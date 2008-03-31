@@ -22,6 +22,8 @@ namespace YouMap
 
         private string YouIcon { get { return Path.Combine(UserFiles, "Y.png"); } }
         private string IconShadow { get { return Path.Combine(UserFiles, "shadow.png"); } }
+        private string EventIconPath { get { return Path.Combine(UserFiles, "checkin.png"); } }
+        private string CheckinIconPath { get { return Path.Combine(UserFiles, "event.png"); } }
 
         private readonly CategoryDocumentService _categoriesDocumentService;
 
@@ -55,6 +57,36 @@ namespace YouMap
                     Point = Point.Empty,
                     Size = new Size(28, 34)
                     
+                };
+            }
+        }
+
+        public MarkerIcon EventIconModel
+        {
+            get
+            {
+                return new MarkerIcon()
+                {
+                    Path = EventIconPath.Replace("\\", "/"),
+                    Anchor = new Point(0, 30),
+                    Point = Point.Empty,
+                    Size = new Size(30, 30)
+
+                };
+            }
+        }
+
+        public MarkerIcon CheckInIconModel
+        {
+            get
+            {
+                return new MarkerIcon()
+                {
+                    Path = CheckinIconPath.Replace("\\", "/"),
+                    Anchor = new Point(0, 0),
+                    Point = Point.Empty,
+                    Size = new Size(30, 30)
+
                 };
             }
         }
@@ -109,11 +141,6 @@ namespace YouMap
                     Anchor = new Point(-7, 57)
                 };
             }
-        }
-
-        public MarkerIcon EventIconModel
-        {
-            get { return null; }
         }
 
         public MarkerIcon EventShadowModel
