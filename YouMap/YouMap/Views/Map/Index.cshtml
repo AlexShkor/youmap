@@ -1,0 +1,28 @@
+﻿@using Jmelosegui.Mvc.Controls
+@using YouMap.Controllers
+@model MapModel
+
+<script>
+$(document).ready(function() {
+	YouMap.Map.Initialize();
+});
+</script>
+@(Html.Telerik().GoogleMap().Name("map").Height(Model.Height).Width(Model.Width)
+.Latitude(Model.Latitude).Longitude(Model.Longitude).Zoom(Model.Zoom)
+.Markers(x=>
+			 {
+				 foreach (var item2 in Model.Markers)
+				 {
+					 PlaceModel marker = item2;
+					 x.Add().Title(marker.Title)
+					 .Latitude(marker.Latitude)
+					 .Longitude(marker.Longitude)
+					 .Icon(marker.Icon, new Size(24, 24), new Point(0, 0), new Point(12, 12))
+					 .Clickable(true)
+					 .Window(y => y.Add().Content(
+					 @<text>
+						@Html.Partial("PlaceInfo",marker)
+					 </text>
+					 ));
+				 }
+ }))

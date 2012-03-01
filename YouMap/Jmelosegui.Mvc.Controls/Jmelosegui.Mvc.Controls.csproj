@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5476DBD6-F0EC-4B7A-A616-DB42A7EF7E1B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Jmelosegui.Mvc.Controls</RootNamespace>
+    <AssemblyName>Jmelosegui.Mvc.Controls</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MVC2</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;MVC2</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug MVC3|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug MVC3\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;MVC3</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisLogFile>bin\Debug\Jmelosegui.Mvc.Controls.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release MVC3|AnyCPU'">
+    <OutputPath>bin\Release MVC3\</OutputPath>
+    <DefineConstants>TRACE;MVC3</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.Web.Mvc">
+      <HintPath>..\packages\TelerikMvcExtensions.2012.1.214\lib\net40\Telerik.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enums\ControlPosition.cs" />
+    <Compile Include="Enums\MapType.cs" />
+    <Compile Include="Enums\MapTypeControlStyle.cs" />
+    <Compile Include="Enums\NavigationControlType.cs" />
+    <Compile Include="Extensions\ViewComponentFactoryExtension.cs" />
+    <Compile Include="GoogleMapBuilder.cs" />
+    <Compile Include="Events\GooglemapClientEventsBuilder.cs" />
+    <Compile Include="Events\GooglemapClientEvents.cs" />
+    <Compile Include="Overlays\Markers\Clustering\MarkerClusteringStylesSerializer.cs" />
+    <Compile Include="Overlays\Markers\Clustering\MarkerClusteringStyles.cs" />
+    <Compile Include="Overlays\Markers\Clustering\MarkerClusteringOptions.cs" />
+    <Compile Include="Overlays\InfoWindow\InfoWindow.cs" />
+    <Compile Include="Overlays\InfoWindow\InfoWindowBuilder.cs" />
+    <Compile Include="Overlays\InfoWindow\InfoWindowFactory.cs" />
+    <Compile Include="Overlays\IOverlaySerializer.cs" />
+    <Compile Include="Overlays\Location.cs" />
+    <Compile Include="Overlays\LocationFactory.cs" />
+    <Compile Include="Overlays\Markers\Clustering\MarkerClusteringOptionsFactory.cs" />
+    <Compile Include="Overlays\Markers\MarkerImage.cs" />
+    <Compile Include="GoogleMap.cs" />
+    <Compile Include="Overlays\Markers\MarkerSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Overlays\OverlayBindingBuilder.cs" />
+    <Compile Include="Overlays\OverlayBindingFactory.cs" />
+    <Compile Include="Overlays\IOverlayBinding.cs" />
+    <Compile Include="Overlays\Markers\Marker.cs" />
+    <Compile Include="Overlays\Markers\MarkerBuilder.cs" />
+    <Compile Include="Overlays\Markers\MarkerFactory.cs" />
+    <Compile Include="Overlays\Overlay.cs" />
+    <Compile Include="Overlays\Shapes\Circle\Circle.cs" />
+    <Compile Include="Overlays\Shapes\Circle\CircleBuilder.cs" />
+    <Compile Include="Overlays\Shapes\Circle\CircleFactory.cs" />
+    <Compile Include="Extensions\ColorExtension.cs" />
+    <Compile Include="Overlays\Shapes\Circle\CircleSerializer.cs" />
+    <Compile Include="Overlays\Shapes\Polygons\PolygonBuilder.cs" />
+    <Compile Include="Overlays\Shapes\Polygons\Polygon.cs" />
+    <Compile Include="Overlays\Shapes\Polygons\PolygonFactory.cs" />
+    <Compile Include="Overlays\Shapes\Polygons\PolygonSerializer.cs" />
+    <Compile Include="Overlays\Shapes\ShapeSerializer.cs" />
+    <Compile Include="Overlays\Shapes\Shape.cs" />
+    <Compile Include="Overlays\Shapes\ShapeBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\markerclusterer.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jmelosegui.googlemap.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>  
+  -->
+  <Target Name="AfterBuild">
+    <Message Importance="high" Text="Configuration $(Configuration)|$(Platform)" />
+    <Message Importance="high" Text="Copying JavaScript files to $(SolutionDir)\src\Mvc.Googlemap.Examples\Scripts\..." />
+    <Copy SourceFiles="@(Content)" DestinationFolder="$(SolutionDir)\src\Mvc.Googlemap.Examples\Scripts\" Condition="'%(Extension)'=='.js'">
+      <Output TaskParameter="DestinationFiles" ItemName="Resources" />
+    </Copy>
+    <ItemGroup>
+      <!-- FileWrites is the list of files to delete when performing a Clean -->
+      <FileWrites Include="@(Resources)" />
+    </ItemGroup>
+  </Target>
+</Project>

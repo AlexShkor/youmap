@@ -1,0 +1,23 @@
+﻿@using YouMap.Controllers
+@model IEnumerable<CategoryModel>
+
+<ul class="list-vertical">
+@foreach (var item in Model)
+{
+	<li data-id="@item.Id" class="awesome"> 
+		<span>@item.Name</span>
+		<img src="@item.Icon"/>
+	</li>
+	<div class="actions">
+		@Html.ActionLink("edit","Edit",new{id=item.Id},new{@class="awesome green small"})
+		@Html.ActionLink("delete","Delete",new{id=item.Id}, new{@class="awesome red small"})
+		</div>
+}
+</ul>
+
+<div>
+@Html.ActionLink("Добавить категорию","AddCategory","Categories",new {id="addCalegory", @class="ajax-link awesome magenta"})
+</div>
+
+
+<div class="add-category-container"/>

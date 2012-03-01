@@ -1,0 +1,15 @@
+﻿@if(Request.IsAuthenticated) {
+ <text>
+[ @Html.ActionLink("Панель Управления", "ControlPanel", "Map") ]
+   Welcome <strong>@User.Identity.Name</strong>!
+	[ @Html.ActionLink("Выйти", "LogOff", "Account") ]</text>
+}
+else {
+<a id="vkLogin" href="#">Войти через "Вконтакте"</a>
+	@:[ @Html.ActionLink("Войти", "LogOn", "Account") ]
+	
+}
+
+<script>
+	YouMap.Auth.Initialize();
+</script>

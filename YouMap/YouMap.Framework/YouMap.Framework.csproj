@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EF8F12CE-0EA4-4639-A5D7-733D12F3F966}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YouMap.Framework</RootNamespace>
+    <AssemblyName>YouMap.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\libs\Microsoft.Practices\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\libs\MongoDriver\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\libs\MongoDriver\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Paralect.Domain">
+      <HintPath>..\libs\Paralect\Paralect.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="Paralect.ServiceBus">
+      <HintPath>..\libs\Paralect\Paralect.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Paralect.ServiceLocator.StructureMap">
+      <HintPath>..\libs\Paralect\Paralect.ServiceLocator.StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="Paralect.ServiceLocator.Unity">
+      <HintPath>..\libs\Paralect\Paralect.ServiceLocator.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Paralect.Transitions">
+      <HintPath>..\libs\Paralect\Paralect.Transitions.dll</HintPath>
+    </Reference>
+    <Reference Include="Paralect.Transitions.Mongo">
+      <HintPath>..\libs\Paralect\Paralect.Transitions.Mongo.dll</HintPath>
+    </Reference>
+    <Reference Include="Prelude">
+      <HintPath>..\libs\Prelude.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.4.4\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsyncServiceBus.cs" />
+    <Compile Include="CommandHandler.cs" />
+    <Compile Include="CommandService.cs" />
+    <Compile Include="Enums\StatusMessageType.cs" />
+    <Compile Include="EnvironmentTypeEnum.cs" />
+    <Compile Include="Environment\CustomSessionLifecycle.cs" />
+    <Compile Include="Environment\DualEventBus.cs" />
+    <Compile Include="Environment\ErrorMessage.cs" />
+    <Compile Include="Environment\GetStateAttribute.cs" />
+    <Compile Include="Environment\HttpApplicationStructureMapContext.cs" />
+    <Compile Include="Environment\IIdGenerator.cs" />
+    <Compile Include="Environment\MongoObjectIdGenerator.cs" />
+    <Compile Include="Environment\MultiTenancy\ApplicationTenant.cs" />
+    <Compile Include="Environment\MultiTenancy\ContainerControllerActionInvoker.cs" />
+    <Compile Include="Environment\MultiTenancy\ContainerControllerFactory.cs" />
+    <Compile Include="Environment\MultiTenancy\ContainerResolver.cs" />
+    <Compile Include="Environment\MultiTenancy\ControllerConvention.cs" />
+    <Compile Include="Environment\MultiTenancy\ControllersDictionary.cs" />
+    <Compile Include="Environment\MultiTenancy\ExecutionFilterAttribute.cs" />
+    <Compile Include="Environment\MultiTenancy\HandleErrorWithElmahAttribute.cs" />
+    <Compile Include="Environment\MultiTenancy\IApplicationTenant.cs" />
+    <Compile Include="Environment\MultiTenancy\IContainerFilter.cs" />
+    <Compile Include="Environment\MultiTenancy\IContainerResolver.cs" />
+    <Compile Include="Environment\MultiTenancy\ITenantConfigurer.cs" />
+    <Compile Include="Environment\MultiTenancy\ITenantSelector.cs" />
+    <Compile Include="Environment\MultiTenancy\TenantNotFoundException.cs" />
+    <Compile Include="Environment\MultiTenancy\TenantSelector.cs" />
+    <Compile Include="Environment\MultiTenancy\TenantTools.cs" />
+    <Compile Include="Environment\MultiTenancy\ThemedViewEngine.cs" />
+    <Compile Include="Environment\MultiTenancy\ThemeHttpModule.cs" />
+    <Compile Include="Environment\MultiTenancy\ThreadSafeDictionary.cs" />
+    <Compile Include="Environment\PassStateAttribute.cs" />
+    <Compile Include="Environment\Sitemap\TenantSiteMap.cs" />
+    <Compile Include="Environment\StructureMapDependencyResolver.cs" />
+    <Compile Include="Environment\StructureMapFilterProvider .cs" />
+    <Compile Include="EventService.cs" />
+    <Compile Include="Exceptions\Modules\ErrorHandlerModule.cs" />
+    <Compile Include="Exceptions\Modules\ErrorLoggingModule.cs" />
+    <Compile Include="Exceptions\MpowerSecurityException.cs" />
+    <Compile Include="IUserIdentity.cs" />
+    <Compile Include="MongoRead.cs" />
+    <Compile Include="MongoTemp.cs" />
+    <Compile Include="MongoWrite.cs" />
+    <Compile Include="Mongo\MongoConvention.cs" />
+    <Compile Include="Mongo\MongoIntuit.cs" />
+    <Compile Include="Mongo\MongoUtil.cs" />
+    <Compile Include="Mongo\MongoYodlee.cs" />
+    <Compile Include="Mongo\NLogMongoService.cs" />
+    <Compile Include="Mongo\NLogMongoTarget.cs" />
+    <Compile Include="Mongo\NoDefaultPropertyIdConvention.cs" />
+    <Compile Include="YoumapAR.cs" />
+    <Compile Include="mPowerSettings.cs" />
+    <Compile Include="Mvc\Ajax\AjaxResponse.cs" />
+    <Compile Include="Mvc\Ajax\ErrorMessage.cs" />
+    <Compile Include="Mvc\Ajax\UpdateItem.cs" />
+    <Compile Include="Mvc\Ajax\ValidationContext.cs" />
+    <Compile Include="Mvc\Extensions.cs" />
+    <Compile Include="Mvc\Helpers\HtmlHelpers.cs" />
+    <Compile Include="Mvc\Helpers\SelectListHelper.cs" />
+    <Compile Include="Mvc\Helpers\SuffixDropDown.cs" />
+    <Compile Include="Mvc\Helpers\UnitedStatesStates.cs" />
+    <Compile Include="Mvc\IObjectFactory.cs" />
+    <Compile Include="Mvc\IObjectRepository.cs" />
+    <Compile Include="Mvc\ModelBinders\CustomPropertyModelBinder.cs" />
+    <Compile Include="Mvc\ModelBinders\IPropertyBinder.cs" />
+    <Compile Include="Mvc\ModelBinders\MoneyBinder.cs" />
+    <Compile Include="Mvc\ModelBinders\PercentBinder.cs" />
+    <Compile Include="Mvc\ModelBinders\PropertyBinderAttribute.cs" />
+    <Compile Include="Mvc\ObjectRepository.cs" />
+    <Compile Include="Mvc\RazorHelpers\MoneyHelper.generated.cs" />
+    <Compile Include="Mvc\RazorHelpers\PaginatorHelper.generated.cs" />
+    <Compile Include="Mvc\RazorHelpers\ValidationHelper.generated.cs" />
+    <Compile Include="Mvc\ScriptVersion.cs" />
+    <Compile Include="Mvc\Validation\CrossFieldValidator.cs" />
+    <Compile Include="Mvc\Validation\EqualToPropertyAttribute.cs" />
+    <Compile Include="Mvc\Validation\EqualToPropertyValidator.cs" />
+    <Compile Include="Mvc\Validation\ICrossFieldValidationAttribute.cs" />
+    <Compile Include="Mvc\Validation\IValidationRepository.cs" />
+    <Compile Include="Mvc\Validation\IValidator.cs" />
+    <Compile Include="Mvc\Validation\NotEqualToPropertyAttribute.cs" />
+    <Compile Include="Mvc\Validation\NotEqualToPropertyValidator.cs" />
+    <Compile Include="Mvc\Validation\ValidationRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registries\CommandServerRegistry.cs" />
+    <Compile Include="Registries\MongoRegistry.cs" />
+    <Compile Include="Registries\SettingsRegistry.cs" />
+    <Compile Include="Services\BaseDocumentService.cs" />
+    <Compile Include="Services\BaseFilter.cs" />
+    <Compile Include="Services\BaseMongoService.cs" />
+    <Compile Include="Services\BaseTemporaryService.cs" />
+    <Compile Include="Services\CsvFileReader.cs" />
+    <Compile Include="Services\CsvFileWriter.cs" />
+    <Compile Include="Services\CsvRow.cs" />
+    <Compile Include="Services\PagingInfo.cs" />
+    <Compile Include="Utils\CommonUtil.cs" />
+    <Compile Include="Utils\CreditCalculator\CreditCalculator.cs" />
+    <Compile Include="Utils\CreditCalculator\ReportCardIn.cs" />
+    <Compile Include="Utils\CreditCalculator\ReportCardOut.cs" />
+    <Compile Include="Utils\DateRange.cs" />
+    <Compile Include="Utils\DateUtil.cs" />
+    <Compile Include="Utils\Ensure.cs" />
+    <Compile Include="Utils\Extensions\ControllerExtentions.cs" />
+    <Compile Include="Utils\Extensions\Enumerable.cs" />
+    <Compile Include="Utils\Extensions\EnumExtensions.cs" />
+    <Compile Include="Utils\Extensions\HttpContextBase.cs" />
+    <Compile Include="Utils\Extensions\String.cs" />
+    <Compile Include="Utils\Extensions\StringEnumerable.cs" />
+    <Compile Include="Utils\Extensions\UriExtension.cs" />
+    <Compile Include="Utils\IifNameAttribute.cs" />
+    <Compile Include="Utils\MvcUtils.cs" />
+    <Compile Include="Utils\Notification\NotificationGroupAttribute.cs" />
+    <Compile Include="Utils\Notification\NotificationGroupEnum.cs" />
+    <Compile Include="Utils\ObjectComparer.cs" />
+    <Compile Include="Utils\SecurityUtil.cs" />
+    <Compile Include="Utils\Security\DecryptAttribute.cs" />
+    <Compile Include="Utils\Security\EncryptionService.cs" />
+    <Compile Include="Utils\Security\EncryptionService_old.cs" />
+    <Compile Include="Utils\Security\IEncryptionService.cs" />
+    <Compile Include="Utils\StreamUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Registries\Modules.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mvc\RazorHelpers\MoneyHelper.cshtml" />
+    <None Include="Mvc\RazorHelpers\PaginatorHelper.cshtml" />
+    <None Include="Mvc\RazorHelpers\ValidationHelper.cshtml" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

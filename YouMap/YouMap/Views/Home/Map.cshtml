@@ -1,0 +1,7 @@
+﻿@using Jmelosegui.Mvc.Controls
+@using YouMap.Controllers
+@model MapModel
+
+
+
+@Html.Telerik().GoogleMap().Name("map").Height(Model.Height).Width(Model.Width).Latitude(Model.Latitude).Longitude(Model.Longitude).Zoom(Model.Zoom)

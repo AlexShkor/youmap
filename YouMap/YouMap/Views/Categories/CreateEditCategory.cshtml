@@ -1,0 +1,32 @@
+﻿
+@using YouMap.Controllers
+@model AddCategoryModel
+
+@using (Html.BeginForm())
+{
+	<fieldset>
+	@Html.HiddenFor(x=> x.Id)
+		<div class="editor-label">
+				@Html.LabelFor(m => m.Name)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Name)
+				@Html.ValidationMessageFor(m => m.Name)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Icon)
+			</div>
+			<div class="editor-field">
+				@Html.Telerik().Upload().Name("Icon")
+				@Html.ValidationMessageFor(m => m.Icon)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(m => m.IsTop)
+			</div>
+			<div class="editor-field">
+				@Html.CheckBoxFor(x=> x.IsTop)
+				@Html.ValidationMessageFor(m => m.IsTop)
+			</div>
+			<input type="submit" class="ajax-submit"/>
+	</fieldset>
+}
