@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using mPower.Framework;
 
 namespace YouMap
 {
@@ -8,6 +9,7 @@ namespace YouMap
         string UserId { get; set; }
         string UserEmail { get; set; }
         string ClientKey { get; set; }
+        IUserIdentity User { get; set; }
         bool IsUserAuthorized();
         void Logout();
         string GetStringSessionValue(string key);
@@ -26,6 +28,7 @@ namespace YouMap
     public class SessionContext : ISessionContext
     {
         private const string _userId = "UserId";
+        private const string _userName= "UserName";
         private const string _userEmail = "UserEmail";
         private const string _clientKey = "ClientKey";
 
@@ -42,11 +45,36 @@ namespace YouMap
             set { SetSessionValue(_userEmail, value); }
         }
 
+        public string UserName
+        {
+            get { return GetStringSessionValue(_userName); }
+            set { SetSessionValue(_userName, value); }
+        }
+
 
         public string ClientKey
         {
             get { return GetStringSessionValue(_clientKey); }
             set { SetSessionValue(_clientKey, value); }
+        }
+
+        public IUserIdentity User
+        {
+            get
+            {
+                return new UserIdentity
+                           {
+                               Id = UserId,
+                               Email = UserEmail,
+                               Name = UserName
+                           };
+            }
+            set
+            {
+                UserId = value.Id;
+                UserName = value.Name;
+                UserEmail = value.Email;
+            }
         }
 
         public bool IsUserAuthorized()
@@ -90,5 +118,13 @@ namespace YouMap
                 HttpContext.Current.Session.Remove(key);
             }
         }
+    }
+
+    public class UserIdentity : IUserIdentity
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -533,6 +533,7 @@ ul.list-vertical
 {
     margin-left: 50px;
     float: left;
+    margin-top: 4px;
 }
  
 /* Style the search input field. */
@@ -540,7 +541,7 @@ ul.list-vertical
 {
     padding: 0;
     float:left; 
-    width:300px; 
+    width:500px; 
     height:27px; 
     line-height:27px;
     text-indent:10px; 

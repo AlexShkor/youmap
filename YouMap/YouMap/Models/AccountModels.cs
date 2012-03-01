@@ -22,7 +22,7 @@ namespace YouMap.Models
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Подтвердите пароля")]
+        [Display(Name = "Подтвердите пароль")]
         [Compare("NewPassword", ErrorMessage = "Подтверждения новго пароля не верно.")]
         public string ConfirmPassword { get; set; }
     }

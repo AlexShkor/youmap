@@ -38,6 +38,12 @@ namespace YouMap.Documents.Documents
 
         public bool IsActive { get; set; }
 
+        public string Name
+        {
+            get { return FullName; }
+            set { throw new NotImplementedException(); }
+        }
+
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }
 
         public bool HasPermissions(params UserPermissionEnum[] permissions)

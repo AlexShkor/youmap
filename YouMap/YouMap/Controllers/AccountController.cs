@@ -17,15 +17,16 @@ namespace YouMap.Controllers
 {
     public class AccountController : BaseController
     {
-
-        private IAuthenticationService _authenticationService;
-
+        private readonly IAuthenticationService _authenticationService;
+        VkAuthenticationService vkAuth
+        {
+            get { return _authenticationService.VkAuth; }
+        }
         //
         // GET: /Account/LogOn
 
         public AccountController(
             ICommandService commandService, 
-            UserDocumentService userDocumentService, 
             IAuthenticationService authenticationService) : base(commandService)
         {
             _authenticationService = authenticationService;
@@ -47,7 +48,7 @@ namespace YouMap.Controllers
                 if (_authenticationService.ValidateUser(model.Email, model.Password))
                 {
                     var user = _authenticationService.GetUserByEmail(model.Email);
-                    SessionContext.UserId = user.Id;
+                    SessionContext.User = user;
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
@@ -101,7 +102,7 @@ namespace YouMap.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     var user = _authenticationService.GetUserByEmail(model.Email);
-                    SessionContext.UserId = user.Id;
+                    SessionContext.User = user;
                     FormsAuthentication.SetAuthCookie(model.Email, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
@@ -127,12 +128,18 @@ namespace YouMap.Controllers
         [HttpGet]
         public ActionResult LoginVk()
         {
-            var authenticationService = new VkAuthenticationService(null);
-            var vkAppId = "2831071";
-            var query = Request.Cookies.Get("vk_app_" + vkAppId);
+            try
+            {
+                var user = vkAuth.LoginFromCookie(Request.Cookies);
+                FormsAuthentication.SetAuthCookie(user.Name, true);
+                SessionContext.User = user;
+            }
+            catch(Exception e)
+            {
+               ModelState.AddModelError("Error",e.Message);
+            }
             return Result();
         }
-
 
         [HttpPost]
         public ActionResult LoginVk(VkLoginModel model)
@@ -140,15 +147,13 @@ namespace YouMap.Controllers
             if (ModelState.IsValid)
             {
                 var user = _authenticationService.GetVkUser(model.Id);
-                if (user != null)
-                {
-                    SessionContext.UserId = user.Id;
-                }
-                else
-                {
+                if (user == null){
                     _authenticationService.CreateUser(model);
                     user = _authenticationService.GetVkUser(model.Id);
                 }
+                SessionContext.User = user;
+                var cookie = vkAuth.CreateCookie(model);
+                Response.SetCookie(cookie);
                 FormsAuthentication.SetAuthCookie(user.FullName,true);
                 AjaxResponse.Render("#logindisplay","_LogOnPartial",new{});
             }
@@ -242,7 +247,7 @@ namespace YouMap.Controllers
 
     public class VkLoginModel
     {
-        public int Expire { get; set; }
+        public long Expire { get; set; }
 
         [Required]
         public string Sig { get; set; }

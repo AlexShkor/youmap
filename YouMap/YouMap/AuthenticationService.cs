@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Security.Authentication;
+using System.Web;
 using System.Web.Security;
 using Paralect.Domain;
 using YouMap.Controllers;
@@ -20,11 +23,16 @@ namespace YouMap
         private readonly ICommandService _commandService;
         private readonly IIdGenerator _idGenerator;
 
+
+        public VkAuthenticationService VkAuth { get; private set; }
+
+
         public AuthenticationService(UserDocumentService userDocumentService, ICommandService commandService, IIdGenerator idGenerator)
         {
             _commandService = commandService;
             _userDocumentService = userDocumentService;
             _idGenerator = idGenerator;
+            VkAuth = new VkAuthenticationService(userDocumentService);
         }
 
         public bool ValidateUser(string email, string password)
@@ -105,6 +113,7 @@ namespace YouMap
         {
             return _userDocumentService.GetByFilter(new UserFilter { VkId = id }).FirstOrDefault();
         }
+
     }
 
     public interface IAuthenticationService
@@ -116,6 +125,7 @@ namespace YouMap
         void ChangePassword(string id, string oldPassword, string newPassword);
         void CreateUser(VkLoginModel model);
         UserDocument GetVkUser(string id);
+        VkAuthenticationService VkAuth { get;}
     }
 
     public interface IVkAuthenticationService
@@ -128,6 +138,9 @@ namespace YouMap
         private readonly UserDocumentService _userDocumentService;
         private string AppVkSecret;
 
+        const string VkAppId = "2831071";
+        protected string VkCookiesKey { get { return "vk_app_" + VkAppId; } }
+
         public  VkAuthenticationService(UserDocumentService userDocumentService)
         {
             _userDocumentService = userDocumentService;
@@ -136,7 +149,7 @@ namespace YouMap
         public bool ValidateUser(string sig, VkLoginModel model)
         {
             var hash = string.Format("expire={0}mid={1}secret={2}sid={3}{4}",
-                                     model.Expire, model.Mid, model.Secret, model.Id, AppVkSecret);
+                                     model.Expire, model.Mid, model.Secret, model.Sid, AppVkSecret);
             return GetMD5Hash(hash) == sig && ConvertFromUnixTimestamp(model.Expire) > DateTime.Now;
         }
 
@@ -150,10 +163,20 @@ namespace YouMap
             return ValidateUser(user.Vk.Sig, model);
         }
 
-         public bool ValidateUser(string sig, string queryFromCoockies)
-         {
-             return false;
-         }
+        private bool ValidateUser(string sig, HttpCookie coockie)
+        {
+            var expire = long.Parse(coockie.Values["expire"]);
+            var mid = coockie.Values["mid"];
+            var secret = coockie.Values["secret"];
+            var sid = coockie.Values["sid"];
+            return ValidateUser(sig, new VkLoginModel
+                                         {
+                                             Expire = expire,
+                                             Mid = mid,
+                                             Secret = secret,
+                                             Sid = sid
+                                         });
+        }
 
         public  string GetMD5Hash( string input)
         {
@@ -175,6 +198,40 @@ namespace YouMap
             var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return origin.AddSeconds(timestamp);
         }
+
+        public HttpCookie CreateCookie(VkLoginModel model)
+        {
+            var hash = string.Format("expire={0}&mid={1}&secret={2}&sid={3}&uid={4}",
+                                     model.Expire, model.Mid, model.Secret, model.Sid,model.Id);
+            var cookie = new HttpCookie(VkCookiesKey, hash);
+            //cookie.Expires = ConvertFromUnixTimestamp(model.Expire);
+            cookie.Expires = DateTime.Now.AddYears(1);
+            return cookie;
+        }
+
+        public IUserIdentity LoginFromCookie(HttpCookieCollection cookies)
+        {
+            var cookie = cookies.Get(VkCookiesKey);
+            if (cookie == null)
+            {
+                throw new KeyNotFoundException("VK key not found in cookie collection");
+            }
+            var uid = cookie.Values["uid"];
+            var user = _userDocumentService.GetByFilter(new UserFilter {VkId = uid}).First();
+            if (user == null)
+            {
+                throw new SecurityException("User Not Found");
+                
+            }
+            return user;
+            //if (ValidateUser(user.Vk.Sig, cookie))
+            //{
+            //    return user;
+            //}
+            //throw new SecurityException("Auth is expired.");
+        }
+
+        
     }
 
     

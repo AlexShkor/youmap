@@ -5,7 +5,7 @@ namespace YouMap.Domain.Data
     //used in events
     public class VkData
     {
-        public int Expire { get; set; }
+        public long Expire { get; set; }
 
         public string Sig { get; set; }
 

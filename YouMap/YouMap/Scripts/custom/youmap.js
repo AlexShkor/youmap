@@ -173,14 +173,13 @@ YouMap.Auth = function ($) {
         $("#vkLogin").live("click", function () {
             VK.Auth.login(vkLoginCallback);
         });
-
-        VK.Auth.getLoginStatus(function (response) {
-            if (response.session) {
-                Request.get("/Account/LoginVk");
+        Request.get("/Account/LoginVk").addSuccess("loginVK", function (data) {
+            if (data.Errors.length == 0) {
+                alert("Успешко залогинелся из Вконтакте");
             } else {
-                /* Неавторизованный в Open API пользователь */
+                VK.Auth.getLoginStatus(vkLoginCallback);
             }
-        });
+        }).send();
     };
 
     var vkLoginCallback = function (response) {
