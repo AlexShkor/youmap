@@ -19,11 +19,17 @@ namespace YouMap.Documents.Services
 
         protected override QueryComplete BuildFilterQuery(CategoryFilter filter)
         {
-            return Query.And();
+            var query = Query.And();
+            if (filter.IsTop.HasValue)
+            {
+                query = Query.And(query, Query.EQ("IsTop", filter.IsTop.Value));
+            }
+            return query;
         }
     }
 
     public class CategoryFilter : BaseFilter
     {
+        public bool? IsTop { get; set; }
     }
 }

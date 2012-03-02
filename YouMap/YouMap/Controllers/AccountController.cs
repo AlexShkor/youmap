@@ -18,7 +18,7 @@ namespace YouMap.Controllers
     public class AccountController : BaseController
     {
         private readonly IAuthenticationService _authenticationService;
-        VkAuthenticationService vkAuth
+        VkAuthenticationService VkAuth
         {
             get { return _authenticationService.VkAuth; }
         }
@@ -45,79 +45,56 @@ namespace YouMap.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_authenticationService.ValidateUser(model.Email, model.Password))
+                try
                 {
-                    var user = _authenticationService.GetUserByEmail(model.Email);
-                    SessionContext.User = user;
-                    FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                    _authenticationService.LogOn(model.Email,model.Password);
+                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                     {
                         return Redirect(returnUrl);
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Map");
                     }
                 }
-                else
+                catch
                 {
                     ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // GET: /Account/LogOff
-
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
-
-            return RedirectToAction("Index", "Home");
+            _authenticationService.Logout();
+            return RedirectToAction("Index", "Map");
         }
-
-        //
-        // GET: /Account/Register
 
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
-
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                var createStatus = _authenticationService.CreateUser(model.Email, model.Password);
-                
-                if (createStatus == MembershipCreateStatus.Success)
+                try
                 {
-                    var user = _authenticationService.GetUserByEmail(model.Email);
-                    SessionContext.User = user;
-                    FormsAuthentication.SetAuthCookie(model.Email, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    _authenticationService.Register(model.Email, model.Password);
+                    return RedirectToAction("Index", "Map");
                 }
-                else
+                catch(Exception e)
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    ModelState.AddModelError("Error",e.Message);
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // GET: /Account/ChangePassword
 
         [Authorize]
         public ActionResult ChangePassword()
@@ -130,9 +107,9 @@ namespace YouMap.Controllers
         {
             try
             {
-                var user = vkAuth.LoginFromCookie(Request.Cookies);
+                var user = VkAuth.LoginFromCookie(Request.Cookies);
                 FormsAuthentication.SetAuthCookie(user.Name, true);
-                SessionContext.User = user;
+                SessionContext.SetUser(user);
             }
             catch(Exception e)
             {
@@ -146,21 +123,18 @@ namespace YouMap.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _authenticationService.GetVkUser(model.Id);
-                if (user == null){
-                    _authenticationService.CreateUser(model);
-                    user = _authenticationService.GetVkUser(model.Id);
+                try
+                {
+                    _authenticationService.LogOn(model);
                 }
-                SessionContext.User = user;
-                var cookie = vkAuth.CreateCookie(model);
-                Response.SetCookie(cookie);
-                FormsAuthentication.SetAuthCookie(user.FullName,true);
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError("Error",exception.Message);
+                }
                 AjaxResponse.Render("#logindisplay","_LogOnPartial",new{});
             }
             return Result();
         }
-        //
-        // POST: /Account/ChangePassword
 
         [Authorize]
         [HttpPost]
@@ -168,81 +142,23 @@ namespace YouMap.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                // ChangePassword will throw an exception rather
-                // than return false in certain failure scenarios.
-                bool changePasswordSucceeded;
                 try
                 {
-                    _authenticationService.ChangePassword(SessionContext.UserId,model.OldPassword, model.NewPassword);
-                    changePasswordSucceeded = true;
-                }
-                catch (Exception)
-                {
-                    changePasswordSucceeded = false;
-                }
-
-                if (changePasswordSucceeded)
-                {
+                    _authenticationService.ChangePassword(model.OldPassword, model.NewPassword);
                     return RedirectToAction("ChangePasswordSuccess");
                 }
-                else
+                catch (Exception)
                 {
                     ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // GET: /Account/ChangePasswordSuccess
 
         public ActionResult ChangePasswordSuccess()
         {
             return View();
         }
-
-        #region Status Codes
-        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
-        {
-            // See http://go.microsoft.com/fwlink/?LinkID=177550 for
-            // a full list of status codes.
-            switch (createStatus)
-            {
-                case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
-
-                case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
-
-                case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
-
-                case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidQuestion:
-                    return "The password retrieval question provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.ProviderError:
-                    return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                case MembershipCreateStatus.UserRejected:
-                    return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                default:
-                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-            }
-        }
-        #endregion
     }
 
     public class VkLoginModel

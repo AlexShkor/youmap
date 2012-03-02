@@ -22,13 +22,22 @@ namespace YouMap
         private readonly UserDocumentService _userDocumentService;
         private readonly ICommandService _commandService;
         private readonly IIdGenerator _idGenerator;
+        private readonly ISessionContext _sessionContext;
 
 
         public VkAuthenticationService VkAuth { get; private set; }
 
+        public void Logout()
+        {
+            _sessionContext.Logout();
+            FormsAuthentication.SignOut();
+            VkAuth.Logout();
+        }
+
 
         public AuthenticationService(UserDocumentService userDocumentService, ICommandService commandService, IIdGenerator idGenerator)
         {
+            _sessionContext = new SessionContext();
             _commandService = commandService;
             _userDocumentService = userDocumentService;
             _idGenerator = idGenerator;
@@ -40,7 +49,7 @@ namespace YouMap
             return _userDocumentService.GetByFilter(new UserFilter { Email = email }).Any(x => x.Password == password);
         }
 
-        public MembershipCreateStatus CreateUser(string email, string password)
+        public void Register(string email, string password)
         {
             var user = _userDocumentService.GetByFilter(new UserFilter { Email = email }).FirstOrDefault();
             if (user != null)
@@ -55,7 +64,32 @@ namespace YouMap
                               };
             command.Metadata.UserId = command.UserId;
             _commandService.Send(command);
-            return MembershipCreateStatus.Success;
+        }
+
+        public void LogOn(VkLoginModel model, bool remember = true)
+        {
+            var user = GetVkUser(model.Id);
+            if (user == null)
+            {
+                Register(model);
+            }
+            else
+            {
+                SetAuthCookie(user,remember);
+            }
+            var cookie = VkAuth.CreateCookie(model);
+            HttpContext.Current.Response.SetCookie(cookie);
+        }
+
+        public void LogOn(string email, string password, bool remember)
+        {
+            var user = _userDocumentService.GetByFilter(new UserFilter { Email = email }).Single();
+
+            if (user.Password != password)
+            {
+                throw new SecurityException("Login faild");
+            }
+            SetAuthCookie(user,remember);
         }
 
         public IUserIdentity GetUserByEmail(string email)
@@ -68,11 +102,15 @@ namespace YouMap
             return _userDocumentService.GetById((string)id);
         }
 
-        public void ChangePassword(string id, string oldPassword, string newPassword)
+        public void ChangePassword(string oldPassword, string newPassword)
         {
+            if (!_sessionContext.IsUserAuthorized())
+            {
+                throw new SecurityException("User is not loginned.");
+            }
             var command = new User_ChangePasswordCommand
                               {
-                                  UserId = id,
+                                  UserId = _sessionContext.UserId,
                                   OldPassword = oldPassword,
                                   NewPassword = newPassword
                               };
@@ -80,7 +118,7 @@ namespace YouMap
             _commandService.Send(command);
         }
 
-        public void CreateUser(VkLoginModel model)
+        public void Register(VkLoginModel model)
         {
             var user = _userDocumentService.GetByFilter(new UserFilter { VkId = model.Id }).FirstOrDefault();
             if (user != null)
@@ -107,6 +145,15 @@ namespace YouMap
             };
             command.Metadata.UserId = command.UserId;
             _commandService.Send(command);
+            SetAuthCookie(
+                new UserIdentity {Id = command.UserId, Name = String.Format("{0} {1}", model.FirstName, model.LastName)},
+                true);
+        }
+
+        public void SetAuthCookie(IUserIdentity user, bool remember)
+        {
+            _sessionContext.SetUser(user);
+            FormsAuthentication.SetAuthCookie(user.Name ?? user.Email, remember);
         }
 
         public UserDocument GetVkUser(string id)
@@ -119,13 +166,13 @@ namespace YouMap
     public interface IAuthenticationService
     {
         bool ValidateUser(string email, string password);
-        MembershipCreateStatus CreateUser(string email, string password);
-        IUserIdentity GetUserByEmail(string email);
-        IUserIdentity GetUserById(object id);
-        void ChangePassword(string id, string oldPassword, string newPassword);
-        void CreateUser(VkLoginModel model);
-        UserDocument GetVkUser(string id);
+        void LogOn(string email, string password, bool remember = true);
+        void ChangePassword(string oldPassword, string newPassword);
+        void Register(string email, string password);
+        void LogOn(VkLoginModel model, bool remember = true);
+        void Register(VkLoginModel model);
         VkAuthenticationService VkAuth { get;}
+        void Logout();
     }
 
     public interface IVkAuthenticationService
@@ -216,6 +263,10 @@ namespace YouMap
             {
                 throw new KeyNotFoundException("VK key not found in cookie collection");
             }
+            if (cookie.Expires < DateTime.UtcNow)
+            {
+                throw new SecurityException("Cookies is expired;");
+            }
             var uid = cookie.Values["uid"];
             var user = _userDocumentService.GetByFilter(new UserFilter {VkId = uid}).First();
             if (user == null)
@@ -231,7 +282,11 @@ namespace YouMap
             //throw new SecurityException("Auth is expired.");
         }
 
-        
+
+        public void Logout()
+        {
+            HttpContext.Current.Response.Cookies.Remove(VkCookiesKey);
+        }
     }
 
     

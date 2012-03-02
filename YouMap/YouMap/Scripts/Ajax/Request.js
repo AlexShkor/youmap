@@ -1,6 +1,12 @@
 ﻿/**
 * Holds all request objects on page
 */
+Function.reference = function (context, func) {
+    return function () {
+        func.apply(context, arguments);
+    };
+};
+
 var RequestRegistry = function() {
     RequestRegistry.requests = [];
 };
@@ -136,7 +142,7 @@ Request.prototype = {
     * HTML Form Id to be submitted by Ajax
     * It is possible to submit only one form per request
     */
-    formId: null,
+    formSelector: null,
 
     /**
     * HTML preloader selector to be showed till Ajax request
@@ -174,8 +180,8 @@ Request.prototype = {
     /**
     * Set form id
     */
-    setFormId: function (formId) {
-        this.formId = formId;
+    setFormSelector: function (formSelector) {
+        this.formSelector = formSelector;
         return this;
     },
 
@@ -198,8 +204,8 @@ Request.prototype = {
     /**
     * Get form id
     */
-    getFormId: function () {
-        return this.formId;
+    getFormSelector: function () {
+        return this.formSelector;
     },
 
     /**
@@ -317,10 +323,10 @@ Request.prototype = {
         // block UI
         this.doBlockUI();
 
-        if (this.formId != null || this.currentForm) {
+        if (this.formSelector != null || this.currentForm) {
 
             // Submit for using jQuery Form Plugin
-            var sentForm = this.currentForm || $('#' + this.formId);
+            var sentForm = this.currentForm || $(this.formSelector);
             sentForm.ajaxSubmit({
                 type: this.method,
                 cache: false,
@@ -377,8 +383,8 @@ Request.prototype = {
             }
 
             if (options.successSummaryContainer != null) {
-                $('#' + options.successSummaryContainer).html('');
-                $('#' + options.successSummaryContainer).parent().hide();
+                $(options.successSummaryContainer).html('');
+                $(options.successSummaryContainer).parent().hide();
             }
 
             return;
@@ -397,9 +403,9 @@ Request.prototype = {
 
         result.getErrors().clear(options);
         if (options.successSummaryContainer != null && options.successMessage != null) {
-            $('#' + options.successSummaryContainer).html('');
-            $('#' + options.successSummaryContainer).parent().show();
-            $('#' + options.successSummaryContainer).append('<li>' + options.successMessage + ' </li>');
+            $(options.successSummaryContainer).html('');
+            $(options.successSummaryContainer).parent().show();
+            $(options.successSummaryContainer).append('<li>' + options.successMessage + ' </li>');
             //            setTimeout(function() {
             //                $('#' + options.successSummaryContainer).parent().hide();
             //            }, 10000);
@@ -439,8 +445,8 @@ Request.prototype = {
         return this;
     },
 
-    form: function (formId) {
-        this.setFormId(formId);
+    form: function (formSelector) {
+        this.setFormSelector(formSelector);
         return this;
     }
 }

@@ -60,15 +60,20 @@ namespace YouMap.Controllers
         public ActionResult AddPlace()
         {
             var model = new AddPlaceModel();
+            return GetAddPlaceResponse(model);
+        }
+
+        private ActionResult GetAddPlaceResponse(AddPlaceModel model)
+        {
             return RespondTo
                 (request =>
                      {
                          request.Ajax = request.Json = () =>
-                                {
-                                    AjaxResponse.Render(".control-content", "AddPlace", model);
-                                    return Result();
-                                };
-                         request.Html = () => PartialView(model);
+                                                           {
+                                                               AjaxResponse.Render(".control-content", "AddPlace", model);
+                                                               return Result();
+                                                           };
+                         request.Html = () => View(model);
                      });
         }
 
@@ -89,8 +94,9 @@ namespace YouMap.Controllers
                             Address = model.Address
                         };
                 Send(command);
+                RedirectToAction("ControlPanel");
             }
-            return RedirectToAction("Index");
+            return GetAddPlaceResponse(model);
         }
 
         [HttpGet]

@@ -9,13 +9,14 @@ namespace YouMap
         string UserId { get; set; }
         string UserEmail { get; set; }
         string ClientKey { get; set; }
-        IUserIdentity User { get; set; }
+        IUserIdentity User { get;}
         bool IsUserAuthorized();
         void Logout();
         string GetStringSessionValue(string key);
         bool GetBoolSessionValue(string key);
         void SetSessionValue<T>(string key, T value);
         void RemoveSessionValue(string key);
+        void SetUser(IUserIdentity user);
     }
 
     /// <summary>
@@ -69,7 +70,7 @@ namespace YouMap
                                Name = UserName
                            };
             }
-            set
+            private set
             {
                 UserId = value.Id;
                 UserName = value.Name;
@@ -87,6 +88,7 @@ namespace YouMap
             HttpContext.Current.Session.Abandon();
             UserId = null;
             UserEmail = null;
+            UserName = null;
         }
 
         public string GetStringSessionValue(string key)
@@ -118,6 +120,11 @@ namespace YouMap
                 HttpContext.Current.Session.Remove(key);
             }
         }
+
+        public void SetUser(IUserIdentity user)
+        {
+            User = user;
+        }
     }
 
     public class UserIdentity : IUserIdentity
@@ -125,6 +132,5 @@ namespace YouMap
         public string Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
-        public string Password { get; set; }
     }
 }

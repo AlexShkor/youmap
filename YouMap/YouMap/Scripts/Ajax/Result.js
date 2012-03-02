@@ -1,9 +1,5 @@
 ﻿
-Function.reference = function(context, func) {
-    return function() {
-        func.apply(context, arguments);
-    };
-};
+
 
 /**
 * Static function for counting size of associative object (hash)
@@ -324,9 +320,9 @@ UpdateItems.prototype = {
 * Collection of UpdateItem
 */
 var ResultOptions = function (data) {
-    this.errorsSummaryContainer = data.Options.ErrorsSummaryContainer || "validation-summary-errors";
+    this.errorsSummaryContainer = data.Options.ErrorsSummaryContainer || "#validation-summary-errors";
     this.showErrorNearElement = data.Options.ShowErrorNearElement;
-    this.successSummaryContainer = data.Options.SuccessSummaryContainer || "validation-summary-success";
+    this.successSummaryContainer = data.Options.SuccessSummaryContainer || "#validation-summary-success";
     this.successMessage = data.Options.SuccessMessage;
 };
 

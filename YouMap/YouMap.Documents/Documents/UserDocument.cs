@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson.Serialization.Attributes;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 using mPower.Framework;
 
 namespace YouMap.Documents.Documents
@@ -38,6 +39,8 @@ namespace YouMap.Documents.Documents
 
         public bool IsActive { get; set; }
 
+        public IEnumerable<CheckIn> CheckIns { get; set; } 
+
         public string Name
         {
             get { return FullName; }
@@ -50,11 +53,13 @@ namespace YouMap.Documents.Documents
         {
             return permissions.All(permission => Permissions.Contains(permission));
         }
+
+        public UserDocument()
+        {
+            CheckIns = new List<CheckIn>();
+            Permissions = new List<UserPermissionEnum>();
+        }
     }
 
-    public enum UserPermissionEnum
-    {
-        User,
-        Admin
-    }
+   
 }

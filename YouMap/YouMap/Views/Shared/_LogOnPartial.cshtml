@@ -11,5 +11,5 @@ else {
 }
 
 <script>
-	YouMap.Auth.Initialize();
+	YouMap.Auth.Initialize('@Request.IsAuthenticated' == true);
 </script>

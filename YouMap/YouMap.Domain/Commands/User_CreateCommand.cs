@@ -1,5 +1,7 @@
-﻿using Paralect.Domain;
+﻿using System.Collections.Generic;
+using Paralect.Domain;
 using Paralect.ServiceBus;
+using YouMap.Domain.Enums;
 using mPower.Framework;
 
 namespace YouMap.Domain.Commands
@@ -11,6 +13,8 @@ namespace YouMap.Domain.Commands
         public string Email { get; set; }
 
         public string UserId { get; set; }
+
+        public IEnumerable<UserPermissionEnum> Permissions { get; set; }
     }
 
     public class User_CreateCommandHandler: CommandHandler<User_CreateCommand>

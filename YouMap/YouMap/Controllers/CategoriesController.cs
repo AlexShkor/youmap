@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using YouMap.Documents.Documents;
@@ -19,9 +21,16 @@ namespace YouMap.Controllers
         private CategoryDocumentService _documentService;
         //
         // GET: /Categories/
+        private Point IconSmallSize
+        {
+            get { return new Point(24, 24); }
+        }
 
-        public const int IconWidth = 24;
-        public const int IconHeight = 24;
+        private Point IconLargeSize
+        {
+            get { return new Point(24, 24); }
+        }
+
         private const string PlaceIconsDir = "/UserFiles/PlaceIcons/";
 
         public CategoriesController(ICommandService commandService, IIdGenerator idGenerator, CategoryDocumentService categoryDocumentService) : base(commandService)
@@ -52,8 +61,7 @@ namespace YouMap.Controllers
         public ActionResult AddCategory()
         {
             var model = new AddCategoryModel();
-            AjaxResponse.Render(".add-category-container", "CreateEditCategory", model);
-            return Result();
+            return GetEditCreateAjaxResponse(model);
         }
 
         public ActionResult Delete(string id)
@@ -66,13 +74,25 @@ namespace YouMap.Controllers
             return Result();
         }
 
+        [HttpGet]
         public ActionResult Edit(string id)
         {
             var doc = _documentService.GetById(id);
             var model = MapToEditModel(doc);
-            return PartialView("CreateEditCategory",model);
+            return RespondTo(r =>
+                          {
+                              r.Json = () => GetEditCreateAjaxResponse(model);
+                              r.Html = () => View("CreateEditCategory",model);
+                          });
         }
 
+        private ActionResult GetEditCreateAjaxResponse(AddCategoryModel model)
+        {
+            AjaxResponse.Render(".add-category-container", "CreateEditCategory", model);
+            return Result();
+        }
+
+        [HttpPost]
         public ActionResult Edit(AddCategoryModel model)
         {
             if (ModelState.IsValid)
@@ -124,19 +144,24 @@ namespace YouMap.Controllers
         {
             try
             {
-                var image = new WebImage(model.Icon.InputStream);
-                if (image.Width != IconWidth || image.Height != IconHeight)
-                {
-                    image = image.Resize(IconWidth, IconHeight);
-                }
-                var filename = IconWidth.ToString() + Path.GetExtension(model.Icon.FileName);
-                image.Save(GetSavePathFor(model.Id, filename));
-                model.FileName = filename;
+                model.FileName = SaveImageAndGetFilename(model.Icon,model.Id);
             }
             catch
             {
                 ModelState.AddModelError("Icon", "Не удалось сохранить изображение на сервере.");
             }
+        }
+
+        private String SaveImageAndGetFilename(HttpPostedFileBase file, string id)
+        {
+            var image = new WebImage(file.InputStream);
+            if (image.Width != IconSmallSize.X || image.Height != IconSmallSize.Y)
+            {
+                image = image.Resize(IconSmallSize.X, IconSmallSize.Y);
+            }
+            var filename = String.Format("{0}x{1}", IconSmallSize.X, IconSmallSize.Y) + Path.GetExtension(file.FileName);
+            image.Save(GetSavePathFor(id, filename));
+            return filename;
         }
 
         private string GetSavePathFor(string id, string filename)
@@ -148,5 +173,36 @@ namespace YouMap.Controllers
             }
             return Path.Combine(dir,filename);
         }
+
+        public ActionResult Filter(MapFilter filter)
+        {
+            var model = _documentService.GetAll().Select(Map);
+            return RespondTo(r =>
+                    {
+                        r.Ajax = r.Json = () =>
+                            {
+                                AjaxResponse.Render(".control-content", "Index", model);
+                                return Result();
+                            };
+                        r.Html = () =>
+                            {
+                                return View("Index");
+                            };
+                    });
+        }
+
+        public ActionResult Navigation()
+        {
+            var model = _documentService.GetByFilter(new CategoryFilter
+                                                         {
+                                                             IsTop = true
+                                                         }).Select(Map);
+            return PartialView(model);
+        }
+    }
+
+    public class MapFilter
+    {
+        public string CategoryId { get; set; }
     }
 }

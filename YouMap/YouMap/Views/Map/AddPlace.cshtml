@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 @using(Html.BeginForm())
 {
-
+@Html.ValidationSummary("",new{id="place-validation"})
 <div class="field-set-500">
 <ul class="form-wrapper">
 
@@ -20,6 +20,7 @@ $(document).ready(function() {
 	<li class="row">
 		@Html.LabelFor(x=> x.Address,"Адрес")
 		<span class="fieldbox">@Html.TextBoxFor(x=> x.Address)
+		@Html.ValidationMessageFor(x=> x.Address)
 		<a id='search' href="#">&emsp;</a>
 		</span>
 	</li>
@@ -31,7 +32,7 @@ $(document).ready(function() {
 	@Html.HiddenFor(x=> x.Latitude)
 	@Html.HiddenFor(x=> x.Longitude)
 	<li>
-		<input type="submit" id="submitPlace" value="Добавить" />
+		<input class="ajax-submit" type="submit" id="submitPlace" value="Добавить" />
 	</li>
 	</ul>
 </div>

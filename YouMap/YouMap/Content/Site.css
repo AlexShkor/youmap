@@ -447,7 +447,7 @@ margin: 5px;
 }
 
 .awesome, .awesome:visited {
-	background: #222 url(/images/alert-overlay.png) repeat-x; 
+	background: #222 url('images/alert-overlay.png') repeat-x; 
 	display: inline-block; 
 	padding: 5px 10px 6px; 
 	color: #fff; 
@@ -559,7 +559,7 @@ ul.list-vertical
     margin-left: 10px;
     cursor: pointer;
     height: 29px;
-    background: url(ico-search.png) no-repeat #4d90fe center;
+    background: #4d90fe ;
     border: 1px solid #3079ED;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
@@ -570,7 +570,7 @@ ul.list-vertical
 }
 /* Style the search button hover state */
 #searchSubmit:hover {
-    background: url(ico-search.png) no-repeat center #357AE8; 
+    background: #357AE8; 
     border: 1px solid #2F5BB7;
 }
 /* Clear floats */

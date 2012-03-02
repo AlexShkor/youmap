@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryAR.cs" />
+    <Compile Include="Data\CheckIn.cs" />
+    <Compile Include="Enums\UserPermissionEnum.cs" />
     <Compile Include="Events\Category_DeletedEvent.cs" />
     <Compile Include="Events\Category_UpdateEvent.cs" />
     <Compile Include="Commands\Category_DeleteCommand.cs" />

@@ -569,8 +569,10 @@
     <Content Include="Scripts\2012.1.214\telerik.upload.min.js" />
     <Content Include="Scripts\2012.1.214\telerik.window.min.js" />
     <Content Include="Scripts\Ajax\AutoAjax.js" />
+    <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\Ajax\Request.js" />
     <Content Include="Scripts\Ajax\Result.js" />
+    <Content Include="Scripts\custom\auth.js" />
     <Content Include="Scripts\custom\youmap.js" />
     <Content Include="Scripts\jmelosegui.googlemap.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
@@ -897,6 +899,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Categories\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Categories\Navigation.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

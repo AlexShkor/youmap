@@ -28,7 +28,7 @@ namespace YouMap.Domain
         {
             _id = userId;
             SetCommandMetadata(metadata);
-            Apply(new User_ImportedFromVkEvent
+            Apply(new User_CreatedEvent
                       {
                           UserId = userId,
                           Vk = vkData

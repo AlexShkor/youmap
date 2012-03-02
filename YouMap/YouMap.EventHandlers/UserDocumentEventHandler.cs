@@ -1,4 +1,6 @@
-﻿using Paralect.ServiceBus;
+﻿using MongoDB.Bson;
+using MongoDB.Driver.Builders;
+using Paralect.ServiceBus;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain;
@@ -30,15 +32,25 @@ namespace YouMap.EventHandlers
 
         public void Handle(User_ImportedFromVkEvent message)
         {
-            var doc = new UserDocument
-                          {
-                              Id = message.UserId,
-                              Vk = message.Vk,
-                              FirstName = message.Vk.FirstName,
-                              LastName = message.Vk.LastName,
-                              UserName = message.Vk.Domain
-                          };
-            _documentService.Save(doc);
+            
+            if (_documentService.GetById(message.UserId) != null)
+            {
+                var query = Query.EQ("_id", message.UserId);
+                var update = Update.Set("Vk",BsonTypeMapper.MapToBsonValue(message.Vk));
+                _documentService.Update(query,update);
+            }
+            else
+            {
+                var doc = new UserDocument
+                {
+                    Id = message.UserId,
+                    Vk = message.Vk,
+                    FirstName = message.Vk.FirstName,
+                    LastName = message.Vk.LastName,
+                    UserName = message.Vk.Domain
+                };
+                _documentService.Save(doc);
+            }
         }
     }
 }
