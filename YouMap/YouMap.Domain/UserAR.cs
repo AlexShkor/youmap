@@ -45,6 +45,9 @@ namespace YouMap.Domain
                 UserId = userId,
                 Vk = userData.Vk,
                 Password = userData.Password,
+                FirstName = userData.FirstName,
+                LastName = userData.LastName,
+                UserName = userData.UserName,
                 Email = userData.Email,
                 Permissions = userData.Permissions
             });

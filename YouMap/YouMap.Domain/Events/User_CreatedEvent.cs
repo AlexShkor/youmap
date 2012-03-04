@@ -16,5 +16,11 @@ namespace YouMap.Domain.Events
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }
 
         public VkData Vk { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string UserName { get; set; }
     }
 }

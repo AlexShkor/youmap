@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\RoleAttribute.cs" />
     <Compile Include="App_GlobalResources\EditorLocalization.bg-BG.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -302,6 +303,7 @@
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
+    <Compile Include="Controllers\VkController.cs" />
     <Compile Include="Models\PlaceSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VkLoginModel.cs" />
@@ -589,6 +591,7 @@
     <Content Include="Scripts\Ajax\AutoAjax.js" />
     <Content Include="Scripts\custom\geolocation.js" />
     <Content Include="Scripts\custom\search.js" />
+    <Content Include="Scripts\custom\vkmap.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\Ajax\Request.js" />
     <Content Include="Scripts\Ajax\Result.js" />

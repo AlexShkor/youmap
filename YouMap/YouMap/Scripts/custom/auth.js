@@ -1,11 +1,12 @@
 ﻿YouMap.Auth = function ($) {
 
+    var permissions = 2 + 1024 + 1;
     var loginned = false;
     var initialize = function (isUserLoginned) {
         loginned = isUserLoginned;
         if (!loginned) {
             $("#vkLogin").live("click", function() {
-                VK.Auth.login(vkLoginCallback);
+                VK.Auth.login(vkLoginCallback,permissions);
             });
             Request.get("/Account/LoginVk").addSuccess("loginVK", function(data) {
                 if (false) {

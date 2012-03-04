@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 using YouMap.Documents.Services;
+using YouMap.Domain.Auth;
 using YouMap.Domain.Enums;
 using YouMap.Models;
 using mPower.Framework;
@@ -158,12 +159,12 @@ namespace YouMap.Controllers
                 try
                 {
                     _authenticationService.LogOn(model);
+                    AjaxResponse.Render("#logindisplay", "LoginState", Map(User));
                 }
                 catch (Exception exception)
                 {
                     ModelState.AddModelError("Error",exception.Message);
-                }
-                AjaxResponse.Render("#logindisplay","_LogOnPartial",new{});
+                }            
             }
             return Result();
         }
@@ -194,14 +195,20 @@ namespace YouMap.Controllers
 
         public ActionResult LoginState()
         {
+            var model = Map(User);
+            return PartialView(model);
+        }
+
+        private UserViewModel Map(IUserIdentity user)
+        {
             var model = new UserViewModel();
             model.IsAuthenticated = SessionContext.IsUserAuthorized();
             if (model.IsAuthenticated)
             {
-                model.DisplayName = SessionContext.User.Name;
-                model.DisplayAdmin = SessionContext.User.HasPermissions(UserPermissionEnum.Admin);
+                model.DisplayName = user.Name;
+                model.DisplayAdmin = user.HasPermissions(UserPermissionEnum.Admin);
             }
-            return PartialView(model);
+            return model;
         }
     }
 }

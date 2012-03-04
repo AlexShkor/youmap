@@ -18,6 +18,12 @@ namespace YouMap.Domain.Commands
         public VkData Vk { get; set; }
 
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string UserName { get; set; }
     }
 
     public class User_CreateCommandHandler: CommandHandler<User_CreateCommand>
@@ -31,6 +37,9 @@ namespace YouMap.Domain.Commands
         {
             var ar = new UserAR(message.UserId, new UserData
             {
+                FirstName = message.FirstName,
+                LastName = message.LastName,
+                UserName = message.UserName,
                 Email = message.Email,
                 Password = message.Password,
                 Permissions = message.Permissions,

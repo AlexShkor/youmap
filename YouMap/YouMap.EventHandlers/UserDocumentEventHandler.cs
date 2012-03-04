@@ -26,7 +26,11 @@ namespace YouMap.EventHandlers
                               Id = message.UserId,
                               Email = message.Email,
                               Password = message.Password,
-                              Permissions =  message.Permissions
+                              Permissions =  message.Permissions,
+                              Vk = message.Vk,
+                              UserName = message.UserName,
+                              LastName = message.LastName,
+                              FirstName = message.FirstName
                           };
             _documentService.Save(doc);
         }

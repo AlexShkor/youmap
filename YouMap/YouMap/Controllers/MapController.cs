@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
+using YouMap.Domain.Enums;
 using YouMap.Models;
 using mPower.Framework;
 using mPower.Framework.Environment;
@@ -57,6 +59,7 @@ namespace YouMap.Controllers
 
         [HttpGet]
         [Authorize]
+        [Role(UserPermissionEnum.Admin,UserPermissionEnum.Advertiser)]
         public ActionResult AddPlace()
         {
             var model = new AddPlaceModel();
@@ -86,6 +89,7 @@ namespace YouMap.Controllers
 
         [HttpPost]
         [Authorize]
+        [Role(UserPermissionEnum.Admin, UserPermissionEnum.Advertiser)]
         public ActionResult AddPlace(AddPlaceModel model)
         {
             if (ModelState.IsValid)
@@ -107,6 +111,7 @@ namespace YouMap.Controllers
         }
 
         [HttpGet]
+        [Admin]
         [Authorize]
         public ActionResult ControlPanel()
         {
@@ -144,6 +149,7 @@ namespace YouMap.Controllers
 
 
         [HttpGet]
+        [Role(UserPermissionEnum.Admin, UserPermissionEnum.Advertiser)]
         [Authorize]
         public ActionResult PlaceIcons()
         {          

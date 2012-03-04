@@ -160,6 +160,9 @@ namespace YouMap
             var command = new User_CreateCommand
             {
                 UserId = _idGenerator.Generate(),
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.Domain,
                 Vk = new VkData
                          {
                              Domain = model.Domain,
@@ -182,7 +185,7 @@ namespace YouMap
             command.Metadata.UserId = command.UserId;
             _commandService.Send(command);
             var identity = new UserIdentity
-                               {Id = command.UserId, Name = String.Format("{0} {1}", model.FirstName, model.LastName)};
+                               {Id = command.UserId, Name = String.Format("{0} {1}", model.FirstName, model.LastName), Permissions = command.Permissions};
             SetAuthCookie(identity, true);
         }
 
