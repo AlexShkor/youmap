@@ -33,9 +33,14 @@ var updatePosition = function (marker, location) {
 //endregion GLOBAL
 
 YouMap.Map = function ($) {
+
+    var closeZoom = 18;
+    var geocoder = null;
+  
+
     var initialize = function () {
 
-        $(".place-info-window").each(function () {
+        $(".place-info-window").each(function() {
             var id = "vk_like_place_" + $(this).data("id");
             var baseUri = $(this).baseURI;
             var url = baseUri + $("a", $(this)).attr("href");
@@ -54,11 +59,66 @@ YouMap.Map = function ($) {
 
         $("#map").css("width", "100%");
         setMapHeight();
-  	$(window).resize(function(e) {
-  	    setMapHeight();
-  	    
+        $(window).resize(function(e) {
+            setMapHeight();
         });
+        
+        if (geocoder == null) {
+            geocoder = new google.maps.Geocoder();
+        }
 
+    };
+
+    //вычисление значения Zoom по границам
+    var getZoom = function (bounds) {
+
+        var width = $("#map").width();
+        var height = $("#map").height();
+
+        var dlat = Math.abs(bounds.getNorthEast().lat() - bounds.getSouthWest().lat());
+        var dlon = Math.abs(bounds.getNorthEast().lng() - bounds.getSouthWest().lng());
+
+        var max = 0;
+        if (dlat > dlon) {
+            max = dlat;
+        } else {
+            max = dlon;
+        }
+
+        // Center latitude in radians
+        var clat = Math.PI * Math.abs(bounds.getSouthWest().lat() + bounds.getNorthEast().lat()) / 360.;
+
+        var C = 0.0000107288;
+        var z0 = Math.ceil(Math.log(dlat / (C * height)) / Math.LN2);
+        var z1 = Math.ceil(Math.log(dlon / (C * width * Math.cos(clat))) / Math.LN2);
+
+        return 18 - ((z1 > z0) ? z1 : z0);
+    };
+
+    var createLocation = function (x, y) {
+        return new google.maps.LatLng(x, y);
+    };
+
+    var setMapCenter = function (x, y) {
+        var map = getMap();
+        map.GMap.setCenter(createLocation(x, y));
+        map.GMap.setZoom(closeZoom);
+    };
+
+    var searchGoogle = function(address,callback) {
+        var map = getMap();
+
+        geocoder.geocode({ 'address': address }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var location = results[0].geometry.location;
+                map.GMap.setCenter(location);
+                map.GMap.setZoom(getZoom(results[0].geometry.viewport));
+                callback(location);
+
+            } else {
+                alert("Пошло что-то не так, потому что: " + status);
+            }
+        });
     };
 
     var setMapHeight = function()
@@ -71,7 +131,12 @@ YouMap.Map = function ($) {
         }
     };
 
-    return { Initialize: initialize };
+    return {
+        Initialize: initialize,
+        SetMapCenter: setMapCenter,
+        SetMapHeight: setMapHeight,
+        SearchGoogle: searchGoogle
+    };
 } (jQuery);
 
 YouMap.ControlPanel = function ($) {
@@ -86,10 +151,6 @@ YouMap.ControlPanel = function ($) {
 
 
 YouMap.AddPlace = function ($) {
-
-    var geocoder = null;
-
-
     var initialize = function () {
         $("#search").click(function (event) {
             setMapToCity();
@@ -115,30 +176,16 @@ YouMap.AddPlace = function ($) {
             $.colorbox.close();
         });
 
-        if (geocoder == null) {
-            geocoder = new google.maps.Geocoder();
-        }
+       
     };
-
-    //Установить карту на город 
+    
     var setMapToCity = function () {
         var address = $("#Address").val();
-        var map = getMap();
-
-        geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var location = results[0].geometry.location;
-                map.GMap.setCenter(location);
-                //установить Zoom таким образом, чтобы город был показан весь
-                map.GMap.setZoom(getZoom(results[0].geometry.viewport));
-                //и поставить маркет для отметки адреса
-                setMarkerPosition(location);
-                updateFormFields(results[0].geometry.location);
-
-            } else {
-                alert("Пошло что-то не так, потому что: " + status);
-            }
+        YouMap.Map.SearchGoogle(address,function(location) {
+            setMarkerPosition(location);
+            updateFormFields(location);
         });
+        
     };
 
     var marker = null;
@@ -158,6 +205,8 @@ YouMap.AddPlace = function ($) {
 
     };
 
+ 
+
     var markerDragged = function (parameters) {
         updateFormFields(parameters);
     };
@@ -167,31 +216,7 @@ YouMap.AddPlace = function ($) {
         $('#Longitude').val(location.Ta);
     };
 
-    //вычисление значения Zoom по границам 
-    var getZoom = function (bounds) {
-
-        var width = $("#map").width();
-        var height = $("#map").height();
-
-        var dlat = Math.abs(bounds.getNorthEast().lat() - bounds.getSouthWest().lat());
-        var dlon = Math.abs(bounds.getNorthEast().lng() - bounds.getSouthWest().lng());
-
-        var max = 0;
-        if (dlat > dlon) {
-            max = dlat;
-        } else {
-            max = dlon;
-        }
-
-        // Center latitude in radians
-        var clat = Math.PI * Math.abs(bounds.getSouthWest().lat() + bounds.getNorthEast().lat()) / 360.;
-
-        var C = 0.0000107288;
-        var z0 = Math.ceil(Math.log(dlat / (C * height)) / Math.LN2);
-        var z1 = Math.ceil(Math.log(dlon / (C * width * Math.cos(clat))) / Math.LN2);
-
-        return 18 - ((z1 > z0) ? z1 : z0);
-    };
+    
     return {
         Initialize: initialize
     };

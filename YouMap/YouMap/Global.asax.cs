@@ -1,9 +1,13 @@
 ﻿
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 using Microsoft.Practices.ServiceLocation;
 using Paralect.Domain;
 using Paralect.Domain.EventBus;
@@ -42,6 +46,23 @@ namespace YouMap
             );
 
         }
+
+        //Implement an Authentication Request Handler to Construct
+        // a GenericPrincipal Object
+        //protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        //{
+        //    HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+        //    if (authCookie != null)
+        //    {
+        //        var authTicket =
+        //               FormsAuthentication.Decrypt(authCookie.Value);
+        //        var query = authTicket.UserData;
+        //        var identity = new UserIdentity();
+        //        var user = new UserPrincipal(identity);
+        //        Context.User = user;
+        //    }
+        //}
+
 
         protected void Application_Start()
         {

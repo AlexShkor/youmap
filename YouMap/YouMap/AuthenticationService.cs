@@ -176,7 +176,7 @@ namespace YouMap
                          },
                 Permissions = new List<UserPermissionEnum>
                 {
-                    UserPermissionEnum.User
+                    UserPermissionEnum.User, UserPermissionEnum.VkUser
                 }
             };
             command.Metadata.UserId = command.UserId;

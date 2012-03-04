@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.SessionState;
 using YouMap.Domain.Auth;
@@ -119,11 +120,22 @@ namespace YouMap
         }
     }
 
-    public class UserIdentity : IUserIdentity
+    public class UserIdentity : IUserIdentity, IIdentity
     {
         public string Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
+
+        public string AuthenticationType
+        {
+            get { return "Forms"; }
+        }
+
+        public bool IsAuthenticated
+        {
+            get { return !String.IsNullOrEmpty(Id); }
+        }
+
         public bool HasPermissions(params UserPermissionEnum[] permission)
         {
             return permission.All(x => Permissions.Contains(x));
@@ -135,5 +147,28 @@ namespace YouMap
         {
             Permissions = new List<UserPermissionEnum>();
         }
+    }
+
+    public class UserPrincipal : IPrincipal
+    {
+        private readonly IUserIdentity _userIdentity;
+
+        public UserPrincipal(UserIdentity identity)
+        {
+            Identity = identity;
+            _userIdentity = identity;
+        }
+
+        public bool IsInRole(string role)
+        {
+            UserPermissionEnum value;
+            if (Enum.TryParse(role,out value))
+            {
+                return _userIdentity.HasPermissions(value);
+            }
+            return false;
+        }
+
+        public IIdentity Identity { get; set; }
     }
 }

@@ -301,6 +301,7 @@
     </Compile>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Models\PlaceSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VkLoginModel.cs" />
@@ -587,6 +588,7 @@
     <Content Include="Scripts\2012.1.214\telerik.window.min.js" />
     <Content Include="Scripts\Ajax\AutoAjax.js" />
     <Content Include="Scripts\custom\geolocation.js" />
+    <Content Include="Scripts\custom\search.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\Ajax\Request.js" />
     <Content Include="Scripts\Ajax\Result.js" />

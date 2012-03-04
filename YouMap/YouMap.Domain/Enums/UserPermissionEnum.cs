@@ -4,6 +4,7 @@
     {
         User,
         Admin,
-        Advertiser
+        Advertiser,
+        VkUser
     }
 }
