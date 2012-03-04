@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
+using System.Web.SessionState;
+using YouMap.Domain.Auth;
+using YouMap.Domain.Enums;
 using mPower.Framework;
 
 namespace YouMap
 {
     public interface ISessionContext
     {
-        string UserId { get; set; }
-        string UserEmail { get; set; }
         string ClientKey { get; set; }
         IUserIdentity User { get;}
         bool IsUserAuthorized();
         void Logout();
         string GetStringSessionValue(string key);
         bool GetBoolSessionValue(string key);
-        void SetSessionValue<T>(string key, T value);
+        void SetSessionValue(string key, object value);
         void RemoveSessionValue(string key);
         void SetUser(IUserIdentity user);
     }
@@ -28,29 +31,8 @@ namespace YouMap
     [Serializable]
     public class SessionContext : ISessionContext
     {
-        private const string _userId = "UserId";
-        private const string _userName= "UserName";
-        private const string _userEmail = "UserEmail";
+        private const string _userKey = "UserId";
         private const string _clientKey = "ClientKey";
-
-
-        public string UserId
-        {
-            get { return GetStringSessionValue(_userId); }
-            set { SetSessionValue(_userId, value); }
-        }
-
-        public string UserEmail
-        {
-            get { return GetStringSessionValue(_userEmail); }
-            set { SetSessionValue(_userEmail, value); }
-        }
-
-        public string UserName
-        {
-            get { return GetStringSessionValue(_userName); }
-            set { SetSessionValue(_userName, value); }
-        }
 
 
         public string ClientKey
@@ -61,34 +43,44 @@ namespace YouMap
 
         public IUserIdentity User
         {
-            get
-            {
-                return new UserIdentity
-                           {
-                               Id = UserId,
-                               Email = UserEmail,
-                               Name = UserName
-                           };
-            }
+            get { return GetSessionValue<IUserIdentity>(_userKey); }
             private set
             {
-                UserId = value.Id;
-                UserName = value.Name;
-                UserEmail = value.Email;
+                if (value == null)
+                {
+                    SetSessionValue(_userKey, null);
+                    return;
+                }
+                var user = new UserIdentity
+                              {
+                                  Email = value.Email,
+                                  Id = value.Id,
+                                  Name = value.Name,
+                                  Permissions = value.Permissions
+                              };
+                SetSessionValue(_userKey,user);
             }
+        }
+
+        private T GetSessionValue<T>(string sessionKey)
+        {
+            return (T) Session[sessionKey];
+        }
+
+        protected HttpSessionState Session
+        {
+            get { return HttpContext.Current.Session; }
         }
 
         public bool IsUserAuthorized()
         {
-            return !String.IsNullOrEmpty(UserId);
+            return User != null && !String.IsNullOrEmpty(User.Id);
         }
 
         public void Logout()
         {
             HttpContext.Current.Session.Abandon();
-            UserId = null;
-            UserEmail = null;
-            UserName = null;
+            SetUser(null);
         }
 
         public string GetStringSessionValue(string key)
@@ -99,7 +91,7 @@ namespace YouMap
 
         public bool GetBoolSessionValue(string key)
         {
-            var item = HttpContext.Current.Session[key];
+            var item = Session[key];
             var result = false;
             if (item != null)
             {
@@ -108,16 +100,16 @@ namespace YouMap
             return result;
         }
 
-        public void SetSessionValue<T>(string key, T value)
+        public void SetSessionValue(string key, object value)
         {
-            HttpContext.Current.Session[key] = value;
+            Session[key] = value;
         }
 
         public void RemoveSessionValue(string key)
         {
             if (!string.IsNullOrEmpty(key))
             {
-                HttpContext.Current.Session.Remove(key);
+                Session.Remove(key);
             }
         }
 
@@ -132,5 +124,16 @@ namespace YouMap
         public string Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
+        public bool HasPermissions(params UserPermissionEnum[] permission)
+        {
+            return permission.All(x => Permissions.Contains(x));
+        }
+
+        public IEnumerable<UserPermissionEnum> Permissions { get; set; }
+
+        public UserIdentity()
+        {
+            Permissions = new List<UserPermissionEnum>();
+        }
     }
 }

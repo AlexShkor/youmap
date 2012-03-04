@@ -169,8 +169,8 @@ Errors.prototype = {
 
         this.forEach(Function.reference(this, function (error) {
             if (options.errorsSummaryContainer != null) {
-                $('#' + options.errorsSummaryContainer).parent().show();
-                $('#' + options.errorsSummaryContainer).append('<li>' + error.getMessage() + ' </li>');
+                $(options.errorsSummaryContainer).show();
+                $(options.errorsSummaryContainer).append('<li>' + error.getMessage() + ' </li>');
             }
             //TODO: Display error near element
             //$('#' + error.getName()).after('<div name="' + this.ERROR_NAME_ATTRIBUTE + '" class="the_error" style=color:red; padding:1px;">' + error.getMessage() + '</div>');
@@ -183,8 +183,8 @@ Errors.prototype = {
 
     clear: function (options) {
         if (options.errorsSummaryContainer != null) {
-            $('#' + options.errorsSummaryContainer).html('');
-            $('#' + options.errorsSummaryContainer).parent().hide();
+            $(options.errorsSummaryContainer).html('');
+            $(options.errorsSummaryContainer).hide();
         }
     }
 };

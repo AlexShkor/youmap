@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson.Serialization.Attributes;
+using YouMap.Domain.Auth;
 using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 using mPower.Framework;
@@ -21,6 +22,10 @@ namespace YouMap.Documents.Documents
         {
             get
             {
+                if (FirstName == null && LastName == null)
+                {
+                    return null;
+                }
                 return String.Format("{0} {1}", FirstName, LastName);
             }
         }
@@ -43,8 +48,7 @@ namespace YouMap.Documents.Documents
 
         public string Name
         {
-            get { return FullName; }
-            set {  }
+            get { return FullName; }set { }
         }
 
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }

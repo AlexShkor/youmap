@@ -9,6 +9,7 @@ using Paralect.Domain;
 using YouMap.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
+using YouMap.Domain.Auth;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Models;
@@ -141,7 +142,7 @@ namespace YouMap
             }
             var command = new User_ChangePasswordCommand
                               {
-                                  UserId = _sessionContext.UserId,
+                                  UserId = _sessionContext.User.Id,
                                   OldPassword = oldPassword,
                                   NewPassword = newPassword
                               };
@@ -180,9 +181,9 @@ namespace YouMap
             };
             command.Metadata.UserId = command.UserId;
             _commandService.Send(command);
-            SetAuthCookie(
-                new UserIdentity {Id = command.UserId, Name = String.Format("{0} {1}", model.FirstName, model.LastName)},
-                true);
+            var identity = new UserIdentity
+                               {Id = command.UserId, Name = String.Format("{0} {1}", model.FirstName, model.LastName)};
+            SetAuthCookie(identity, true);
         }
 
         public void SetAuthCookie(IUserIdentity user, bool remember)

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using YouMap.Models
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -28,15 +29,11 @@
 			<div id="title">
 				<h1>YOUMAP</h1>
 			</div>
-			<div id="searchContainer">
-    <form>
-        <input id="searchField" name="field" type="text" />
-        <input id="searchSubmit" name="submit" type="submit" value="Искать" />
-		<input id="searchSubmit" name="submit" type="submit" value="Показать на карте" />
-    </form>
-</div>
+            <div id="searchContainer">
+               @Html.Partial("../Places/SearchForm",new PlaceSearchModel())
+            </div>
 			<div id="logindisplay">
-				@Html.Partial("_LogOnPartial")
+				@Html.Action("LoginState","Account")
 			</div>
 			
 		</header>

@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\IUserIdentity.cs" />
     <Compile Include="CategoryAR.cs" />
     <Compile Include="Data\CheckIn.cs" />
     <Compile Include="Data\UserData.cs" />

@@ -1,0 +1,12 @@
+﻿@using System.Web.Mvc
+@model YouMap.Models.PlaceSearchModel
+
+ 
+@using(Html.BeginForm("Search","Places",FormMethod.Post,new{id="searchForm"}))
+{
+    @Html.TextBoxFor(x=> x.Serach,new{id="searchField"})
+    @Html.HiddenFor(x=> x.UserLocation.Latitude)
+    @Html.HiddenFor(x=> x.UserLocation.Longitude)
+    <input id="searchSubmit" name="submit" type="submit" value="Искать" />
+    <input id="searchSubmit" name="submit" type="submit" value="Показать на карте" />
+}

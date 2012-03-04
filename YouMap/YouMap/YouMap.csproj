@@ -301,6 +301,8 @@
     </Compile>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\PlaceSearchModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VkLoginModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\AddCategoryModel.cs" />
@@ -634,7 +636,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\Account\LoginState.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
@@ -918,6 +920,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Categories\Navigation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\SearchForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

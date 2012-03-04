@@ -122,6 +122,27 @@ namespace YouMap.Controllers
                 });
         }
 
+        public ActionResult Filter(MapFilter filter)
+        {
+            var places = _documentService.GetByFilter(new PlaceDocumentFilter
+                                                         {
+                                                             CategoryId = filter.CategoryId
+                                                         }).Select(Map);
+            var model = new MapModel();
+            model.Markers = places;
+
+            return RespondTo(r =>
+            {
+                r.Ajax = r.Json = () =>
+                {
+                    AjaxResponse.Render("#mapHolder", "Index", model);
+                    return Result();
+                };
+                r.Html = () => View("Index",model);
+            });
+        }
+
+
         [HttpGet]
         [Authorize]
         public ActionResult PlaceIcons()
@@ -136,4 +157,10 @@ namespace YouMap.Controllers
             return View(Map(doc));
         }
     }
+
+    public class MapFilter
+    {
+        public string CategoryId { get; set; }
+    }
+
 }

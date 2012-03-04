@@ -34,7 +34,9 @@ namespace YouMap.Controllers
 
         private const string PlaceIconsDir = "/UserFiles/PlaceIcons/";
 
-        public CategoriesController(ICommandService commandService, IIdGenerator idGenerator, CategoryDocumentService categoryDocumentService) : base(commandService)
+        public CategoriesController(ICommandService commandService, IIdGenerator idGenerator,
+                                    CategoryDocumentService categoryDocumentService)
+            : base(commandService)
         {
             _idGenerator = idGenerator;
             _documentService = categoryDocumentService;
@@ -54,7 +56,7 @@ namespace YouMap.Controllers
                            Id = doc.Id,
                            Name = doc.Name,
                            IsTop = doc.IsTop,
-                           Icon = Url.Content(Path.Combine(PlaceIconsDir,doc.Id + "/", doc.Icon))
+                           Icon = Url.Content(Path.Combine(PlaceIconsDir, doc.Id + "/", doc.Icon))
                        };
         }
 
@@ -81,10 +83,10 @@ namespace YouMap.Controllers
             var doc = _documentService.GetById(id);
             var model = MapToEditModel(doc);
             return RespondTo(r =>
-                          {
-                              r.Json = () => GetEditCreateAjaxResponse(model);
-                              r.Html = () => View("CreateEditCategory",model);
-                          });
+                                 {
+                                     r.Json = () => GetEditCreateAjaxResponse(model);
+                                     r.Html = () => View("CreateEditCategory", model);
+                                 });
         }
 
         private ActionResult GetEditCreateAjaxResponse(AddCategoryModel model)
@@ -100,12 +102,12 @@ namespace YouMap.Controllers
             {
                 TrySaveImage(model);
                 var command = new Category_UpdateCommand
-                {
-                    Id = model.Id,
-                    Name = model.Name,
-                    Icon = model.FileName,
-                    IsTop = model.IsTop
-                };
+                                  {
+                                      Id = model.Id,
+                                      Name = model.Name,
+                                      Icon = model.FileName,
+                                      IsTop = model.IsTop
+                                  };
                 Send(command);
             }
             return Result();
@@ -145,7 +147,7 @@ namespace YouMap.Controllers
         {
             try
             {
-                model.FileName = SaveImageAndGetFilename(model.Icon,model.Id);
+                model.FileName = SaveImageAndGetFilename(model.Icon, model.Id);
             }
             catch
             {
@@ -172,24 +174,7 @@ namespace YouMap.Controllers
             {
                 Directory.CreateDirectory(dir);
             }
-            return Path.Combine(dir,filename);
-        }
-
-        public ActionResult Filter(MapFilter filter)
-        {
-            var model = _documentService.GetAll().Select(Map);
-            return RespondTo(r =>
-                    {
-                        r.Ajax = r.Json = () =>
-                            {
-                                AjaxResponse.Render(".control-content", "Index", model);
-                                return Result();
-                            };
-                        r.Html = () =>
-                            {
-                                return View("Index");
-                            };
-                    });
+            return Path.Combine(dir, filename);
         }
 
         public ActionResult Navigation()
@@ -202,8 +187,4 @@ namespace YouMap.Controllers
         }
     }
 
-    public class MapFilter
-    {
-        public string CategoryId { get; set; }
-    }
 }

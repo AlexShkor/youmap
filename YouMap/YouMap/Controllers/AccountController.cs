@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Web.Script.Serialization;
 using System.Web.Security;
 using YouMap.Documents.Services;
+using YouMap.Domain.Enums;
 using YouMap.Models;
 using mPower.Framework;
 using mPower.Framework.Environment;
@@ -189,6 +190,18 @@ namespace YouMap.Controllers
         public ActionResult ChangePasswordSuccess()
         {
             return View();
+        }
+
+        public ActionResult LoginState()
+        {
+            var model = new UserViewModel();
+            model.IsAuthenticated = SessionContext.IsUserAuthorized();
+            if (model.IsAuthenticated)
+            {
+                model.DisplayName = SessionContext.User.Name;
+                model.DisplayAdmin = SessionContext.User.HasPermissions(UserPermissionEnum.Admin);
+            }
+            return PartialView(model);
         }
     }
 }

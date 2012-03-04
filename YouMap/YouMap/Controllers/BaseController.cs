@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Paralect.Domain;
 using Prelude.Extensions;
 using StructureMap.Attributes;
+using YouMap.Domain.Auth;
 using mPower.Framework;
 using mPower.Framework.Exceptions;
 using mPower.Framework.Mvc.Ajax;
@@ -35,6 +36,8 @@ namespace YouMap.Controllers
         [SetterProperty]
         protected ISessionContext SessionContext { get; set; }
 
+        protected IUserIdentity User {get { return SessionContext.User; }}
+
         #endregion
 
         protected BaseController(ICommandService commandService)
@@ -49,7 +52,7 @@ namespace YouMap.Controllers
             {
                 foreach (var command in commands)
                 {
-                    command.Metadata.UserId = SessionContext.UserId;
+                    command.Metadata.UserId = SessionContext.User.Id;
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using System;
+using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using YouMap.Documents.Documents;
 using mPower.Framework;
@@ -19,11 +20,17 @@ namespace YouMap.Documents.Services
 
         protected override QueryComplete BuildFilterQuery(PlaceDocumentFilter filter)
         {
-            return Query.And();
+            var query = Query.And();
+            if (filter.CategoryId.HasValue())
+            {
+                query = Query.And(query, Query.EQ("CategoryId", filter.CategoryId));
+            }
+            return query;
         }
     }
 
     public class PlaceDocumentFilter : BaseFilter
     {
+        public string CategoryId { get; set; }
     }
 }
