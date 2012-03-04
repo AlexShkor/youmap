@@ -24,8 +24,8 @@ namespace mPower.Framework.Modules
             var application = (HttpApplication)sender;
             Exception exception = application.Server.GetLastError();
 
-            if (exception is MpowerSecurityException || 
-                exception is MpowerNotFoundException ||
+            if (exception is HttpSecurityException || 
+                exception is HttpNotFoundException ||
                 (exception is HttpException && ((HttpException)exception).ErrorCode == 404))
             {
                 _logger.Warn(String.Format("{1} exception type: {0}", exception.GetType(), exception.Message));

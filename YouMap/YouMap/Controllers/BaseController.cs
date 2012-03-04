@@ -103,7 +103,7 @@ namespace YouMap.Controllers
             if (result != null)
                 return result;
 
-            throw new MpowerNotFoundException("Unable to respond to requested format.");
+            throw new HttpNotFoundException("Unable to respond to requested format.");
         }
 
         protected new JsonResult Json(object data)

@@ -27,11 +27,11 @@ namespace mPower.Framework.Modules
             var application = (HttpApplication)sender;
             Exception exception = application.Server.GetLastError();
 
-            if (exception is MpowerSecurityException)
+            if (exception is HttpSecurityException)
             {
                 HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             }
-            else if(exception is MpowerNotFoundException)
+            else if(exception is HttpNotFoundException)
             {
                 HttpContext.Current.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }

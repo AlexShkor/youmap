@@ -7,7 +7,6 @@ using Prelude.Extensions.FlashMessage;
 using mPower.Environment.MultiTenancy;
 using mPower.Framework.Enums;
 using mPower.Framework.Environment.MultiTenancy;
-using mPower.Framework.Environment.Sitemap;
 
 using mPower.Framework.Utils.Extensions;
 using System.Collections.Generic;
@@ -153,97 +152,6 @@ namespace System.Web.Mvc
         }
 
 
-        //public static MvcHtmlString NavigationDropDown(this HtmlHelper helper, string id = null, string @class = null)
-        //{
-
-        //    var selectList = new StringBuilder();
-
-        //    selectList.AppendFormat("<select id='{0}'class='{1}'>", id, @class);
-
-        //    var nodes = SiteMap.RootNode.ChildNodes;
-
-        //    foreach (SiteMapNode node in nodes)
-        //    {
-        //        string selected = "";
-
-        //        if(SiteMap.CurrentNode != null)
-        //            if (node == SiteMap.CurrentNode || node == SiteMap.CurrentNode.ParentNode)
-        //                selected = "selected = 'selected'";
-
-        //        if(node.Title != "Authentication")
-        //            selectList.AppendFormat("<option value='{0}' {1}>{2}</option>", node.Url, selected, node.Title);
-        //    }
-
-        //    selectList.AppendLine("</select>");
-
-        //    return MvcHtmlString.Create(selectList.ToString());
-        //}
-
-
-
-        public static MvcHtmlString Menu(this HtmlHelper helper, string nodeTitle = "root", string ulClass = "menu", string selectedClass = "active", bool selectOnCurrentChild = true)
-        {
-            var siteMap = TenantTools.Selector.Select(HttpContext.Current.Request.RequestContext).SiteMap;
-            var currentNode = siteMap.CurrentNode;
-            if (nodeTitle == null || nodeTitle.ToLower() == "root")
-                return BuildMenu(siteMap.RootNode, currentNode, ulClass, selectedClass, selectOnCurrentChild);
-
-            var currentTopLevelNode = siteMap.RootNode.Nodes.FirstOrDefault(n => String.Compare(n.Title, nodeTitle, true) == 0);
-            if (currentTopLevelNode != null)
-            {
-                if (currentNode == null)
-                {
-                    currentNode = siteMap.FindSiteMapNode(HttpContext.Current, currentTopLevelNode);
-                }
-                if (currentNode != null)
-                {
-                    return BuildMenu(currentTopLevelNode, currentNode, ulClass, selectedClass, selectOnCurrentChild);
-                }
-            }
-
-            return null;
-        }
-
-        private static MvcHtmlString BuildMenu(TenantSiteMapNode topLevelNode, TenantSiteMapNode currentNode, string ulClass, string activeClass, bool selectOnCurrentChild, string linkClass = "")
-        {
-            var sb = new StringBuilder();
-            TenantSiteMapNode topParent = null;
-
-            // Create opening unordered list tag
-            sb.AppendFormat("<ul class='{0}'>", ulClass);
-
-            foreach (var node in topLevelNode.Nodes.Where(x=> !x.IsAccessDenied))
-            {
-                var childNodeIsActive = ContainsChildNode(node, currentNode);
-                if (childNodeIsActive)
-                {
-                    topParent = node;
-                }
-
-                var temp = new StringBuilder();
-
-                temp.AppendLine("<li>");
-                var cssClass = string.Format("{0} {1}", linkClass, 
-                    (currentNode == node || (childNodeIsActive && selectOnCurrentChild)) ? activeClass : string.Empty);
-                temp.AppendFormat("<a href='{0}' class='{1}'>{2}</a>", node.Url, cssClass, HttpUtility.HtmlEncode(node.Title));
-                temp.AppendLine("</li>");
-
-                sb.AppendFormat("{0}", temp);
-            }
-
-            sb.Append("</ul>");
-            if (topParent != null && topParent.ShowSubmenu)
-            {
-                sb.Append(BuildMenu(topParent, currentNode, "sub-navbar", activeClass, selectOnCurrentChild, "sub-nav-item"));
-            }
-
-            return MvcHtmlString.Create(sb.ToString());
-        }
-
-        private static bool ContainsChildNode(TenantSiteMapNode parent, TenantSiteMapNode child)
-        {
-            return parent.Nodes.Contains(child) || parent.Nodes.Any(n => ContainsChildNode(n, child));
-        }
 
         public static MvcHtmlString StatusMessage(this HtmlHelper helper, string message)
         {

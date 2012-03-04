@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.Practices.ServiceLocation;
 using mPower.Framework.Environment.MultiTenancy;
 
 namespace mPower.Framework.Utils.Security
@@ -14,7 +15,7 @@ namespace mPower.Framework.Utils.Security
         public DecryptAttribute()
         {
             ParametersNames = new List<string>();
-            _encrypter = TenantTools.Selector.TenantsContainer.GetInstance<IEncryptionService>();
+            _encrypter = ServiceLocator.Current.GetInstance<IEncryptionService>();
         }
 
         public DecryptAttribute(params string[] parametersNames)

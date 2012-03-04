@@ -110,46 +110,25 @@
     <Compile Include="Environment\HttpApplicationStructureMapContext.cs" />
     <Compile Include="Environment\IIdGenerator.cs" />
     <Compile Include="Environment\MongoObjectIdGenerator.cs" />
-    <Compile Include="Environment\MultiTenancy\ApplicationTenant.cs" />
-    <Compile Include="Environment\MultiTenancy\ContainerControllerActionInvoker.cs" />
-    <Compile Include="Environment\MultiTenancy\ContainerControllerFactory.cs" />
-    <Compile Include="Environment\MultiTenancy\ContainerResolver.cs" />
-    <Compile Include="Environment\MultiTenancy\ControllerConvention.cs" />
-    <Compile Include="Environment\MultiTenancy\ControllersDictionary.cs" />
-    <Compile Include="Environment\MultiTenancy\ExecutionFilterAttribute.cs" />
-    <Compile Include="Environment\MultiTenancy\HandleErrorWithElmahAttribute.cs" />
-    <Compile Include="Environment\MultiTenancy\IApplicationTenant.cs" />
-    <Compile Include="Environment\MultiTenancy\IContainerFilter.cs" />
-    <Compile Include="Environment\MultiTenancy\IContainerResolver.cs" />
-    <Compile Include="Environment\MultiTenancy\ITenantConfigurer.cs" />
-    <Compile Include="Environment\MultiTenancy\ITenantSelector.cs" />
-    <Compile Include="Environment\MultiTenancy\TenantNotFoundException.cs" />
-    <Compile Include="Environment\MultiTenancy\TenantSelector.cs" />
-    <Compile Include="Environment\MultiTenancy\TenantTools.cs" />
-    <Compile Include="Environment\MultiTenancy\ThemedViewEngine.cs" />
-    <Compile Include="Environment\MultiTenancy\ThemeHttpModule.cs" />
-    <Compile Include="Environment\MultiTenancy\ThreadSafeDictionary.cs" />
+    <Compile Include="ThreadSafeDictionary.cs" />
     <Compile Include="Environment\PassStateAttribute.cs" />
-    <Compile Include="Environment\Sitemap\TenantSiteMap.cs" />
     <Compile Include="Environment\StructureMapDependencyResolver.cs" />
     <Compile Include="Environment\StructureMapFilterProvider .cs" />
     <Compile Include="EventService.cs" />
+    <Compile Include="Exceptions\HttpNotFoundException.cs" />
     <Compile Include="Exceptions\Modules\ErrorHandlerModule.cs" />
     <Compile Include="Exceptions\Modules\ErrorLoggingModule.cs" />
-    <Compile Include="Exceptions\MpowerSecurityException.cs" />
-    <Compile Include="IUserIdentity.cs" />
+    <Compile Include="Exceptions\HttpSecurityException.cs" />
     <Compile Include="MongoRead.cs" />
     <Compile Include="MongoTemp.cs" />
     <Compile Include="MongoWrite.cs" />
     <Compile Include="Mongo\MongoConvention.cs" />
-    <Compile Include="Mongo\MongoIntuit.cs" />
     <Compile Include="Mongo\MongoUtil.cs" />
-    <Compile Include="Mongo\MongoYodlee.cs" />
     <Compile Include="Mongo\NLogMongoService.cs" />
     <Compile Include="Mongo\NLogMongoTarget.cs" />
     <Compile Include="Mongo\NoDefaultPropertyIdConvention.cs" />
     <Compile Include="YoumapAR.cs" />
-    <Compile Include="mPowerSettings.cs" />
+    <Compile Include="YouMapSettings.cs" />
     <Compile Include="Mvc\Ajax\AjaxResponse.cs" />
     <Compile Include="Mvc\Ajax\ErrorMessage.cs" />
     <Compile Include="Mvc\Ajax\UpdateItem.cs" />
@@ -193,9 +172,6 @@
     <Compile Include="Services\CsvRow.cs" />
     <Compile Include="Services\PagingInfo.cs" />
     <Compile Include="Utils\CommonUtil.cs" />
-    <Compile Include="Utils\CreditCalculator\CreditCalculator.cs" />
-    <Compile Include="Utils\CreditCalculator\ReportCardIn.cs" />
-    <Compile Include="Utils\CreditCalculator\ReportCardOut.cs" />
     <Compile Include="Utils\DateRange.cs" />
     <Compile Include="Utils\DateUtil.cs" />
     <Compile Include="Utils\Ensure.cs" />
@@ -214,12 +190,8 @@
     <Compile Include="Utils\SecurityUtil.cs" />
     <Compile Include="Utils\Security\DecryptAttribute.cs" />
     <Compile Include="Utils\Security\EncryptionService.cs" />
-    <Compile Include="Utils\Security\EncryptionService_old.cs" />
     <Compile Include="Utils\Security\IEncryptionService.cs" />
     <Compile Include="Utils\StreamUtils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Registries\Modules.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mvc\RazorHelpers\MoneyHelper.cshtml" />
