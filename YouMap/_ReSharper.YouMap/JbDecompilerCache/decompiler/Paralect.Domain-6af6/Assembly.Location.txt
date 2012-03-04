@@ -1,1 +1,0 @@
-﻿D:\install\YouMap\YouMapCqrsMongo\YouMap\libs\Paralect\Paralect.Domain.dll

@@ -1,8 +1,0 @@
-﻿Code version: 6.0.2202.688
-Assembly name Paralect.ServiceLocator.StructureMap, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null mvid {e33b7672-2901-409d-9a3e-cda52e965841}
-* ref Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
-  not resolved
-* ref StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223
-  not resolved
-* ref mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-  mvid {e67e4144-0be1-4383-8b4a-118504cce2e9}
