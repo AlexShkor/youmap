@@ -7,6 +7,7 @@ namespace YouMap.Domain
 {
     public class UserAR : YoumapAR
     {
+
         public UserAR()
         {
             
@@ -33,6 +34,20 @@ namespace YouMap.Domain
                           UserId = userId,
                           Vk = vkData
                       });
+        }
+
+        public UserAR(string userId, UserData userData, ICommandMetadata metadata)
+        {
+            _id = userId;
+            SetCommandMetadata(metadata);
+            Apply(new User_CreatedEvent
+            {
+                UserId = userId,
+                Vk = userData.Vk,
+                Password = userData.Password,
+                Email = userData.Email,
+                Permissions = userData.Permissions
+            });
         }
 
         public void ChangePassword(string oldPassword, string newPassword)

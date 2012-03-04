@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 
-namespace YouMap.Controllers
+namespace YouMap.Models
 {
     public class AddCategoryModel
     {

@@ -58,3 +58,7 @@ $(document).ready(function() {
 </div>
 }
 </div>
+@if (Model.DisplayMap)
+{
+    @Html.Partial("Index",Model.Map)
+}

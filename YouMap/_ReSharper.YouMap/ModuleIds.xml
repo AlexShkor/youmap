@@ -1,0 +1,18 @@
+<Modules>
+  <Module PersistentId="0C2256E2-26AE-4E1B-A30D-4202EDE589AE" ModuleId="YouMap" />
+  <Module PersistentId="5476DBD6-F0EC-4B7A-A616-DB42A7EF7E1B" ModuleId="Jmelosegui.Mvc.Controls" />
+  <Module PersistentId="EF8F12CE-0EA4-4639-A5D7-733D12F3F966" ModuleId="YouMap.Framework" />
+  <Module PersistentId="0D0838BA-4966-4F14-93D6-9E94D0A29DF0" ModuleId="YouMap.Domain" />
+  <Module PersistentId="D9031CDC-70E2-4AE1-9B48-E46952A9188C" ModuleId="YouMap.Documents" />
+  <Module PersistentId="5BC9441C-B57D-427F-B59B-32BD3F55A4A1" ModuleId="YouMap.EventHandlers" />
+  <Module PersistentId="StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223" ModuleId="StructureMap" />
+  <Module PersistentId="Paralect.ServiceLocator.StructureMap, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" ModuleId="Paralect.ServiceLocator.StructureMap" />
+  <Module PersistentId="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="mscorlib" />
+  <Module PersistentId="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" ModuleId="Microsoft.Practices.ServiceLocation" />
+  <Module PersistentId="Paralect.Transitions.Mongo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" ModuleId="Paralect.Transitions.Mongo" />
+  <Module PersistentId="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" ModuleId="System.Web" />
+  <Module PersistentId="System.Web.ApplicationServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" ModuleId="System.Web.ApplicationServices" />
+  <Module PersistentId="Paralect.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" ModuleId="Paralect.Domain" />
+  <Module PersistentId="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" ModuleId="System.Web.Mvc" />
+  <Module PersistentId="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" ModuleId="System.Web_1" />
+</Modules>

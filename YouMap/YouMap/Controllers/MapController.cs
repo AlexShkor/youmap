@@ -60,6 +60,13 @@ namespace YouMap.Controllers
         public ActionResult AddPlace()
         {
             var model = new AddPlaceModel();
+            if (!Request.IsAjaxRequest())
+            {
+                model.Map = new MapModel();
+                model.Map.Width = 600;
+                model.Map.Height = 600;
+                model.DisplayMap = true;
+            }
             return GetAddPlaceResponse(model);
         }
 

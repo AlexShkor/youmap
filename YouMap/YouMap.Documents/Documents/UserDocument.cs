@@ -44,7 +44,7 @@ namespace YouMap.Documents.Documents
         public string Name
         {
             get { return FullName; }
-            set { throw new NotImplementedException(); }
+            set {  }
         }
 
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }

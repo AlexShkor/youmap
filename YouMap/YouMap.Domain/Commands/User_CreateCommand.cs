@@ -3,6 +3,7 @@ using Paralect.Domain;
 using Paralect.ServiceBus;
 using YouMap.Domain.Enums;
 using mPower.Framework;
+using YouMap.Domain.Data;
 
 namespace YouMap.Domain.Commands
 {
@@ -13,6 +14,8 @@ namespace YouMap.Domain.Commands
         public string Email { get; set; }
 
         public string UserId { get; set; }
+
+        public VkData Vk { get; set; }
 
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }
     }
@@ -26,7 +29,13 @@ namespace YouMap.Domain.Commands
 
         public override void Handle(User_CreateCommand message)
         {
-            var ar = new UserAR(message.UserId, message.Email, message.Password,message.Metadata);
+            var ar = new UserAR(message.UserId, new UserData
+            {
+                Email = message.Email,
+                Password = message.Password,
+                Permissions = message.Permissions,
+                Vk = message.Vk
+            }, message.Metadata);
             Repository.Save(ar);
         }
     }

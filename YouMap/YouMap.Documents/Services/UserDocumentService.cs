@@ -49,6 +49,10 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.EQ("Vk.Id", filter.VkId));
             }
+            if (filter.HasPermission.HasValue)
+            {
+                query = Query.And(query, Query.EQ("Permissions", filter.HasPermission.Value));
+            }
             return query;
         }
     }
@@ -71,5 +75,7 @@ namespace YouMap.Documents.Services
         public string UserNameOrEmail { get; set; }
 
         public string VkId { get; set; }
+
+        public Domain.Enums.UserPermissionEnum? HasPermission { get; set; }
     }
 }

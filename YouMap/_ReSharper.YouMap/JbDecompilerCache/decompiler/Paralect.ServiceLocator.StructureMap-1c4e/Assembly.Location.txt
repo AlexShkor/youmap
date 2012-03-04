@@ -1,0 +1,1 @@
+﻿D:\install\YouMap\YouMap\libs\Paralect\Paralect.ServiceLocator.StructureMap.dll

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using YouMap.Controllers;
 
 namespace YouMap.Models
 {
@@ -26,5 +27,9 @@ namespace YouMap.Models
         public string Description { get; set; }
 
         public string Icon { get; set; }
+
+        public bool DisplayMap { get; set; }
+
+        public MapModel Map { get; set; }
     }
 }

@@ -1,0 +1,66 @@
+﻿<RecentFiles>
+  <RecentFiles>
+    <File id="D9031CDC-70E2-4AE1-9B48-E46952A9188C/d:Services/f:PlaceDocumentService.cs" caret="0" fromTop="0" />
+    <File id="D9031CDC-70E2-4AE1-9B48-E46952A9188C/d:Services/f:CategoryDocumentService.cs" caret="0" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Categories/f:Navigation.cshtml" caret="0" fromTop="0" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Data/f:Location.cs" caret="0" fromTop="0" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Data/f:CheckIn.cs" caret="0" fromTop="0" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Events/f:User_CreatedEvent.cs" caret="0" fromTop="0" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Events/f:User_PasswordChangedEvent.cs" caret="0" fromTop="0" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Commands/f:User_ImportFromVkCommand.cs" caret="0" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Shared/f:_LogOnPartial.cshtml" caret="0" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/f:Global.asax.cs" caret="0" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:custom/f:auth.js" caret="0" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:custom/f:youmap.js" caret="0" fromTop="0" />
+    <File id="EF8F12CE-0EA4-4639-A5D7-733D12F3F966/f:IUserIdentity.cs" caret="0" fromTop="0" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Data/f:VkData.cs" caret="0" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Result.js" caret="6748" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Shared/f:_Layout.cshtml" caret="1455" fromTop="25" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="9226" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Map/f:ControlPanelPartial.cshtml" caret="0" fromTop="0" />
+    <File id="EF8F12CE-0EA4-4639-A5D7-733D12F3F966/d:Services/f:BaseFilter.cs" caret="318" fromTop="11" />
+    <File id="EF8F12CE-0EA4-4639-A5D7-733D12F3F966/d:Services/f:BaseMongoService.cs" caret="2870" fromTop="31" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Events/f:User_ImportedFromVkEvent.cs" caret="98" fromTop="5" />
+    <File id="5BC9441C-B57D-427F-B59B-32BD3F55A4A1/f:UserDocumentEventHandler.cs" caret="976" fromTop="22" />
+    <File id="D9031CDC-70E2-4AE1-9B48-E46952A9188C/d:Documents/f:UserDocument.cs" caret="1116" fromTop="23" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Controllers/f:BaseController.cs" caret="392" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/f:AuthenticationService.cs" caret="1264" fromTop="6" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/d:Commands/f:User_CreateCommand.cs" caret="820" fromTop="25" />
+    <File id="5BC9441C-B57D-427F-B59B-32BD3F55A4A1/f:PlaceDocumentEventHandler.cs" caret="0" fromTop="0" />
+    <File id="D9031CDC-70E2-4AE1-9B48-E46952A9188C/d:Services/f:UserDocumentService.cs" caret="2017" fromTop="32" />
+    <File id="0D0838BA-4966-4F14-93D6-9E94D0A29DF0/f:UserAR.cs" caret="1131" fromTop="20" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Controllers/f:AccountController.cs" caret="5730" fromTop="195" />
+  </RecentFiles>
+  <RecentEdits>
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:AutoAjax.js" caret="193" fromTop="5" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/f:jquery.form.js" caret="27839" fromTop="39" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/f:jquery.form.js" caret="2" fromTop="1" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Map/f:AddPlace.cshtml" caret="507" fromTop="22" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Map/f:AddPlace.cshtml" caret="281" fromTop="14" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:AutoAjax.js" caret="589" fromTop="23" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:AutoAjax.js" caret="585" fromTop="19" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:AutoAjax.js" caret="589" fromTop="0" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Shared/f:_Layout.cshtml" caret="1128" fromTop="13" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Shared/f:_Layout.cshtml" caret="577" fromTop="11" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="9905" fromTop="21" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Result.js" caret="2" fromTop="1" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="44" fromTop="3" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="170" fromTop="7" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Controllers/f:MapController.cs" caret="2402" fromTop="24" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="9905" fromTop="12" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="3928" fromTop="24" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="3489" fromTop="15" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="8214" fromTop="6" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="8916" fromTop="27" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Result.js" caret="7070" fromTop="33" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Scripts/d:Ajax/f:Request.js" caret="9893" fromTop="40" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Controllers/f:AccountController.cs" caret="2546" fromTop="17" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/f:AuthenticationService.cs" caret="3192" fromTop="26" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Shared/f:_Layout.cshtml" caret="1582" fromTop="30" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Views/d:Shared/f:_Layout.cshtml" caret="193" fromTop="6" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Controllers/f:AccountController.cs" caret="3565" fromTop="24" />
+    <File id="D9031CDC-70E2-4AE1-9B48-E46952A9188C/d:Documents/f:UserDocument.cs" caret="1116" fromTop="23" />
+    <File id="5BC9441C-B57D-427F-B59B-32BD3F55A4A1/f:UserDocumentEventHandler.cs" caret="976" fromTop="22" />
+    <File id="0C2256E2-26AE-4E1B-A30D-4202EDE589AE/d:Controllers/f:AccountController.cs" caret="2777" fromTop="21" />
+  </RecentEdits>
+</RecentFiles>

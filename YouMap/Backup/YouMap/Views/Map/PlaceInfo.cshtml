@@ -1,0 +1,14 @@
+﻿@using YouMap.Controllers
+@model PlaceModel
+
+<div data-id="@Model.Id" class="place-info-window">
+  <div class="place-logo">
+	<img src="@(Model.Icon.Replace("24x24","128x128"))"/>
+  </div>
+  <div class="place-content">
+  <h2>@Model.Title</h2>
+  <p>@Html.Raw(Model.Description)</p>
+  <div id="vk_like_place_@(Model.Id)" class="share-container"></div>
+  @Html.ActionLink("Подробнее","PlaceInfo",new{id = Model.Id})
+  </div>
+</div>

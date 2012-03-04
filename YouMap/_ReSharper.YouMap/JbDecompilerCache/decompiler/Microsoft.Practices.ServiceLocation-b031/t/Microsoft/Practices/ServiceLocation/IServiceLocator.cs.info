@@ -1,0 +1,6 @@
+﻿Code version: 6.0.2202.688
+Assembly name Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35 mvid {f7f2f2c3-6a78-4a41-bfcc-ce4b7dfd209c}
+* ref mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  mvid {e67e4144-0be1-4383-8b4a-118504cce2e9}
+* ref System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  mvid {2c6028d9-0d4f-421e-ab1e-cd889f8a8720}

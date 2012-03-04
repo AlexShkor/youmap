@@ -1,5 +1,7 @@
 ﻿YouMap = { };
 
+//region GLOBAL
+
 $(document).ready(function () {
     VK.init({
         apiId: 2831071
@@ -28,6 +30,8 @@ var updatePosition = function (marker, location) {
     marker.GMarker.setPosition(location);
 };
 
+//endregion GLOBAL
+
 YouMap.Map = function ($) {
     var initialize = function () {
 
@@ -47,6 +51,24 @@ YouMap.Map = function ($) {
                 width: 100
             });
         });
+
+        $("#map").css("width", "100%");
+        setMapHeight();
+  	$(window).resize(function(e) {
+  	    setMapHeight();
+  	    
+        });
+
+    };
+
+    var setMapHeight = function()
+    {
+        var height = $(window).height() - 120;
+        if ($("#controlPanel").length > 0) {
+            $("#map").css("height", height - $("#controlPanel").height());
+        } else {
+            $("#map").css("height", height);
+        }
     };
 
     return { Initialize: initialize };

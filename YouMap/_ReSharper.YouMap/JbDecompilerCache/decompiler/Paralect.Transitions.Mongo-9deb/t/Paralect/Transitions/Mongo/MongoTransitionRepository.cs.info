@@ -1,0 +1,14 @@
+﻿Code version: 6.0.2202.688
+Assembly name Paralect.Transitions.Mongo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null mvid {47622337-85dc-4934-bb91-528403feab1c}
+* ref mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  mvid {fcb9dac8-ae3a-4886-93b0-f4cd5b0db0be}
+* ref Paralect.Transitions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  mvid {d69517f1-7e72-43c2-9f0d-4bd8908547ff}
+* ref MongoDB.Driver, Version=1.2.0.4274, Culture=neutral, PublicKeyToken=f686731cfb9cc103
+  mvid {bf3d60e3-d3a5-409c-8315-d3403e1d58b2}
+* ref MongoDB.Bson, Version=1.2.0.4274, Culture=neutral, PublicKeyToken=f686731cfb9cc103
+  mvid {792e62cb-a803-444a-aaaa-92b6ceb8be4b}
+* ref mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  mvid {e67e4144-0be1-4383-8b4a-118504cce2e9}
+* ref System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+  mvid {c08d55d3-6463-439d-b112-60f6502ec141}

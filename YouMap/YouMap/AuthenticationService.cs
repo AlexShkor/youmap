@@ -11,9 +11,11 @@ using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
+using YouMap.Models;
 using YouMap.Scripts.custom;
 using mPower.Framework;
 using mPower.Framework.Environment;
+using YouMap.Domain.Enums;
 
 namespace YouMap
 {
@@ -34,6 +36,42 @@ namespace YouMap
             VkAuth.Logout();
         }
 
+        public bool HasAdmin
+        {
+            get
+            {
+                return _userDocumentService.GetByFilter(new UserFilter { HasPermission = UserPermissionEnum.Admin }).Any();
+            }
+        }
+
+        public void CreateAdmin(string email, string password)
+        {
+            var user = _userDocumentService.GetByFilter(new UserFilter { Email = email }).FirstOrDefault();
+            if (user != null)
+            {
+                throw new AuthenticationException("User already exist");
+            }
+            CreateUser(email, password, UserPermissionEnum.Admin);
+        }
+
+        private void CreateUser(string email, string password, params UserPermissionEnum[] permissions)
+        {
+            var command = new User_CreateCommand
+            {
+                UserId = _idGenerator.Generate(),
+                Password = password,
+                Email = email,
+                Permissions = new List<UserPermissionEnum>(permissions)
+            };
+            command.Metadata.UserId = command.UserId;
+            _commandService.Send(command);
+            SetAuthCookie(new UserIdentity
+            {
+                Id = command.UserId,
+                Email = command.Email,
+                Name = command.Email
+            },true);
+        }
 
         public AuthenticationService(UserDocumentService userDocumentService, ICommandService commandService, IIdGenerator idGenerator)
         {
@@ -56,14 +94,7 @@ namespace YouMap
             {
                 throw new AuthenticationException("User already exist");
             }
-            var command = new User_CreateCommand
-                              {
-                                  UserId = _idGenerator.Generate(),
-                                  Password = password,
-                                  Email = email
-                              };
-            command.Metadata.UserId = command.UserId;
-            _commandService.Send(command);
+            CreateUser(email, password, UserPermissionEnum.User);
         }
 
         public void LogOn(VkLoginModel model, bool remember = true)
@@ -125,7 +156,7 @@ namespace YouMap
             {
                 throw new AuthenticationException("User already exist");
             }
-            var command = new User_ImportFromVkCommand
+            var command = new User_CreateCommand
             {
                 UserId = _idGenerator.Generate(),
                 Vk = new VkData
@@ -139,9 +170,13 @@ namespace YouMap
                              Mid = model.Mid,
                              Nickname = model.Nickname,
                              Secret = model.Secret,
-                             Sid =  model.Sid,
+                             Sid = model.Sid,
                              Sig = model.Sig
-                         }
+                         },
+                Permissions = new List<UserPermissionEnum>
+                {
+                    UserPermissionEnum.User
+                }
             };
             command.Metadata.UserId = command.UserId;
             _commandService.Send(command);
@@ -169,10 +204,12 @@ namespace YouMap
         void LogOn(string email, string password, bool remember = true);
         void ChangePassword(string oldPassword, string newPassword);
         void Register(string email, string password);
+        void CreateAdmin(string email, string password);
         void LogOn(VkLoginModel model, bool remember = true);
         void Register(VkLoginModel model);
         VkAuthenticationService VkAuth { get;}
         void Logout();
+        bool HasAdmin { get; }
     }
 
     public interface IVkAuthenticationService
