@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using YouMap.Documents.Documents;
@@ -53,6 +55,14 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.EQ("Permissions", filter.HasPermission.Value));
             }
+            if (filter.VkIdIn != null)
+            {
+                query = Query.And(query, Query.In("Vk.Id", BsonArray.Create(filter.VkIdIn)));
+            }
+            if (filter.LastLocationDateGreaterThan.HasValue)
+            {
+                query = Query.And(query, Query.GTE("LocatedDate", filter.LastLocationDateGreaterThan.Value));
+            }
             return query;
         }
     }
@@ -77,5 +87,9 @@ namespace YouMap.Documents.Services
         public string VkId { get; set; }
 
         public Domain.Enums.UserPermissionEnum? HasPermission { get; set; }
+
+        public IEnumerable<String> VkIdIn { get; set; }
+
+        public DateTime? LastLocationDateGreaterThan { get; set; }
     }
 }
