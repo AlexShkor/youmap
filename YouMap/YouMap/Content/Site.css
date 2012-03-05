@@ -89,6 +89,7 @@ header, #header
     position: relative;
     margin-bottom: 0px;
     color: #000;
+    height: 80px;
     padding: 0;
 }
 

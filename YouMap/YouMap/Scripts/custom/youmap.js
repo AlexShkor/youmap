@@ -36,8 +36,9 @@ YouMap.Map = function ($) {
 
     var closeZoom = 18;
     var geocoder = null;
-  
-
+    var userLocation = null;
+    var userMarker = null;
+    
     var initialize = function () {
 
         $(".place-info-window").each(function() {
@@ -57,6 +58,11 @@ YouMap.Map = function ($) {
             });
         });
 
+        YouMap.Geolocation.Locate(function(location) {          
+            setMapCenter(location.Sa, location.Ta);
+            updateUserMarker(location);
+        });
+        startUpdateLocation();
         $("#map").css("width", "100%");
         setMapHeight();
         $(window).resize(function(e) {
@@ -66,7 +72,28 @@ YouMap.Map = function ($) {
         if (geocoder == null) {
             geocoder = new google.maps.Geocoder();
         }
+        YouMap.Vk.Map.Initialize();
+    };
+    
+    var updateUserMarker = function (location) {
+        userLocation = location;
+        if (userMarker) {
+            userMarker.Latitude = location.Sa;
+            userMarker.Longitude = location.Ta;
+        } else {
+            userMarker = createMarker({
+                Latitude: location.Sa,
+                Longitude: location.Ta,
+                Title: "Я"
+            });
+        }
+    };
 
+    var startUpdateLocation = function() {
+        setTimeout(function() {
+            YouMap.Geolocation.Locate(updateUserMarker);
+            startUpdateLocation();
+        },300000);
     };
 
     //вычисление значения Zoom по границам

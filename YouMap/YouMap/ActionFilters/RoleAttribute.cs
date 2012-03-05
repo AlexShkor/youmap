@@ -20,7 +20,7 @@ namespace YouMap.ActionFilters
         {
             try
             {
-                return _permissions.All(x => _sessionContext.User.HasPermissions(x));
+                return _permissions.Any(x => _sessionContext.User.HasPermissions(x));
             }
             catch
             {

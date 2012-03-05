@@ -12,10 +12,10 @@
         var map = getMap();
         if (navigator.geolocation) {
             browserSupportFlag = true;
-            locateW3C(callback, errorCallback);
+            return locateW3C(callback, errorCallback);
         } else if (google.gears) {
             browserSupportFlag = true;
-            locateGoogleGears(callback);
+            return locateGoogleGears(callback);
         } else {
             browserSupportFlag = false;
             handleNoGeolocation(browserSupportFlag);
@@ -23,12 +23,17 @@
         ;
     };
 
+    var getLastLocation = function() {
+        return initialLocation;
+    };
+
     var locateW3C = function(callback, errorCallback) {
         navigator.geolocation.getCurrentPosition(function(position) {
             initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            map.setCenter(initialLocation);
+            callback(initialLocation);
         }, function() {
             handleNoGeolocation(browserSupportFlag);
+            errorCallback(error);
         });
     };
 
@@ -54,6 +59,7 @@
     };
     return {
         Initialize: initialize,
-        Locate: locate
+        Locate: locate,
+        GetLastLocation: getLastLocation
     };
 }(jQuery);

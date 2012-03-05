@@ -21,6 +21,7 @@ namespace YouMap.Domain.Data
 
         public string LastName { get; set; }
 
+        //TODO: change to long
         public string Id { get; set; }
 
         public String Href { get; set; }

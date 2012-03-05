@@ -1,18 +1,15 @@
 ﻿@using System.Web.Mvc
 @model YouMap.Models.PlaceSearchModel
-
 <script>
-   $(document).ready(function() {
-       YouMap.Search.Initialize('@Url.Action("Search","Places")');
-       
-   })
+    $(document).ready(function () {
+        YouMap.Search.Initialize('@Url.Action("Search","Places")');
+
+    })
 </script>
- 
-@using(Html.BeginForm("Search","Places",FormMethod.Post,new{id="searchForm"}))
+@using (Html.BeginForm("Search", "Places", FormMethod.Post, new { id = "searchForm" }))
 {
-    @Html.TextBoxFor(x=> x.Serach,new{id="searchField"})
-    @Html.HiddenFor(x=> x.UserLocation.Latitude)
-    @Html.HiddenFor(x=> x.UserLocation.Longitude)
+    @Html.TextBoxFor(x => x.Serach, new { id = "searchField" })
+    @Html.HiddenFor(x => x.UserLocation.Latitude)
+    @Html.HiddenFor(x => x.UserLocation.Longitude)
     <input id="searchSubmit" class="search-google-btn" name="submit" type="button" value="Искать" />
-    <input id="searchSubmit" class="search-google-btn" name="submit" type="button" value="Показать на карте" />
 }
