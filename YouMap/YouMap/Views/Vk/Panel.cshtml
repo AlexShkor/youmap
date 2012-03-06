@@ -1,0 +1,26 @@
+﻿@model YouMap.Models.VkPanelModel
+
+<script>
+    $(document).ready(function() {
+        YouMap.Vk.Panel.Initialize('@Model.IsVkUser' == 'True');
+    });
+</script>
+
+@if(Model.IsVkUser)
+{
+    
+    <div id="vkPanel">
+        <div class="actions"><a class="awesome small" href="@Url.Action("CheckIn","Map")">Отметиться</a><a class="awesome small" id="showSettings" href="#">&nu;</a></div>
+        <div class="hidden setting">
+            <div>
+                @Html.CheckBoxFor(x => x.ShareLocation)
+                @Html.LabelFor(x => x.ShareLocation,"Показывать меня друзьям")
+                
+            </div>
+            <div>
+                @Html.CheckBoxFor(x => x.ShowFriends)
+                @Html.LabelFor(x => x.ShowFriends, "Показывать друзей")         
+            </div>
+        </div>
+    </div>
+}

@@ -172,6 +172,26 @@ namespace YouMap.Controllers
             var doc = _documentService.GetById(id);
             return View(Map(doc));
         }
+
+        [HttpGet]
+        public ActionResult CheckIn()
+        {
+            var model = new CheckInModel();
+            return RespondTo(request =>
+                                 {
+                                     request.Ajax = () => PartialView(model);
+                                     request.Html = () => View(model);
+                                 });
+        }
+        [HttpPost]
+        public ActionResult CheckIn(CheckInModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+            return Result();
+        }
     }
 
     public class MapFilter

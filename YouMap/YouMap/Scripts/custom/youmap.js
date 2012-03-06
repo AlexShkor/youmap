@@ -159,7 +159,7 @@ YouMap.Map = function ($) {
 
     var setMapHeight = function()
     {
-        var height = $(window).height() - 120;
+        var height = $(window).height() - $("header").height();
         if ($("#controlPanel").length > 0) {
             $("#map").css("height", height - $("#controlPanel").height());
         } else {
