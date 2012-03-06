@@ -10,7 +10,8 @@ namespace YouMap.EventHandlers
 {
     public class UserDocumentEventHandler: 
         IMessageHandler<User_CreatedEvent>,
-        IMessageHandler<User_ImportedFromVkEvent>
+        IMessageHandler<User_ImportedFromVkEvent>,
+        IMessageHandler<User_MarkUdatedEvent>
     {
         private readonly UserDocumentService _documentService;
 
@@ -37,25 +38,23 @@ namespace YouMap.EventHandlers
 
         public void Handle(User_ImportedFromVkEvent message)
         {
-            
-            if (_documentService.GetById(message.UserId) != null)
-            {
-                var query = Query.EQ("_id", message.UserId);
-                var update = Update.Set("Vk",BsonTypeMapper.MapToBsonValue(message.Vk));
-                _documentService.Update(query,update);
-            }
-            else
-            {
-                var doc = new UserDocument
-                {
-                    Id = message.UserId,
-                    Vk = message.Vk,
-                    FirstName = message.Vk.FirstName,
-                    LastName = message.Vk.LastName,
-                    UserName = message.Vk.Domain
-                };
-                _documentService.Save(doc);
-            }
+
+            var query = Query.EQ("_id", message.UserId);
+            var update = Update.Set("Vk", BsonTypeMapper.MapToBsonValue(message.Vk));
+            _documentService.Update(query, update);
+        }
+
+        public void Handle(User_MarkUdatedEvent message)
+        {
+            var query = Query.EQ("_id", message.UserId);
+            var mark = new UserMarkDocument
+                           {
+                               Location = message.Location,
+                               Id = message.UserId +"mark", //has no sense, may be deleted
+                               Visited = message.Visited
+                           };
+            var update = Update.Set("LastMark", BsonDocument.Create(mark));
+            _documentService.Update(query,update);
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YouMap.Documents.Services;
+using YouMap.Domain.Enums;
+using YouMap.Models;
 using mPower.Framework;
 
 namespace YouMap.Controllers
@@ -39,6 +41,13 @@ namespace YouMap.Controllers
         {
             _documentService.Remove(new UserFilter());
             return "Success";
+        }
+
+        public ActionResult Panel()
+        {
+            var model = new VkPanelModel();
+            model.IsVkUser = User != null && User.HasPermissions(UserPermissionEnum.VkUser);
+            return PartialView("Panel",model);
         }
     }
 }

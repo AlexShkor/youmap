@@ -40,6 +40,8 @@ namespace YouMap.Documents.Documents
 
         public string MobileAccessToken { get; set; }
 
+        public UserMarkDocument LastMark { get; set; }
+
         public VkData Vk { get; set; }
 
         public bool IsActive { get; set; }
@@ -48,7 +50,7 @@ namespace YouMap.Documents.Documents
 
         public string Name
         {
-            get { return FullName; }set { }
+            get { return FullName; }
         }
 
         public IEnumerable<UserPermissionEnum> Permissions { get; set; }

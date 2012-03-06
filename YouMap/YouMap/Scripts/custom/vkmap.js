@@ -1,4 +1,19 @@
-﻿YouMap.Vk = {};
+﻿YouMap.Vk = {   };
+
+YouMap.Vk.Panel = function($) {
+
+    var initialize = function(isVkUser) {
+        if(isVkUser) {
+            $("#showSettings").click(function() {
+                $("#vkPanel .setting").slideToggle("fast");
+            });
+        }
+    };
+
+    return {
+        Initialize: initialize
+    };
+}(jQuery);
 
 YouMap.Vk.Map = function($) {
 

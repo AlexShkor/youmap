@@ -9,6 +9,7 @@ using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
+using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 using YouMap.Models;
 using mPower.Framework;
@@ -55,6 +56,15 @@ namespace YouMap.Controllers
                            Longitude = doc.Longitude,
                            Title = doc.Title
                        };
+        }
+
+        public ActionResult CheckNearby(Location? location)
+        {
+            if (location.HasValue)
+            {
+                
+            }
+            return Result();
         }
 
         [HttpGet]

@@ -22,7 +22,8 @@ namespace YouMap.Scripts.custom
 
         public override void Handle(User_ImportFromVkCommand message)
         {
-            var ar = new UserAR(message.UserId, message.Vk, message.Metadata);
+            var ar = Repository.GetById<UserAR>(message.UserId);
+            ar.ImportFromVk(message.Vk);
             Repository.Save(ar);
         }
     }

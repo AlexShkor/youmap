@@ -8,6 +8,10 @@ namespace YouMap.Domain.Data
 
         public DateTime Visited { get; set; }
 
+        public string Memo { get; set; }
+
+        public string Title { get; set; }
+
         public bool IsHidden { get; set; }
     }
 }

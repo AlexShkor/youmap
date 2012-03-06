@@ -8,7 +8,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="mapHolder">
-@(Html.Telerik().GoogleMap().Name("map").Height(Model.Height).Width(Model.Width)
+@(Html.Telerik().GoogleMap().Name("map")
 .Latitude(Model.Latitude).Longitude(Model.Longitude).Zoom(Model.Zoom)
 .Markers(x=>
 			 {

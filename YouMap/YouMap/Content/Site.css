@@ -104,13 +104,21 @@ header h1, #header h1 {
     text-shadow: 1px 1px 2px #111;
 }
 
+#map
+{
+    overflow: visible !important;
+}
+
 #main
 {
-    padding: 10px 30px 5px 30px;
+    padding: 5px 5px 5px 5px;
     background-color: #fff;
     -webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 10px #FFF;
+    -moz-box-shadow: 0 0 10px #FFF;
+    box-shadow: 0 0 10px #FFF;
 }
 
 footer, 
@@ -477,6 +485,57 @@ margin: 5px;
     margin: 5px;
 }
 
+.hidden
+{
+    display: none;
+}
+
+#vkPanel
+{
+    padding: 5px;
+    float: left;
+    margin-left: 50px;
+}
+
+#vkPanel .actions a
+{
+    margin: 2px 5px;
+    text-decoration: none;
+    color: white;
+    background-color: #598EDD;
+}
+
+    #vkPanel .setting
+    {
+        position: absolute;
+        width: 200px;
+        margin-top: 40px;
+        z-index: 99;
+        background-color: white;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        overflow: hidden;
+        -webkit-box-shadow: 0 0 6px #999;
+        -moz-box-shadow: 0 0 6px #999;
+        box-shadow: 0 0 6px #999;
+        padding: 5px 0px;
+    }
+
+
+        #vkPanel .setting div
+        {
+            color: #45688E;
+            font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+            font-size: 11px;
+            clear: left;
+            padding: 4px 10px;
+        }
+        #vkPanel .setting label, #vkPanel .setting input
+        {
+            float: left;
+        }
+
 .control-content
 {
     float: left;
@@ -570,3 +629,4 @@ ul.ui-autocomplete
 {
     padding: 5px;
 }
+    

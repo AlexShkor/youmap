@@ -14,6 +14,9 @@ var getMap = function() {
 
 var createMarker = function (config, onDrag) {
     var map = getMap();
+    if (!map.Markers) {
+        map.Markers = new Array();
+    }
     var marker = new $.telerik.GoogleMarker(map.GMap, map.Markers.length, config);
 
     map.Markers.push(marker);
@@ -63,7 +66,9 @@ YouMap.Map = function ($) {
             updateUserMarker(location);
         });
         startUpdateLocation();
-        $("#map").css("width", "100%");
+        //$("#map").attr("style", "height: 213px; position: relative; background-color: rgb(229, 227, 223); overflow: initial;");
+        $("#map").css("width", "auto");
+
         setMapHeight();
         $(window).resize(function(e) {
             setMapHeight();
@@ -80,6 +85,10 @@ YouMap.Map = function ($) {
         if (userMarker) {
             userMarker.Latitude = location.Sa;
             userMarker.Longitude = location.Ta;
+            Request.get("/Map/CheckNearby").addParams({
+                Latitude: location.Sa,
+                Longitude: location.Sa
+            });
         } else {
             userMarker = createMarker({
                 Latitude: location.Sa,

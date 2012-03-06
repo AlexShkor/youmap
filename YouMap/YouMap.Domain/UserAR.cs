@@ -1,4 +1,5 @@
-﻿using Paralect.Domain;
+﻿using System;
+using Paralect.Domain;
 using YouMap.Domain.Data;
 using YouMap.Domain.Events;
 using mPower.Framework;
@@ -7,35 +8,6 @@ namespace YouMap.Domain
 {
     public class UserAR : YoumapAR
     {
-
-        public UserAR()
-        {
-            
-        }
-
-        public UserAR(string id, string email, string password, ICommandMetadata metadata)
-        {
-            _id = id;
-            SetCommandMetadata(metadata);
-            Apply(new User_CreatedEvent
-                      {
-                          UserId = id,
-                          Email = email,
-                          Password = password
-                      });
-        }
-
-        public UserAR(string userId, VkData vkData, ICommandMetadata metadata)
-        {
-            _id = userId;
-            SetCommandMetadata(metadata);
-            Apply(new User_CreatedEvent
-                      {
-                          UserId = userId,
-                          Vk = vkData
-                      });
-        }
-
         public UserAR(string userId, UserData userData, ICommandMetadata metadata)
         {
             _id = userId;
@@ -64,6 +36,25 @@ namespace YouMap.Domain
                 );
         }
 
+        public void ImportFromVk(VkData vk)
+        {
+            Apply(new User_ImportedFromVkEvent
+            {
+                UserId = _id,
+                Vk = vk
+            });
+        }
+
+        public void UpdateMark(Location location)
+        {
+            Apply(new User_MarkUdatedEvent
+            {
+                Location = location,
+                UserId = _id,
+                Visited = DateTime.Now
+            });
+        }
+
         #region Object Reconstruction
 
         protected void On(User_CreatedEvent created)
@@ -71,11 +62,20 @@ namespace YouMap.Domain
             _id = created.UserId;
         }
 
+        protected void On(User_MarkUdatedEvent user)
+        {
+        }
+
+        protected void On(User_PasswordChangedEvent user)
+        {
+        }
+
         protected void On(User_ImportedFromVkEvent user)
         {
-            _id = user.UserId;
         }
 
         #endregion
+
+        
     }
 }

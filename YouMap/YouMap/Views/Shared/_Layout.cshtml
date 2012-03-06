@@ -37,6 +37,9 @@
             <div id="searchContainer">
                 @Html.Partial("../Places/SearchForm", new PlaceSearchModel())
             </div>
+            <div id="actionsPanel">
+                @Html.Action("Panel","Vk")
+            </div>
             <div id="logindisplay">
                 @Html.Action("LoginState", "Account")
             </div>
