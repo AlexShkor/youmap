@@ -9,7 +9,6 @@
     };
 
     var locate = function(callback, errorCallback) {
-        var map = getMap();
         if (navigator.geolocation) {
             browserSupportFlag = true;
             return locateW3C(callback, errorCallback);
@@ -30,7 +29,7 @@
     var locateW3C = function(callback, errorCallback) {
         navigator.geolocation.getCurrentPosition(function(position) {
             initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            callback(initialLocation);
+            callback(position.coords.latitude, position.coords.longitude);
         }, function() {
             handleNoGeolocation(browserSupportFlag);
             errorCallback(error);
@@ -42,7 +41,7 @@
         var geo = google.gears.factory.create('beta.geolocation');
         geo.getCurrentPosition(function(position) {
             initialLocation = new google.maps.LatLng(position.latitude, position.longitude);
-            callback(initialLocation);
+            callback(position.latitude,position.longitude);
         }, function(error) {
             handleNoGeoLocation(browserSupportFlag);
             errorCallback(error);

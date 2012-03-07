@@ -20,7 +20,9 @@ namespace YouMap.Domain.Commands
         public override void Handle(User_UpdateMarkCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.UserId);
+            ar.SetCommandMetadata(message.Metadata);
             ar.UpdateMark(message.Location);
+            Repository.Save(ar);
         }
     }
 }

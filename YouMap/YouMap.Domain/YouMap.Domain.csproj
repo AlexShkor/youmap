@@ -69,8 +69,9 @@
   <ItemGroup>
     <Compile Include="Auth\IUserIdentity.cs" />
     <Compile Include="CategoryAR.cs" />
+    <Compile Include="Data\CheckInData.cs" />
+    <Compile Include="Commands\User_AddCheckInCommand.cs" />
     <Compile Include="Commands\User_UpdateMarkCommand.cs" />
-    <Compile Include="Data\CheckIn.cs" />
     <Compile Include="Data\UserData.cs" />
     <Compile Include="Enums\UserPermissionEnum.cs" />
     <Compile Include="Events\Category_DeletedEvent.cs" />
@@ -83,11 +84,11 @@
     <Compile Include="Commands\Category_CreateCommand.cs" />
     <Compile Include="Commands\User_ChangePasswordCommand.cs" />
     <Compile Include="Commands\User_CreateCommand.cs" />
-    <Compile Include="Data\CategoryData.cs" />
     <Compile Include="Data\Location.cs" />
     <Compile Include="Commands\Place_CreateCommand.cs" />
     <Compile Include="Commands\Place_UpdateLocationCommand.cs" />
     <Compile Include="Data\PlaceData.cs" />
+    <Compile Include="Events\User_CheckInAddedEvent.cs" />
     <Compile Include="Events\User_CreatedEvent.cs" />
     <Compile Include="Events\User_PasswordChangedEvent.cs" />
     <Compile Include="Events\User_SetLastMarkEvent.cs" />

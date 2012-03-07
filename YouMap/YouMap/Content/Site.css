@@ -19,10 +19,6 @@ header a:link {
     text-decoration: underline;
 }
 
-header a:visited {
-    color: #505abc;
-}
-
 header a:hover {
     color: #1d60ff;
     text-decoration: none;
@@ -285,26 +281,7 @@ div#title {
 }
 
 #logindisplay {
-    font-size: 1.1em;
-    display: block;
-    text-align: right;
-    margin: 10px;
-    color: White;
-}
-
-#logindisplay a:link {
-    color: white;
-    text-decoration: underline;
-}
-
-#logindisplay a:visited {
-    color: white;
-    text-decoration: underline;
-}
-
-#logindisplay a:hover {
-    color: white;
-    text-decoration: none;
+    float: right;
 }
 
    
@@ -490,14 +467,14 @@ margin: 5px;
     display: none;
 }
 
-#vkPanel
+.slide-popup
 {
     padding: 5px;
     float: left;
     margin-left: 50px;
 }
 
-#vkPanel .actions a
+.slide-popup .actions a
 {
     margin: 2px 5px;
     text-decoration: none;
@@ -505,7 +482,7 @@ margin: 5px;
     background-color: #598EDD;
 }
 
-    #vkPanel .setting
+    .slide-popup .container
     {
         position: absolute;
         width: 200px;
@@ -523,7 +500,7 @@ margin: 5px;
     }
 
 
-        #vkPanel .setting div
+        .slide-popup .container div
         {
             color: #45688E;
             font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
@@ -531,10 +508,24 @@ margin: 5px;
             clear: left;
             padding: 4px 10px;
         }
-        #vkPanel .setting label, #vkPanel .setting input
+        .slide-popup .container label, .slide-popup .container input
         {
             float: left;
         }
+
+#loginPanel .container
+{
+    right: 20px;
+    width: 280px;
+}
+
+.container .editor-label a
+{
+    float: right;
+    padding-top: 2px;
+    color: #45688E;
+    text-decoration: none;
+}
 
 .control-content
 {

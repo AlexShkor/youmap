@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Documents\CategoryDocument.cs" />
+    <Compile Include="Documents\CheckInDocument.cs" />
     <Compile Include="Documents\PlaceDocument.cs" />
     <Compile Include="Documents\UserDocument.cs" />
     <Compile Include="Documents\UserMarkDocument.cs" />

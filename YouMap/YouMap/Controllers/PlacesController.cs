@@ -50,8 +50,8 @@ namespace YouMap.Controllers
                 Address = doc.Address,
                 Description = doc.Description,
                 Icon = Path.Combine(contentUrl.Replace("64x64", "24x24"), doc.Icon),
-                Latitude = doc.Latitude,
-                Longitude = doc.Longitude,
+                Latitude = doc.Location.Latitude,
+                Longitude = doc.Location.Longitude,
                 Title = doc.Title
             };
         }

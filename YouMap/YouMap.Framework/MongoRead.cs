@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 
 namespace mPower.Framework
 {
@@ -31,11 +32,7 @@ namespace mPower.Framework
 
         public void EnsureIndexes()
         {
-            //Entries.EnsureIndex(IndexKeys.Ascending("LedgerId", "TransactionId").Descending("BookedDate"));
-            //Entries.EnsureIndex(IndexKeys.Ascending("LedgerId", "TransactionId"));
-            //Entries.EnsureIndex(IndexKeys.Ascending("OffsetAccountId").Descending("BookedDate"));
-            //MobileEntries.EnsureIndex(IndexKeys.Ascending("LedgerId", "TransactionId"));
-            //MobileEntries.EnsureIndex(IndexKeys.Ascending("AccountId"));
+            GetCollection("places").EnsureIndex(IndexKeys.GeoSpatial("Location"));
         }
 
         /// <summary>

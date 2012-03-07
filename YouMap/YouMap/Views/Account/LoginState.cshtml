@@ -1,21 +1,32 @@
-﻿@model YouMap.Models.UserViewModel
-           
-@if(Model.IsAuthenticated) {
+﻿@using YouMap.Models
+@model UserViewModel
+<script>
+    $(document).ready(function () {
+        YouMap.Vk.Panel.UserView();
+    });
+</script> 
+          
+@if (Model.IsAuthenticated)
+{
     <text>
         @if (Model.DisplayAdmin)
         {
             <span>[
             @Html.ActionLink("Панель Управления", "ControlPanel", "Map") 
             ]</span>
-            }
+        }
             Welcome <strong>@Model.DisplayName</strong>!
         [ @Html.ActionLink("Выйти", "LogOff", "Account") ]
     </text>
 }
-else {
-<a id="vkLogin" href="#">Войти через "Вконтакте"</a>
-	@:[ @Html.ActionLink("Войти", "LogOn", "Account") ]
-	
+else
+{
+	<div id="loginPanel" class="slide-popup">
+        <div class="actions"><a class="awesome small" id="vkLogin" href="#">Войти</a><a class="awesome small" id="showSmallLogon" href="#">&nu;</a></div>
+        <div id="loginContent" class="hidden container">
+            @Html.Partial("LogOn", Model.LogOnModel)
+        </div>
+    </div>
 }
 
 <script>

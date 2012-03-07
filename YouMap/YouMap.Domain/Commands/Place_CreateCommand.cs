@@ -1,5 +1,6 @@
 ﻿using Paralect.Domain;
 using Paralect.ServiceBus;
+using YouMap.Domain.Data;
 using mPower.Framework;
 
 namespace YouMap.Domain.Commands
@@ -12,13 +13,11 @@ namespace YouMap.Domain.Commands
 
         public string Icon { get; set; }
 
-        public double Longitude { get; set; }
-
-        public double Latitude { get; set; }
-
         public string Description { get; set; }
 
         public string Address { get; set; }
+
+        public Location Location { get; set; }
     }
 
     public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
@@ -37,8 +36,7 @@ namespace YouMap.Domain.Commands
                                Description = message.Description,
                                CreatorId = message.Metadata.UserId,
                                Icon = message.Icon,
-                               Latitude = message.Latitude,
-                               Longitude = message.Longitude
+                               Location = message.Location
                            };
             var ar = new PlaceAR(data,message.Metadata);
             Repository.Save(ar);

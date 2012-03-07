@@ -61,9 +61,9 @@ YouMap.Map = function ($) {
             });
         });
 
-        YouMap.Geolocation.Locate(function(location) {          
-            setMapCenter(location.Sa, location.Ta);
-            updateUserMarker(location);
+        YouMap.Geolocation.Locate(function(x,y) {          
+            setMapCenter(x, y);
+            updateUserMarker(x,y);
         });
         startUpdateLocation();
         //$("#map").attr("style", "height: 213px; position: relative; background-color: rgb(229, 227, 223); overflow: initial;");
@@ -80,21 +80,23 @@ YouMap.Map = function ($) {
         YouMap.Vk.Map.Initialize();
     };
     
-    var updateUserMarker = function (location) {
+    var updateUserMarker = function (x,y,dontCheckNearby) {
         userLocation = location;
         if (userMarker) {
-            userMarker.Latitude = location.Sa;
-            userMarker.Longitude = location.Ta;
-            Request.get("/Map/CheckNearby").addParams({
-                Latitude: location.Sa,
-                Longitude: location.Sa
-            });
+            userMarker.Latitude = x;
+            userMarker.Longitude = y;       
         } else {
             userMarker = createMarker({
-                Latitude: location.Sa,
-                Longitude: location.Ta,
+                Latitude: x,
+                Longitude: y,
                 Title: "Я"
             });
+        }
+        if (!dontCheckNearby) {
+            Request.get("/Map/CheckNearby").addParams({
+                Latitude: x,
+                Longitude: y
+            }).send();
         }
     };
 
@@ -159,7 +161,7 @@ YouMap.Map = function ($) {
 
     var setMapHeight = function()
     {
-        var height = $(window).height() - $("header").height();
+        var height = $(window).height() - $("header").height() - 20;
         if ($("#controlPanel").length > 0) {
             $("#map").css("height", height - $("#controlPanel").height());
         } else {

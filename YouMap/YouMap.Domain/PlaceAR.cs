@@ -24,8 +24,7 @@ namespace YouMap.Domain
                 Address = data.Address,
                 CreatorId = data.CreatorId,
                 Icon = data.Icon,
-                Latitude = data.Latitude,
-                Longitude = data.Longitude
+                Location = data.Location
             });
         }
 
@@ -34,8 +33,7 @@ namespace YouMap.Domain
             Apply(new Place_LocationChanged
                       {
                           Id = placeId,
-                          Latitude = location.Latitude,
-                          Longitude = location.Longitude
+                          Location = location
                       });
         }
 

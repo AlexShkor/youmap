@@ -1,5 +1,6 @@
 ﻿using System;
 using Paralect.Domain;
+using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Domain.Events;
 using mPower.Framework;
@@ -8,6 +9,11 @@ namespace YouMap.Domain
 {
     public class UserAR : YoumapAR
     {
+        public UserAR()
+        {
+            
+        }
+
         public UserAR(string userId, UserData userData, ICommandMetadata metadata)
         {
             _id = userId;
@@ -55,6 +61,19 @@ namespace YouMap.Domain
             });
         }
 
+        public void AddCheckIn(CheckInData data)
+        {
+            Apply(new User_CheckInAddedEvent
+                      {
+                          Location = data.Location,
+                          Memo = data.Memo,
+                          PlaceId = data.PlaceId,
+                          Title = data.Title,
+                          UserId = _id,
+                          Visited = DateTime.Now
+                      });
+        }
+
         #region Object Reconstruction
 
         protected void On(User_CreatedEvent created)
@@ -72,10 +91,9 @@ namespace YouMap.Domain
 
         protected void On(User_ImportedFromVkEvent user)
         {
+            _id = user.UserId;
         }
 
         #endregion
-
-        
     }
 }

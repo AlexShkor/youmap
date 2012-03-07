@@ -21,8 +21,7 @@ namespace YouMap.EventHandlers
                           {
                               Id = message.Id,
                               CreatorId = message.CreatorId,
-                              Latitude = message.Latitude,
-                              Longitude = message.Longitude,
+                              Location = message.Location,
                               Title = message.Title,
                               Address = message.Address,
                               Description = message.Description,

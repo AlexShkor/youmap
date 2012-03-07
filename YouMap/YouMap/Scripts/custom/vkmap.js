@@ -5,13 +5,20 @@ YouMap.Vk.Panel = function($) {
     var initialize = function(isVkUser) {
         if(isVkUser) {
             $("#showSettings").click(function() {
-                $("#vkPanel .setting").slideToggle("fast");
+                $("#vkPanel .container").slideToggle("fast");
             });
         }
     };
 
+    var userView = function() {
+        $("#showSmallLogon").click(function () {
+            $("#loginPanel .container").slideToggle("fast");
+        });
+    };
+
     return {
-        Initialize: initialize
+        Initialize: initialize,
+        UserView: userView
     };
 }(jQuery);
 
@@ -49,7 +56,7 @@ YouMap.Vk.Map = function($) {
                                 var item = data.jsonItems.locations[i];
                                 var friend = friends[j];
                                 if (item.Id == friend.uid) {
-                                    createFriendMarker(friend, item.Latitude, item.Longitude);
+                                    createFriendMarker(friend,item );
                                 }
                             }
                         }
@@ -59,10 +66,10 @@ YouMap.Vk.Map = function($) {
         });
     };
 
-    var createFriendMarker = function(friend, x, y) {
+    var createFriendMarker = function(friend,item) {
         var marker = createMarker({
-            Latitude: x,
-            Longitude: y,
+            Latitude: item.Latitude,
+            Longitude: item.Longitude,
             Title: friend.first_name + " " + friend.last_name,
             Icon: {
                 Path: friend.photo,

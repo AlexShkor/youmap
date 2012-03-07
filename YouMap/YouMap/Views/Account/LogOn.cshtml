@@ -4,11 +4,6 @@
     ViewBag.Title = "Log On";
 }
 
-<h2>Log On</h2>
-<p>
-    Введите ваш e-mail и пароль или @Html.ActionLink("зарегистрируйтесь", "Register") 
-</p>
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
@@ -38,11 +33,13 @@
             <div class="editor-label">
                 @Html.CheckBoxFor(m => m.RememberMe)
                 @Html.LabelFor(m => m.RememberMe)
+                <a class="colorbox" href="@Url.Action("Register","Account")">Регистрация</a>
             </div>
 
             <p>
                 <input type="submit" value="Войти" />
             </p>
+            
         </fieldset>
     </div>
 }

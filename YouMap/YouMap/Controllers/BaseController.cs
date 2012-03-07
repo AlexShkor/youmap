@@ -59,6 +59,16 @@ namespace YouMap.Controllers
             CommandService.Send(commands);
         }
 
+        protected ActionResult RespondTo(object model)
+        {
+            return RespondTo(request =>
+            {
+                request.Html = () => model != null ? View(model) : View();
+                request.Ajax = () => model != null ? PartialView(model) : PartialView();
+                request.Json = () => Result();
+            });
+        }
+
         //public void SendAsync(params ICommand[] commands)
         //{
         //    if (SessionContext.IsUserAuthorized())

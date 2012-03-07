@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using YouMap.Domain.Data;
 
 namespace YouMap.Documents.Documents
 {
@@ -11,9 +12,7 @@ namespace YouMap.Documents.Documents
 
         public string CreatorId { get; set; }
 
-        public double Longitude { get; set; }
-
-        public double Latitude { get; set; }
+        public Location Location { get; set; }
 
         public string Icon { get; set; }
 

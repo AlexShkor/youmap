@@ -46,7 +46,7 @@ namespace YouMap.Documents.Documents
 
         public bool IsActive { get; set; }
 
-        public IEnumerable<CheckIn> CheckIns { get; set; } 
+        public IEnumerable<CheckInDocument> CheckIns { get; set; } 
 
         public string Name
         {
@@ -62,7 +62,7 @@ namespace YouMap.Documents.Documents
 
         public UserDocument()
         {
-            CheckIns = new List<CheckIn>();
+            CheckIns = new List<CheckInDocument>();
             Permissions = new List<UserPermissionEnum>();
         }
     }

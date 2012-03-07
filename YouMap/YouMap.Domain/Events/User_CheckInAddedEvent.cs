@@ -1,14 +1,11 @@
-﻿using YouMap.Controllers;
+﻿using System;
+using Paralect.Domain;
 using YouMap.Domain.Data;
 
-namespace YouMap.Models
+namespace YouMap.Domain.Events
 {
-    public class CheckInModel
+    public class User_CheckInAddedEvent: Event
     {
-        public PlaceModel PlaceModel { get; set; }
-
-        public bool DisplayPlace { get; set; }
-
         public string Memo { get; set; }
 
         public string Title { get; set; }
@@ -16,5 +13,9 @@ namespace YouMap.Models
         public Location Location { get; set; }
 
         public string PlaceId { get; set; }
+
+        public string UserId { get; set; }
+
+        public DateTime Visited { get; set; }
     }
 }

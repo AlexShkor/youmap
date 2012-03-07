@@ -11,7 +11,8 @@ namespace YouMap.EventHandlers
     public class UserDocumentEventHandler: 
         IMessageHandler<User_CreatedEvent>,
         IMessageHandler<User_ImportedFromVkEvent>,
-        IMessageHandler<User_MarkUdatedEvent>
+        IMessageHandler<User_MarkUdatedEvent>,
+        IMessageHandler<User_CheckInAddedEvent>
     {
         private readonly UserDocumentService _documentService;
 
@@ -50,10 +51,24 @@ namespace YouMap.EventHandlers
             var mark = new UserMarkDocument
                            {
                                Location = message.Location,
-                               Id = message.UserId +"mark", //has no sense, may be deleted
                                Visited = message.Visited
                            };
             var update = Update.Set("LastMark", BsonDocument.Create(mark));
+            _documentService.Update(query,update);
+        }
+
+        public void Handle(User_CheckInAddedEvent message)
+        {
+            var query = Query.EQ("_id", message.UserId);
+            var checkIn = new CheckInDocument
+                              {
+                                  Location = message.Location,
+                                  Memo = message.Memo,
+                                  Title = message.Title,
+                                  Visited = message.Visited,
+                                  IsHidden = false
+                              };
+            var update = Update.PushWrapped("CheckIns", checkIn);
             _documentService.Update(query,update);
         }
     }

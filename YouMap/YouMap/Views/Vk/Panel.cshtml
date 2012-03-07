@@ -9,9 +9,9 @@
 @if(Model.IsVkUser)
 {
     
-    <div id="vkPanel">
+    <div id="vkPanel" class="slide-popup">
         <div class="actions"><a class="awesome small" href="@Url.Action("CheckIn","Map")">Отметиться</a><a class="awesome small" id="showSettings" href="#">&nu;</a></div>
-        <div class="hidden setting">
+        <div class="hidden container">
             <div>
                 @Html.CheckBoxFor(x => x.ShareLocation)
                 @Html.LabelFor(x => x.ShareLocation,"Показывать меня друзьям")

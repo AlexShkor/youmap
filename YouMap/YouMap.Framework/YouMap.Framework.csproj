@@ -110,6 +110,7 @@
     <Compile Include="Environment\HttpApplicationStructureMapContext.cs" />
     <Compile Include="Environment\IIdGenerator.cs" />
     <Compile Include="Environment\MongoObjectIdGenerator.cs" />
+    <Compile Include="Extensions\TimeSpan.cs" />
     <Compile Include="ThreadSafeDictionary.cs" />
     <Compile Include="Environment\PassStateAttribute.cs" />
     <Compile Include="Environment\StructureMapDependencyResolver.cs" />

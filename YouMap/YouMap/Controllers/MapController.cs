@@ -52,19 +52,33 @@ namespace YouMap.Controllers
                            Address = doc.Address,
                            Description = doc.Description,
                            Icon = Path.Combine(contentUrl.Replace("64x64", "24x24"), doc.Icon),
-                           Latitude = doc.Latitude,
-                           Longitude = doc.Longitude,
+                           Latitude = doc.Location.Latitude,
+                           Longitude = doc.Location.Longitude,
                            Title = doc.Title
                        };
         }
 
-        public ActionResult CheckNearby(Location? location)
+        
+        public ActionResult CheckNearby(double? latitude, double? longitude)
         {
-            if (location.HasValue)
+            if (latitude.HasValue && longitude.HasValue && LastLocation == null && SessionContext.IsUserAuthorized())
             {
-                
+                var location = new Location(latitude.Value, longitude.Value);
+                LastLocation = location;
+                var command = new User_UpdateMarkCommand
+                                  {
+                                      UserId = User.Id,
+                                      Location = location
+                                  };
+                Send(command);
             }
             return Result();
+        }
+
+        protected Location? LastLocation
+        {
+            get { return (Location?) Session["LastLocation"]; }
+            set { Session["LastLocation"] = value; }
         }
 
         [HttpGet]
@@ -108,8 +122,8 @@ namespace YouMap.Controllers
                         {
                             Id = _idGenerator.Generate(),
                             Icon = Path.GetFileName(model.Icon),
-                            Latitude = double.Parse(model.Latitude,CultureInfo.InvariantCulture),
-                            Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture),
+                            Location = new Location(double.Parse(model.Latitude,CultureInfo.InvariantCulture),
+                                double.Parse(model.Longitude, CultureInfo.InvariantCulture)),
                             Title = model.Title,
                             Description = model.Description,
                             Address = model.Address
@@ -174,9 +188,18 @@ namespace YouMap.Controllers
         }
 
         [HttpGet]
-        public ActionResult CheckIn()
+        public ActionResult CheckIn(Location? location)
         {
             var model = new CheckInModel();
+            if (location.HasValue)
+            {
+                var place = _documentService.GetByFilter(new PlaceDocumentFilter { Location = location}).SingleOrDefault();
+                if (place != null)
+                {
+                    model.DisplayPlace = true;
+                    model.PlaceModel = Map(place);
+                }
+            }
             return RespondTo(request =>
                                  {
                                      request.Ajax = () => PartialView(model);
@@ -188,7 +211,13 @@ namespace YouMap.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                var command = new User_AddCheckInCommand
+                                  {
+                                      Memo = model.Memo,
+                                      Title = model.Title,
+                                      Location = model.Location,
+                                      PlaceId = model.PlaceId
+                                  };
             }
             return Result();
         }

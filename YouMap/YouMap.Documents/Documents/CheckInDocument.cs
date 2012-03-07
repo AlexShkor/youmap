@@ -1,8 +1,9 @@
 ﻿using System;
+using YouMap.Domain.Data;
 
-namespace YouMap.Domain.Data
+namespace YouMap.Documents.Documents
 {
-    public class CheckIn
+    public class CheckInDocument
     {
         public Location Location { get; set; }
 
@@ -14,4 +15,5 @@ namespace YouMap.Domain.Data
 
         public bool IsHidden { get; set; }
     }
+
 }

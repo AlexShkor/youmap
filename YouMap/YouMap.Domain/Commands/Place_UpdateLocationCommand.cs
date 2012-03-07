@@ -9,9 +9,7 @@ namespace YouMap.Domain.Commands
     {
         public string Id { get; set; }
 
-        public double Longitude { get; set; }
-
-        public double Latitude { get; set; }
+        public Location Location { get; set; }
     }
 
     public class Place_UpdateLocationCommandHandler: CommandHandler<Place_UpdateLocationCommand>
@@ -25,7 +23,7 @@ namespace YouMap.Domain.Commands
         {
             var ar = Repository.GetById<PlaceAR>(message.Id);
             ar.SetCommandMetadata(message.Metadata);
-            ar.UpdateLocation(message.Id, new Location(message.Latitude, message.Longitude));
+            ar.UpdateLocation(message.Id, message.Location);
             Repository.Save(ar);
         }
     }

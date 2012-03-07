@@ -35,7 +35,7 @@ namespace YouMap.Controllers
 
         public ActionResult LogOn()
         {
-            return View();
+            return RespondTo(new LogOnModel());
         }
 
         //
@@ -76,7 +76,7 @@ namespace YouMap.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            return RespondTo(new RegisterModel());
         }
 
         [HttpGet]
@@ -108,8 +108,10 @@ namespace YouMap.Controllers
                     ModelState.AddModelError("Error", e.Message);
                 }
             }
-            return View("LogOn", model);
+            return RespondTo(model);
         }
+
+       
 
         [HttpPost]
         public ActionResult Register(RegisterModel model)
@@ -143,6 +145,7 @@ namespace YouMap.Controllers
                 var user = VkAuth.LoginFromCookie(Request.Cookies);
                 FormsAuthentication.SetAuthCookie(user.Name, true);
                 SessionContext.SetUser(user);
+                AjaxResponse.AddJsonItem("Success",true);
             }
             catch(Exception e)
             {
