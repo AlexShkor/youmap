@@ -9,7 +9,7 @@
 @if (Model.IsAuthenticated)
 {
     <div id="profilePanel" class="slide-popup">
-        <div class="actions"><a class="awesome small" href="#">@Model.DisplayName</a><a class="awesome small" href="#">&nu;</a></div>
+        <div class="actions"><a class="awesome lightgreen small" href="#">@Model.DisplayName</a><a class="awesome lightgreen small" href="#">&nu;</a></div>
         <div id="profileContent" class="hidden container">
             @Html.Action("Profile","Account")
             @Html.ActionLink("Выйти", "LogOff", "Account")

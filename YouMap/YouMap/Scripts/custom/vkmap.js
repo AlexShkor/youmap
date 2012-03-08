@@ -15,8 +15,14 @@ YouMap.Vk.Panel = function($) {
             $("#loginPanel .container").slideToggle("fast");
         });
 
-        $("#profilePanel actions a").click(function() {
+        $("#profilePanel .actions a").click(function() {
             $("#profilePanel .container").slideToggle("fast");
+        });
+    };
+
+    var controlPanel = function () {
+        $("#showControls").click(function () {
+            $("#topControl .container").slideToggle("fast");
         });
     };
 
@@ -35,7 +41,8 @@ YouMap.Vk.Panel = function($) {
     return {
         Initialize: initialize,
         UserView: userView,
-        CheckInInit: checkInInit
+        CheckInInit: checkInInit,
+        ControlPanel: controlPanel
     };
 }(jQuery);
 

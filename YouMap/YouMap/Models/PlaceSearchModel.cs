@@ -6,11 +6,8 @@ namespace YouMap.Models
     {
         public string Serach { get; set; }
 
-        public Location UserLocation { get; set; }
+        public string Latitude { get; set; }
 
-        public PlaceSearchModel()
-        {
-            UserLocation = new Location();
-        }
+        public string Longitude { get; set; }
     }
 }

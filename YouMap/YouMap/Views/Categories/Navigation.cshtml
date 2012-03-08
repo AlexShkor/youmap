@@ -1,11 +1,11 @@
 ﻿@using YouMap.Controllers
 @model IEnumerable<CategoryModel>
-
-		<nav>
-				<ul id="menu">
-				@foreach (var item in Model)
-                {
-                    <li>@Html.ActionLink(@item.Name,"Filter", "Map",new {categoryId = item.Id},new {categoryId = item.Id})</li>
+<nav>
+    <ul id="menu">
+        @foreach (var item in Model)
+        {
+            <li>@Html.ActionLink(@item.Name, "Filter", "Map", new { categoryId = item.Id }, new { categoryId = item.Id })
+            </li>
                 }
-				</ul>
-			</nav>
+    </ul>
+</nav>

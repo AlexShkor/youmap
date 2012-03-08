@@ -447,6 +447,14 @@ margin: 5px;
 	.orange.awesome:hover							{ background-color: #d45500; }
 	.yellow.awesome, .yellow.awesome:visited		{ background-color: #ffb515; }
 	.yellow.awesome:hover							{ background-color: #fc9200; }
+    .lightgreen.awesome, .lightgreen.awesome:visited
+{
+    background-color: #64C69A;
+}
+	.lightgreen.awesome:hover
+{
+    background-color: #54C08F;
+}
 
 input.awesome
 {
@@ -536,8 +544,7 @@ margin-left: 10px;
 .slide-popup
 {
     padding: 5px;
-    float: left;
-    margin-left: 50px;
+    float: right;
 }
 
 .slide-popup .actions a
@@ -546,6 +553,16 @@ margin-left: 10px;
     text-decoration: none;
     color: white;
     background-color: #598EDD;
+}
+
+.slide-popup .actions a:hover
+{
+    background-color: #4882D9;
+}
+
+.slide-popup .actions a.lightgreen:hover
+{
+    background-color: #54C08F;
 }
 
     .slide-popup .container
@@ -579,7 +596,7 @@ margin-left: 10px;
             float: left;
         }
 
-#loginPanel .container
+#loginPanel .container, #profilePanel .container
 {
     right: 20px;
     width: 280px;

@@ -98,21 +98,8 @@ namespace YouMap.Controllers
                 model.Map.Height = 600;
                 model.DisplayMap = true;
             }
-            return GetAddPlaceResponse(model);
-        }
-
-        private ActionResult GetAddPlaceResponse(AddPlaceModel model)
-        {
-            return RespondTo
-                (request =>
-                     {
-                         request.Ajax = request.Json = () =>
-                                                           {
-                                                               AjaxResponse.Render(".control-content", "AddPlace", model);
-                                                               return Result();
-                                                           };
-                         request.Html = () => View(model);
-                     });
+            AjaxResponse.Render(".control-content", "AddPlace", model);
+            return RespondTo(model);
         }
 
         [HttpPost]
@@ -137,9 +124,9 @@ namespace YouMap.Controllers
                             Address = model.Address
                         };
                 Send(command);
-                RedirectToAction("ControlPanel");
             }
-            return GetAddPlaceResponse(model);
+            AjaxResponse.Render(".control-content", "AddPlace", model);
+            return RespondTo(model);
         }
 
         [HttpGet]
@@ -148,11 +135,13 @@ namespace YouMap.Controllers
             var model = new ControlPanelModel();
             if (User != null)
             {
-                model.IsAdminPanelVisible = User.HasPermissions(UserPermissionEnum.Admin);
-                model.IsAdvertiserPanelVisible = User.HasPermissions(UserPermissionEnum.Advertiser);
+                model.IsAdminPanelVisible = IsAdmin;
+                model.IsAdvertiserPanelVisible = IsAdvertiser || IsAdmin;
             }
             return PartialView(model);
         }
+
+       
 
         public ActionResult Filter(MapFilter filter)
         {

@@ -14,7 +14,10 @@
             <div id="title">
                 <h1>YOUMAP</h1>
             </div>
-            @Html.Partial("TopBar")
+            <div class="top-bar">
+                @Html.Partial("TopBar")
+            </div>
+            
         </header>
         <section id="main">
             @RenderBody()

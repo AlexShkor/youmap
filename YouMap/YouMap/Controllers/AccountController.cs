@@ -208,7 +208,7 @@ namespace YouMap.Controllers
             model.IsAuthenticated = SessionContext.IsUserAuthorized();
             if (model.IsAuthenticated)
             {
-                model.DisplayName = user.Name;
+                model.DisplayName = user.Name ?? user.Email;
                 model.DisplayAdmin = user.HasPermissions(UserPermissionEnum.Admin);
             }
             return model;

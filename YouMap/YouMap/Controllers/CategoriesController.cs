@@ -46,7 +46,7 @@ namespace YouMap.Controllers
         {
             var model = _documentService.GetAll().Select(Map);
             AjaxResponse.Render(".control-content", "Index", model);
-            return Result();
+            return RespondTo(model);
         }
 
         private CategoryModel Map(CategoryDocument doc)
