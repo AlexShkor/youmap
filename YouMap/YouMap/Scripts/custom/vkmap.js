@@ -14,11 +14,28 @@ YouMap.Vk.Panel = function($) {
         $("#showSmallLogon").click(function () {
             $("#loginPanel .container").slideToggle("fast");
         });
+
+        $("#profilePanel actions a").click(function() {
+            $("#profilePanel .container").slideToggle("fast");
+        });
+    };
+
+    var checkInInit = function() {
+        $(".checkin .ajax-submit").click(function() {
+            var location = YouMap.Map.GetUserLocation();
+            $(".checkin #Latitude").val(location.x);
+            $(".checkin #Longitude").val(location.y);
+
+            VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + "/#:" + location.x + ":" + location.y }, function() {
+
+            });
+        });
     };
 
     return {
         Initialize: initialize,
-        UserView: userView
+        UserView: userView,
+        CheckInInit: checkInInit
     };
 }(jQuery);
 

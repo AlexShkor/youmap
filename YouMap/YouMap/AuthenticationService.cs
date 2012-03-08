@@ -52,7 +52,7 @@ namespace YouMap
             {
                 throw new AuthenticationException("User already exist");
             }
-            CreateUser(email, password, UserPermissionEnum.Admin);
+            CreateUser(email, password, UserPermissionEnum.Admin,UserPermissionEnum.User);
         }
 
         private void CreateUser(string email, string password, params UserPermissionEnum[] permissions)
@@ -60,6 +60,7 @@ namespace YouMap
             var command = new User_CreateCommand
             {
                 UserId = _idGenerator.Generate(),
+                //TODO: Implement encryption
                 Password = password,
                 Email = email,
                 Permissions = new List<UserPermissionEnum>(permissions)
@@ -85,7 +86,7 @@ namespace YouMap
 
         public bool ValidateUser(string email, string password)
         {
-            return _userDocumentService.GetByFilter(new UserFilter { Email = email }).Any(x => x.Password == password);
+            return _userDocumentService.GetByFilter(new UserFilter { Email = email }).Any(x => x.Password == password); //TODO: decrypt
         }
 
         public void Register(string email, string password)
@@ -224,7 +225,7 @@ namespace YouMap
     public class VkAuthenticationService: IVkAuthenticationService
     {
         private readonly UserDocumentService _userDocumentService;
-        private string AppVkSecret;
+        private string AppVkSecret = "jqd7ytRzXmmvcvEAgccZ";
 
         const string VkAppId = "2831071";
         protected string VkCookiesKey { get { return "vk_app_" + VkAppId; } }

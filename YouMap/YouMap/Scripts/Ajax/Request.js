@@ -358,7 +358,7 @@ Request.prototype = {
     success: function (data) {
         // unblock UI
         this.doUnblockUI();
-
+        
 
         // getting result from untyped json object to typed Result object
         var result = Result.fromJson(data);

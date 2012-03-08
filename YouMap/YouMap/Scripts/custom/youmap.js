@@ -81,7 +81,7 @@ YouMap.Map = function ($) {
     };
     
     var updateUserMarker = function (x,y,dontCheckNearby) {
-        userLocation = location;
+        userLocation = {x: x, y: y};
         if (userMarker) {
             userMarker.Latitude = x;
             userMarker.Longitude = y;       
@@ -100,6 +100,10 @@ YouMap.Map = function ($) {
         }
     };
 
+    var getUserLocation = function() {
+        return userLocation;
+    };
+   
     var startUpdateLocation = function() {
         setTimeout(function() {
             YouMap.Geolocation.Locate(updateUserMarker);
@@ -173,7 +177,8 @@ YouMap.Map = function ($) {
         Initialize: initialize,
         SetMapCenter: setMapCenter,
         SetMapHeight: setMapHeight,
-        SearchGoogle: searchGoogle
+        SearchGoogle: searchGoogle,
+        GetUserLocation: getUserLocation
     };
 } (jQuery);
 

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace YouMap.Domain.Data
 {
@@ -16,6 +17,11 @@ namespace YouMap.Domain.Data
         {
             Latitude = latitude;
             Longitude = longitude;
+        }
+
+        public static Location Parse(string latitude, string longitude)
+        {
+            return new Location(double.Parse(latitude, CultureInfo.InvariantCulture), double.Parse(longitude, CultureInfo.InvariantCulture));
         }
     }
 }

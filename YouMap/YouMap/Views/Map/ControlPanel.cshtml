@@ -1,7 +1,22 @@
-﻿@using Jmelosegui.Mvc.Controls
-@using YouMap.Controllers
-@model MapModel
-
-@Html.Partial("ControlPanelPartial")
-
-@Html.Partial("Index",Model)
+﻿@model YouMap.Models.ControlPanelModel
+    
+@if(Model.Visible)
+{
+    <div id="top-control" class="slide-popup">
+        <div class="actions"><a class="awesome small colorbox" href="#">Панель управления</a><a class="awesome small" id="showSettings" href="#">&nu;</a></div>
+        <div class="hidden container">
+            @if(Model.IsAdvertiserPanelVisible)
+            {
+                <div>
+                    @Html.ActionLink("Добавить место", "AddPlace", null, new {id = "addPlaceLink", @class = "ajax-link"})
+                </div>
+            }
+            @if(Model.IsAdminPanelVisible)
+            {
+                <div>
+                    @Html.ActionLink("Категории", "Index", "Categories", null, new {@class = "ajax-link"})     
+                </div>
+            }   
+        </div>
+    </div>
+}

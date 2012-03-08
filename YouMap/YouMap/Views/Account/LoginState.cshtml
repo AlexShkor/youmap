@@ -8,16 +8,13 @@
           
 @if (Model.IsAuthenticated)
 {
-    <text>
-        @if (Model.DisplayAdmin)
-        {
-            <span>[
-            @Html.ActionLink("Панель Управления", "ControlPanel", "Map") 
-            ]</span>
-        }
-            Welcome <strong>@Model.DisplayName</strong>!
-        [ @Html.ActionLink("Выйти", "LogOff", "Account") ]
-    </text>
+    <div id="profilePanel" class="slide-popup">
+        <div class="actions"><a class="awesome small" href="#">@Model.DisplayName</a><a class="awesome small" href="#">&nu;</a></div>
+        <div id="profileContent" class="hidden container">
+            @Html.Action("Profile","Account")
+            @Html.ActionLink("Выйти", "LogOff", "Account")
+        </div>
+    </div>
 }
 else
 {

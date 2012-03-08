@@ -213,5 +213,10 @@ namespace YouMap.Controllers
             }
             return model;
         }
+
+        public ActionResult Profile()
+        {
+            return PartialView();
+        }
     }
 }

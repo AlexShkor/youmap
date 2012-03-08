@@ -305,6 +305,7 @@
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\VkController.cs" />
     <Compile Include="Models\CheckInModel.cs" />
+    <Compile Include="Models\ControlPanelModel.cs" />
     <Compile Include="Models\PlaceSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VkLoginModel.cs" />
@@ -902,9 +903,6 @@
     <Content Include="Views\Map\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Map\ControlPanelPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Map\AddPlace.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -933,6 +931,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Map\CheckIn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\TopBar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Profile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Scripts.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

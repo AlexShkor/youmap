@@ -1,5 +1,11 @@
 ﻿@model YouMap.Models.CheckInModel
 
+<script>
+    $(document).ready(function () {
+        YouMap.Vk.Panel.CheckInInit();
+    });
+</script> 
+
 <div class="checkin">
     @using(Html.BeginForm("CheckIn","Map"))
     {
@@ -12,6 +18,8 @@
             </div>
         }
         <div>
+            @Html.HiddenFor(x=> x.Latitude)
+            @Html.HiddenFor(x=> x.Longitude)
             @Html.TextAreaFor(x => x.Memo)
             <p>
                 <input type="submit" class="ajax-submit awesome small" value="Отметится" />

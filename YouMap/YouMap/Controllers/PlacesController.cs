@@ -33,6 +33,11 @@ namespace YouMap.Controllers
             return Json(places);
         }
 
+        public ActionResult SearchForm()
+        {
+            return PartialView();
+        }
+
         private bool Compare(string title, string term)
         {
             title = title.ToLower();

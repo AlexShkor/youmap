@@ -143,20 +143,15 @@ namespace YouMap.Controllers
         }
 
         [HttpGet]
-        [Admin]
-        [Authorize]
         public ActionResult ControlPanel()
         {
-            return RespondTo(request =>
-                {
-                    request.Ajax = () => PartialView("ControlPanelPartial");
-                    request.Html = () =>
-                            {
-                                var model = new MapModel();
-                                model.Markers = _documentService.GetAll().Select(Map);
-                                return View(model);
-                            };
-                });
+            var model = new ControlPanelModel();
+            if (User != null)
+            {
+                model.IsAdminPanelVisible = User.HasPermissions(UserPermissionEnum.Admin);
+                model.IsAdvertiserPanelVisible = User.HasPermissions(UserPermissionEnum.Advertiser);
+            }
+            return PartialView(model);
         }
 
         public ActionResult Filter(MapFilter filter)
@@ -218,11 +213,12 @@ namespace YouMap.Controllers
         {
             if (ModelState.IsValid)
             {
+                var location = Location.Parse(model.Latitude, model.Longitude);
                 var command = new User_AddCheckInCommand
                                   {
                                       Memo = model.Memo,
                                       Title = model.Title,
-                                      Location = model.Location,
+                                      Location =  location,
                                       PlaceId = model.PlaceId,
                                       UserId = User.Id
                                   };

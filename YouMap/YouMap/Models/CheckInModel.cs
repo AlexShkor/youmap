@@ -11,13 +11,11 @@ namespace YouMap.Models
 
         public string Title { get; set; }
 
-        public Location Location { get; set; }
-
         public string PlaceId { get; set; }
 
-        public CheckInModel()
-        {
-            Location = new Location();
-        }
+        public string Latitude { get; set; }
+
+        public string Longitude { get; set; }
+
     }
 }

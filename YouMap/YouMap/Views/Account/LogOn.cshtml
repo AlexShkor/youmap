@@ -9,7 +9,7 @@
 
 @Html.ValidationSummary(true, "Неверное имя или пароль. Попробуйте еще раз.")
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("LogOn","Account")) {
     <div>
         <fieldset>
             <legend>Авторизация</legend>
