@@ -8,7 +8,15 @@ $(document).ready(function () {
 
     $(document).on("click", ".colorbox", function (event) {
         var url = $(this).attr("href");
-        $.colorbox({ href: url });
+        $.colorbox({
+            href: url,
+            onComplete: function() {
+                $.colorbox.resize();
+            },
+            overlayClose: true,
+            scrolling: false,
+            close: "<a>закрыть</a>"
+        });
         return false;
     });
 
@@ -16,6 +24,12 @@ $(document).ready(function () {
         var form = $(this).parents("form");
         Request.named(form.attr("action")).setForm(form).addSuccess("resize", YouMap.Map.SetMapHeight).send();
         return false;
+    });
+
+    $("#cboxContent input[type='submit']").live("click", function () {
+        setTimeout(function() {
+            $.colorbox.resize();
+        }, 1);
     });
     
 });

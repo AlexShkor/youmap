@@ -4,6 +4,7 @@ using YouMap.Domain.Data;
 
 namespace YouMap.Documents.Documents
 {
+    [BsonIgnoreExtraElements]
     public class UserMarkDocument
     {
         public string UserId { get; set; }

@@ -6,9 +6,9 @@ namespace mPower.Framework
 {
     public class MPowerSettings
     {
-        public string MongoWriteDatabaseConnectionString = "mongodb://localhost:27020/youmap_write";
-        public string MongoReadDatabaseConnectionString = "mongodb://localhost:27020/youmap_read";
-        public string MongoTempDatabaseConnectionString = "mongodb://localhost:27020/youmap_temp";
+        public string MongoWriteDatabaseConnectionString = "mongodb://localhost:27020/youmap_write1";
+        public string MongoReadDatabaseConnectionString = "mongodb://localhost:27020/youmap_read1";
+        public string MongoTempDatabaseConnectionString = "mongodb://localhost:27020/youmap_temp1";
         public string InputQueueName = "youmap_input_msmq";
         public string ErrorQueueName = "youmap_error_msmq";
         //{

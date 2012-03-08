@@ -63,7 +63,11 @@ namespace YouMap.Controllers
         {
             if (latitude.HasValue && longitude.HasValue && LastLocation == null && SessionContext.IsUserAuthorized())
             {
-                var location = new Location(latitude.Value, longitude.Value);
+                var location = new Location
+                                   {
+                                       Latitude = latitude.Value,
+                                       Longitude = longitude.Value
+                                   };
                 LastLocation = location;
                 var command = new User_UpdateMarkCommand
                                   {
@@ -75,9 +79,9 @@ namespace YouMap.Controllers
             return Result();
         }
 
-        protected Location? LastLocation
+        protected Location LastLocation
         {
-            get { return (Location?) Session["LastLocation"]; }
+            get { return Session["LastLocation"] as Location; }
             set { Session["LastLocation"] = value; }
         }
 
@@ -118,12 +122,16 @@ namespace YouMap.Controllers
         {
             if (ModelState.IsValid)
             {
+                var location = new Location
+                                   {
+                                       Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
+                                       Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture)
+                                   };
                 var command = new Place_CreateCommand()
                         {
                             Id = _idGenerator.Generate(),
                             Icon = Path.GetFileName(model.Icon),
-                            Location = new Location(double.Parse(model.Latitude,CultureInfo.InvariantCulture),
-                                double.Parse(model.Longitude, CultureInfo.InvariantCulture)),
+                            Location = location,
                             Title = model.Title,
                             Description = model.Description,
                             Address = model.Address
@@ -188,24 +196,23 @@ namespace YouMap.Controllers
         }
 
         [HttpGet]
-        public ActionResult CheckIn(Location? location)
+        public ActionResult CheckIn(double? latitude, double? longitude)
         {
             var model = new CheckInModel();
-            if (location.HasValue)
+            if (latitude.HasValue && longitude.HasValue)
             {
+                var location = new Location(latitude.Value,longitude.Value);
                 var place = _documentService.GetByFilter(new PlaceDocumentFilter { Location = location}).SingleOrDefault();
                 if (place != null)
                 {
                     model.DisplayPlace = true;
-                    model.PlaceModel = Map(place);
+                    model.PlaceId = place.Id;
+                    model.Title = place.Title;
                 }
             }
-            return RespondTo(request =>
-                                 {
-                                     request.Ajax = () => PartialView(model);
-                                     request.Html = () => View(model);
-                                 });
+            return PartialView(model);
         }
+
         [HttpPost]
         public ActionResult CheckIn(CheckInModel model)
         {
@@ -216,8 +223,11 @@ namespace YouMap.Controllers
                                       Memo = model.Memo,
                                       Title = model.Title,
                                       Location = model.Location,
-                                      PlaceId = model.PlaceId
+                                      PlaceId = model.PlaceId,
+                                      UserId = User.Id
                                   };
+                Send(command);
+                AjaxResponse.ClosePopup = true;
             }
             return Result();
         }

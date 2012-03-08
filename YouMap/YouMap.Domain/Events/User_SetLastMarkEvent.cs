@@ -8,6 +8,6 @@ namespace YouMap.Domain.Events
     {
         public string UserId { get; set; } 
         public DateTime Visited { get; set; }
-        public Location Location { get; set; } 
+        public Location Location { get; set; }
     }
 }

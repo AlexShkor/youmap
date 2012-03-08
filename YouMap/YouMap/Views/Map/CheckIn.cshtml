@@ -3,6 +3,19 @@
 <div class="checkin">
     @using(Html.BeginForm("CheckIn","Map"))
     {
-        
+        if (Model.DisplayPlace)
+        {
+
+            <div>
+                @Html.HiddenFor(x => x.PlaceId)
+                @Html.LabelFor(x => x.Memo, Model.Title)
+            </div>
+        }
+        <div>
+            @Html.TextAreaFor(x => x.Memo)
+            <p>
+                <input type="submit" class="ajax-submit awesome small" value="Отметится" />
+            </p>
+        </div>
     }
 </div>

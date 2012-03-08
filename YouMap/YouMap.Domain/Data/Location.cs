@@ -1,11 +1,18 @@
+using System;
+
 namespace YouMap.Domain.Data
 {
-    public struct Location
+    public class Location
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public Location(double latitude, double longitude) : this()
+        public Location()
+        {
+
+        }
+
+        public Location(double latitude, double longitude)
         {
             Latitude = latitude;
             Longitude = longitude;

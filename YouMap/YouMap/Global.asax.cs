@@ -1,14 +1,6 @@
-﻿
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security;
-using System.Web;
+﻿using System;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
-using Microsoft.Practices.ServiceLocation;
 using Paralect.Domain;
 using Paralect.Domain.EventBus;
 using Paralect.ServiceBus;
@@ -22,6 +14,7 @@ using YouMap.EventHandlers;
 using mPower.Framework;
 using mPower.Framework.Environment;
 using mPower.Framework.Registries;
+using IIdGenerator = mPower.Framework.Environment.IIdGenerator;
 
 namespace YouMap
 {

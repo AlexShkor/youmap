@@ -315,7 +315,6 @@
     <Compile Include="Models\PlaceModel.cs" />
     <Compile Include="Models\AddPlaceModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="DependencyResolution\SmDependencyResolver.cs" />
     <Compile Include="Global.asax.cs">

@@ -53,7 +53,7 @@ namespace YouMap.EventHandlers
                                Location = message.Location,
                                Visited = message.Visited
                            };
-            var update = Update.Set("LastMark", BsonDocument.Create(mark));
+            var update = Update.Set("LastMark", mark.ToBsonDocument());
             _documentService.Update(query,update);
         }
 

@@ -7,21 +7,22 @@ body
 {
     background-color: #5c87b2;
     font-size: .85em;
-    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
-    color: #696969;
+    font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
+    font-size: 11px;
     background-image: url('images/square_bg.png');
 }
 
-header a:link {
-    color: #034af3;
-    text-decoration: underline;
+a:hover {
+text-decoration: underline;
 }
-
-header a:hover {
-    color: #1d60ff;
+a
+{
+    color: #2B587A;
     text-decoration: none;
+    cursor: pointer;
 }
 
 header a:active {
@@ -401,6 +402,13 @@ margin: 5px;
 #colorbox
 {
     background-image: url('images/black-50-opasity-pixel.png');
+      -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        overflow: hidden;
+        -webkit-box-shadow: 0 0 6px #999;
+        -moz-box-shadow: 0 0 6px #999;
+        box-shadow: 0 0 6px #999;
 }
 
 .awesome, .awesome:visited {
@@ -422,7 +430,7 @@ margin: 5px;
 
 	.awesome:hover							{ background-color: #111; color: #fff; }
 	.awesome:active							{ top: 1px; }
-	.small.awesome, .small.awesome:visited 			{ font-size: 11px; padding: ; }
+	.small.awesome, .small.awesome:visited 			{ font-size: 11px; }
 	.awesome, .awesome:visited,
 	.medium.awesome, .medium.awesome:visited 		{ font-size: 13px; font-weight: bold; line-height: 1; text-shadow: 0 -1px 1px rgba(0,0,0,0.25); }
 	.large.awesome, .large.awesome:visited 			{ font-size: 14px; padding: 8px 14px 9px; }
@@ -439,8 +447,66 @@ margin: 5px;
 	.orange.awesome:hover							{ background-color: #d45500; }
 	.yellow.awesome, .yellow.awesome:visited		{ background-color: #ffb515; }
 	.yellow.awesome:hover							{ background-color: #fc9200; }
-	
-	
+
+input.awesome
+{
+    border: none;
+}
+#cboxClose
+{
+    margin-top: -20px;
+margin-left: 10px;
+
+    cursor: pointer;
+}
+    #cboxClose a
+    {
+        color: peachpuff;
+    }
+
+#cboxContent h2
+{
+    text-align: center;
+    color: white;
+}
+
+.checkin
+{
+    width: 300px;
+    padding: 10px;
+}
+
+
+    #cboxContent p
+    {
+        text-align: center;
+    }
+
+#cboxContent textarea
+{
+    background: transparent;
+    border: none;
+    height: 120px;
+    padding: 5px;
+    width: 290px;
+    color: white;
+    -webkit-box-shadow: 0 0 6px #FFF;
+    -moz-box-shadow: 0 0 6px #FFF;
+    box-shadow: 0 0 6px #FFF;
+}
+
+#cboxContent fieldset
+{
+    color: white;
+    border: none;
+}
+
+#cboxContent .field-validation-error
+{
+    color: #F88;
+}
+
+
 	.control-panel
 {
     float: left;
@@ -523,8 +589,6 @@ margin: 5px;
 {
     float: right;
     padding-top: 2px;
-    color: #45688E;
-    text-decoration: none;
 }
 
 .control-content

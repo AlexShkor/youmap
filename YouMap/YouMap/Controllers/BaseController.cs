@@ -36,7 +36,7 @@ namespace YouMap.Controllers
         [SetterProperty]
         protected ISessionContext SessionContext { get; set; }
 
-        protected IUserIdentity User {get { return SessionContext.User; }}
+        protected new IUserIdentity User {get { return SessionContext.User; }}
 
         #endregion
 

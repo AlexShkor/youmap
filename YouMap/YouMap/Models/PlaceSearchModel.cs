@@ -7,5 +7,10 @@ namespace YouMap.Models
         public string Serach { get; set; }
 
         public Location UserLocation { get; set; }
+
+        public PlaceSearchModel()
+        {
+            UserLocation = new Location();
+        }
     }
 }

@@ -31,9 +31,9 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.EQ("CategoryId", filter.CategoryId));
             }
-            if (filter.Location.HasValue)
+            if (filter.Location != null)
             {
-                query = Query.And(query, Query.EQ("Location", BsonValue.Create(filter.Location.Value)));
+                query = Query.And(query, Query.EQ("Location", BsonValue.Create(filter.Location)));
             }
             return query;
         }
@@ -69,6 +69,6 @@ namespace YouMap.Documents.Services
     {
         public string CategoryId { get; set; }
 
-        public Location? Location { get; set; }
+        public Location Location { get; set; }
     }
 }
