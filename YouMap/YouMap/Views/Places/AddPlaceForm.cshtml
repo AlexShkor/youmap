@@ -1,0 +1,40 @@
+﻿@using System.Web.Mvc.Html
+@using YouMap.Models
+@model AddPlaceModel
+@using (Html.BeginForm())
+{
+    <script>
+    $(document).ready(function () {
+        YouMap.AddPlace.Initialize();
+    });
+    </script>
+    @Html.ValidationSummary("", new { id = "validation-summary-errors" })
+     
+    <ul class="form-wrapper">
+        <li class="row">
+            @Html.LabelFor(x => x.Address, "Адрес")
+            <span class="fieldbox">@Html.TextBoxFor(x => x.Address)
+                @Html.ValidationMessageFor(x => x.Address)
+                <a id='search' href="#">&emsp;</a></span></li>
+        <li class="row">
+            @Html.LabelFor(x => x.Title, "Название")
+            <span class="fieldbox">@Html.TextBoxFor(x => x.Title)
+            </span></li>
+        @Html.HiddenFor(x => x.Latitude)
+        @Html.HiddenFor(x => x.Longitude)
+      
+    </ul>
+    <ul class="form-wrapper">
+        <li class="row">
+            @Html.LabelFor(x => x.Icon, "Иконка")<img id="currentIcon" />
+            <span class="fieldbox">@Html.TextBoxFor(x => x.Icon)</span><a id='selectIconBtn' href="@Url.Action("PlaceIcons", "Map")">
+                Выбрать</a></li>
+        <li class="row">
+            @Html.LabelFor(x => x.Description, "Описание")
+            <span class="msgbox">@Html.TextAreaFor(x => x.Description)
+            </span></li>
+  <li>
+            <input class="ajax-submit" type="submit" id="submitPlace" value="Добавить" />
+        </li>
+    </ul>      
+}

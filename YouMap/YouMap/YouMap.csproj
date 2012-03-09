@@ -638,8 +638,6 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Account\LoginState.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -875,9 +873,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Map.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Jmelosegui.Mvc.Controls\Jmelosegui.Mvc.Controls.csproj">
       <Project>{5476DBD6-F0EC-4B7A-A616-DB42A7EF7E1B}</Project>
       <Name>Jmelosegui.Mvc.Controls</Name>
@@ -903,7 +898,7 @@
     <Content Include="Views\Map\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Map\AddPlace.cshtml" />
+    <Content Include="Views\Places\AddPlace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Map\PlaceIcons.cshtml" />
@@ -940,6 +935,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Scripts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\AddPlaceForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

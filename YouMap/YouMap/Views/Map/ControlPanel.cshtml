@@ -16,7 +16,7 @@
             @if(Model.IsAdvertiserPanelVisible)
             {
                 <div>
-                    @Html.ActionLink("Добавить место", "AddPlace", null, new {id = "addPlaceLink", @class = "colorbox"})
+                    @Html.ActionLink("Добавить место", "AddPlace", "Places",null, new {id = "addPlaceLink", @class = "colorbox"})
                 </div>
             }
             @if(Model.IsAdminPanelVisible)

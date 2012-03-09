@@ -80,15 +80,16 @@ namespace YouMap.Controllers
             CommandService.Send(commands);
         }
 
-        protected ActionResult RespondTo(object model)
+        protected ActionResult RespondTo(object model = null, string view = null)
         {
             return RespondTo(request =>
             {
-                request.Html = () => model != null ? View(model) : View();
-                request.Ajax = () => model != null ? PartialView(model) : PartialView();
+                request.Html = () => model != null ? View(view,model) : View(view);
+                request.Ajax = () => model != null ? PartialView(view,model) : PartialView(view);
                 request.Json = () => Result();
             });
         }
+
 
         //public void SendAsync(params ICommand[] commands)
         //{
@@ -142,6 +143,7 @@ namespace YouMap.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        
         #endregion
 
     }

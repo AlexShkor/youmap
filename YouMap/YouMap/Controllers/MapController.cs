@@ -85,51 +85,8 @@ namespace YouMap.Controllers
             set { Session["LastLocation"] = value; }
         }
 
-        [HttpGet]
-        [Authorize]
-        [Role(UserPermissionEnum.Admin,UserPermissionEnum.Advertiser)]
-        public ActionResult AddPlace()
-        {
-            var model = new AddPlaceModel();
-            if (!Request.IsAjaxRequest())
-            {
-                model.Map = new MapModel();
-                model.Map.Width = 600;
-                model.Map.Height = 600;
-                model.DisplayMap = true;
-            }
-            AjaxResponse.Render(".control-content", "AddPlace", model);
-            return RespondTo(model);
-        }
+        
 
-        [HttpPost]
-        [Authorize]
-        [Role(UserPermissionEnum.Admin, UserPermissionEnum.Advertiser)]
-        public ActionResult AddPlace(AddPlaceModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var location = new Location
-                                   {
-                                       Latitude = double.Parse(model.Latitude, CultureInfo.InvariantCulture),
-                                       Longitude = double.Parse(model.Longitude, CultureInfo.InvariantCulture)
-                                   };
-                var command = new Place_CreateCommand()
-                        {
-                            Id = _idGenerator.Generate(),
-                            Icon = Path.GetFileName(model.Icon),
-                            Location = location,
-                            Title = model.Title,
-                            Description = model.Description,
-                            Address = model.Address
-                        };
-                Send(command);
-            }
-            AjaxResponse.Render(".control-content", "AddPlace", model);
-            return RespondTo(model);
-        }
-
-        [HttpGet]
         public ActionResult ControlPanel()
         {
             var model = new ControlPanelModel();

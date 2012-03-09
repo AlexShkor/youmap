@@ -245,20 +245,16 @@ input[type="submit"] {
 ----------------------------------------------------------*/
 
 table {
-    border: solid 1px #e8eef4;
-    border-collapse: collapse;
+border-collapse: separate;
+border-spacing: 0px;
 }
 
 table td {
-    padding: 5px;
-    border: solid 1px #e8eef4;
+
 }
 
 table th {
-    padding: 6px 5px;
-    text-align: left;
-    background-color: #e8eef4;
-    border: solid 1px #e8eef4;
+
 }
 
 /* MISC  
@@ -368,6 +364,15 @@ margin: 5px;
 .field-set
 {
     float: left;
+}
+
+#addPlaceContainer table
+{
+    width: 100%;
+}
+#addPlaceContainer table td
+{
+    width: 50%;
 }
 .field-set-500
 {

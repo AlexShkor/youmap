@@ -146,6 +146,7 @@ namespace YouMap.Controllers
                 FormsAuthentication.SetAuthCookie(user.Name, true);
                 SessionContext.SetUser(user);
                 AjaxResponse.AddJsonItem("Success",true);
+                RenderTopBar();
             }
             catch(Exception e)
             {
@@ -162,7 +163,7 @@ namespace YouMap.Controllers
                 try
                 {
                     _authenticationService.LogOn(model);
-                    AjaxResponse.Render("#logindisplay", "LoginState", Map(User));
+                    RenderTopBar();
                 }
                 catch (Exception exception)
                 {
@@ -170,6 +171,11 @@ namespace YouMap.Controllers
                 }            
             }
             return Result();
+        }
+
+        private void RenderTopBar()
+        {
+            AjaxResponse.Render("#topBar", "TopBar", new{});
         }
 
         [Authorize]

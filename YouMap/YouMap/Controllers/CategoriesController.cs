@@ -18,8 +18,8 @@ namespace YouMap.Controllers
 {
     public class CategoriesController : BaseController
     {
-        private IIdGenerator _idGenerator;
-        private CategoryDocumentService _documentService;
+        private readonly IIdGenerator _idGenerator;
+        private readonly CategoryDocumentService _documentService;
         //
         // GET: /Categories/
         private Point IconSmallSize
@@ -64,7 +64,8 @@ namespace YouMap.Controllers
         public ActionResult AddCategory()
         {
             var model = new AddCategoryModel();
-            return GetEditCreateAjaxResponse(model);
+            RenderEditCategory(model);
+            return RespondTo(model, "CreateEditCategory");
         }
 
         public ActionResult Delete(string id)
@@ -74,25 +75,23 @@ namespace YouMap.Controllers
                                   Id = id
                               };
             Send(command);
-            return Result();
+            return RedirectToAction("Index");
         }
+
+      
 
         [HttpGet]
         public ActionResult Edit(string id)
         {
             var doc = _documentService.GetById(id);
             var model = MapToEditModel(doc);
-            return RespondTo(r =>
-                                 {
-                                     r.Json = () => GetEditCreateAjaxResponse(model);
-                                     r.Html = () => View("CreateEditCategory", model);
-                                 });
+            RenderEditCategory(model);
+            return RespondTo(model,"CreateEditCategory");
         }
 
-        private ActionResult GetEditCreateAjaxResponse(AddCategoryModel model)
+        private void RenderEditCategory(AddCategoryModel model)
         {
             AjaxResponse.Render(".add-category-container", "CreateEditCategory", model);
-            return Result();
         }
 
         [HttpPost]
@@ -110,6 +109,7 @@ namespace YouMap.Controllers
                                   };
                 Send(command);
             }
+            AjaxResponse.RedirectUrl = Url.Action("Index");
             return Result();
         }
 
@@ -140,6 +140,7 @@ namespace YouMap.Controllers
                                   };
                 Send(command);
             }
+            AjaxResponse.RedirectUrl = Url.Action("Index");
             return Result();
         }
 
