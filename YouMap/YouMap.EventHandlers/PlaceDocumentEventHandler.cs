@@ -3,10 +3,13 @@ using Paralect.ServiceBus;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain;
+using YouMap.Domain.Events;
 
 namespace YouMap.EventHandlers
 {
-    public class PlaceDocumentEventHandler : IMessageHandler<Place_AddedEvent>
+    public class PlaceDocumentEventHandler :
+        IMessageHandler<Place_AddedEvent>,
+        IMessageHandler<Place_StatusChangedEvent>
     {
         private readonly PlaceDocumentService _documentService;
 
@@ -20,14 +23,22 @@ namespace YouMap.EventHandlers
             var doc = new PlaceDocument
                           {
                               Id = message.Id,
-                              CreatorId = message.CreatorId,
+                              OwnerId = message.CreatorId,
                               Location = message.Location,
                               Title = message.Title,
                               Address = message.Address,
                               Description = message.Description,
-                              Icon = message.Icon
+                              CategoryId = message.CategoryId,
+                              WorkDays = message.WorkDays
                           };
             _documentService.Save(doc);
+        }
+
+        public void Handle(Place_StatusChangedEvent message)
+        {
+            var query = Query.EQ("_id", message.PlaceId);
+            var update = Update.Set("Status", message.Status);
+            _documentService.Update(query,update);
         }
     }
 }

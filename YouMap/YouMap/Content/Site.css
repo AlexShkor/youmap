@@ -5,14 +5,14 @@ to use a different color start by replacing all instances of
 ----------------------------------------------------------*/
 body
 {
-    background-color: #5c87b2;
+    background-color: #333333;
     font-size: .85em;
-    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
     font-size: 11px;
-    background-image: url('images/square_bg.png');
+    background-image: url('images/px_by_Gre3g.png');
 }
 
 a:hover {
@@ -135,7 +135,6 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 1px #5C87B2 solid;
     padding: 0 0 2px;
     position: relative;
     margin: 0 auto;
@@ -573,7 +572,7 @@ margin-left: 10px;
     .slide-popup .container
     {
         position: absolute;
-        width: 200px;
+        width: auto;
         margin-top: 40px;
         z-index: 99;
         background-color: white;
@@ -584,7 +583,7 @@ margin-left: 10px;
         -webkit-box-shadow: 0 0 6px #999;
         -moz-box-shadow: 0 0 6px #999;
         box-shadow: 0 0 6px #999;
-        padding: 5px 0px;
+        padding: 5px 10px;
     }
 
 
@@ -594,7 +593,7 @@ margin-left: 10px;
             font-family: tahoma, arial, verdana, sans-serif, Lucida Sans;
             font-size: 11px;
             clear: left;
-            padding: 4px 10px;
+            padding: 4px;
         }
         .slide-popup .container label, .slide-popup .container input
         {
@@ -604,7 +603,6 @@ margin-left: 10px;
 #loginPanel .container, #profilePanel .container
 {
     right: 20px;
-    width: 280px;
 }
 
 .container .editor-label a
@@ -706,4 +704,8 @@ ul.ui-autocomplete
 {
     padding: 5px;
 }
-    
+
+.left
+{
+    float: left;
+}

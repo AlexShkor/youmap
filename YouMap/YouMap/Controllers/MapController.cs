@@ -23,14 +23,16 @@ namespace YouMap.Controllers
 
         private readonly IIdGenerator _idGenerator;
         private readonly PlaceDocumentService _documentService;
+        private IEnumerable<CategoryDocument> _categories;
+        private readonly CategoryDocumentService _categoriesDocumentService;
+        public IEnumerable<CategoryDocument> Categories { get { return _categories = _categories ?? _categoriesDocumentService.GetAll(); } } 
 
-
-        public MapController(IIdGenerator idGenerator, ICommandService commandService, PlaceDocumentService documentService)
+        public MapController(IIdGenerator idGenerator, ICommandService commandService, PlaceDocumentService documentService, CategoryDocumentService categoriesDocumentService)
             : base(commandService)
         {
             _idGenerator = idGenerator;
             _documentService = documentService;
-
+            _categoriesDocumentService = categoriesDocumentService;
         }
 
         public ActionResult Index()
@@ -51,7 +53,7 @@ namespace YouMap.Controllers
                            Id = doc.Id,
                            Address = doc.Address,
                            Description = doc.Description,
-                           Icon = Path.Combine(contentUrl.Replace("64x64", "24x24"), doc.Icon),
+                           Icon = Path.Combine(contentUrl.Replace("64x64", "24x24"), Categories.Single(x => x.Id == doc.CategoryId).Icon),
                            Latitude = doc.Location.Latitude,
                            Longitude = doc.Location.Longitude,
                            Title = doc.Title

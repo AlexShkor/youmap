@@ -1,8 +1,7 @@
 ﻿using Paralect.Domain;
-using YouMap.Domain;
 using mPower.Framework;
 
-namespace YouMap.Scripts
+namespace YouMap.Domain.Commands
 {
     public class Category_DeleteCommand : Command
     {

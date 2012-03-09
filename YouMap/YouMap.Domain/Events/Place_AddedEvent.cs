@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Paralect.Domain;
 using YouMap.Domain.Data;
 
@@ -19,5 +20,9 @@ namespace YouMap.Domain
         public string Address { get; set; }
 
         public Location Location { get; set; }
+
+        public string CategoryId { get; set; }
+
+        public IEnumerable<DayOfWeek> WorkDays { get; set; }
     }
 }

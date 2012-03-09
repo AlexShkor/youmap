@@ -13,7 +13,6 @@ using YouMap.Domain.Auth;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Models;
-using YouMap.Scripts.custom;
 using mPower.Framework;
 using mPower.Framework.Environment;
 using YouMap.Domain.Enums;

@@ -1,5 +1,8 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System;
+using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 
 namespace YouMap.Documents.Documents
 {
@@ -10,16 +13,18 @@ namespace YouMap.Documents.Documents
 
         public string Title { get; set; }
 
-        public string CreatorId { get; set; }
-
         public Location Location { get; set; }
-
-        public string Icon { get; set; }
 
         public string Description { get; set; }
 
         public string Address { get; set; }
 
         public string CategoryId { get; set; }
+
+        public PlaceStatusEnum Status { get; set; }
+
+        public string OwnerId { get; set; }
+
+        public IEnumerable<DayOfWeek> WorkDays { get; set; }
     }
 }

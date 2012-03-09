@@ -1,0 +1,42 @@
+﻿@model System.Collections.Generic.IEnumerable<YouMap.Models.PlaceListItem>
+@{
+    ViewBag.Title = "Места";
+}
+
+@if(Model.Count() == 0)
+{
+    <p>Список мест пуст</p>
+}
+<table>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.Description.Ellipsize(200)
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "Edit", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.ActionLink(item.HideLabel, item.HideAction, new { id = item.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                </td>
+                @if (item.DisplayBlockAction)
+                {
+                    <td>
+                        @Html.ActionLink("Заблокировать", "Block", new { id = item.Id })
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

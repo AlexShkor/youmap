@@ -47,8 +47,8 @@ namespace mPower.Framework.Services
         {
             var query = BuildFilterQuery(filter);
             //if filter was not applied we not return all documents, we just return empty list
-            if (query == null && filter.PagingInfo == null)
-                return new List<T>();
+            //if (query == null && filter.PagingInfo == null)
+            //    return new List<T>();
 
             var list = GetByQuery(query, x =>
                                              {

@@ -111,6 +111,7 @@
     <Compile Include="Environment\IIdGenerator.cs" />
     <Compile Include="Environment\MongoObjectIdGenerator.cs" />
     <Compile Include="Extensions\TimeSpan.cs" />
+    <Compile Include="Helpers\SelectListHelper.cs" />
     <Compile Include="ThreadSafeDictionary.cs" />
     <Compile Include="Environment\PassStateAttribute.cs" />
     <Compile Include="Environment\StructureMapDependencyResolver.cs" />

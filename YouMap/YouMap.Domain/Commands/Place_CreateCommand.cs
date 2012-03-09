@@ -1,4 +1,6 @@
-﻿using Paralect.Domain;
+﻿using System;
+using System.Collections.Generic;
+using Paralect.Domain;
 using Paralect.ServiceBus;
 using YouMap.Domain.Data;
 using mPower.Framework;
@@ -11,13 +13,15 @@ namespace YouMap.Domain.Commands
 
         public string Title { get; set; }
 
-        public string Icon { get; set; }
-
         public string Description { get; set; }
 
         public string Address { get; set; }
 
         public Location Location { get; set; }
+
+        public string CategoryId { get; set; }
+
+        public IEnumerable<DayOfWeek> WorkDays { get; set; }
     }
 
     public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
@@ -28,15 +32,16 @@ namespace YouMap.Domain.Commands
 
         public override void Handle(Place_CreateCommand message)
         {
-            var data = new PlaceData()
+            var data = new PlaceData
                            {
                                Id = message.Id,
                                Title = message.Title,
                                Address = message.Address,
                                Description = message.Description,
                                CreatorId = message.Metadata.UserId,
-                               Icon = message.Icon,
-                               Location = message.Location
+                               Location = message.Location,
+                               WorkDays = message.WorkDays,
+                               CategoryId = message.CategoryId
                            };
             var ar = new PlaceAR(data,message.Metadata);
             Repository.Save(ar);

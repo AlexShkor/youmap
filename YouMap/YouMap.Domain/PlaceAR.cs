@@ -1,5 +1,6 @@
 using Paralect.Domain;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 using YouMap.Domain.Events;
 using mPower.Framework;
 
@@ -23,7 +24,8 @@ namespace YouMap.Domain
                 Description = data.Description,
                 Address = data.Address,
                 CreatorId = data.CreatorId,
-                Icon = data.Icon,
+                CategoryId = data.CategoryId,
+                WorkDays = data.WorkDays,
                 Location = data.Location
             });
         }
@@ -45,5 +47,14 @@ namespace YouMap.Domain
         }
 
         #endregion
+
+        public void ChangeStatus(PlaceStatusEnum status)
+        {
+            Apply(new Place_StatusChangedEvent
+                      {
+                          PlaceId = _id,
+                          Status = status
+                      });
+        }
     }
 }

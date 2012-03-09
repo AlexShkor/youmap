@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using YouMap.Documents.Documents;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 using mPower.Framework;
 using mPower.Framework.Services;
 
@@ -30,6 +31,14 @@ namespace YouMap.Documents.Services
             if (filter.CategoryId.HasValue())
             {
                 query = Query.And(query, Query.EQ("CategoryId", filter.CategoryId));
+            }
+            if (filter.OwnerId.HasValue())
+            {
+                query = Query.And(query, Query.EQ("OwnerId", filter.OwnerId));
+            }
+            if (filter.StatusNotEqual.HasValue)
+            {
+                query = Query.And(query, Query.NE("Status", filter.StatusNotEqual.Value));
             }
             if (filter.Location != null)
             {
@@ -70,5 +79,9 @@ namespace YouMap.Documents.Services
         public string CategoryId { get; set; }
 
         public Location Location { get; set; }
+
+        public string OwnerId { get; set; }
+
+        public PlaceStatusEnum? StatusNotEqual { get; set; }
     }
 }

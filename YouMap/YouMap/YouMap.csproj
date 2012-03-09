@@ -306,6 +306,8 @@
     <Compile Include="Controllers\VkController.cs" />
     <Compile Include="Models\CheckInModel.cs" />
     <Compile Include="Models\ControlPanelModel.cs" />
+    <Compile Include="Models\PlaceEditModel.cs" />
+    <Compile Include="Models\PlaceListItem.cs" />
     <Compile Include="Models\PlaceSearchModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VkLoginModel.cs" />
@@ -530,6 +532,7 @@
     <Content Include="Content\images\alert-overlay.png" />
     <Content Include="Content\images\black-50-opasity-pixel.png" />
     <Content Include="Content\images\paven.png" />
+    <Content Include="Content\images\px_by_Gre3g.png" />
     <Content Include="Content\images\Search30x30.png" />
     <Content Include="Content\images\square_bg.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -938,6 +941,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Places\AddPlaceForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

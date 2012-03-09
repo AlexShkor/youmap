@@ -10,7 +10,6 @@ using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Models;
-using YouMap.Scripts;
 using mPower.Framework;
 using mPower.Framework.Environment;
 

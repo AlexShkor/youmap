@@ -22,6 +22,7 @@ var createMarker = function (config, onDrag) {
     map.Markers.push(marker);
     map.renderMarker(marker);
     google.maps.event.addListener(marker.GMarker, 'drag', function (e) {
+        onDrag(e.latLng.Ua, e.latLng.Va);
         $('#Latitude').val(e.latLng.Sa);
         $('#Longitude').val(e.latLng.Ta);
     });
@@ -29,7 +30,8 @@ var createMarker = function (config, onDrag) {
 };
 
 
-var updatePosition = function (marker, location) {
+var updatePosition = function (marker, x, y) {
+    var location = new google.maps.LatLng(x, y);
     marker.GMarker.setPosition(location);
 };
 
@@ -155,7 +157,7 @@ YouMap.Map = function ($) {
                 var location = results[0].geometry.location;
                 map.GMap.setCenter(location);
                 map.GMap.setZoom(getZoom(results[0].geometry.viewport));
-                callback(location);
+                callback(location.Ua,location.Va);
 
             } else {
                 alert("Пошло что-то не так, потому что: " + status);
@@ -206,41 +208,28 @@ YouMap.AddPlace = function ($) {
                 return false;
             }
         });
-
-        $('#selectIconBtn').click(function () {
-            $.colorbox({ href: $(this).attr("href"), width: 600, height: 400 });
-            return false;
-        });
-
-        $('.icon-select').live("click", function () {
-            var src = $(this).find("img").attr("src");
-            $("#Icon").val(src);
-            $("#currentIcon").attr("src", src.replace("64x64", "24x24"));
-            $.colorbox.close();
-        });
-
        
     };
     
     var setMapToCity = function () {
         var address = $("#Address").val();
-        YouMap.Map.SearchGoogle(address,function(location) {
-            setMarkerPosition(location);
-            updateFormFields(location);
+        YouMap.Map.SearchGoogle(address,function(x,y) {
+            setMarkerPosition(x,y);
+            updateFormFields(x,y);
         });
         
     };
 
     var marker = null;
 
-    var setMarkerPosition = function (location) {
+    var setMarkerPosition = function (x,y) {
 
         if (marker) {
-            updatePosition(marker, location);
+            updatePosition(marker, x,y);
         } else {
             marker = createMarker({
-                Latitude: location.Sa,
-                Longitude: location.Ta,
+                Latitude: x,
+                Longitude: y,
                 Draggable: true,
                 Title: "New marker"
             }, markerDragged);
@@ -250,13 +239,13 @@ YouMap.AddPlace = function ($) {
 
  
 
-    var markerDragged = function (parameters) {
-        updateFormFields(parameters);
+    var markerDragged = function (x,y) {
+        updateFormFields(x,y);
     };
 
-    var updateFormFields = function (location) {
-        $('#Latitude').val(location.Sa);
-        $('#Longitude').val(location.Ta);
+    var updateFormFields = function (x,y) {
+        $('#addPlaceContainer #Latitude').val(x);
+        $('#addPlaceContainer #Longitude').val(y);
     };
 
     
