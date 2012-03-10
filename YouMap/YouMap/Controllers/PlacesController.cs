@@ -22,17 +22,18 @@ namespace YouMap.Controllers
 {
     public class PlacesController : BaseController
     {
-        const string contentUrl = "/content/images/place_icons/64x64/";
         private readonly PlaceDocumentService _docimentService;
+        private readonly ImageService _imageService;
         private readonly IIdGenerator _idGenerator;
         private readonly CategoryDocumentService _categoriesDocumentService;
 
         private IEnumerable<CategoryDocument> _categories;
         public IEnumerable<CategoryDocument> Categories { get { return _categories = _categories ?? _categoriesDocumentService.GetAll(); } } 
 
-        public PlacesController(ICommandService commandService, PlaceDocumentService docimentService, IIdGenerator idGenerator, CategoryDocumentService categoriesDocumentService) : base(commandService)
+        public PlacesController(ICommandService commandService, PlaceDocumentService docimentService,ImageService imageService, IIdGenerator idGenerator, CategoryDocumentService categoriesDocumentService) : base(commandService)
         {
             _docimentService = docimentService;
+            _imageService = imageService;
             _idGenerator = idGenerator;
             _categoriesDocumentService = categoriesDocumentService;
         }
@@ -85,6 +86,7 @@ namespace YouMap.Controllers
             if (!Request.IsAjaxRequest())
             {
                 model.Map = new MapModel();
+                model.Map.IconShadow.Path = _imageService.IconShadow;
                 model.DisplayMap = true;
             }
             AjaxResponse.Render(".control-content", "AddPlace", model);
@@ -128,7 +130,7 @@ namespace YouMap.Controllers
                 Id = doc.Id,
                 Address = doc.Address,
                 Description = doc.Description,
-                Icon = Path.Combine(contentUrl.Replace("64x64", "24x24"), Categories.Single(x=> x.Id == doc.CategoryId).Icon),
+                Icon = _imageService.GetIconForCategory(doc.CategoryId),
                 Latitude = doc.Location.Latitude,
                 Longitude = doc.Location.Longitude,
                 Title = doc.Title
@@ -142,7 +144,7 @@ namespace YouMap.Controllers
                 Id = doc.Id,
                 Address = doc.Address,
                 Description = doc.Description,
-                Icon = Path.Combine(contentUrl.Replace("64x64", "24x24"), Categories.Single(x=> x.Id == doc.CategoryId).Icon),
+                Icon = _imageService.GetIconForCategory(doc.CategoryId),
                 Title = doc.Title,
                 HideAction = doc.Status == PlaceStatusEnum.Hidden ? "Activate" : "Hide",
                 HideLabel = doc.Status == PlaceStatusEnum.Hidden ? "Активировать" : "Спрятать",

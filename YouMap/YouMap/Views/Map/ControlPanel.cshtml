@@ -18,6 +18,9 @@
                 <div>
                     @Html.ActionLink("Добавить место", "AddPlace", "Places",null, new {id = "addPlaceLink", @class = "colorbox"})
                 </div>
+                <div>
+                    @Html.ActionLink("Мои места", "Index", "Places")
+                </div>
             }
             @if(Model.IsAdminPanelVisible)
             {

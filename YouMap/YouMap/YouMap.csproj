@@ -304,6 +304,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\VkController.cs" />
+    <Compile Include="ImageService.cs" />
     <Compile Include="Models\CheckInModel.cs" />
     <Compile Include="Models\ControlPanelModel.cs" />
     <Compile Include="Models\PlaceEditModel.cs" />
@@ -531,8 +532,11 @@
     <Content Include="Content\2012.1.214\Windows7\sprite.png" />
     <Content Include="Content\images\alert-overlay.png" />
     <Content Include="Content\images\black-50-opasity-pixel.png" />
+    <Content Include="Content\images\bright_squares.png" />
     <Content Include="Content\images\paven.png" />
     <Content Include="Content\images\px_by_Gre3g.png" />
+    <Content Include="Content\images\px_by_Gre3g_blue.png" />
+    <Content Include="Content\images\px_by_Gre3g_contrast.png" />
     <Content Include="Content\images\Search30x30.png" />
     <Content Include="Content\images\square_bg.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -647,7 +651,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\images\place_icons\" />
   </ItemGroup>
   <ItemGroup>
@@ -944,6 +947,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Places\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\AjaxLoader.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

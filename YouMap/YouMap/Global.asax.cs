@@ -11,6 +11,7 @@ using Paralect.Transitions.Mongo;
 using StructureMap;
 using YouMap.Domain;
 using YouMap.EventHandlers;
+using YouMap.Framework;
 using mPower.Framework;
 using mPower.Framework.Environment;
 using mPower.Framework.Registries;
@@ -71,7 +72,7 @@ namespace YouMap
             new SettingsRegistry(container);
             new MongoRegistry(container);
 
-            var settings = container.GetInstance<MPowerSettings>();
+            var settings = container.GetInstance<Settings>();
 
             //var encrypt = new EncryptionService();
 

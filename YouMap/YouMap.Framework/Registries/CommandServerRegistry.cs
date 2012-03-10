@@ -5,6 +5,7 @@ using Paralect.ServiceLocator.StructureMap;
 using Paralect.Transitions;
 using Paralect.Transitions.Mongo;
 using StructureMap;
+using YouMap.Framework;
 
 namespace mPower.Framework.Registries
 {
@@ -15,7 +16,7 @@ namespace mPower.Framework.Registries
         /// </summary>
         public CommandServerRegistry(IContainer container)
         {
-            var settings = container.GetInstance<MPowerSettings>();
+            var settings = container.GetInstance<Settings>();
 
             //
             // Service Bus configuration and start

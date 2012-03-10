@@ -101,7 +101,15 @@ YouMap.Vk.Map = function($) {
                     Width: 50, Height: 50, IsEmpty: false
                 },
                 Point: {X: 0, Y: 0, IsEmpty: true},
-                Anchor: { X: 25, Y: 50, IsEmpty: false }
+                Anchor: { X: -7, Y:57, IsEmpty: false }
+            },
+            Shadow: {
+                Path: window.location.origin + "/UserFiles/border.png",
+                Size: {
+                    Width: 60, Height: 60, IsEmpty: false
+                },
+                Point: { X: 0, Y: 0, IsEmpty: true },
+                Anchor: { X: 0, Y: 60, IsEmpty: false }
             }
         });
         friendsMarkers.push(marker);

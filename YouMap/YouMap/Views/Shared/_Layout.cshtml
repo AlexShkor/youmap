@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,11 +29,11 @@
             @Html.Action("Navigation", "Categories")
             <div id="title">
                 <h1>YOUMAP</h1>
+                @*@Html.Partial("AjaxLoader")*@
             </div>
             <div id="topBar">
                 @Html.Partial("TopBar")
             </div>
-            
         </header>
         <section id="main">
             @RenderBody()

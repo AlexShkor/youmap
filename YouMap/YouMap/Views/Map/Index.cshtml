@@ -18,7 +18,8 @@ $(document).ready(function() {
 					 x.Add().Title(marker.Title)
 					 .Latitude(marker.Latitude)
 					 .Longitude(marker.Longitude)
-					 .Icon(marker.Icon, new Size(24, 24), new Point(0, 0), new Point(12, 12))
+					 .Icon(marker.Icon, Model.Icon.Size, Model.Icon.Point,Model.Icon.Anchor)
+                     .Shadow(Model.IconShadow.Path, Model.IconShadow.Size, Model.IconShadow.Point, Model.IconShadow.Anchor)
 					 .Clickable(true)
 					 .Window(y => y.Add().Content(
 					 @<text>

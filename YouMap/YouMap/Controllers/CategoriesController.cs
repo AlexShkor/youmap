@@ -23,7 +23,7 @@ namespace YouMap.Controllers
         // GET: /Categories/
         private Point IconSmallSize
         {
-            get { return new Point(24, 24); }
+            get { return new Point(20, 34); }
         }
 
         private Point IconLargeSize
