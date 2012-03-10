@@ -6,17 +6,13 @@
     });
 </script> 
 
-<div class="checkin">
+<div id="checkin" class="checkin">
     @using(Html.BeginForm("CheckIn","Map"))
     {
-        if (Model.DisplayPlace)
-        {
-
             <div>
                 @Html.HiddenFor(x => x.PlaceId)
-                @Html.LabelFor(x => x.Memo, Model.Title)
+                <label for="Memo">@Model.Title</label>
             </div>
-        }
         <div>
             @Html.HiddenFor(x=> x.Latitude)
             @Html.HiddenFor(x=> x.Longitude)

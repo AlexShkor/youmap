@@ -311,10 +311,22 @@ namespace YouMap.Documents.Lucene
             return JoinQueriesAnd(queries);
         }
 
+        protected Query BuildPrefixQueryOr(string field, params string[] values)
+        {
+            var queries = values.Select(value => BuildPrefixQuery(field, value)).ToArray();
+            return JoinQueriesOr(queries);
+        }
+
         protected Query BuildFuzzyQueryAnd(string field, params string[] values)
         {
             var queries = values.Select(value => BuildFuzzyQuery(field, value)).ToArray();
             return JoinQueriesAnd(queries);
+        }
+
+        protected Query BuildFuzzyQueryOr(string field, params string[] values)
+        {
+            var queries = values.Select(value => BuildFuzzyQuery(field, value)).ToArray();
+            return JoinQueriesOr(queries);
         }
 
         protected PhraseQuery BuildPhraseQuery(string field, string value)
@@ -323,6 +335,12 @@ namespace YouMap.Documents.Lucene
             query.Add(new Term(field, value));
             return query;
         }
+        protected Query BuildPhraseQueryOr(string field, params string[] values)
+        {
+            var queries = values.Select(value => BuildPhraseQuery(field, value)).ToArray();
+            return JoinQueriesOr(queries);
+        }
+        
 
         protected TermQuery BuildMatchQuery(string field, string text)
         {

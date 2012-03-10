@@ -4,8 +4,15 @@ YouMap.Vk.Panel = function($) {
 
     var initialize = function(isVkUser) {
         if(isVkUser) {
-            $("#showSettings").click(function() {
+            $("#showSettings").click(function () {
                 $("#vkPanel .container").slideToggle("fast");
+            });
+            $("#ShowFriends").click(function() {
+                if ($(this).is(':checked')) {
+                    YouMap.Vk.Map.ShowFriends();
+                } else {
+                    YouMap.Vk.Map.HideFriends();
+                }
             });
         }
     };
@@ -18,6 +25,9 @@ YouMap.Vk.Panel = function($) {
         $("#profilePanel .actions a").click(function() {
             $("#profilePanel .container").slideToggle("fast");
         });
+        $("#logoutLink").click(function() {
+            VK.Auth.logout();
+        });
     };
 
     var controlPanel = function () {
@@ -26,7 +36,13 @@ YouMap.Vk.Panel = function($) {
         });
     };
 
-    var checkInInit = function() {
+    var checkInInit = function () {
+        if (!$("#checkin #PlaceId").val()) {
+            var loc = YouMap.Map.GetUserLocation();
+            YouMap.Map.SearchByLocation(loc.x, loc.y, function (result) {
+                $("#checkin textarea").html(result[0].formatted_address);
+            });
+        }
         $(".checkin .ajax-submit").click(function() {
             var location = YouMap.Map.GetUserLocation();
             $(".checkin #Latitude").val(location.x);
@@ -118,10 +134,19 @@ YouMap.Vk.Map = function($) {
 
 
     var hideFriendsMarkers = function() {
-
+        for (var marker in friendsMarkers) {
+            friendsMarkers[marker].GMarker.setMap(null);
+        }
     };
-
+    var showFriendsMarkers = function () {
+        var map = getMap();
+        for (var marker in friendsMarkers) {
+            friendsMarkers[marker].GMarker.setMap(map.GMap);
+        }
+    };
     return {
-        Initialize: initialize
+        Initialize: initialize,
+        ShowFriends: showFriendsMarkers,
+        HideFriends: hideFriendsMarkers
     };
 }(jQuery);

@@ -10,6 +10,7 @@ using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
+using YouMap.Documents.Lucene;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
@@ -26,26 +27,27 @@ namespace YouMap.Controllers
         private readonly ImageService _imageService;
         private readonly IIdGenerator _idGenerator;
         private readonly CategoryDocumentService _categoriesDocumentService;
-
+        private readonly PlaceLuceneService _placeLuceneService;
         private IEnumerable<CategoryDocument> _categories;
         public IEnumerable<CategoryDocument> Categories { get { return _categories = _categories ?? _categoriesDocumentService.GetAll(); } } 
 
-        public PlacesController(ICommandService commandService, PlaceDocumentService docimentService,ImageService imageService, IIdGenerator idGenerator, CategoryDocumentService categoriesDocumentService) : base(commandService)
+        public PlacesController(ICommandService commandService, PlaceDocumentService docimentService,ImageService imageService, IIdGenerator idGenerator, CategoryDocumentService categoriesDocumentService, PlaceLuceneService placeLuceneService) : base(commandService)
         {
             _docimentService = docimentService;
             _imageService = imageService;
             _idGenerator = idGenerator;
             _categoriesDocumentService = categoriesDocumentService;
+            _placeLuceneService = placeLuceneService;
         }
 
         public ActionResult Index()
         {
-            var filter = new PlaceDocumentFilter();
-            
+            var filter = new PlaceDocumentFilter();         
+            filter.StatusNotIn.Add(PlaceStatusEnum.Deleted);
             if (!IsAdmin)
             {
                 filter.OwnerId = User.Id;
-                filter.StatusNotEqual = PlaceStatusEnum.Blocked;
+                filter.StatusNotIn.Add(PlaceStatusEnum.Blocked);
             }
             var docs = _docimentService.GetByFilter(filter);
             var model = docs.Select(MapListItem);
@@ -54,12 +56,18 @@ namespace YouMap.Controllers
 
         public ActionResult Search(string term)
         {
-            if (string.IsNullOrEmpty(term))
+            if (!string.IsNullOrEmpty(term))
             {
-                return Json(new {});
+                var luceneDocs = _placeLuceneService.Search(term);
+                if (luceneDocs.Any())
+                {
+                    var places =
+                        _docimentService.GetByFilter(new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id)}).
+                            Select(Map);
+                    return Json(places);
+                }
             }
-            var places = _docimentService.GetAll().Where(x => Compare(x.Title,term)).Select(Map);
-            return Json(places);
+            return Json(new { });
         }
 
         public ActionResult SearchForm()

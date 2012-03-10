@@ -165,6 +165,13 @@ YouMap.Map = function ($) {
         });
     };
 
+    var searchByLocation = function(x, y, callback) {
+        var location = new google.maps.LatLng(x, y);
+        geocoder.geocode({ location: location }, function(result, status) {
+            callback(result);
+        });
+    };
+
     var setMapHeight = function()
     {
         var height = $(window).height() - $("header").height() - 20;
@@ -180,7 +187,8 @@ YouMap.Map = function ($) {
         SetMapCenter: setMapCenter,
         SetMapHeight: setMapHeight,
         SearchGoogle: searchGoogle,
-        GetUserLocation: getUserLocation
+        GetUserLocation: getUserLocation,
+        SearchByLocation: searchByLocation
     };
 } (jQuery);
 

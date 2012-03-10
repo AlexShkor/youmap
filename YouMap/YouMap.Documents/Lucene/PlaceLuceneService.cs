@@ -10,6 +10,7 @@ namespace YouMap.Documents.Lucene
     {
         public PlaceLuceneService(Settings settings) : base(settings)
         {
+            SetIndexName("Places");
         }
 
         public virtual IEnumerable<PlaceLucene> Search(string searchText)
@@ -20,9 +21,9 @@ namespace YouMap.Documents.Lucene
                 var words = searchText.Split(new [] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
                 queries.Add(JoinQueriesOr(
-                    BuildPrefixQueryAnd("Discription", words),
-                    BuildPrefixQueryAnd("Title", words),
-                    BuildPrefixQueryAnd("Adress", words)));
+                    BuildFuzzyQueryOr("Memo", words),
+                    BuildFuzzyQueryOr("Title", words),
+                    BuildFuzzyQueryOr("Address", words)));
             }
             var query = queries.Count == 0 ? new MatchAllDocsQuery() : JoinQueriesAnd(queries.ToArray());
             return Search(query);
@@ -33,7 +34,7 @@ namespace YouMap.Documents.Lucene
             var doc = new Document();
             doc.Add(new Field("_id", item.Id, Field.Store.YES, Field.Index.NOT_ANALYZED));
             if (item.Title != null)
-                doc.Add(new Field("Title", item.Title, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("Title", item.Title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
             if (item.Memo != null)
                 doc.Add(new Field("Memo", item.Memo, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
             if (item.Address != null)

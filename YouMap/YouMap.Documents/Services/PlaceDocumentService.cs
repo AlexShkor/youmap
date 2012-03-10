@@ -27,7 +27,7 @@ namespace YouMap.Documents.Services
 
         protected override QueryComplete BuildFilterQuery(PlaceDocumentFilter filter)
         {
-            var query = Query.And();
+            var query = Query.And(Query.Null);
             if (filter.CategoryId.HasValue())
             {
                 query = Query.And(query, Query.EQ("CategoryId", filter.CategoryId));
@@ -36,13 +36,17 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.EQ("OwnerId", filter.OwnerId));
             }
-            if (filter.StatusNotEqual.HasValue)
-            {
-                query = Query.And(query, Query.NE("Status", filter.StatusNotEqual.Value));
-            }
             if (filter.Location != null)
             {
                 query = Query.And(query, Query.EQ("Location", BsonValue.Create(filter.Location)));
+            }
+            if (filter.IdIn != null && filter.IdIn.Any())
+            {
+                query = Query.And(query, Query.In("_id", BsonArray.Create(filter.IdIn)));
+            }
+            if (filter.StatusNotIn != null && filter.StatusNotIn.Any())
+            {
+                query = Query.And(query, Query.NotIn("Status", BsonArray.Create(filter.StatusNotIn)));
             }
             return query;
         }
@@ -82,6 +86,13 @@ namespace YouMap.Documents.Services
 
         public string OwnerId { get; set; }
 
-        public PlaceStatusEnum? StatusNotEqual { get; set; }
+        public IEnumerable<string> IdIn { get; set; }
+
+        public List<PlaceStatusEnum> StatusNotIn { get; set; }
+
+        public PlaceDocumentFilter()
+        {
+            StatusNotIn = new List<PlaceStatusEnum>();
+        }
     }
 }

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="CategoryDocumentEventHandler.cs" />
     <Compile Include="PlaceDocumentEventHandler.cs" />
+    <Compile Include="PlaceLuceneEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDocumentEventHandler.cs" />
   </ItemGroup>

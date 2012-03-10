@@ -12,7 +12,7 @@
         <div class="actions"><a class="awesome lightgreen small" href="#">@Model.DisplayName</a><a class="awesome lightgreen small" href="#">&nu;</a></div>
         <div id="profileContent" class="hidden container">
             @Html.Action("Profile","Account")
-            @Html.ActionLink("Выйти", "LogOff", "Account")
+            @Html.ActionLink("Выйти", "LogOff", "Account",null,new{id="logoutLink"})
         </div>
     </div>
 }

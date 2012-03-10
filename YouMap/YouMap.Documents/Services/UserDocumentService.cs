@@ -24,7 +24,7 @@ namespace YouMap.Documents.Services
 
         protected override QueryComplete BuildFilterQuery(UserFilter filter)
         {
-            var query = Query.And();
+            var query = Query.And(Query.Null);
             if (!string.IsNullOrEmpty(filter.UserName))
             {
                 query = Query.And(query, Query.EQ("UserName", filter.UserName));

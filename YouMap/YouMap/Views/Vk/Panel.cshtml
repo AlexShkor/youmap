@@ -13,12 +13,12 @@
         <div class="actions"><a class="awesome small colorbox" href="@Url.Action("CheckIn","Map")">Отметиться</a><a class="awesome small" id="showSettings" href="#">&nu;</a></div>
         <div class="hidden container">
             <div>
-                @Html.CheckBoxFor(x => x.ShareLocation)
+                <input type="checkbox" name="ShareLocation" id="ShareLocation" checked="checked"/>
                 @Html.LabelFor(x => x.ShareLocation,"Показывать меня друзьям")
                 
             </div>
             <div>
-                @Html.CheckBoxFor(x => x.ShowFriends)
+                <input type="checkbox" name="ShowFriends" id="ShowFriends" checked="checked"/>
                 @Html.LabelFor(x => x.ShowFriends, "Показывать друзей")         
             </div>
         </div>
