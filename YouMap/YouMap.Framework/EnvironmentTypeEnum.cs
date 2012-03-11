@@ -1,4 +1,4 @@
-﻿namespace mPower.Framework
+﻿namespace YouMap.Framework
 {
     public enum EnvironmentTypeEnum
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mPower.Framework.Utils.Notification
+namespace YouMap.Framework.Utils.Notification
 {
     public class NotificationGroupAttribute : Attribute
     {

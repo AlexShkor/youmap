@@ -5,9 +5,8 @@ using Paralect.ServiceLocator.StructureMap;
 using Paralect.Transitions;
 using Paralect.Transitions.Mongo;
 using StructureMap;
-using YouMap.Framework;
 
-namespace mPower.Framework.Registries
+namespace YouMap.Framework.Registries
 {
     public class CommandServerRegistry
     {

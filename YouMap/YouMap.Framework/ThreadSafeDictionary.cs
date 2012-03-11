@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace mPower.Framework.Environment.MultiTenancy
+namespace YouMap.Framework
 {
     /// <summary>
     /// Dictionary that has a "GetOrAdd" method that is thread-safe

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace mPower.Framework.Mvc
+namespace YouMap.Framework.Mvc
 {
     public static class Extensions
     {

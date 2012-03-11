@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using mPower.Framework.Utils;
 using Newtonsoft.Json;
+using YouMap.Framework.Utils;
 
-namespace mPower.Framework.Mvc.Ajax
+namespace YouMap.Framework.Mvc.Ajax
 {
     /// <summary>
     /// Store data which will be sent back to the client

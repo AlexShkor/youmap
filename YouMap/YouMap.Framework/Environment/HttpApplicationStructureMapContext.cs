@@ -2,7 +2,7 @@ using System;
 using System.Web;
 using StructureMap;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     /// <summary>
     /// Holds StructureMap container in the HttpApplicationState collection

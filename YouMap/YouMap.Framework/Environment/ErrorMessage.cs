@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace mPower.Framework.Environment
+﻿namespace YouMap.Framework.Environment
 {
     public static class ErrorMessage
     {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Paralect.Domain;
 using Paralect.Domain.EventBus;
 using Paralect.ServiceBus;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     public class DualEventBus : IEventBus
     {

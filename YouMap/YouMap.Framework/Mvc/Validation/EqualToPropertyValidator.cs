@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace mPower.Framework.Mvc.Validation
+namespace YouMap.Framework.Mvc.Validation
 {
     /// <summary>
     /// <see cref="Validator"/> class for validating a property against another property in the model.

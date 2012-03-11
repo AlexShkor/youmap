@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Paralect.Domain;
 using YouMap.Domain.Data;
 

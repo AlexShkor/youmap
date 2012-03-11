@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using StructureMap;
 
-namespace mPower.Framework.Mvc
+namespace YouMap.Framework.Mvc
 {
     public class ObjectRepository : IObjectRepository
     {

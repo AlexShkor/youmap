@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Security.Cryptography;
+using System.IO;
 
-namespace mPower.Framework.Utils.Security
+namespace YouMap.Framework.Utils.Security
 {
-    using System;
-    using System.Data;
-    using System.Security.Cryptography;
-    using System.IO;
-
-
     public class EncryptionService : IEncryptionService
     {
         // Change these keys

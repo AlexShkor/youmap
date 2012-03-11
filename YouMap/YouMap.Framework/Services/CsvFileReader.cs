@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace mPower.Framework.Services
+namespace YouMap.Framework.Services
 {
     public class CsvFileReader : StreamReader
     {

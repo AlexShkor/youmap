@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using MongoDB.Driver;
-using mPower.Framework.Utils;
+using YouMap.Framework.Utils;
 
-namespace mPower.Framework.Mongo
+namespace YouMap.Framework.Mongo
 {
     public class MongoUtil
     {

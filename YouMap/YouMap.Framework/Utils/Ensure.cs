@@ -1,9 +1,10 @@
-﻿namespace mPower.Environment.MultiTenancy
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using YouMap.Framework.Utils.Extensions;
 
+namespace YouMap.Framework.Utils
+{
     /// <summary>
     /// Helper class that will throw exceptions when conditions are not satisfied
     /// </summary>

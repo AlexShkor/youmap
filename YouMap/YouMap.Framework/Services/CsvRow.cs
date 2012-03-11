@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace mPower.Framework.Services
+namespace YouMap.Framework.Services
 {
     public class CsvRow : List<string>
     {

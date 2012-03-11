@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace mPower.Framework.Mvc.Validation
+namespace YouMap.Framework.Mvc.Validation
 {
     /// <summary>
     /// A base class for validators that have attributes that require more

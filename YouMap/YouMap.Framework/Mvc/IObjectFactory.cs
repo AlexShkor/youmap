@@ -1,4 +1,4 @@
-namespace mPower.Framework.Mvc
+namespace YouMap.Framework.Mvc
 {
     public interface IObjectFactory<TInput, TOutput>
     {

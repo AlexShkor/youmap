@@ -1,4 +1,4 @@
-﻿namespace mPower.Framework.Utils.Notification
+﻿namespace YouMap.Framework.Utils.Notification
 {
     public enum NotificationGroupEnum
     {

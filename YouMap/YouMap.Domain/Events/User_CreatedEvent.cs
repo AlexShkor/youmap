@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Paralect.Domain;
+﻿using Paralect.Domain;
 using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 

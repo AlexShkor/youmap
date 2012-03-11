@@ -1,9 +1,6 @@
-
 using StructureMap;
-using StructureMap.Configuration.DSL;
-using YouMap.Framework;
 
-namespace mPower.Framework.Registries
+namespace YouMap.Framework.Registries
 {
     public class SettingsRegistry
     {

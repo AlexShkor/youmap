@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Driver;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     public class MongoTemp
     {

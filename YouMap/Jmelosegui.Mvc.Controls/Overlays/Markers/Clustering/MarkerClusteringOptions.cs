@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Jmelosegui.Mvc.Controls.Overlays.Markers;
 using Telerik.Web.Mvc.Extensions;
 using Telerik.Web.Mvc.Infrastructure;

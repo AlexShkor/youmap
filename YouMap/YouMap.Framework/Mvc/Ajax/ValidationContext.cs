@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace mPower.Framework.Mvc.Ajax
+namespace YouMap.Framework.Mvc.Ajax
 {
     public class ValidationContext
     {

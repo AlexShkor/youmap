@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using StructureMap;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     public class StructureMapFilterProvider : FilterAttributeFilterProvider
     {

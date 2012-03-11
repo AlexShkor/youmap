@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Web;
 using NLog;
-using mPower.Framework.Exceptions;
 
-namespace mPower.Framework.Modules
+namespace YouMap.Framework.Exceptions.Modules
 {
     public class ErrorLoggingModule : IHttpModule
     {

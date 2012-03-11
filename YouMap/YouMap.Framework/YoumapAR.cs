@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Paralect.Domain;
-using mPower.Framework.Environment;
+using YouMap.Framework.Environment;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     public class YoumapAR : AggregateRoot
     {

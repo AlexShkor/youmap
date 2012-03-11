@@ -4,7 +4,7 @@ using System.Linq;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     public class MongoRead
     {

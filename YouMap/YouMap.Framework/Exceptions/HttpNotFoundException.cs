@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace mPower.Framework.Exceptions
+namespace YouMap.Framework.Exceptions
 {
     /// <summary>
     /// Throw this exception when some pages not found, or actions parameters don't allow to show page correctly 

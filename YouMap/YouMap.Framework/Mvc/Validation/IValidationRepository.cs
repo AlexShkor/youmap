@@ -1,4 +1,4 @@
-namespace mPower.Framework.Mvc.Validation
+namespace YouMap.Framework.Mvc.Validation
 {
     public interface IValidationRepository
     {

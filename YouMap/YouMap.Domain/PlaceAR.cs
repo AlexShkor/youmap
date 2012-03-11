@@ -2,7 +2,7 @@ using Paralect.Domain;
 using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 using YouMap.Domain.Events;
-using mPower.Framework;
+using YouMap.Framework;
 
 namespace YouMap.Domain
 {

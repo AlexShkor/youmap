@@ -1,18 +1,17 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Web;
+using System.Web.Mvc;
 using System.Xml.Linq;
 using Prelude.Extensions.FlashMessage;
-using mPower.Environment.MultiTenancy;
-using mPower.Framework.Enums;
-using mPower.Framework.Environment.MultiTenancy;
+using YouMap.Framework.Enums;
+using YouMap.Framework.Utils.Extensions;
 
-using mPower.Framework.Utils.Extensions;
-using System.Collections.Generic;
-using mPower.Framework.Mvc;
-
-namespace System.Web.Mvc
+namespace YouMap.Framework.Mvc.Helpers
 {
     public static class HtmlHelpers
     {
@@ -79,7 +78,7 @@ namespace System.Web.Mvc
             var messages = new FlashStorage(instance.ViewContext.TempData).Messages.ToList();
 
             var elements = messages.Select(pair => new XElement(tagName, new XAttribute("class", "flash" + " " + pair.Key), content(pair.Value)));
-            var html = String.Join(Environment.NewLine, elements.Select(e => e.ToString()));
+            var html = String.Join(System.Environment.NewLine, elements.Select(e => e.ToString()));
 
             return instance.Raw(html);
         }

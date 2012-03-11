@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace YouMap.Framework.Extensions
+﻿namespace YouMap.Framework.Extensions
 {
     public static class TimeSpanExtensions
     {

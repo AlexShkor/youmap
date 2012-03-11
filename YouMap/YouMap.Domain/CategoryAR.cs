@@ -1,6 +1,6 @@
 ﻿using YouMap.Domain.Commands;
 using YouMap.Domain.Events;
-using mPower.Framework;
+using YouMap.Framework;
 
 namespace YouMap.Domain
 {

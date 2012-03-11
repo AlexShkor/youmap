@@ -1,7 +1,7 @@
 using System;
 using StructureMap;
 
-namespace mPower.Framework.Mvc.Validation
+namespace YouMap.Framework.Mvc.Validation
 {
     public class ValidationRepository : IValidationRepository
     {

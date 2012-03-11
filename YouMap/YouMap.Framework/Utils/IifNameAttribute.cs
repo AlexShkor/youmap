@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace mPower.Framework.Utils
+namespace YouMap.Framework.Utils
 {
     public class IifNameAttribute : DescriptionAttribute
     {

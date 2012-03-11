@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace mPower.Framework.Utils
+namespace YouMap.Framework.Utils
 {
     public static class SecurityUtil
     {

@@ -5,7 +5,7 @@ using NLog;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace mPower.Framework.Mongo
+namespace YouMap.Framework.Mongo
 {
     public class NLogMongoTarget
     {

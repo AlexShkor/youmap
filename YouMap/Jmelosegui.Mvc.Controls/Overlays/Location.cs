@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Telerik.Web.Mvc.Infrastructure;
+﻿using Telerik.Web.Mvc.Infrastructure;
 
 namespace Jmelosegui.Mvc.Controls.Overlays
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 

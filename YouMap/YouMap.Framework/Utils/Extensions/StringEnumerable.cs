@@ -1,11 +1,9 @@
-﻿using mPower.Environment.MultiTenancy;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace System.Collections.Generic
+namespace YouMap.Framework.Utils.Extensions
 {
-    using System.Linq;
-    using System.Text;
-    
-
     /// <summary>
     /// Extension methods for <see cref="System.Collections.Generic.IEnumerable{System.String}"/>
     /// </summary>

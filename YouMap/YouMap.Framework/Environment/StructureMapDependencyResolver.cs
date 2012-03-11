@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using StructureMap;
 using System.Linq;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     public class StructureMapDependencyResolver : IDependencyResolver
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mPower.Framework.Utils
+namespace YouMap.Framework.Utils
 {
     public class DateRange
     {

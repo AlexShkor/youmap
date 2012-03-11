@@ -1,9 +1,8 @@
-﻿using System;
-using Paralect.Domain;
+﻿using Paralect.Domain;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Domain.Events;
-using mPower.Framework;
+using YouMap.Framework;
 
 namespace YouMap.Domain
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace mPower.Framework.Mvc.ModelBinders
+namespace YouMap.Framework.Mvc.ModelBinders
 {
     public class PropertyBinderAttribute : Attribute
     {

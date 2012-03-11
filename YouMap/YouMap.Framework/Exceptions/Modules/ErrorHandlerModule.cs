@@ -5,10 +5,9 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using NLog;
-using mPower.Framework.Exceptions;
-using mPower.Framework.Environment;
+using YouMap.Framework.Environment;
 
-namespace mPower.Framework.Modules
+namespace YouMap.Framework.Exceptions.Modules
 {
     public class ErrorHandlerModule : IHttpModule
     {

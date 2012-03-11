@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security;
 using System.Security.Authentication;
-using System.Web;
 using System.Web.Security;
 using Paralect.Domain;
 using YouMap.Controllers;
@@ -12,9 +9,9 @@ using YouMap.Documents.Services;
 using YouMap.Domain.Auth;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
+using YouMap.Framework;
+using YouMap.Framework.Environment;
 using YouMap.Models;
-using mPower.Framework;
-using mPower.Framework.Environment;
 using YouMap.Domain.Enums;
 
 namespace YouMap

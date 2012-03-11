@@ -1,7 +1,7 @@
 using System;
 using MongoDB.Bson.Serialization.Conventions;
 
-namespace mPower.Framework.Mongo
+namespace YouMap.Framework.Mongo
 {
     /// <summary>
     /// Do not search for ID property

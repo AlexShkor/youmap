@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace mPower.Framework.Mvc.Validation
+namespace YouMap.Framework.Mvc.Validation
 {
     /// <summary>
     /// All validation data annotation attributes that require more than one

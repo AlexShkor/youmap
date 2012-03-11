@@ -1,6 +1,6 @@
 ﻿using Paralect.Domain;
 using YouMap.Domain.Enums;
-using mPower.Framework;
+using YouMap.Framework;
 
 namespace YouMap.Domain.Commands
 {

@@ -1,9 +1,9 @@
 using System;
-using mPower.Framework.Environment;
 using Paralect.Domain;
 using Paralect.ServiceBus;
+using YouMap.Framework.Environment;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     public interface ICommandService
     {

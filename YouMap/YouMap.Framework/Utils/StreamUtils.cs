@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace mPower.Framework.Utils {
+namespace YouMap.Framework.Utils {
 	public class StreamUtils {
 
 		/// <summary>

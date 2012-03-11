@@ -1,7 +1,7 @@
 ﻿using Paralect.Domain;
 using Paralect.ServiceBus;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     public abstract class CommandHandler<T>: IMessageHandler<T>
     {

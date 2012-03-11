@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mPower.Framework.Mvc.Ajax
+namespace YouMap.Framework.Mvc.Ajax
 {
     public enum UpdateStyle
     {

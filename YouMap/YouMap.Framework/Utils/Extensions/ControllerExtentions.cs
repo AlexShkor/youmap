@@ -1,12 +1,8 @@
-﻿using System.Linq;
+﻿using System;
 using System.Linq.Expressions;
-using System.Net.Mail;
 using System.Web.Mvc;
-using mPower.Framework.Environment.MultiTenancy;
-using System;
-using StructureMap;
 
-namespace mPower.Framework.Utils.Extensions
+namespace YouMap.Framework.Utils.Extensions
 {
     public static class ControllerExtentions
     {

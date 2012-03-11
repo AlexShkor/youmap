@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MongoDB.Bson;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     /// <summary>
     /// Generate ID as MongoDB ObjectId

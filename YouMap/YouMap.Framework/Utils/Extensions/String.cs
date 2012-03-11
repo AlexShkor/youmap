@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace System
+namespace YouMap.Framework.Utils.Extensions
 {
     /// <summary>
     /// Extension methods for <see cref="System.String"/>

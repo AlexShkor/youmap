@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using mPower.Framework.Utils.Notification;
+using YouMap.Framework.Utils.Notification;
 
-namespace mPower.Framework.Utils.Extensions
+namespace YouMap.Framework.Utils.Extensions
 {
     public static class EnumExtensions
     {

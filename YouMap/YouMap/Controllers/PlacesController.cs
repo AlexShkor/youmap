@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 using YouMap.ActionFilters;
@@ -15,9 +11,9 @@ using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
+using YouMap.Framework;
+using YouMap.Framework.Environment;
 using YouMap.Models;
-using mPower.Framework;
-using mPower.Framework.Environment;
 
 namespace YouMap.Controllers
 {

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using Paralect.Domain;
 using Prelude.Extensions;
 using StructureMap.Attributes;
 using YouMap.Domain.Auth;
 using YouMap.Domain.Enums;
-using mPower.Framework;
-using mPower.Framework.Exceptions;
-using mPower.Framework.Mvc.Ajax;
+using YouMap.Framework;
+using YouMap.Framework.Exceptions;
+using YouMap.Framework.Mvc.Ajax;
 
 namespace YouMap.Controllers
 {

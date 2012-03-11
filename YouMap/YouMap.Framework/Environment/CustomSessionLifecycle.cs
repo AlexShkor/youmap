@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using StructureMap.Pipeline;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     public class CustomSessionLifecycle : ILifecycle
     {

@@ -1,4 +1,3 @@
-using System;
 using Paralect.Domain;
 using YouMap.Domain.Data;
 

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     public class GetStateAttribute : ActionFilterAttribute
     {

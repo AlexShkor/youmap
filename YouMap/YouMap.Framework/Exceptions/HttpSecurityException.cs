@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
+﻿using System.Web;
 
-namespace mPower.Framework.Exceptions
+namespace YouMap.Framework.Exceptions
 {
     /// <summary>
     /// Throw this exception when some user trying to access any information that does not belong to him

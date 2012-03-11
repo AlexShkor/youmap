@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
-namespace mPower.Framework.Utils
+namespace YouMap.Framework.Utils
 {
     public class ObjectComparer
     {

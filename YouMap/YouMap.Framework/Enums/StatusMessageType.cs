@@ -1,4 +1,4 @@
-﻿namespace mPower.Framework.Enums
+﻿namespace YouMap.Framework.Enums
 {
     public enum StatusMessageType
     {

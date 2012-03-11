@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Paralect.Domain;
+﻿using Paralect.Domain;
 using Paralect.ServiceBus;
 using YouMap.Domain.Enums;
-using mPower.Framework;
 using YouMap.Domain.Data;
+using YouMap.Framework;
 
 namespace YouMap.Domain.Commands
 {

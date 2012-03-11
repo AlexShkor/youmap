@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Web.Mvc;
-
 namespace YouMap.Controllers
 {
     public class PlaceAssignModel

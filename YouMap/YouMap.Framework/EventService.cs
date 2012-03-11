@@ -1,7 +1,7 @@
 ﻿using Paralect.Domain;
 using Paralect.Domain.EventBus;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     public interface IEventService
     {

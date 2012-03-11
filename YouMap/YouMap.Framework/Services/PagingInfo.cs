@@ -1,4 +1,4 @@
-namespace mPower.Framework.Services
+namespace YouMap.Framework.Services
 {
     public class PagingInfo
     {

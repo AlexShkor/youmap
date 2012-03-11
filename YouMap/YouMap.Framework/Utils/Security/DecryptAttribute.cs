@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
-using mPower.Framework.Environment.MultiTenancy;
 
-namespace mPower.Framework.Utils.Security
+namespace YouMap.Framework.Utils.Security
 {
     public class DecryptAttribute : ActionFilterAttribute
     {

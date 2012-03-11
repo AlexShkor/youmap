@@ -1,6 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 using Paralect.Domain;
 using Paralect.Domain.EventBus;
 using Paralect.ServiceBus;
@@ -12,10 +10,9 @@ using StructureMap;
 using YouMap.Domain;
 using YouMap.EventHandlers;
 using YouMap.Framework;
-using mPower.Framework;
-using mPower.Framework.Environment;
-using mPower.Framework.Registries;
-using IIdGenerator = mPower.Framework.Environment.IIdGenerator;
+using YouMap.Framework.Environment;
+using YouMap.Framework.Registries;
+using IIdGenerator = YouMap.Framework.Environment.IIdGenerator;
 
 namespace YouMap
 {

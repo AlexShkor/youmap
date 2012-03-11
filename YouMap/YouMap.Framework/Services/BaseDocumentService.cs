@@ -1,4 +1,4 @@
-﻿namespace mPower.Framework.Services
+﻿namespace YouMap.Framework.Services
 {
     public abstract class BaseDocumentService<T, TFilter> : BaseMongoService<T, TFilter> 
         where T : class

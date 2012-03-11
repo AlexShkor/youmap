@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Web.Mvc;
 
-namespace mPower.Framework.Mvc.ModelBinders
+namespace YouMap.Framework.Mvc.ModelBinders
 {
     public interface IPropertyBinder
     {

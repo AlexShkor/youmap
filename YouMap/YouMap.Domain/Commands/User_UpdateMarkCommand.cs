@@ -1,7 +1,6 @@
-﻿using System;
-using Paralect.Domain;
+﻿using Paralect.Domain;
 using YouMap.Domain.Data;
-using mPower.Framework;
+using YouMap.Framework;
 
 namespace YouMap.Domain.Commands
 {

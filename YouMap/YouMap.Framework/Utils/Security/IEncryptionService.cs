@@ -1,4 +1,4 @@
-namespace mPower.Framework.Utils.Security
+namespace YouMap.Framework.Utils.Security
 {
     public interface IEncryptionService
     {

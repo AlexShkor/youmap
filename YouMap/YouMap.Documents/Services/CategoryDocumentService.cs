@@ -1,8 +1,8 @@
 ﻿using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using YouMap.Documents.Documents;
-using mPower.Framework;
-using mPower.Framework.Services;
+using YouMap.Framework;
+using YouMap.Framework.Services;
 
 namespace YouMap.Documents.Services
 {

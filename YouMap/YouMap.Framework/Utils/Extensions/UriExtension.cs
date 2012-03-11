@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace mPower.Framework.Utils.Extensions
+namespace YouMap.Framework.Utils.Extensions
 {
     public static class UriExtensions
     {

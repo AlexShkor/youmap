@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Paralect.ServiceBus;
+﻿using Paralect.ServiceBus;
 
-namespace mPower.Framework
+namespace YouMap.Framework
 {
     //TODO: Temp quick solution, remove this class later.
     public class AsyncServiceBus

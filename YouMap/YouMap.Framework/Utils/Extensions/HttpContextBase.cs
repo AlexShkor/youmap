@@ -1,6 +1,6 @@
-﻿using mPower.Environment.MultiTenancy;
+﻿using System.Web;
 
-namespace System.Web
+namespace YouMap.Framework.Utils.Extensions
 {
     /// <summary>
     /// Extension methods for <see cref="System.Web.HttpContextBase"/>

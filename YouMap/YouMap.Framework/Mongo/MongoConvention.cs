@@ -1,9 +1,8 @@
-using System;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Options;
 
-namespace mPower.Framework.Mongo
+namespace YouMap.Framework.Mongo
 {
     public static class MongoConvention
     {

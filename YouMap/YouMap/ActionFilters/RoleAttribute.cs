@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Linq;
 using YouMap.Domain.Enums;
 
 namespace YouMap.ActionFilters

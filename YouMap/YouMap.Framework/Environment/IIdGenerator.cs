@@ -1,6 +1,6 @@
 using System;
 
-namespace mPower.Framework.Environment
+namespace YouMap.Framework.Environment
 {
     /// <summary>
     /// Id generation

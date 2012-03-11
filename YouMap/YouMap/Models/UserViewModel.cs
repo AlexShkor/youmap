@@ -1,6 +1,4 @@
-﻿using System.Web.Mvc;
-
-namespace YouMap.Models
+﻿namespace YouMap.Models
 {
     public class UserViewModel
     {

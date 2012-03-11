@@ -1,9 +1,7 @@
-using YouMap.Framework;
-using mPower.Framework.Mongo;
 using StructureMap;
-using StructureMap.Configuration.DSL;
+using YouMap.Framework.Mongo;
 
-namespace mPower.Framework.Registries
+namespace YouMap.Framework.Registries
 {
     public class MongoRegistry
     {

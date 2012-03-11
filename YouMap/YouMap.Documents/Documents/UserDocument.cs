@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MongoDB.Bson.Serialization.Attributes;
 using YouMap.Domain.Auth;
 using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
-using mPower.Framework;
 
 namespace YouMap.Documents.Documents
 {

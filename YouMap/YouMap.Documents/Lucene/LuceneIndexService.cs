@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ru;
 using Lucene.Net.Index;
@@ -9,7 +7,7 @@ using YouMap.Framework;
 using Lucene.Net.Documents;
 using System.IO;
 using Lucene.Net.Search;
-using mPower.Framework.Services;
+using YouMap.Framework.Services;
 using Directory = Lucene.Net.Store.Directory;
 using Version = Lucene.Net.Util.Version;
 

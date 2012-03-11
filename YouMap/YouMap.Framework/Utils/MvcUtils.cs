@@ -4,7 +4,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
 
-namespace mPower.Framework.Utils
+namespace YouMap.Framework.Utils
 {
 	public static class MvcUtils
 	{

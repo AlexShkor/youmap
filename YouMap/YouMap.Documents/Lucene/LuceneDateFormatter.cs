@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace YouMap.Documents.Lucene
+﻿namespace YouMap.Documents.Lucene
 {
     public class LuceneDateFormatter
     {
