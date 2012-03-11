@@ -1,7 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Helpers;
+using System.Web.Mvc;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
@@ -51,7 +54,7 @@ namespace YouMap.Controllers
                            Id = doc.Id,
                            Name = doc.Name,
                            IsTop = doc.IsTop,
-                           Icon = Url.Content(Path.Combine(PlaceIconsDir, doc.Id + "/", doc.Icon))
+                           Icon = Url.Content(Path.Combine(PlaceIconsDir, doc.Id + "/", doc.Icon ?? String.Empty)) //doc.Icon ?? String.Empty - it's hot fix
                        };
         }
 

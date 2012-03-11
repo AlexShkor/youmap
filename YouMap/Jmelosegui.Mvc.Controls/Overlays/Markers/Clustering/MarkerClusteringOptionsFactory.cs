@@ -1,4 +1,6 @@
-﻿namespace Jmelosegui.Mvc.Controls.Overlays.Markers
+﻿using System.Collections.Generic;
+
+namespace Jmelosegui.Mvc.Controls.Overlays.Markers
 {
     public class MarkerClusteringOptionsFactory
     {

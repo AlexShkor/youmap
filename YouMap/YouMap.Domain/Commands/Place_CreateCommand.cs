@@ -1,4 +1,6 @@
-﻿using Paralect.Domain;
+﻿using System;
+using System.Collections.Generic;
+using Paralect.Domain;
 using Paralect.ServiceBus;
 using YouMap.Domain.Data;
 using YouMap.Framework;

@@ -1,4 +1,6 @@
-﻿namespace Jmelosegui.Mvc.Controls.Overlays
+﻿using System.Collections.Generic;
+
+namespace Jmelosegui.Mvc.Controls.Overlays
 {
     public class Polygon : Shape
     {

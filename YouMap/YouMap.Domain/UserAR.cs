@@ -1,4 +1,5 @@
-﻿using Paralect.Domain;
+﻿using System;
+using Paralect.Domain;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Domain.Events;

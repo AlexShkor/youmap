@@ -1,4 +1,4 @@
-namespace YouMap.Controllers
+namespace YouMap.Models
 {
     public class PlaceModel
     {
@@ -12,10 +12,15 @@ namespace YouMap.Controllers
 
         public string Description { get; set; }
 
-        public string Icon { get; set; }
+        public MarkerIcon Icon { get; set; }
 
         public bool Draggable { get; set; }
 
         public string Id { get; set; }
+
+        public PlaceModel()
+        {
+            Icon =new MarkerIcon();
+        }
     }
 }

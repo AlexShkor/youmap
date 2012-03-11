@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Web.Mvc;
 using Paralect.Domain;
 using Prelude.Extensions;
 using StructureMap.Attributes;

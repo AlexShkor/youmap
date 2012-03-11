@@ -1,31 +1,65 @@
 ﻿@using Jmelosegui.Mvc.Controls
 @using YouMap.Controllers
-@model MapModel
+@using YouMap.Models
+@model YouMap.Models.MapModel
 
 <script>
-$(document).ready(function() {
-	YouMap.Map.Initialize();
+    $(document).ready(function () {
+        var config = {
+            X: '@(Model.Latitude)',
+            Y: '@(Model.Longitude)',
+            Zoom: @(Model.Zoom)
+        };
+        var places = [
+            @foreach(var item in Model.Markers)
+            {
+                var place = item;
+                <text>
+                {
+                    Id: '@(place.Id)',
+                    Icon: @IconOptions(item.Icon),
+                    Shadow: @IconOptions(Model.IconShadow),
+                    X: '@(place.Latitude)',
+                    Y: '@(place.Longitude)',
+                    Title: '@(place.Title)'
+                }@(Model.Markers.Last() == place ? "":",")
+                </text>
+            }
+        ];
+	YouMap.Map.Initialize(config,places);
 });
 </script>
 <div id="mapHolder">
-@(Html.Telerik().GoogleMap().Name("map")
-.Latitude(Model.Latitude).Longitude(Model.Longitude).Zoom(Model.Zoom)
-.Markers(x=>
-			 {
-				 foreach (var item2 in Model.Markers)
-				 {
-					 PlaceModel marker = item2;
-					 x.Add().Title(marker.Title)
-					 .Latitude(marker.Latitude)
-					 .Longitude(marker.Longitude)
-					 .Icon(marker.Icon, Model.Icon.Size, Model.Icon.Point,Model.Icon.Anchor)
-                     .Shadow(Model.IconShadow.Path, Model.IconShadow.Size, Model.IconShadow.Point, Model.IconShadow.Anchor)
-					 .Clickable(true)
-					 .Window(y => y.Add().Content(
-					 @<text>
-						@Html.Partial("PlaceInfo",marker)
-					 </text>
-					 ));
-				 }
- }))
+    <div id="map"></div>
+    @*   @(Html.Telerik().GoogleMap().Name("map")
+           .Latitude(Model.Latitude).Longitude(Model.Longitude).Zoom(Model.Zoom)
+           .Markers(x=>
+                        {
+                            foreach (var item2 in Model.Markers)
+                            {
+                                PlaceModel marker = item2;
+                                x.Add().Title(marker.Title)
+                                    .Latitude(marker.Latitude)
+                                    .Longitude(marker.Longitude)
+                                    .Icon(marker.Icon.Path, marker.Icon.Size, marker.Icon.Point, marker.Icon.Anchor)
+                                    .Shadow(Model.IconShadow.Path, Model.IconShadow.Size, Model.IconShadow.Point, Model.IconShadow.Anchor)
+                                    .Clickable(true)
+                                    .Window(y => y.Add().Content(
+                                        @<text>
+                                             @Html.Partial("PlaceInfo",marker)
+                                         </text>
+                                                     ));
+                            }
+                        }))*@
 </div>
+
+@helper IconOptions(MarkerIcon iconShadow)
+{
+    <text> { 
+        Path: '@(iconShadow.Path)', 
+        Size: { Width: @(iconShadow.Size.Width), Height:@(iconShadow.Size.Height)},
+        Point: { X: @(iconShadow.Point.X), Y: @(iconShadow.Point.Y)},
+        Anchor: { X: @(iconShadow.Anchor.X), Y: @(iconShadow.Anchor.Y)} 
+            }
+    </text>
+}

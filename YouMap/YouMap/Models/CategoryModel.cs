@@ -1,4 +1,4 @@
-namespace YouMap.Controllers
+namespace YouMap.Models
 {
     public class CategoryModel
     {

@@ -1,4 +1,6 @@
-﻿namespace YouMap.Domain.Data
+﻿using System;
+
+namespace YouMap.Domain.Data
 {
     //used in events
     public class VkData

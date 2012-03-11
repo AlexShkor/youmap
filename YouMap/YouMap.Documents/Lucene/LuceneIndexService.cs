@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ru;
 using Lucene.Net.Index;

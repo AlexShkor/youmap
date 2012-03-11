@@ -61,7 +61,8 @@ namespace YouMap.Domain
         {
             Apply(new Place_AssignedEvent
                       {
-                          
+                          PlaceId = _id,
+                          OwnerId = userId
                       });
         }
     }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System;
+using MongoDB.Bson.Serialization.Attributes;
 using YouMap.Domain.Data;
 
 namespace YouMap.Documents.Documents

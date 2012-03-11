@@ -1,4 +1,5 @@
-﻿using YouMap.Domain.Data;
+﻿using System;
+using YouMap.Domain.Data;
 
 namespace YouMap.Documents.Documents
 {

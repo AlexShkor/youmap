@@ -1,4 +1,5 @@
-﻿using YouMap.Domain.Enums;
+﻿using System.Collections.Generic;
+using YouMap.Domain.Enums;
 
 namespace YouMap.Domain.Auth
 {

@@ -44,7 +44,12 @@ YouMap.Map = function ($) {
     var userLocation = null;
     var userMarker = null;
     
-    var initialize = function () {
+    var initialize = function (config,places) {
+        var map = YouMap.Google.CreateMap(config);
+        for (var i = 0; i < places.length; i++) {
+            var marker = YouMap.Google.CreateMarker(map, places[i]);
+            YouMap.Google.AddMarker(map, marker);
+        }
 
         $(".place-info-window").each(function() {
             var id = "vk_like_place_" + $(this).data("id");

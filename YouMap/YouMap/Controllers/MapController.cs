@@ -1,6 +1,8 @@
-﻿using System.Globalization;
+﻿using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Web.Mvc;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -29,7 +31,7 @@ namespace YouMap.Controllers
         public ActionResult Index()
         {
             var model = new MapModel();
-            model.IconShadow.Path = _imageService.IconShadow;
+            model.IconShadow = _imageService.IconShadowModel;
             model.Markers = _documentService.GetAll().Select(Map);
             if (Request.IsAjaxRequest())
             {
@@ -45,7 +47,7 @@ namespace YouMap.Controllers
                            Id = doc.Id,
                            Address = doc.Address,
                            Description = doc.Description,
-                           Icon = _imageService.GetIconForCategory(doc.CategoryId),
+                           Icon = _imageService.GetIconModel(doc.CategoryId),
                            Latitude = doc.Location.Latitude,
                            Longitude = doc.Location.Longitude,
                            Title = doc.Title
@@ -101,7 +103,7 @@ namespace YouMap.Controllers
                                                              CategoryId = filter.CategoryId
                                                          }).Select(Map);
             var model = new MapModel();
-            model.IconShadow.Path = _imageService.IconShadow;
+            model.IconShadow = _imageService.IconShadowModel;
             model.Markers = places;
 
             return RespondTo(r =>

@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 using YouMap.ActionFilters;
@@ -92,7 +95,7 @@ namespace YouMap.Controllers
             if (!Request.IsAjaxRequest())
             {
                 model.Map = new MapModel();
-                model.Map.IconShadow.Path = _imageService.IconShadow;
+                model.Map.IconShadow = _imageService.IconShadowModel;
                 model.DisplayMap = true;
             }
             AjaxResponse.Render(".control-content", "AddPlace", model);
@@ -136,7 +139,7 @@ namespace YouMap.Controllers
                 Id = doc.Id,
                 Address = doc.Address,
                 Description = doc.Description,
-                Icon = _imageService.GetIconForCategory(doc.CategoryId),
+                Icon = _imageService.GetIconModel(doc.CategoryId),
                 Latitude = doc.Location.Latitude,
                 Longitude = doc.Location.Longitude,
                 Title = doc.Title

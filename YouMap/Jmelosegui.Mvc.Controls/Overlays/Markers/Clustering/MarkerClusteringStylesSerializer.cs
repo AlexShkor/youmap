@@ -1,4 +1,5 @@
-﻿using Telerik.Web.Mvc.Infrastructure;
+﻿using System.Collections.Generic;
+using Telerik.Web.Mvc.Infrastructure;
 
 namespace Jmelosegui.Mvc.Controls.Overlays.Markers.Clustering
 {

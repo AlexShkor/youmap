@@ -1,4 +1,6 @@
-﻿using Lucene.Net.Documents;
+﻿using System;
+using System.Collections.Generic;
+using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using YouMap.Framework;
 

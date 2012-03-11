@@ -1,4 +1,7 @@
-namespace YouMap.Controllers
+using System.Collections.Generic;
+using System.Web.Mvc;
+
+namespace YouMap.Models
 {
     public class PlaceAssignModel
     {

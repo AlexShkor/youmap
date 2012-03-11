@@ -1,4 +1,6 @@
-﻿namespace Jmelosegui.Mvc.Controls
+﻿using System;
+
+namespace Jmelosegui.Mvc.Controls
 {
     public class OverlayBinding<TGoogleMapOverlay, TDataItem> : IOverlayBinding<TGoogleMapOverlay>
         where TGoogleMapOverlay : Overlay
