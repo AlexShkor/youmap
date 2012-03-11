@@ -56,5 +56,13 @@ namespace YouMap.Domain
                           Status = status
                       });
         }
+
+        public void AssignToUser(string userId)
+        {
+            Apply(new Place_AssignedEvent
+                      {
+                          
+                      });
+        }
     }
 }

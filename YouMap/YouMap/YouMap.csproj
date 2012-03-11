@@ -302,6 +302,7 @@
     </Compile>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\PlaceAssignModel.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\VkController.cs" />
     <Compile Include="ImageService.cs" />
@@ -951,9 +952,15 @@
   <ItemGroup>
     <Content Include="Views\Shared\AjaxLoader.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\Assign.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

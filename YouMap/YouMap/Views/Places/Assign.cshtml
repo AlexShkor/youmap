@@ -1,0 +1,34 @@
+﻿@model YouMap.Controllers.PlaceAssignModel
+
+@using (Html.BeginForm("Assign","Places"))
+{
+    @Html.ValidationSummary("", new { id = "validation-summary-errors" })
+    <div>
+        <fieldset>
+            <div class="editor-label">
+                @Html.LabelFor(x => x.UserId, "Владелец")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(x => x.UserId,Model.Users)
+                @Html.ValidationMessageFor(x => x.UserId)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(x => x.Address, "Адрес")
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(x => x.Address)
+                @Html.ValidationMessageFor(x => x.Address)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Title, "Название")
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Title)
+                @Html.ValidationMessageFor(m => m.Title)
+            </div>
+            <p>
+                <input class="awesome small" type="submit" value="Отправить" />
+            </p>
+        </fieldset>
+    </div> 
+}

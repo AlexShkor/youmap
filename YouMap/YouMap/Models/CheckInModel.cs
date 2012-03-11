@@ -9,8 +9,6 @@ namespace YouMap.Models
 
         public string Memo { get; set; }
 
-        public string Title { get; set; }
-
         public string PlaceId { get; set; }
 
         public string Latitude { get; set; }

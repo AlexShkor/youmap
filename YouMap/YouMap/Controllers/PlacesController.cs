@@ -23,21 +23,23 @@ namespace YouMap.Controllers
 {
     public class PlacesController : BaseController
     {
-        private readonly PlaceDocumentService _docimentService;
+        private readonly PlaceDocumentService _documentService;
         private readonly ImageService _imageService;
         private readonly IIdGenerator _idGenerator;
         private readonly CategoryDocumentService _categoriesDocumentService;
+        private readonly UserDocumentService _userDocumentService;
         private readonly PlaceLuceneService _placeLuceneService;
         private IEnumerable<CategoryDocument> _categories;
         public IEnumerable<CategoryDocument> Categories { get { return _categories = _categories ?? _categoriesDocumentService.GetAll(); } } 
 
-        public PlacesController(ICommandService commandService, PlaceDocumentService docimentService,ImageService imageService, IIdGenerator idGenerator, CategoryDocumentService categoriesDocumentService, PlaceLuceneService placeLuceneService) : base(commandService)
+        public PlacesController(ICommandService commandService, PlaceDocumentService documentService,ImageService imageService, IIdGenerator idGenerator, CategoryDocumentService categoriesDocumentService, PlaceLuceneService placeLuceneService, UserDocumentService userDocumentService) : base(commandService)
         {
-            _docimentService = docimentService;
+            _documentService = documentService;
             _imageService = imageService;
             _idGenerator = idGenerator;
             _categoriesDocumentService = categoriesDocumentService;
             _placeLuceneService = placeLuceneService;
+            _userDocumentService = userDocumentService;
         }
 
         public ActionResult Index()
@@ -49,7 +51,7 @@ namespace YouMap.Controllers
                 filter.OwnerId = User.Id;
                 filter.StatusNotIn.Add(PlaceStatusEnum.Blocked);
             }
-            var docs = _docimentService.GetByFilter(filter);
+            var docs = _documentService.GetByFilter(filter);
             var model = docs.Select(MapListItem);
             return View(model);
         }
@@ -62,7 +64,7 @@ namespace YouMap.Controllers
                 if (luceneDocs.Any())
                 {
                     var places =
-                        _docimentService.GetByFilter(new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id)}).
+                        _documentService.GetByFilter(new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id)}).
                             Select(Map);
                     return Json(places);
                 }
@@ -210,7 +212,7 @@ namespace YouMap.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            var place = _docimentService.GetById(id);
+            var place = _documentService.GetById(id);
             CheckPermissions(place);
             return RespondTo(place);
         }
@@ -239,8 +241,51 @@ namespace YouMap.Controllers
 
         private void CheckPermissions(string id)
         {
-            var place = _docimentService.GetById(id);
+            var place = _documentService.GetById(id);
             CheckPermissions(place);
+        }
+
+        [HttpGet]
+        [Admin]
+        public ActionResult Assign(string id)
+        {
+            var doc = _documentService.GetById(id);
+            var model = MapToAssignModel(doc);
+            return RespondTo(model);
+        }
+
+        private PlaceAssignModel MapToAssignModel(PlaceDocument doc)
+        {
+            return new PlaceAssignModel
+                       {
+                           Address = doc.Address,
+                           Id = doc.Id,
+                           Title = doc.Title,
+                           UserId = doc.OwnerId,
+                           Users = new SelectList(_userDocumentService.GetAll().Select(x => new
+                                                                                                {
+                                                                                                    Text =
+                                                                                                x.FullName ?? x.Email,
+                                                                                                    Value = x.Id
+                                                                                                }), "Value", "Text")
+                       };
+        }
+
+        [HttpPost]
+        [Admin]
+        public ActionResult Assing(PlaceAssignModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var command = new Place_AssignCommand
+                                  {
+                                      OwnerId = model.UserId,
+                                      PlaceId = model.Id
+                                  };
+                Send(command);
+                return RedirectToAction("Index");
+            }
+            return RespondTo(model);
         }
     }
 }

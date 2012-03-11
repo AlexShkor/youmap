@@ -137,7 +137,7 @@ namespace YouMap.Controllers
                 {
                     model.DisplayPlace = true;
                     model.PlaceId = place.Id;
-                    model.Title = place.Title;
+                    model.Memo = place.Title;
                 }
             }
             return PartialView(model);
@@ -152,7 +152,7 @@ namespace YouMap.Controllers
                 var command = new User_AddCheckInCommand
                                   {
                                       Memo = model.Memo,
-                                      Title = model.Title,
+                                      Title = model.Memo.Ellipsize(50),
                                       Location =  location,
                                       PlaceId = model.PlaceId,
                                       UserId = User.Id

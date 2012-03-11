@@ -91,18 +91,18 @@ namespace YouMap.Controllers
         }
 
 
-        //public void SendAsync(params ICommand[] commands)
-        //{
-        //    if (SessionContext.IsUserAuthorized())
-            //{
-            //    foreach (var command in commands)
-            //    {
-            //        command.Metadata.UserId = SessionContext.UserId;
-            //    }
-            //}
+        public void SendAsync(params ICommand[] commands)
+        {
+            if (SessionContext.IsUserAuthorized())
+            {
+                foreach (var command in commands)
+                {
+                    command.Metadata.UserId = SessionContext.User.Id;
+                }
+            }
 
-        //    CommandService.SendAsync(commands);
-        //}
+            CommandService.SendAsync(commands);
+        }
 
 
         #region Responses

@@ -86,11 +86,11 @@ namespace YouMap.Controllers
             {
                 return HttpNotFound();
             }
-            return View("LogOn", new LogOnModel());
+            return View("Register", new RegisterModel());
         }
 
         [HttpPost]
-        public ActionResult SetupAdmin(LogOnModel model)
+        public ActionResult SetupAdmin(RegisterModel model)
         {
             if (_authenticationService.HasAdmin)
             {
@@ -108,7 +108,7 @@ namespace YouMap.Controllers
                     ModelState.AddModelError("Error", e.Message);
                 }
             }
-            return RespondTo(model);
+            return RespondTo(model, "Register");
         }
 
        

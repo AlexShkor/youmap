@@ -9,7 +9,8 @@ namespace YouMap.EventHandlers
 {
     public class PlaceDocumentEventHandler :
         IMessageHandler<Place_AddedEvent>,
-        IMessageHandler<Place_StatusChangedEvent>
+        IMessageHandler<Place_StatusChangedEvent>,
+        IMessageHandler<Place_AssignedEvent>
     {
         private readonly PlaceDocumentService _documentService;
 
@@ -39,6 +40,13 @@ namespace YouMap.EventHandlers
             var query = Query.EQ("_id", message.PlaceId);
             var update = Update.Set("Status", message.Status);
             _documentService.Update(query,update);
+        }
+
+        public void Handle(Place_AssignedEvent message)
+        {
+            var query = Query.EQ("_id", message.PlaceId);
+            var update = Update.Set("OwnerId", message.OwnerId);
+            _documentService.Update(query, update);
         }
     }
 }

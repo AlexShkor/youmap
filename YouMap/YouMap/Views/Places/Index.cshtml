@@ -35,6 +35,9 @@
                     <td>
                         @Html.ActionLink("Заблокировать", "Block", new { id = item.Id })
                     </td>
+                    <td>
+                        @Html.ActionLink("Сменить владельца", "Assign", new {@class="ajax-link", id = item.Id })
+                    </td>
                 }
             </tr>
         }
