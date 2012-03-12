@@ -18,6 +18,8 @@ namespace YouMap.Models
 
         public string Id { get; set; }
 
+        public string InfoWindowUrl { get; set; }
+
         public PlaceModel()
         {
             Icon =new MarkerIcon();

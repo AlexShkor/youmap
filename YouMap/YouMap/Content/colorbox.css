@@ -1,0 +1,89 @@
+﻿#cboxOverlay{background:#fff;}
+#colorbox
+{
+    background-image: url('images/black-50-opasity-pixel.png');
+      -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        overflow: hidden;
+        -webkit-box-shadow: 0 0 6px #999;
+        -moz-box-shadow: 0 0 6px #999;
+        box-shadow: 0 0 6px #999;
+}
+
+
+#cboxClose
+{
+    margin-top: -20px;
+margin-left: 10px;
+
+    cursor: pointer;
+}
+    #cboxClose a
+    {
+        color: peachpuff;
+    }
+
+#cboxContent h2
+{
+    text-align: center;
+    color: white;
+}
+
+.checkin
+{
+    width: 300px;
+    padding: 10px;
+}
+
+
+    #cboxContent p
+    {
+        text-align: center;
+    }
+
+#cboxContent textarea
+{
+    background: transparent;
+    border: none;
+    height: 120px;
+    padding: 5px;
+    width: 290px;
+    color: white;
+    -webkit-box-shadow: 0 0 6px #FFF;
+    -moz-box-shadow: 0 0 6px #FFF;
+    box-shadow: 0 0 6px #FFF;
+}
+
+#cboxContent fieldset
+{
+    color: white;
+    border: none;
+}
+
+#cboxContent .field-validation-error
+{
+    color: #F88;
+}
+
+
+	.control-panel
+{
+    float: left;
+	    clear: both;
+    
+}
+	.control-panel ul
+{
+	    float: left;
+	    margin: 0;
+	    padding: 0;
+    list-style-type: none;
+    clear: both;
+}
+
+	.control-panel ul li
+{
+    float: left;
+    margin: 5px;
+}

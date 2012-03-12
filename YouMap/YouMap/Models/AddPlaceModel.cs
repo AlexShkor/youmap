@@ -8,22 +8,23 @@ namespace YouMap.Models
 {
     public class AddPlaceModel
     {
-        [Required]
+        [Required(ErrorMessage = "Введите название")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите адресс")]
         public string Address { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Адресс не найден, укажите адресс и нажмите кнопку поиска. Перетащите маркер на нуэную позицию, если требуется.")]
         public string Latitude { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ошибка.")]
         public string Longitude { get; set; }
 
         public IEnumerable<DayOfWeek> WorkDays { get; set; }
 
         public IEnumerable<SelectListItem> DaysOfWeek { get; set; } 
         
+        [Required(ErrorMessage = "Выберите категорию")]
         public string CategoryId { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }

@@ -531,6 +531,9 @@
     <Content Include="Content\2012.1.214\Windows7\slider-v.gif" />
     <Content Include="Content\2012.1.214\Windows7\sprite-vertical.png" />
     <Content Include="Content\2012.1.214\Windows7\sprite.png" />
+    <Content Include="Content\ajax-loader.css" />
+    <Content Include="Content\colorbox.css" />
+    <Content Include="Content\forms.css" />
     <Content Include="Content\images\alert-overlay.png" />
     <Content Include="Content\images\black-50-opasity-pixel.png" />
     <Content Include="Content\images\bright_squares.png" />
@@ -540,6 +543,8 @@
     <Content Include="Content\images\px_by_Gre3g_contrast.png" />
     <Content Include="Content\images\Search30x30.png" />
     <Content Include="Content\images\square_bg.png" />
+    <Content Include="Content\links.css" />
+    <Content Include="Content\table.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -955,6 +960,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Places\Assign.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Styles.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

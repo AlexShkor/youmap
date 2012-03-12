@@ -9,32 +9,8 @@ $(document).ready(function () {
 });
 
 var getMap = function() {
-    return $("#map").data("GoogleMap");
+    return YouMap.Map.GetMap();
 };
-
-var createMarker = function (config, onDrag) {
-    var map = getMap();
-    if (!map.Markers) {
-        map.Markers = new Array();
-    }
-    var marker = new $.telerik.GoogleMarker(map.GMap, map.Markers.length, config);
-
-    map.Markers.push(marker);
-    map.renderMarker(marker);
-    google.maps.event.addListener(marker.GMarker, 'drag', function (e) {
-        onDrag(e.latLng.Ua, e.latLng.Va);
-        $('#Latitude').val(e.latLng.Sa);
-        $('#Longitude').val(e.latLng.Ta);
-    });
-    return marker;
-};
-
-
-var updatePosition = function (marker, x, y) {
-    var location = new google.maps.LatLng(x, y);
-    marker.GMarker.setPosition(location);
-};
-
 //endregion GLOBAL
 
 YouMap.Map = function ($) {
@@ -43,12 +19,21 @@ YouMap.Map = function ($) {
     var geocoder = null;
     var userLocation = null;
     var userMarker = null;
-    
-    var initialize = function (config,places) {
-        var map = YouMap.Google.CreateMap(config);
+
+    var city = "Минск";
+    var country = "Беларусь";
+
+    var map = null;
+    var places = new Array();
+
+    var initialize = function (config, placeOptions) {
+        places = placeOptions;
+        map = YouMap.Google.CreateMap(config);
         for (var i = 0; i < places.length; i++) {
-            var marker = YouMap.Google.CreateMarker(map, places[i]);
+            places[i].click = openPlaceInfo;
+            var marker = YouMap.Google.CreateMarker(map, places[i]);    
             YouMap.Google.AddMarker(map, marker);
+            places[i].Marker = marker;
         }
 
         $(".place-info-window").each(function() {
@@ -68,10 +53,15 @@ YouMap.Map = function ($) {
             });
         });
 
-        YouMap.Geolocation.Locate(function(x,y) {          
-            setMapCenter(x, y);
-            updateUserMarker(x,y);
-        });
+
+        setTimeout(function() {
+            YouMap.Geolocation.Locate(function (x, y) {
+                setMapCenter(x, y);
+                updateUserMarker(x, y);
+            });
+        }, 100);
+
+       
         startUpdateLocation();
         //$("#map").attr("style", "height: 213px; position: relative; background-color: rgb(229, 227, 223); overflow: initial;");
         $("#map").css("width", "auto");
@@ -86,16 +76,22 @@ YouMap.Map = function ($) {
         }
         YouMap.Vk.Map.Initialize();
     };
-    
+
+    var openPlaceInfo = function(options) {
+        var marker = options.Marker;
+        $.get(options.InfoWindowUrl, function (result) {
+            YouMap.Google.OpenWindow(map, marker, result);
+        });
+    };
+
     var updateUserMarker = function (x,y,dontCheckNearby) {
         userLocation = {x: x, y: y};
         if (userMarker) {
-            userMarker.Latitude = x;
-            userMarker.Longitude = y;       
+            YouMap.Google.SetPosition(userMarker, x, y);
         } else {
-            userMarker = createMarker({
-                Latitude: x,
-                Longitude: y,
+            userMarker = YouMap.Google.CreateMarker(map,{
+                X: x,
+                Y: y,
                 Title: "Я"
             });
         }
@@ -149,19 +145,22 @@ YouMap.Map = function ($) {
     };
 
     var setMapCenter = function (x, y) {
-        var map = getMap();
-        map.GMap.setCenter(createLocation(x, y));
-        map.GMap.setZoom(closeZoom);
+        map.setCenter(createLocation(x, y));
+        map.setZoom(closeZoom);
     };
 
     var searchGoogle = function(address,callback) {
-        var map = getMap();
-
+        if (address.indexOf(city) == -1) {
+            address += ", " + city;
+        }
+        if (address.indexOf(country) == -1) {
+            address += ", " + country;
+        }
         geocoder.geocode({ 'address': address }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var location = results[0].geometry.location;
-                map.GMap.setCenter(location);
-                map.GMap.setZoom(getZoom(results[0].geometry.viewport));
+                map.setCenter(location);
+                map.setZoom(getZoom(results[0].geometry.viewport));
                 callback(location.Ua,location.Va);
 
             } else {
@@ -169,6 +168,8 @@ YouMap.Map = function ($) {
             }
         });
     };
+    
+
 
     var searchByLocation = function(x, y, callback) {
         var location = new google.maps.LatLng(x, y);
@@ -193,7 +194,10 @@ YouMap.Map = function ($) {
         SetMapHeight: setMapHeight,
         SearchGoogle: searchGoogle,
         GetUserLocation: getUserLocation,
-        SearchByLocation: searchByLocation
+        SearchByLocation: searchByLocation,
+        GetMap: function () {
+            return map;
+        }
     };
 } (jQuery);
 
@@ -221,6 +225,7 @@ YouMap.AddPlace = function ($) {
                 return false;
             }
         });
+        $("#Address").focusout(setMarkerPosition);
        
     };
     
@@ -238,14 +243,15 @@ YouMap.AddPlace = function ($) {
     var setMarkerPosition = function (x,y) {
 
         if (marker) {
-            updatePosition(marker, x,y);
+            YouMap.Google.SetPosition(marker, x, y);
         } else {
-            marker = createMarker({
+            marker = YouMap.Google.CreateMarker({
                 Latitude: x,
                 Longitude: y,
                 Draggable: true,
-                Title: "New marker"
-            }, markerDragged);
+                Title: "New marker",
+                drag: markerDragged
+            });
         }
 
     };

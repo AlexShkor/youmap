@@ -50,7 +50,8 @@ namespace YouMap.Controllers
                            Icon = _imageService.GetIconModel(doc.CategoryId),
                            Latitude = doc.Location.Latitude,
                            Longitude = doc.Location.Longitude,
-                           Title = doc.Title
+                           Title = doc.Title,
+                           InfoWindowUrl = Url.Action("PlaceInfo",new{id=doc.Id})
                        };
         }
 
@@ -117,10 +118,11 @@ namespace YouMap.Controllers
             });
         }
 
+        [HttpGet]
         public ActionResult PlaceInfo(string id)
         {
             var doc = _documentService.GetById(id);
-            return View(Map(doc));
+            return RespondTo(Map(doc));
         }
 
         [HttpGet]

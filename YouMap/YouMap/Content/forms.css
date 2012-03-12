@@ -1,0 +1,164 @@
+﻿/* FORM LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+input[type="text"], 
+input[type="password"] {
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+    width: 200px;
+    float: left;
+}
+
+select {
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+}
+
+input[type="submit"] {
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, 
+.editor-label {
+    margin: 1em 0 0 0;
+    clear: left;
+}
+
+.display-field, 
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+.editor-field span{
+    float: left;
+}
+.text-box {
+    width: 30em;
+}
+
+.text-box.multi-line {
+    height: 6.5em;
+}
+
+.tri-state {
+    width: 6em;
+}
+
+
+label {
+    display:block;
+    padding-bottom:2px;
+    margin-top:2px;
+}
+
+.form-wrapper li 
+{
+    float: left;
+    clear: both
+}
+
+#search
+{
+    width: 20px;
+    height: 20px;
+    padding: 10px 10px 10px 10px;
+    background-image: url('images/Search30x30.png');
+    background-repeat: no-repeat;
+    text-decoration: none;
+}
+
+#submitPlace
+{
+width: 100px;
+margin: 5px;
+}
+
+.field-set
+{
+    float: left;
+}
+
+#addPlaceContainer table
+{
+    width: 100%;
+}
+#addPlaceContainer table td
+{
+    width: 50%;
+}
+.field-set-500
+{
+     
+    float: left;
+    width: 500px;
+}
+
+.place-icon-selector {
+    margin: 50px;
+
+    padding: 10px;
+}
+
+.icon-select 
+{
+    margin: 5px;
+    float: left;
+    width: 64px;
+    height: 64px;
+   background-image: url('images/black-50-opasity-pixel.png');
+}
+
+.icon-select:hover
+{
+    background-color: red;
+}
+
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #ff0000;
+    float: left;
+    clear: both;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid {
+    display: none;
+}

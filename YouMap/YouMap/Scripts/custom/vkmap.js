@@ -65,7 +65,6 @@ YouMap.Vk.Panel = function($) {
 YouMap.Vk.Map = function($) {
 
     var friends = null;
-    var friendsMarkers = null;
     
     var initialize = function() {
         VK.Observer.subscribe("auth.login", getFriends);
@@ -106,42 +105,46 @@ YouMap.Vk.Map = function($) {
         });
     };
 
-    var createFriendMarker = function(friend,item) {
-        var marker = createMarker({
+    var createFriendMarker = function (friend, item) {
+        var options = {
             Latitude: item.Latitude,
             Longitude: item.Longitude,
             Title: friend.first_name + " " + friend.last_name,
             Icon: {
                 Path: friend.photo,
                 Size: {
-                    Width: 50, Height: 50, IsEmpty: false
+                    Width: 50,
+                    Height: 50,
+                    IsEmpty: false
                 },
-                Point: {X: 0, Y: 0, IsEmpty: true},
-                Anchor: { X: -7, Y:57, IsEmpty: false }
+                Point: { X: 0, Y: 0, IsEmpty: true },
+                Anchor: { X: -7, Y: 57, IsEmpty: false }
             },
             Shadow: {
                 Path: window.location.origin + "/UserFiles/border.png",
                 Size: {
-                    Width: 60, Height: 60, IsEmpty: false
+                    Width: 60,
+                    Height: 60,
+                    IsEmpty: false
                 },
                 Point: { X: 0, Y: 0, IsEmpty: true },
                 Anchor: { X: 0, Y: 60, IsEmpty: false }
             }
-        });
-        friendsMarkers.push(marker);
-        //marker.uid = friend.uid;
+        };
+        var map = getMap();
+        friend.marker = YouMap.Google.CreateMarker(map,options);
     };
 
 
     var hideFriendsMarkers = function() {
-        for (var marker in friendsMarkers) {
-            friendsMarkers[marker].GMarker.setMap(null);
+        for (var i in friends) {
+            friendsMarkers[i].marker.setMap(null);
         }
     };
     var showFriendsMarkers = function () {
         var map = getMap();
-        for (var marker in friendsMarkers) {
-            friendsMarkers[marker].GMarker.setMap(map.GMap);
+        for (var i in friends) {
+            friends[i].marker.setMap(map);
         }
     };
     return {
