@@ -78,9 +78,26 @@ YouMap.Map = function ($) {
     };
 
     var openPlaceInfo = function(options) {
+        var temp = options;
         var marker = options.Marker;
         $.get(options.InfoWindowUrl, function (result) {
+            
             YouMap.Google.OpenWindow(map, marker, result);
+            var id = "vk_like_place_" + temp.Id;
+            var placeInfoWindow = $("#" + id).parents(".place-info-window");
+            var baseUri = window.location.origin;
+            var url = baseUri + options.InfoWindowUrl;
+            var title = $("h2", placeInfoWindow).html();
+            var desc = $("p", placeInfoWindow).html();
+            var image = baseUri + $("img", placeInfoWindow).attr("src");
+
+            VK.Widgets.Like(id, {
+                pageUrl: url,
+                pageImage: image,
+                pageTitle: title,
+                pageDescription: desc,
+                width: 100
+            });
         });
     };
 

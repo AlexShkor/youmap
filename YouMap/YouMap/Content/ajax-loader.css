@@ -1,4 +1,12 @@
-﻿/* LITTLE BAR */
+﻿/*ajax loading animation*/
+#ajaxLoader
+{
+    margin-top: -20px;
+    margin-left: 25px;
+}
+
+
+/* LITTLE BAR */
 
 .barlittle {
 	background-color:#2187e7;  
