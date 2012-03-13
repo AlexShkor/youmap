@@ -7,6 +7,7 @@ using MongoDB.Driver.Builders;
 using YouMap.Documents.Documents;
 using YouMap.Framework;
 using YouMap.Framework.Services;
+using YouMap.Framework.Utils.Extensions;
 
 namespace YouMap.Documents.Services
 {
@@ -63,6 +64,11 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.GTE("LocatedDate", filter.LastLocationDateGreaterThan.Value));
             }
+            if (filter.EventsForUserWithId.HasValue())
+            {
+                query = Query.And(Query.EQ("Friends",filter.EventsForUserWithId),Query.Or(Query.EQ("Events.Private", false),
+                                  Query.EQ("Events.UsersIds", filter.EventsForUserWithId)));
+            }
             return query;
         }
     }
@@ -91,5 +97,9 @@ namespace YouMap.Documents.Services
         public IEnumerable<String> VkIdIn { get; set; }
 
         public DateTime? LastLocationDateGreaterThan { get; set; }
+
+        public string EventsForUserWithId { get; set; }
+
+        public string IdOrVkIdEqual { get; set; }
     }
 }

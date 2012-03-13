@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 using Paralect.ServiceBus;
 using YouMap.Documents.Documents;
@@ -12,6 +13,7 @@ namespace YouMap.EventHandlers
         IMessageHandler<User_CreatedEvent>,
         IMessageHandler<User_ImportedFromVkEvent>,
         IMessageHandler<User_MarkUdatedEvent>,
+        IMessageHandler<User_EventAddedEvent>,
         IMessageHandler<User_CheckInAddedEvent>
     {
         private readonly UserDocumentService _documentService;
@@ -69,6 +71,24 @@ namespace YouMap.EventHandlers
                                   IsHidden = false
                               };
             var update = Update.PushWrapped("CheckIns", checkIn);
+            _documentService.Update(query,update);
+        }
+
+        public void Handle(User_EventAddedEvent message)
+        {
+            var query = Query.EQ("_id", message.OwnerId);
+            var doc = new EventDocument
+                          {
+                              Id = message.Id,
+                              Location = message.Location,
+                              Memo = message.Memo,
+                              PlaceId = message.PlaceId,
+                              Private = message.Private,
+                              Start = message.Start,
+                              Title = message.Title,
+                              UsersIds = message.UsersIds.ToList()
+                          };
+            var update = Update.PushWrapped("Events", doc);
             _documentService.Update(query,update);
         }
     }

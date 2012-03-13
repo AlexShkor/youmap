@@ -90,6 +90,8 @@ namespace YouMap.Documents.Services
 
         public List<PlaceStatusEnum> StatusNotIn { get; set; }
 
+        public string PlaceId { get; set; }
+
         public PlaceDocumentFilter()
         {
             StatusNotIn = new List<PlaceStatusEnum>();

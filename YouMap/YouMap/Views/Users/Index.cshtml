@@ -1,0 +1,28 @@
+﻿@model System.Collections.Generic.IEnumerable<UserListItem>
+
+@{
+    ViewBag.Title = "Пользователи";
+}
+
+@if(!Model.Any())
+{
+    <p>Список пользователей пуст</p>
+}
+<table>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.IsActive
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

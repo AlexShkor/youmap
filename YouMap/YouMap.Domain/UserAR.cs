@@ -95,5 +95,21 @@ namespace YouMap.Domain
         }
 
         #endregion
+
+        public void AddEvent(IEventData data)
+        {
+            Apply(new User_EventAddedEvent
+                      {
+                          Id = _id,
+                          Location = data.Location,
+                          Memo = data.Memo,
+                          OwnerId = data.OwnerId,
+                          Title = data.Title,
+                          Private = data.Private,
+                          PlaceId = data.PlaceId,
+                          Start = data.Start,
+                          UsersIds = data.UsersIds
+                      });
+        }
     }
 }

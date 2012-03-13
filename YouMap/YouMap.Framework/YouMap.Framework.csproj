@@ -112,6 +112,7 @@
     <Compile Include="Environment\MongoObjectIdGenerator.cs" />
     <Compile Include="Extensions\TimeSpan.cs" />
     <Compile Include="Helpers\SelectListHelper.cs" />
+    <Compile Include="Mvc\Helpers\HtmlHelpers.cs" />
     <Compile Include="ThreadSafeDictionary.cs" />
     <Compile Include="Environment\PassStateAttribute.cs" />
     <Compile Include="Environment\StructureMapDependencyResolver.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Mvc\Ajax\UpdateItem.cs" />
     <Compile Include="Mvc\Ajax\ValidationContext.cs" />
     <Compile Include="Mvc\Extensions.cs" />
-    <Compile Include="Mvc\Helpers\HtmlHelpers.cs" />
+    <Compile Include="Mvc\Helpers\Tenants\HtmlHelpers.cs" />
     <Compile Include="Mvc\Helpers\SelectListHelper.cs" />
     <Compile Include="Mvc\Helpers\SuffixDropDown.cs" />
     <Compile Include="Mvc\Helpers\UnitedStatesStates.cs" />

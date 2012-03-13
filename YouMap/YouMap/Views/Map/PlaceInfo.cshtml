@@ -10,8 +10,8 @@
             <h2>@Model.Title</h2>
             <div class="place-actions">
                 <ul>
-                    <li><a href="#">Отметиться</a></li>
-                    <li><a href="#">Создать встречу</a></li>
+                    <li><a class="colorbox" href="@Url.Action("CheckIn","Map",new {PlaceId = Model.Id})">Отметиться</a></li>
+                    <li><a class="colorbox" href="@Url.Action("Create","Events",new {PlaceId = Model.Id})">Создать встречу</a></li>
                     <li><div id="vk_like_place_@(Model.Id)" class="share-container"></div></li>
                 </ul>
             </div>

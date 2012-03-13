@@ -63,7 +63,7 @@ namespace YouMap.Controllers
         {
             var model = new AddCategoryModel();
             RenderEditCategory(model);
-            return RespondTo(model, "CreateEditCategory");
+            return RespondTo(model);
         }
 
         public ActionResult Delete(string id)
@@ -84,7 +84,7 @@ namespace YouMap.Controllers
             var doc = _documentService.GetById(id);
             var model = MapToEditModel(doc);
             RenderEditCategory(model);
-            return RespondTo(model,"CreateEditCategory");
+            return RespondTo(model);
         }
 
         private void RenderEditCategory(AddCategoryModel model)

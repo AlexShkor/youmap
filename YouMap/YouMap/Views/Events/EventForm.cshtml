@@ -1,0 +1,42 @@
+﻿@model YouMap.Models.EventEditModel
+@using (Html.BeginForm())
+{
+	<fieldset>
+	@Html.HiddenFor(x=> x.Id)
+		<div class="editor-label">
+				@Html.LabelFor(m => m.Title)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Title)
+				@Html.ValidationMessageFor(m => m.Title)
+                @Html.HiddenFor(x=> x.PlaceId)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Start)
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Start)
+				@Html.ValidationMessageFor(m => m.Start)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Memo)
+			</div>
+        <div class="editor-field">
+            @Html.TextAreaFor(x=> x.Memo)
+            @Html.ValidationMessageFor(m => m.Memo)
+        </div>
+        <div class="editor-label">
+				@Html.LabelFor(m => m.Private)
+			</div>
+        <div class="editor-field">
+            <label for="PrivateFalse"><input id="PrivateFalse" @Html.CheckedIf(!Model.Private) name="Private" value="False"/>Для все друзей</label>
+            <label for="PrivateTrue"><input id="PrivateTrue" @Html.CheckedIf(Model.Private) name="Private" value="True"/>Для выбранных друзей</label>
+            @Html.ValidationMessageFor(m => m.Private)
+        </div>
+        <div class="editor-field" @Html.DisplayIf(Model.Private)>
+            <select id="friends-select" name="UsersIds"></select>
+            @Html.ValidationMessageFor(x=> x.UsersIds)
+        </div>
+			<input class="ajax-submit" type="submit" />
+	</fieldset>
+}

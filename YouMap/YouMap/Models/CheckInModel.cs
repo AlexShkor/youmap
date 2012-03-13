@@ -15,5 +15,12 @@ namespace YouMap.Models
 
         public string Longitude { get; set; }
 
+
+        private const string CheckInMemoTemlate = "Я сейчас в {0}.";
+
+        public void SetMemoWithTemplate(string title)
+        {
+            Memo = string.Format(CheckInMemoTemlate, title);
+        }
     }
 }

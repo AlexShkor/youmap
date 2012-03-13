@@ -1,0 +1,10 @@
+﻿@model IEnumerable<EventListItem>
+
+<ul>
+    @foreach( var item in Model)
+    {
+        <li>
+            <a href="@Url.Action("Details","Events",new{id = item.Id})">@item.Title <sub>@item.StartDate</sub></a>
+        </li>
+    }
+</ul>

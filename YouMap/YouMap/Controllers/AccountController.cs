@@ -71,10 +71,7 @@ namespace YouMap.Controllers
             return RedirectToAction("Index", "Map");
         }
 
-        public ActionResult Register()
-        {
-            return RespondTo(new RegisterModel());
-        }
+        
 
         [HttpGet]
         public ActionResult SetupAdmin()
@@ -108,11 +105,22 @@ namespace YouMap.Controllers
             return RespondTo(model, "Register");
         }
 
-       
+        [HttpGet]
+        public ActionResult Register()
+        {
+            var model = new RegisterModel();
+            //TODO: Check, does it work?
+            UpdateModelIfPost(model);
+            return RespondTo(model);
+        }
 
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return Register();
+            }
             if (ModelState.IsValid)
             {
                 try

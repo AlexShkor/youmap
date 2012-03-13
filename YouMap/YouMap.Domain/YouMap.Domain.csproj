@@ -71,9 +71,11 @@
     <Compile Include="CategoryAR.cs" />
     <Compile Include="Commands\Place_AssignCommand.cs" />
     <Compile Include="Commands\Place_ChangeStatusCommand.cs" />
+    <Compile Include="Commands\User_AddEventCommand.cs" />
     <Compile Include="Data\CheckInData.cs" />
     <Compile Include="Commands\User_AddCheckInCommand.cs" />
     <Compile Include="Commands\User_UpdateMarkCommand.cs" />
+    <Compile Include="Data\IEventData.cs" />
     <Compile Include="Data\UserData.cs" />
     <Compile Include="Enums\PlaceStatusEnum.cs" />
     <Compile Include="Enums\UserPermissionEnum.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Events\Place_StatusChangedEvent.cs" />
     <Compile Include="Events\User_CheckInAddedEvent.cs" />
     <Compile Include="Events\User_CreatedEvent.cs" />
+    <Compile Include="Events\User_EventAddedEvent.cs" />
     <Compile Include="Events\User_PasswordChangedEvent.cs" />
     <Compile Include="Events\User_SetLastMarkEvent.cs" />
     <Compile Include="PlaceAR.cs" />

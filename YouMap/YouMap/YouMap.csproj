@@ -302,6 +302,11 @@
     </Compile>
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\EventListItem.cs" />
+    <Compile Include="Models\UserListItem.cs" />
+    <Compile Include="Models\EventEditModel.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Models\PlaceAssignModel.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\VkController.cs" />
@@ -311,6 +316,7 @@
     <Compile Include="Models\PlaceEditModel.cs" />
     <Compile Include="Models\PlaceListItem.cs" />
     <Compile Include="Models\PlaceSearchModel.cs" />
+    <Compile Include="Models\UserProfileModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VkLoginModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
@@ -923,7 +929,7 @@
     <Content Include="Views\Map\ControlPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Categories\CreateEditCategory.cshtml" />
+    <Content Include="Views\Categories\CategoryForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Categories\Index.cshtml" />
@@ -963,6 +969,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Styles.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\EventForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Categories\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Categories\AddCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Users\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Users\Profile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

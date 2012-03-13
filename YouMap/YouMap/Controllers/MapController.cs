@@ -125,20 +125,27 @@ namespace YouMap.Controllers
             return RespondTo(Map(doc));
         }
 
+       
+
         [HttpGet]
-        public ActionResult CheckIn(double? latitude, double? longitude)
+        [ActionName("CheckIn")]
+        public ActionResult CheckInGet(CheckInModel model)
         {
-            var model = new CheckInModel();
-            if (latitude.HasValue && longitude.HasValue)
+            model = model ?? new CheckInModel();  
+            var filter = new PlaceDocumentFilter {PlaceId = model.PlaceId};
+            if (string.IsNullOrEmpty(model.PlaceId) && (model.Latitude.HasValue() && model.Longitude.HasValue()))
             {
-                var location = new Location(latitude.Value,longitude.Value);
-                var place = _documentService.GetByFilter(new PlaceDocumentFilter { Location = location}).SingleOrDefault();
-                if (place != null)
-                {
-                    model.DisplayPlace = true;
-                    model.PlaceId = place.Id;
-                    model.Memo = place.Title;
-                }
+                var location = Location.Parse(model.Latitude, model.Longitude);
+                filter.Location = location;
+            }
+            var place = _documentService.GetByFilter(filter).SingleOrDefault();
+            if (place != null)
+            {
+                model.DisplayPlace = true;
+                model.PlaceId = place.Id;
+                model.Latitude = place.Location.GetLatitudeString();
+                model.Latitude = place.Location.GetLongitudeString();
+                model.SetMemoWithTemplate(place.Title);
             }
             return PartialView(model);
         }
@@ -160,7 +167,7 @@ namespace YouMap.Controllers
                 Send(command);
                 AjaxResponse.ClosePopup = true;
             }
-            return Result();
+            return RespondTo();
         }
     }
 

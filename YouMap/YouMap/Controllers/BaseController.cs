@@ -18,16 +18,11 @@ namespace YouMap.Controllers
     {
         #region Properties
 
-        private AjaxResponse _response = null;
+        private AjaxResponse _response;
 
         public virtual AjaxResponse AjaxResponse
         {
-            get
-            {
-                if (_response == null)
-                    _response = new AjaxResponse(this);
-                return _response;
-            }
+            get { return _response ?? (_response = new AjaxResponse(this)); }
         }
 
         #region Permissions
@@ -50,6 +45,16 @@ namespace YouMap.Controllers
         #endregion
 
         
+        public void UpdateModelIfPost<TModel>(TModel model) where TModel:class 
+        {
+            if (IsPost)
+            {
+                TryUpdateModel(model);
+            }
+        }
+
+        protected bool IsPost { get { return Request.HttpMethod.Equals("post", StringComparison.InvariantCultureIgnoreCase); } }
+
         protected ICommandService CommandService { get; set; }
 
         [SetterProperty]

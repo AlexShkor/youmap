@@ -22,5 +22,15 @@ namespace YouMap.Domain.Data
         {
             return new Location(double.Parse(latitude, CultureInfo.InvariantCulture), double.Parse(longitude, CultureInfo.InvariantCulture));
         }
+
+        public string GetLatitudeString()
+        {
+            return Latitude.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public string GetLongitudeString()
+        {
+            return Latitude.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

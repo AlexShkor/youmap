@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver.Builders;
+﻿using System.Linq;
+using MongoDB.Driver.Builders;
 using Paralect.ServiceBus;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -30,7 +31,7 @@ namespace YouMap.EventHandlers
                               Address = message.Address,
                               Description = message.Description,
                               CategoryId = message.CategoryId,
-                              WorkDays = message.WorkDays
+                              WorkDays = message.WorkDays.ToList()
                           };
             _documentService.Save(doc);
         }
