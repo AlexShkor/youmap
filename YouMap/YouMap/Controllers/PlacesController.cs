@@ -76,14 +76,10 @@ namespace YouMap.Controllers
             return PartialView();
         }
 
-        private bool Compare(string title, string term)
+        public ActionResult Info()
         {
-            title = title.ToLower();
-            term = term.ToLower();
-            var titleWords = title.Split(new[]{" "}, StringSplitOptions.RemoveEmptyEntries);
-            return titleWords.Any(x => x.StartsWith(term));
+            return View()
         }
-
 
         [HttpGet]
         [Authorize]

@@ -28,6 +28,10 @@ namespace YouMap.Documents.Services
         protected override QueryComplete BuildFilterQuery(PlaceDocumentFilter filter)
         {
             var query = Query.And(Query.Null);
+            if (filter.PlaceId.HasValue())
+            {
+                query = Query.And(query, Query.EQ("_id", filter.PlaceId));
+            }
             if (filter.CategoryId.HasValue())
             {
                 query = Query.And(query, Query.EQ("CategoryId", filter.CategoryId));

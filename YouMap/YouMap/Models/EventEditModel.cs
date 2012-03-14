@@ -18,5 +18,10 @@ namespace YouMap.Models
         public bool Private { get; set; }
         public string PlaceId { get; set; }
         public string PlateTitle { get; set; }
+
+        public EventEditModel()
+        {
+            UsersIds = new List<string>();
+        }
     }
 }

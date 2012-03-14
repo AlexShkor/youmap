@@ -28,7 +28,7 @@ namespace YouMap.Controllers
             _imageService = imageService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(MapFilter filter)
         {
             var model = new MapModel();
             model.IconShadow = _imageService.IconShadowModel;
@@ -174,6 +174,11 @@ namespace YouMap.Controllers
     public class MapFilter
     {
         public string CategoryId { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string PlaceId { get; set; }
+        public string CheckinId { get; set; }
+        public string EventId { get; set; }
     }
 
 }

@@ -13,6 +13,7 @@ namespace YouMap.Domain.Commands
 
         public bool IsTop { get; set; }
     }
+
     public class Category_CreateCommandHandler: CommandHandler<Category_CreateCommand>
     {
         public Category_CreateCommandHandler(IRepository repository) : base(repository)

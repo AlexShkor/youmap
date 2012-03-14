@@ -76,7 +76,7 @@ namespace YouMap.Controllers
                 model.PlaceId = place.Id;
                 model.PlateTitle = place.Title;
             }
-            return View(model);
+            return RespondTo(model);
         }
 
         [HttpPost]

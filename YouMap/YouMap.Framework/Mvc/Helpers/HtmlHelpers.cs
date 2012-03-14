@@ -7,7 +7,7 @@ namespace YouMap.Framework.Mvc.Helpers
     {
         public static MvcHtmlString DisplayIf(this HtmlHelper helper, bool display)
         {
-            return MvcHtmlString.Create(display ? "style=display:none" : String.Empty);
+            return MvcHtmlString.Create(!display ? "style=display:none" : String.Empty);
 
         }
         public static MvcHtmlString CheckedIf(this HtmlHelper helper, bool value)

@@ -290,3 +290,89 @@ YouMap.AddPlace = function ($) {
     };
 } (jQuery);
 
+YouMap.AddEvent = function($) {
+
+    var initialize = function () {
+        $("#PrivateTrue, #PrivateFalse").change(function() {
+            if ($(this).val() == "True") {
+                showFriendsList();
+            } else {
+                hideFriendsList();
+            }
+        });
+        $("#Start").datetimepicker();
+        $("#friends-select").on("click", "li", function() {
+            if($(this).hasClass("selected")) {
+                $(this).removeClass("selected");
+                removeFriend($(this).data("uid"));
+            } else {
+                $(this).addClass("selected");
+                addFriend($(this).data("uid"));
+            }
+        });
+        $("#friends-select").resize(function() {
+            $.colorbox.resize();
+        });
+        $("#friends-select").data("loaded", false);
+        $("#friends-select").selectable();
+        loadFriendsList();
+    };
+
+    var showFriendsList = function() {
+        if (!friendsListLoaded) {
+            loadFriendsList();
+        }
+        $("#friends-select").parent().show();
+        $.colorbox.resize();
+    };
+
+    var removeFriend = function(uid) {
+        $("#friendsValue").find("#hiddenFriend" + uid).remove();
+    };
+
+    var addFriend = function(uid) {
+        var hidden = $("<input type='hidden' name='UserIds'/>");
+        hidden.val(uid);
+        hidden.attr("id", "hiddenFriend" + uid);
+        $("#friendsValue").append(hidden);
+    };
+
+    var hideFriendsList = function() {
+        $("#friends-select").parent().hide();
+        $.colorbox.resize();
+    };
+
+    var loadFriendsList = function() {
+        VK.Api.call('friends.get', { fields: "uid,first_name,last_name,photo", count: 20, order: "hints" }, function(r) {
+            if (r.response) {
+                $("#friends-select").data("loaded", true);
+            } else {
+                return;
+            }
+            var selectedIds = new Array();
+            selectedIds.concat($("#friendsValue input[name='UserIds']").map(function(item) {
+                return parseInt($(item).val());
+            }));
+            r.response.map(function(friend) {
+                var li = $("<li/>");
+                li.attr("id", "friend" + friend.uid);
+                li.data("uid", friend.uid);
+                var img = $("<img/>");
+                img.attr("src", friend.photo);
+                var fullName = friend.first_name + " " + friend.last_name;
+                img.attr("title", fullName);
+                img.attr("alt", fullName);
+                if (selectedIds.indexOf(friend.uid) != -1) {
+                    li.addClass("selected");
+                }
+                li.append(img);
+                $("#friends-select").append(li);
+            });
+            $.colorbox.resize();
+        });
+    };
+
+    return {
+        Initialize: initialize
+    };
+}(jQuery);

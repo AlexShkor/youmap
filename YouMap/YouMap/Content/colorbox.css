@@ -47,8 +47,8 @@ margin-left: 10px;
     background: transparent;
     border: none;
     height: 120px;
-    padding: 5px;
-    width: 290px;
+    width: 100%;
+    display: block;
     color: white;
     -webkit-box-shadow: 0 0 6px #FFF;
     -moz-box-shadow: 0 0 6px #FFF;
@@ -87,3 +87,20 @@ margin-left: 10px;
     float: left;
     margin: 5px;
 }
+
+ol#friends-select {
+padding: 0;
+margin: 0;
+width: auto;
+display: block;
+height: 400px;
+overflow-y: scroll;
+}
+ol#friends-select li {
+display: block;
+float: left;
+padding: 2px;
+cursor: pointer;
+}
+#friends-select .ui-selecting { background: #FECA40; }
+	#friends-select .selected { background: #F39814; color: white; }

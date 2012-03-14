@@ -89,7 +89,6 @@ YouMap.Vk.Map = function($) {
                 }).join(",");
                 Request.post("/Vk/GetUsersLocation").addParams({ ids: ids }).
                     addSuccess("getuserslocations", function (data) {
-                        friendsMarkers = new Array();
                         for (var i = 0; i < data.jsonItems.locations.length; i++) {
                             for (var j = 0; j < friends.length; j++) {
                                 var item = data.jsonItems.locations[i];
@@ -107,8 +106,8 @@ YouMap.Vk.Map = function($) {
 
     var createFriendMarker = function (friend, item) {
         var options = {
-            Latitude: item.Latitude,
-            Longitude: item.Longitude,
+            X: item.Latitude,
+            Y: item.Longitude,
             Title: friend.first_name + " " + friend.last_name,
             Icon: {
                 Path: friend.photo,
