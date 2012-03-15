@@ -76,11 +76,6 @@ namespace YouMap.Controllers
             return PartialView();
         }
 
-        public ActionResult Info()
-        {
-            return View()
-        }
-
         [HttpGet]
         [Authorize]
         [Role(UserPermissionEnum.Admin, UserPermissionEnum.Advertiser)]

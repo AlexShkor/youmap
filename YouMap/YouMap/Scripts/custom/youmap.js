@@ -300,7 +300,7 @@ YouMap.AddEvent = function($) {
                 hideFriendsList();
             }
         });
-        $("#Start").datetimepicker();
+        $("#Start").datepicker();
         $("#friends-select").on("click", "li", function() {
             if($(this).hasClass("selected")) {
                 $(this).removeClass("selected");
@@ -313,9 +313,15 @@ YouMap.AddEvent = function($) {
         $("#friends-select").resize(function() {
             $.colorbox.resize();
         });
+        
         $("#friends-select").data("loaded", false);
-        $("#friends-select").selectable();
+        $("#friendsSelect").selectable();
         loadFriendsList();
+    };
+
+
+    var friendsListLoaded = function() {
+        return $("#friends-select").data("loaded");
     };
 
     var showFriendsList = function() {
@@ -343,7 +349,7 @@ YouMap.AddEvent = function($) {
     };
 
     var loadFriendsList = function() {
-        VK.Api.call('friends.get', { fields: "uid,first_name,last_name,photo", count: 20, order: "hints" }, function(r) {
+        VK.Api.call('friends.get', { fields: "uid,first_name,last_name,photo", order: "hints" }, function(r) {
             if (r.response) {
                 $("#friends-select").data("loaded", true);
             } else {

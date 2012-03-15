@@ -46,14 +46,19 @@
         <div class="editor-field" @Html.DisplayIf(Model.Private)>
             <div id="friendsValue" @Html.DisplayIf(false)>
               
-                    @foreach (var friendId in Model.UsersIds)
-                    {
-                        <input type="hidden" id="hiddenFriend@(friendId)" value="@friendId" name="UserIds"/>
-                    }
+                @foreach (var friendId in Model.UsersIds)
+                {
+                    <input type="hidden" id="hiddenFriend@(friendId)" value="@friendId" name="UserIds"/>
+                }
             </div>
-            <ol id="friends-select">
-                
-            </ol>
+            <div class="editor-label">
+				@Html.LabelFor(m => m.UsersIds, "Выберите друзей")
+			</div>
+            <div class="editor-field">
+                <input type="text" id="friendsSelect"/>
+                @Html.ValidationMessageFor(m => m.UsersIds)
+            </div>
+            <ol class="friends-select"></ol>
         </div>
 			<input class="ajax-submit" type="submit" />
 	</fieldset>

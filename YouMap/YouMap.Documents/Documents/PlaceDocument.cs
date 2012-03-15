@@ -26,5 +26,7 @@ namespace YouMap.Documents.Documents
         public string OwnerId { get; set; }
 
         public List<DayOfWeek> WorkDays { get; set; }
+
+        public string Logo { get; set; }
     }
 }

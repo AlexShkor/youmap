@@ -47,8 +47,8 @@ YouMap.Vk.Panel = function($) {
             var location = YouMap.Map.GetUserLocation();
             $(".checkin #Latitude").val(location.x);
             $(".checkin #Longitude").val(location.y);
-
-            VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + "/#:" + location.x + ":" + location.y }, function() {
+            var relativeUrl = $("#checkin #CheckInUrl").val() || "/?latitude=" + location.x + "&longitude=" + location.y;
+            VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + relativeUrl}, function() {
 
             });
         });

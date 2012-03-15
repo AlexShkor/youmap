@@ -15,6 +15,10 @@ namespace YouMap.Models
 
         public string Longitude { get; set; }
 
+        public string CheckInUrl { get; set; }
+
+        public string LogoUrl { get; set; }
+
 
         private const string CheckInMemoTemlate = @"Я сейчас в ""{0}"".";
 

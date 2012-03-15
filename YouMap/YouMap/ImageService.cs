@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
+using YouMap.Framework.Utils.Extensions;
 using YouMap.Models;
 
 namespace YouMap
@@ -67,6 +68,20 @@ namespace YouMap
                            Point = Point.Empty,
                            Size = new Size(20, 34)
                        };
+        }
+
+        public string GetPlaceLogoUrl(PlaceDocument place)
+        {
+            if (place.Logo.HasValue())
+            {
+                return Path.Combine(UserFiles, "Places", place.Id, place.Logo).Replace("\\", "/"); 
+            }
+            return DefaultPlaceLogo;
+        }
+
+        private string DefaultPlaceLogo
+        {
+            get { return Path.Combine(UserFiles, "Places","default-logo.png").Replace("\\", "/"); }
         }
     }
 }
