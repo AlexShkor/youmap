@@ -14,6 +14,7 @@ using YouMap.Models;
 
 namespace YouMap.Controllers
 {
+    [Authorize]
     public class EventsController : BaseController
     {
         private readonly UserDocumentService _userDocumentService;
@@ -82,6 +83,10 @@ namespace YouMap.Controllers
         [HttpPost]
         public ActionResult Create(EventEditModel model)
         {
+            if(model.Start < DateTime.Now.Date)
+            {
+                ModelState.AddModelError("Start","Начало встречи должно быть в будущем.");
+            }
             if (!ModelState.IsValid)
             {
                 return Create();

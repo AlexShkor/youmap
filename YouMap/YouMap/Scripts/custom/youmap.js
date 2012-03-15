@@ -36,24 +36,6 @@ YouMap.Map = function ($) {
             places[i].Marker = marker;
         }
 
-        $(".place-info-window").each(function() {
-            var id = "vk_like_place_" + $(this).data("id");
-            var baseUri = $(this).baseURI;
-            var url = baseUri + $("a", $(this)).attr("href");
-            var title = $(".place-content h2", $(this)).html();
-            var desc = $(".place-content p", $(this)).html();
-            var image = baseUri + $(".place-logo img", $(this)).attr("src");
-
-            VK.Widgets.Like(id, {
-                pageUrl: url,
-                pageImage: image,
-                pageTitle: title,
-                pageDescription: desc,
-                width: 100
-            });
-        });
-
-
         setTimeout(function() {
             YouMap.Geolocation.Locate(function (x, y) {
                 setMapCenter(x, y);
@@ -292,6 +274,8 @@ YouMap.AddPlace = function ($) {
 
 YouMap.AddEvent = function($) {
 
+    var friends;
+    
     var initialize = function () {
         $("#PrivateTrue, #PrivateFalse").change(function() {
             if ($(this).val() == "True") {
@@ -300,81 +284,75 @@ YouMap.AddEvent = function($) {
                 hideFriendsList();
             }
         });
-        $("#Start").datepicker();
-        $("#friends-select").on("click", "li", function() {
-            if($(this).hasClass("selected")) {
-                $(this).removeClass("selected");
-                removeFriend($(this).data("uid"));
-            } else {
-                $(this).addClass("selected");
-                addFriend($(this).data("uid"));
-            }
-        });
-        $("#friends-select").resize(function() {
+        $("#Start").datepicker({ dateFormat: "dd.mm.yy" });
+        loadFriendsList();
+        $(".friends-select").on("click", "a", function() {
+            $(this).parent().remove();
             $.colorbox.resize();
         });
-        
-        $("#friends-select").data("loaded", false);
-        $("#friendsSelect").selectable();
-        loadFriendsList();
     };
 
-
-    var friendsListLoaded = function() {
-        return $("#friends-select").data("loaded");
-    };
 
     var showFriendsList = function() {
-        if (!friendsListLoaded) {
+        if (!friends) {
             loadFriendsList();
         }
-        $("#friends-select").parent().show();
-        $.colorbox.resize();
+        
+        $(".friends-select").parent().show("slow", function() {
+            $.colorbox.resize();
+        });
     };
 
-    var removeFriend = function(uid) {
-        $("#friendsValue").find("#hiddenFriend" + uid).remove();
-    };
 
-    var addFriend = function(uid) {
-        var hidden = $("<input type='hidden' name='UserIds'/>");
-        hidden.val(uid);
-        hidden.attr("id", "hiddenFriend" + uid);
-        $("#friendsValue").append(hidden);
+    var addFriend = function(friend) {
+        var span = $("<li/>")
+                            .append(friend.first_name + " " + friend.last_name + " (<a>x</a>)")
+                            .append("<input type='hidden' name='UserIds' value=" + friend.uid + "/>");
+        span.data("photo", friend.photo);
+        span.appendTo(".friends-select");
     };
 
     var hideFriendsList = function() {
-        $("#friends-select").parent().hide();
-        $.colorbox.resize();
+        $(".friends-select").parent().hide("slow", function() {
+            $.colorbox.resize();
+        });
+        
     };
 
     var loadFriendsList = function() {
         VK.Api.call('friends.get', { fields: "uid,first_name,last_name,photo", order: "hints" }, function(r) {
-            if (r.response) {
-                $("#friends-select").data("loaded", true);
-            } else {
-                return;
-            }
-            var selectedIds = new Array();
-            selectedIds.concat($("#friendsValue input[name='UserIds']").map(function(item) {
-                return parseInt($(item).val());
-            }));
-            r.response.map(function(friend) {
-                var li = $("<li/>");
-                li.attr("id", "friend" + friend.uid);
-                li.data("uid", friend.uid);
-                var img = $("<img/>");
-                img.attr("src", friend.photo);
-                var fullName = friend.first_name + " " + friend.last_name;
-                img.attr("title", fullName);
-                img.attr("alt", fullName);
-                if (selectedIds.indexOf(friend.uid) != -1) {
-                    li.addClass("selected");
+            friends = r.response;
+
+            $("#friendsSelect").autocomplete({
+                minLength: 1,
+                source: function(request,response) {
+                    var items = new Array();
+                    for (var i = 0; i < friends.length; i++) {
+                        if (items.length == 10) {
+                            return;
+                        }
+                        var item = friends[i];
+                        if ((item.first_name + " " + item.last_name).toLowerCase().indexOf(request.term.toLowerCase()) != -1){
+                             items.push(item);
+                         }
+                    }
+                    response(items);
+                },
+                select: function (event, ui) {
+                    if ($(".friends-select input[value='" + ui.item.uid + "']").length == 0) {
+                        addFriend(ui.item);
+                        $.colorbox.resize();
+                    }
+                    $("#friendsSelect").val("");
+                    return false;
                 }
-                li.append(img);
-                $("#friends-select").append(li);
-            });
-            $.colorbox.resize();
+            })
+            .data("autocomplete")._renderItem = function (ul, item) {
+                return $("<li class='friend'></li>")
+				.data("item.autocomplete", item)
+	            .append("<a><img src='" + item.photo + "'/>"+ item.first_name + " " + item.last_name +"</a>")
+				.appendTo(ul);
+            };
         });
     };
 

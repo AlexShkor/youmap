@@ -83,6 +83,20 @@ namespace YouMap.Controllers
             CommandService.Send(commands);
         }
 
+        //protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        //{
+        //    var result = filterContext.Result as ViewResult;
+        //    if (result !=  null)
+        //    {
+        //        if (String.IsNullOrEmpty(result.ViewName))
+        //        {
+        //            result.ViewName = filterContext.ActionDescriptor.ActionName;
+        //        }
+        //        result.ViewName = Request.Browser.IsMobileDevice ? result.ViewName + ".Mobile" : result.ViewName;
+        //    }
+        //    base.OnActionExecuted(filterContext);
+        //}
+
         protected ActionResult RespondTo(object model = null, string view = null)
         {
             return RespondTo(request =>

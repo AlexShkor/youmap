@@ -13,37 +13,7 @@
 {
 	<fieldset>
 	@Html.HiddenFor(x=> x.Id)
-		<div class="editor-label">
-				@Html.LabelFor(m => m.Title)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(m => m.Title)
-				@Html.ValidationMessageFor(m => m.Title)
-                @Html.HiddenFor(x=> x.PlaceId)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(m => m.Start)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(m => m.Start)
-				@Html.ValidationMessageFor(m => m.Start)
-			</div>
-			<div class="editor-label">
-				@Html.LabelFor(m => m.Memo)
-			</div>
-        <div class="editor-field">
-            @Html.TextAreaFor(x=> x.Memo)
-            @Html.ValidationMessageFor(m => m.Memo)
-        </div>
-        <div class="editor-label">
-				@Html.LabelFor(m => m.Private)
-			</div>
-        <div class="editor-field">
-            <label for="PrivateFalse"><input id="PrivateFalse" @Html.CheckedIf(!Model.Private) name="Private" type="radio" value="False"/>Для всеx друзей</label>
-            <label for="PrivateTrue"><input id="PrivateTrue" @Html.CheckedIf(Model.Private) name="Private" type="radio"  value="True"/>Для выбранных друзей</label>
-            @Html.ValidationMessageFor(m => m.Private)
-        </div>
-        <div class="editor-field" @Html.DisplayIf(Model.Private)>
+ <div class="editor-field" @Html.DisplayIf(Model.Private)>
             <div id="friendsValue" @Html.DisplayIf(false)>
               
                 @foreach (var friendId in Model.UsersIds)
@@ -52,14 +22,45 @@
                 }
             </div>
             <div class="editor-label">
-				@Html.LabelFor(m => m.UsersIds, "Выберите друзей")
-			</div>
+                @Html.LabelFor(m => m.UsersIds, "Выберите друзей")
+                <sub> (начните вводить имя)</sub>
+            </div>
             <div class="editor-field">
                 <input type="text" id="friendsSelect"/>
                 @Html.ValidationMessageFor(m => m.UsersIds)
             </div>
-            <ol class="friends-select"></ol>
+            <ol class="friends-select clear"></ol>
         </div>
-			<input class="ajax-submit" type="submit" />
+
+        <div class="editor-field">
+            <label for="PrivateFalse"><input id="PrivateFalse" @Html.CheckedIf(!Model.Private) name="Private" type="radio" value="False"/>Для всеx друзей</label>
+            <label for="PrivateTrue"><input id="PrivateTrue" @Html.CheckedIf(Model.Private) name="Private" type="radio"  value="True"/>Для выбранных друзей</label>
+            @Html.ValidationMessageFor(m => m.Private)
+        </div>
+       
+		<div class="editor-label">
+				@Html.LabelFor(m => m.Title,"Название")
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Title)
+				@Html.ValidationMessageFor(m => m.Title)
+                @Html.HiddenFor(x=> x.PlaceId)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Start,"Начало")
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxFor(m => m.Start)
+				@Html.ValidationMessageFor(m => m.Start)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Memo,"Описание")
+			</div>
+        <div class="editor-field">
+            @Html.TextAreaFor(x=> x.Memo)
+            @Html.ValidationMessageFor(m => m.Memo)
+        </div>
+        
+			<p><input class="ajax-submit" type="submit" /></p>
 	</fieldset>
 }

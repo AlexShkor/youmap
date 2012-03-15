@@ -382,27 +382,13 @@ font-weight: bold;
 /* Clear floats */
 .fclear {clear:both}
 
-.ui-autocomplete
+
+ul.ui-autocomplete a 
 {
-    background: floralwhite;
+    font-weight: bold;
+color: #12eb87;
 }
-ul.ui-autocomplete li
-{
-}
-ul.ui-autocomplete 
-{
-    width: 700px;
-    background: floralwhite;
-    list-style-type: none;
-}
-    ul.ui-autocomplete img
-{
-    margin: 5px;
-}  
-     ul.ui-autocomplete a
-{
-    padding: 5px;
-}
+
 
 .left
 {
