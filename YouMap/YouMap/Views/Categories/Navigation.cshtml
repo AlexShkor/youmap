@@ -1,11 +1,15 @@
-﻿@using YouMap.Controllers
-@model IEnumerable<YouMap.Models.CategoryModel>
+﻿@model IEnumerable<CategoryModel>
+<script>
+    $(document).ready(function() {
+        YouMap.Search.Navigation();
+    });
+</script>
 <nav>
     <ul id="menu">
         @foreach (var item in Model)
         {
             <li>@Html.ActionLink(@item.Name, "Filter", "Map", new { categoryId = item.Id }, new { categoryId = item.Id })
             </li>
-                }
+        }
     </ul>
 </nav>

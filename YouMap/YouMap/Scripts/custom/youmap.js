@@ -187,6 +187,19 @@ YouMap.Map = function ($) {
         }
     };
 
+    var filterPlaces = function(filter) {
+        for (var i = 0; i < places.length; i++) {
+            var place = places[i];
+            if (filter.categories ) {
+                if (filter.categories.length > 0 && filter.categories.indexOf(place.CategoryId) == -1) {
+                    YouMap.Google.RemoveMarker(place.Marker);
+                } else {
+                    YouMap.Google.AddMarker(map, place.Marker);
+                }
+            }
+        }
+    };
+
     return {
         Initialize: initialize,
         SetMapCenter: setMapCenter,
@@ -196,7 +209,8 @@ YouMap.Map = function ($) {
         SearchByLocation: searchByLocation,
         GetMap: function () {
             return map;
-        }
+        },
+        FilterPlaces: filterPlaces
     };
 } (jQuery);
 

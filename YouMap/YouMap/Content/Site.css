@@ -194,7 +194,7 @@ box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
 
 }
 
-ul#menu li a:active {
+ul#menu li a:active ,ul#menu li a.selected {
     background-color: #a6e2a6;
     text-decoration: none;
 }
@@ -204,10 +204,10 @@ ul#menu li.selected a {
     color: #000;
 }
 
-
-
-
-
+.place-actions ul
+{
+    list-style: none;    
+}
 
 /* MISC  
 ----------------------------------------------------------*/

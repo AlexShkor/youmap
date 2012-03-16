@@ -10,6 +10,8 @@ namespace YouMap.Models
 
         public double Longitude { get; set; }
 
+        public string CategoryId { get; set; }
+
         public string Description { get; set; }
 
         public MarkerIcon Icon { get; set; }

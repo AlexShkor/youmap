@@ -58,6 +58,10 @@
     var addMarker = function(map, marker) {
         marker.setMap(map);
     };
+
+    var removeMarker = function(marker) {
+        marker.setMap(null);
+    };
     
     var setPosition = function (marker, x, y) {
         var location = new google.maps.LatLng(x, y);
@@ -70,6 +74,7 @@
         CreateMarker: createMarker,
         AddMarker: addMarker,
         SetPosition: setPosition,
-        OpenWindow: openWindow
+        OpenWindow: openWindow,
+        RemoveMarker: removeMarker
     };
 }(jQuery);

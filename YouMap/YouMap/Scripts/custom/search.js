@@ -43,7 +43,26 @@ YouMap.Search = function($) {
         });
     };
 
+    var navigation = function() {
+        $("#menu a").click(function() {
+            $(this).toggleClass("selected");
+            updateMarkersFilter();
+            return false;
+        });
+    };
+
+    var updateMarkersFilter = function() {
+        var categories = new Array();
+        $("#menu a.selected").each(function() {
+            categories.push($(this).attr("categoryid"));
+        });
+        YouMap.Map.FilterPlaces({
+            categories: categories
+        });
+    };
+    
     return {
-        Initialize: initialize
+        Initialize: initialize,
+        Navigation: navigation
     };
 }(jQuery)

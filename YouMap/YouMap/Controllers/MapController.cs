@@ -51,6 +51,7 @@ namespace YouMap.Controllers
                            Latitude = doc.Location.Latitude,
                            Longitude = doc.Location.Longitude,
                            Title = doc.Title,
+                           CategoryId = doc.CategoryId,
                            InfoWindowUrl = Url.Action("PlaceInfo",new{id=doc.Id})
                        };
         }

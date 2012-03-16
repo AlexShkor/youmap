@@ -1,8 +1,5 @@
 ﻿@using System.Globalization
-@using Jmelosegui.Mvc.Controls
-@using YouMap.Controllers
-@using YouMap.Models
-@model YouMap.Models.MapModel
+@model MapModel
 
 <script>
     $(document).ready(function () {
@@ -22,6 +19,7 @@
                     Shadow: @IconOptions(Model.IconShadow),
                     X: @(place.Latitude.ToString(CultureInfo.InvariantCulture)),
                     Y: @(place.Longitude.ToString(CultureInfo.InvariantCulture)),
+                    CategoryId: '@(place.CategoryId)',
                     Title: '@(place.Title)',
                     InfoWindowUrl: '@(place.InfoWindowUrl)'
                 }@(Model.Markers.Last() == place ? "":",")
