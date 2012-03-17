@@ -68,7 +68,7 @@ namespace YouMap.EventHandlers
                                   Memo = message.Memo,
                                   Title = message.Title,
                                   Visited = message.Visited,
-                                  IsHidden = false
+                                  PlaceId = message.PlaceId
                               };
             var update = Update.PushWrapped("CheckIns", checkIn);
             _documentService.Update(query,update);

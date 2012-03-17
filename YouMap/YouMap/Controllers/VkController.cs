@@ -30,7 +30,8 @@ namespace YouMap.Controllers
                                                 Id = x,
                                                 Latitude = 53.90234 + (random.NextDouble() - random.NextDouble())/10,
                                                 Longitude = 27.561896 + (random.NextDouble() - random.NextDouble()) / 10,
-                                                Visited = (DateTime.Now - DateTime.Now.AddDays(- random.Next(100))).ToDisplayString()
+                                                Visited = (DateTime.Now - DateTime.Now.AddDays(- random.Next(100))).ToDisplayString(),
+                                                InfoWindowUrl = Url.Action("UserInfo","Users",new {id=x})
                                             }).Take(5);
             var r = _documentService.GetByFilter(new UserFilter {VkIdIn = ar});
             AjaxResponse.AddJsonItem("locations", result);

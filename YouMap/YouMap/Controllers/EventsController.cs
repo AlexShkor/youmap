@@ -133,5 +133,10 @@ namespace YouMap.Controllers
             return RespondTo();
         }
 
+        [HttpGet]
+        public ActionResult Show(string userid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -6,9 +6,9 @@ namespace YouMap.Models
 
         public string Address { get; set; }
 
-        public double Latitude { get; set; }
+        public double X { get; set; }
 
-        public double Longitude { get; set; }
+        public double Y { get; set; }
 
         public string CategoryId { get; set; }
 
@@ -22,9 +22,14 @@ namespace YouMap.Models
 
         public string InfoWindowUrl { get; set; }
 
+        public bool OpenOnLoad { get; set; }
+
+        public MarkerIcon Shadow { get; set; }
+
         public PlaceModel()
         {
-            Icon =new MarkerIcon();
+            Icon = new MarkerIcon();
+            Shadow = new MarkerIcon();
         }
     }
 }

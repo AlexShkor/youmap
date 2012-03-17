@@ -14,6 +14,8 @@ namespace YouMap.Documents.Documents
         public string Title { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public string PlaceId { get; set; }
     }
 
 }

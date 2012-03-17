@@ -1,0 +1,6 @@
+﻿@model UserInfoModel
+
+<div class="actions">
+    <a href="@Url.Action("Show","Events", new{userId = Model.Id})">Посказать встречи</a>
+    <a href="@Url.Action("Show","CheckIns", new{userId = Model.Id})">Посказать отметки</a>
+</div>

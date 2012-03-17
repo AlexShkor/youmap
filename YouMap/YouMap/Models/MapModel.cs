@@ -16,9 +16,9 @@ namespace YouMap.Models
 
         public double Latitude { get; set; }
 
-        public IEnumerable<PlaceModel> Markers { get; set; }
+        public IEnumerable<PlaceModel> Places { get; set; }
 
-        public MarkerIcon IconShadow { get; set; }
+        public string Json { get; set; }
 
         public MapModel()
         {
@@ -27,7 +27,12 @@ namespace YouMap.Models
             Zoom = 12;
             Latitude = 53.90234;
             Longitude = 27.561896;
-            Markers = new List<PlaceModel>();
+            Places = new List<PlaceModel>();
+        }
+
+        public void ZooomToPlace()
+        {
+            Zoom = 17;
         }
     }
 

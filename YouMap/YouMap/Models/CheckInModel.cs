@@ -1,4 +1,5 @@
-﻿using YouMap.Controllers;
+﻿using System;
+using YouMap.Controllers;
 using YouMap.Domain.Data;
 
 namespace YouMap.Models
@@ -18,6 +19,8 @@ namespace YouMap.Models
         public string CheckInUrl { get; set; }
 
         public string LogoUrl { get; set; }
+
+        public DateTime Visited { get; set; }
 
 
         private const string CheckInMemoTemlate = @"Я сейчас в ""{0}"".";

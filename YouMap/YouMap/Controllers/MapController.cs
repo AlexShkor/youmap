@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -31,8 +32,22 @@ namespace YouMap.Controllers
         public ActionResult Index(MapFilter filter)
         {
             var model = new MapModel();
-            model.IconShadow = _imageService.IconShadowModel;
-            model.Markers = _documentService.GetAll().Select(Map);
+            model.Places = _documentService.GetAll().Select(Map).ToList();
+            if (filter.Latitude.HasValue() && filter.Longitude.HasValue())
+            {
+                var location = Location.Parse(filter.Latitude, filter.Longitude);
+                model.Latitude = location.Latitude;
+                model.Longitude = location.Longitude;
+                model.ZooomToPlace();
+            }
+            if (filter.PlaceId.HasValue())
+            {
+                foreach (var place in model.Places.Where(x => x.Id == filter.PlaceId))
+                {
+                    place.OpenOnLoad = true;
+                }
+            }
+            model.Json = JsonConvert.SerializeObject(model);
             if (Request.IsAjaxRequest())
             {
                 return PartialView(model);
@@ -48,9 +63,10 @@ namespace YouMap.Controllers
                            Address = doc.Address,
                            Description = doc.Description,
                            Icon = _imageService.GetIconModel(doc.CategoryId),
-                           Latitude = doc.Location.Latitude,
-                           Longitude = doc.Location.Longitude,
+                           X = doc.Location.Latitude,
+                           Y = doc.Location.Longitude,
                            Title = doc.Title,
+                           Shadow = _imageService.IconShadowModel,
                            CategoryId = doc.CategoryId,
                            InfoWindowUrl = Url.Action("PlaceInfo",new{id=doc.Id})
                        };
@@ -59,31 +75,27 @@ namespace YouMap.Controllers
         
         public ActionResult CheckNearby(double? latitude, double? longitude)
         {
-            if (latitude.HasValue && longitude.HasValue && LastLocation == null && SessionContext.IsUserAuthorized())
+            if (latitude.HasValue && longitude.HasValue && SessionContext.IsUserAuthorized())
             {
                 var location = new Location
                                    {
                                        Latitude = latitude.Value,
                                        Longitude = longitude.Value
                                    };
-                LastLocation = location;
-                var command = new User_UpdateMarkCommand
-                                  {
-                                      UserId = User.Id,
-                                      Location = location
-                                  };
-                Send(command);
+                SessionContext.UserInfo.Location = location;
+                if (false)
+                {
+                    var command = new User_UpdateMarkCommand
+                                      {
+                                          UserId = User.Id,
+                                          Location = location
+                                      };
+                    Send(command);
+                }
+                
             }
             return Result();
-        }
-
-        protected Location LastLocation
-        {
-            get { return Session["LastLocation"] as Location; }
-            set { Session["LastLocation"] = value; }
-        }
-
-        
+        }        
 
         public ActionResult ControlPanel()
         {
@@ -96,37 +108,12 @@ namespace YouMap.Controllers
             return PartialView(model);
         }
 
-       
-
-        public ActionResult Filter(MapFilter filter)
-        {
-            var places = _documentService.GetByFilter(new PlaceDocumentFilter
-                                                         {
-                                                             CategoryId = filter.CategoryId
-                                                         }).Select(Map);
-            var model = new MapModel();
-            model.IconShadow = _imageService.IconShadowModel;
-            model.Markers = places;
-
-            return RespondTo(r =>
-            {
-                r.Ajax = r.Json = () =>
-                {
-                    AjaxResponse.Render("#mapHolder", "Index", model);
-                    return Result();
-                };
-                r.Html = () => View("Index",model);
-            });
-        }
-
         [HttpGet]
         public ActionResult PlaceInfo(string id)
         {
             var doc = _documentService.GetById(id);
             return RespondTo(Map(doc));
         }
-
-       
 
         [HttpGet]
         [ActionName("CheckIn")]

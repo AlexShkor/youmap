@@ -5,13 +5,14 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.SessionState;
 using YouMap.Domain.Auth;
+using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 
 namespace YouMap
 {
     public interface ISessionContext
     {
-        string ClientKey { get; set; }
+        UserInfo UserInfo { get; set; }
         IUserIdentity User { get;}
         bool IsUserAuthorized();
         void Logout();
@@ -31,24 +32,17 @@ namespace YouMap
     [Serializable]
     public class SessionContext : ISessionContext
     {
-        private const string _userKey = "UserId";
-        private const string _clientKey = "ClientKey";
-
-
-        public string ClientKey
-        {
-            get { return GetStringSessionValue(_clientKey); }
-            set { SetSessionValue(_clientKey, value); }
-        }
+        private const string UserInfoKey = "UserInfo";
+        private const string UserKey = "UserId";
 
         public IUserIdentity User
         {
-            get { return GetSessionValue<IUserIdentity>(_userKey); }
+            get { return GetSessionValue<IUserIdentity>(UserKey); }
             private set
             {
                 if (value == null)
                 {
-                    SetSessionValue(_userKey, null);
+                    SetSessionValue(UserKey, null);
                     return;
                 }
                 var user = new UserIdentity
@@ -58,8 +52,23 @@ namespace YouMap
                                   Name = value.Name,
                                   Permissions = value.Permissions
                               };
-                SetSessionValue(_userKey,user);
+                SetSessionValue(UserKey,user);
             }
+        }
+
+        public UserInfo UserInfo
+        {
+            get
+            {
+                var value = GetSessionValue<UserInfo>(UserInfoKey);
+                if (value == null)
+                {
+                    value = new UserInfo();
+                    UserInfo = value;
+                }
+                return value;
+            }
+            set { SetSessionValue(UserInfoKey, value); }
         }
 
         private T GetSessionValue<T>(string sessionKey)
@@ -117,6 +126,14 @@ namespace YouMap
         {
             User = user;
         }
+    }
+
+    public class UserInfo
+    {
+        public Location GpsLocation { get; set; }
+        public Location Location { get; set; }
+        public Location MapCenter { get; set; }
+        public int MapZoom { get; set; }
     }
 
     public class UserIdentity : IUserIdentity, IIdentity

@@ -15,25 +15,29 @@ var getMap = function() {
 
 YouMap.Map = function ($) {
 
-    var closeZoom = 18;
+    var closeZoom = 17;
     var geocoder = null;
     var userLocation = null;
     var userMarker = null;
-
+    var userProfileUrl = "/Account/Profile";
     var city = "Минск";
     var country = "Беларусь";
 
     var map = null;
     var places = new Array();
 
-    var initialize = function (config, placeOptions) {
-        places = placeOptions;
+    var initialize = function (config,placesconfigs) {
+        places = placesconfigs;
         map = YouMap.Google.CreateMap(config);
         for (var i = 0; i < places.length; i++) {
             places[i].click = openPlaceInfo;
             var marker = YouMap.Google.CreateMarker(map, places[i]);    
             YouMap.Google.AddMarker(map, marker);
             places[i].Marker = marker;
+            if (places[i].OpenOnLoad) {
+                setMapCenter(places[i].X, places[i].Y);
+                openPlaceInfo(places[i]);
+            }
         }
 
         setTimeout(function() {
@@ -45,7 +49,6 @@ YouMap.Map = function ($) {
 
        
         startUpdateLocation();
-        //$("#map").attr("style", "height: 213px; position: relative; background-color: rgb(229, 227, 223); overflow: initial;");
         $("#map").css("width", "auto");
 
         setMapHeight();
@@ -83,6 +86,14 @@ YouMap.Map = function ($) {
         });
     };
 
+
+
+    var openUserInfo = function() {
+        $.get(userProfileUrl, function (content) {
+            YouMap.Google.OpenWindow(getMap(), userMarker, content);
+        });
+    };
+
     var updateUserMarker = function (x,y,dontCheckNearby) {
         userLocation = {x: x, y: y};
         if (userMarker) {
@@ -91,7 +102,8 @@ YouMap.Map = function ($) {
             userMarker = YouMap.Google.CreateMarker(map,{
                 X: x,
                 Y: y,
-                Title: "Я"
+                Title: "Я",
+                click: openUserInfo
             });
         }
         if (!dontCheckNearby) {

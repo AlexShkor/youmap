@@ -86,7 +86,6 @@ namespace YouMap.Controllers
             if (!Request.IsAjaxRequest())
             {
                 model.Map = new MapModel();
-                model.Map.IconShadow = _imageService.IconShadowModel;
                 model.DisplayMap = true;
             }
             AjaxResponse.Render(".control-content", "AddPlace", model);
@@ -131,8 +130,8 @@ namespace YouMap.Controllers
                 Address = doc.Address,
                 Description = doc.Description,
                 Icon = _imageService.GetIconModel(doc.CategoryId),
-                Latitude = doc.Location.Latitude,
-                Longitude = doc.Location.Longitude,
+                X = doc.Location.Latitude,
+                Y = doc.Location.Longitude,
                 Title = doc.Title
             };
         }

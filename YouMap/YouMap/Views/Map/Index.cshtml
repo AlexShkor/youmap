@@ -9,20 +9,21 @@
             Zoom: @(Model.Zoom)
         };
         var places = [
-            @foreach(var item in Model.Markers)
+            @foreach(var item in Model.Places)
             {
                 var place = item;
                 <text>
                 {
                     Id: '@(place.Id)',
-                    Icon: @IconOptions(item.Icon),
-                    Shadow: @IconOptions(Model.IconShadow),
-                    X: @(place.Latitude.ToString(CultureInfo.InvariantCulture)),
-                    Y: @(place.Longitude.ToString(CultureInfo.InvariantCulture)),
+                    Icon: @IconOptions(place.Icon),
+                    Shadow: @IconOptions(place.Shadow),
+                    X: @(place.X.ToString(CultureInfo.InvariantCulture)),
+                    Y: @(place.Y.ToString(CultureInfo.InvariantCulture)),
                     CategoryId: '@(place.CategoryId)',
                     Title: '@(place.Title)',
-                    InfoWindowUrl: '@(place.InfoWindowUrl)'
-                }@(Model.Markers.Last() == place ? "":",")
+                    InfoWindowUrl: '@(place.InfoWindowUrl)',
+                    OpenOnLoad: '@place.OpenOnLoad' == "True"
+                }@(Model.Places.Last() == place ? "":",")
                 </text>
             }
         ];

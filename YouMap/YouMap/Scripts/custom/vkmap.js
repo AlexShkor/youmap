@@ -43,11 +43,15 @@ YouMap.Vk.Panel = function($) {
                 $("#checkin textarea").html(result[0].formatted_address);
             });
         }
-        $(".checkin .ajax-submit").click(function() {
-            var location = YouMap.Map.GetUserLocation();
-            $(".checkin #Latitude").val(location.x);
-            $(".checkin #Longitude").val(location.y);
-            var relativeUrl = $("#checkin #CheckInUrl").val() || "/?latitude=" + location.x + "&longitude=" + location.y;
+        $(".checkin .ajax-submit").click(function () {
+
+            var relativeUrl = $("#checkin #CheckInUrl").val();
+            if (!relativeUrl) {
+                var location = YouMap.Map.GetUserLocation();
+                $(".checkin #Latitude").val(location.x);
+                $(".checkin #Longitude").val(location.y);
+                relativeUrl = "/?latitude=" + location.x + "&longitude=" + location.y;
+            }
             VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + relativeUrl}, function() {
 
             });
@@ -106,8 +110,10 @@ YouMap.Vk.Map = function($) {
 
     var createFriendMarker = function (friend, item) {
         var options = {
+            Id: friend.Uid,
             X: item.Latitude,
             Y: item.Longitude,
+            InfoWindowUrl: item.InfoWindowUrl,
             Title: friend.first_name + " " + friend.last_name,
             Icon: {
                 Path: friend.photo,
@@ -128,22 +134,29 @@ YouMap.Vk.Map = function($) {
                 },
                 Point: { X: 0, Y: 0, IsEmpty: true },
                 Anchor: { X: 0, Y: 60, IsEmpty: false }
-            }
+            },
+            click: openFriendInfo
         };
         var map = getMap();
-        friend.marker = YouMap.Google.CreateMarker(map,options);
+        options.marker = YouMap.Google.CreateMarker(map, options);
+        friend.options = options;
     };
-
+    
+    var openFriendInfo = function(options) {
+        $.get(options.InfoWindowUrl, function(content) {
+            YouMap.Google.OpenWindow(getMap(), options.marker, content);
+        });
+    };
 
     var hideFriendsMarkers = function() {
         for (var i in friends) {
-            friendsMarkers[i].marker.setMap(null);
+            friends[i].options.marker.setMap(null);
         }
     };
     var showFriendsMarkers = function () {
         var map = getMap();
         for (var i in friends) {
-            friends[i].marker.setMap(map);
+            friends[i].options.marker.setMap(map);
         }
     };
     return {

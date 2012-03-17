@@ -28,6 +28,11 @@ namespace YouMap.Controllers
             return View(model);
         }
 
+        public ActionResult UserInfo(string id)
+        {
+            return RespondTo();
+        }
+
         private UserListItem MapToListItem(UserDocument doc)
         {
             return new UserListItem

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.Script.Serialization;
 using System.Web.Security;
-using YouMap.Documents.Services;
 using YouMap.Domain.Auth;
 using YouMap.Domain.Enums;
 using YouMap.Framework;
@@ -16,7 +11,8 @@ namespace YouMap.Controllers
     public class AccountController : BaseController
     {
         private readonly IAuthenticationService _authenticationService;
-        VkAuthenticationService VkAuth
+
+        private VkAuthenticationService VkAuth
         {
             get { return _authenticationService.VkAuth; }
         }
@@ -29,6 +25,7 @@ namespace YouMap.Controllers
         {
             _authenticationService = authenticationService;
         }
+
 
         public ActionResult LogOn()
         {
@@ -227,7 +224,7 @@ namespace YouMap.Controllers
 
         public ActionResult Profile()
         {
-            return PartialView();
+            return RespondTo();
         }
     }
 }
