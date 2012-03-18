@@ -146,7 +146,7 @@ namespace YouMap.Controllers
         {
             try
             {
-                model.FileName = SaveImageAndGetFilename(model.Icon, model.Id);
+                model.FileName = SaveImage(model.Icon, model.Id);
             }
             catch
             {
@@ -154,7 +154,7 @@ namespace YouMap.Controllers
             }
         }
 
-        private String SaveImageAndGetFilename(HttpPostedFileBase file, string id)
+        private String SaveImage(HttpPostedFileBase file, string id)
         {
             var image = new WebImage(file.InputStream);
             if (image.Width != IconSmallSize.X || image.Height != IconSmallSize.Y)

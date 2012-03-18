@@ -27,8 +27,7 @@ YouMap.Map = function ($) {
             YouMap.Google.AddMarker(map, marker);
             places[i].Marker = marker;
             if (places[i].OpenOnLoad) {
-                setMapCenter(places[i].X, places[i].Y);
-                openPlaceInfo(places[i]);
+                navigateToPlace(places[i]);
             }
         }
         
@@ -80,6 +79,18 @@ YouMap.Map = function ($) {
     };
 
 
+    var navigateToPlace = function(place) {
+        setMapCenter(place.X, place.Y);
+        openPlaceInfo(place);
+    };
+
+    var navigateToPlaceById = function(id) {
+        for (var i = 0; i < places.length; i++) {
+            if (places[i].Id == id) {
+                navigateToPlace(places[i]);
+            }
+        }
+    };
 
     var openUserInfo = function() {
         $.get(userProfileUrl, function (content) {
@@ -215,7 +226,8 @@ YouMap.Map = function ($) {
         GetMap: function () {
             return map;
         },
-        FilterPlaces: filterPlaces
+        FilterPlaces: filterPlaces,
+        NavigateToPlaceById: navigateToPlaceById
     };
 } (jQuery);
 
@@ -263,9 +275,9 @@ YouMap.AddPlace = function ($) {
         if (marker) {
             YouMap.Google.SetPosition(marker, x, y);
         } else {
-            marker = YouMap.Google.CreateMarker({
-                Latitude: x,
-                Longitude: y,
+            marker = YouMap.Google.CreateMarker(getMap(),{
+                X: x,
+                Y: y,
                 Draggable: true,
                 Title: "New marker",
                 drag: markerDragged
@@ -299,6 +311,7 @@ YouMap.AddEvent = function($) {
         $("#PrivateTrue, #PrivateFalse").change(function() {
             if ($(this).val() == "True") {
                 showFriendsList();
+                $("#friendsSelect").focus();
             } else {
                 hideFriendsList();
             }
@@ -312,13 +325,19 @@ YouMap.AddEvent = function($) {
         $("#submitEvent").bind("success", function (event, data) {
             var message = $("#placeFields #Title").val();
             if ($("#placeFields #PlaceTitle").val()) {
-                message += ". Встреча в \"" + $("#placeFields #PlaceTitle").val() + "\"";
+                message += ".\n Встреча в \"" + $("#placeFields #PlaceTitle").val() + "\"";
             }
             if ($("#placeFields input[name='UserIds']").length > 0) {
                 var hiddens = $("#placeFields input[name='UserIds']");
-                var users = new Array();
-                users.push("*id" + $(hiddens).val());
-                message += ". Участники: " + users.join(", ");
+                var users = new Array();               
+                for (var i = 0; i < hiddens.length; i++) {
+                    users.push("*id" + $(hiddens[i]).val());
+                }
+                message += ".\n Участники: " + users.join(", ");
+            }
+            message += ".\n" + $("#placeFields #Start").val() + " " + $("#placeFields #Hour").val() + ":" + $("#placeFields #Minute").val();
+            if ($("#placeFields #Memo").val()) {
+                message += ".\n" + $("#placeFields #Memo").val();
             }
             VK.Api.call("wall.post", { message: message, attachments: window.location.origin + data.jsonItems.url }, function() {
             });

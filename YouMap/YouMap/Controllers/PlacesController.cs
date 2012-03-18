@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
@@ -22,6 +24,8 @@ namespace YouMap.Controllers
 {
     public class PlacesController : BaseController
     {
+        private const string PlacesDir = "/UserFiles/Places/";
+
         private readonly PlaceDocumentService _documentService;
         private readonly ImageService _imageService;
         private readonly IIdGenerator _idGenerator;
@@ -113,10 +117,12 @@ namespace YouMap.Controllers
             if (ModelState.IsValid)
             {
                 var location = Location.Parse(model.Latitude, model.Longitude);
+                model.Id = _idGenerator.Generate();
+                TrySaveImage(model);
                 var command = new Place_CreateCommand()
                 {
-                    Id = _idGenerator.Generate(),
-                    //Icon = Path.GetFileName(model.Icon),
+                    Id = model.Id,
+                    Logo = model.LogoFileName,
                     Location = location,
                     Title = model.Title,
                     Description = model.Description,
@@ -141,6 +147,8 @@ namespace YouMap.Controllers
                             Y = doc.Location.Longitude,
                             Title = doc.Title,
                             CategoryId = doc.CategoryId,
+                            //TODO: Uncomment when styles will be fixed
+                            //Icon = _imageService.GetPlaceLogoUrl(doc)
                         };
          }
 
@@ -222,15 +230,51 @@ namespace YouMap.Controllers
         {
             var place = _documentService.GetById(id);
             CheckPermissions(place);
-            return RespondTo(place);
+            return RespondTo(MapToEdit(place));
+        }
+
+        private AddPlaceModel MapToEdit(PlaceDocument place)
+        {
+            var model =  new AddPlaceModel
+                       {
+                           Id = place.Id,
+                           Title = place.Title,
+                           Description = place.Description,
+                           Address = place.Address,
+                           CategoryId = place.CategoryId,
+                           LogoFileName = place.Logo,
+                           WorkDays = place.WorkDays,
+                           Latitude = place.Location.GetLatitudeString(),
+                           Longitude = place.Location.GetLongitudeString(),
+                           Categories = GetCategorySelectList()
+                       };
+            if (!Request.IsAjaxRequest())
+            {
+                model.Map = new MapModel();
+                model.DisplayMap = true;
+            }
+            return model;
         }
 
         [HttpPost]
-        public ActionResult Edit(PlaceEditModel model)
+        public ActionResult Edit(AddPlaceModel model)
         {
             if (ModelState.IsValid)
             {
-                throw new NotImplementedException();
+                var location = Location.Parse(model.Latitude, model.Longitude);
+                TrySaveImage(model);
+                var command = new Place_UpdateCommand
+                                  {
+                                      Id = model.Id,
+                                      Logo = model.LogoFileName,
+                                      Location = location,
+                                      Title = model.Title,
+                                      Description = model.Description,
+                                      Address = model.Address,
+                                      CategoryId = model.CategoryId,
+                                      WorkDays = model.WorkDays
+                                  };
+                Send(command);
             }
             return Result();
         }
@@ -294,6 +338,40 @@ namespace YouMap.Controllers
                 return RedirectToAction("Index");
             }
             return RespondTo(model);
+        }
+
+        private void TrySaveImage(AddPlaceModel model)
+        {
+            try
+            {
+                model.LogoFileName = SaveImage(model.LogoFile, model.Id);
+            }
+            catch
+            {
+                ModelState.AddModelError("Icon", "Не удалось сохранить изображение на сервере.");
+            }
+        }
+
+        private String SaveImage(HttpPostedFileBase file, string id)
+        {
+            var image = new WebImage(file.InputStream);
+            if (image.Width > 120 || image.Height > 80)
+            {
+                image = image.Resize(120, 80);
+            }
+            var filename = String.Format("logo{0}x{1}", 120, 80) + Path.GetExtension(file.FileName);
+            image.Save(GetSavePathFor(id, filename));
+            return filename;
+        }
+
+        private string GetSavePathFor(string id, string filename)
+        {
+            var dir = Path.Combine(Server.MapPath(PlacesDir), id);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            return Path.Combine(dir, filename);
         }
     }
 }

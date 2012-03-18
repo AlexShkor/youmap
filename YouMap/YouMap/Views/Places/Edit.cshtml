@@ -1,0 +1,30 @@
+﻿@using System.Web.Mvc.Html
+@using YouMap.Controllers
+@using YouMap.Models
+@model AddPlaceModel
+
+<div id="addPlaceContainer">
+    @if(Model.DisplayMap)
+    {
+        
+        <table>
+            <tr>
+                <td>
+                    <div >
+                        <h2>Редактирование</h2>
+                        @Html.Partial("PlaceForm", Model)
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        @Html.Partial("../Map/Index", Model.Map)
+                    </div>
+                </td>
+            </tr>
+        </table>
+    }else
+    {
+        @Html.Partial("PlaceForm", Model)
+    }
+    
+</div>

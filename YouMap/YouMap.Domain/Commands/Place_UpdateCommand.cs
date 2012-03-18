@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Paralect.Domain;
-using Paralect.ServiceBus;
 using YouMap.Domain.Data;
 using YouMap.Framework;
 
 namespace YouMap.Domain.Commands
 {
-    public class Place_CreateCommand: Command
+    public class Place_UpdateCommand: Command
     {
         public string Id { get; set; }
 
@@ -26,15 +25,17 @@ namespace YouMap.Domain.Commands
         public string Logo { get; set; }
     }
 
-    public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
+    public class  Place_UpdateCommandHandler: CommandHandler<Place_UpdateCommand>
     {
-        public Place_CreateCommandHandler(IRepository repository) : base(repository)
+        public Place_UpdateCommandHandler(IRepository repository) : base(repository)
         {
         }
 
-        public override void Handle(Place_CreateCommand message)
+        public override void Handle(Place_UpdateCommand message)
         {
-            var data = new PlaceData
+            var ar = Repository.GetById<PlaceAR>(message.Id);
+            ar.SetCommandMetadata(message.Metadata);
+             var data = new PlaceData
                            {
                                Id = message.Id,
                                Title = message.Title,
@@ -46,9 +47,7 @@ namespace YouMap.Domain.Commands
                                Logo = message.Logo,
                                CategoryId = message.CategoryId
                            };
-            var ar = new PlaceAR(data,message.Metadata);
-            Repository.Save(ar);
-            
+            ar.Update(data);
         }
     }
 }

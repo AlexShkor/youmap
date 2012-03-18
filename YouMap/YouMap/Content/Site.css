@@ -436,3 +436,20 @@ color: #12eb87;
 {
     background-color: whitesmoke;
 }
+
+.ui-autocomplete
+{
+    background-image: url('images/black-50-opasity-pixel.png');
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 6px #999;
+    -moz-box-shadow: 0 0 6px #999;
+    box-shadow: 0 0 6px #999;
+}
+
+.title a:hover
+{
+    text-decoration: none;
+}

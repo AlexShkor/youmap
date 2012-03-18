@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using System.Web.Mvc;
 using YouMap.Controllers;
 
@@ -34,6 +35,12 @@ namespace YouMap.Models
         public bool DisplayMap { get; set; }
 
         public MapModel Map { get; set; }
+
+        public string LogoFileName { get; set; }
+
+        public string Id { get; set; }
+
+        public HttpPostedFileBase LogoFile { get; set; }
 
         public AddPlaceModel()
         {

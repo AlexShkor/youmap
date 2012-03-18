@@ -25,6 +25,7 @@ namespace YouMap.Domain
                 Address = data.Address,
                 CreatorId = data.CreatorId,
                 CategoryId = data.CategoryId,
+                Logo = data.Logo,
                 WorkDays = data.WorkDays,
                 Location = data.Location
             });
@@ -64,6 +65,22 @@ namespace YouMap.Domain
                           PlaceId = _id,
                           OwnerId = userId
                       });
+        }
+
+        public void Update(PlaceData data)
+        {
+            Apply(new Place_UpdatedEvent
+            {
+                Id = _id,
+                Title = data.Title,
+                Description = data.Description,
+                Address = data.Address,
+                CreatorId = data.CreatorId,
+                CategoryId = data.CategoryId,
+                Logo = data.Logo,
+                WorkDays = data.WorkDays,
+                Location = data.Location
+            });
         }
     }
 }

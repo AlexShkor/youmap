@@ -24,5 +24,7 @@ namespace YouMap.Domain
         public string CategoryId { get; set; }
 
         public IEnumerable<DayOfWeek> WorkDays { get; set; }
+
+        public string Logo { get; set; }
     }
 }

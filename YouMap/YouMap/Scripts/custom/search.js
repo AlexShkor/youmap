@@ -19,16 +19,22 @@ YouMap.Search = function($) {
                 $("#searchField-id").val(ui.item.Id);
                 $("#searchField-description").html(ui.item.Description);
                 $("#searchField-icon").attr("src", ui.item.Icon);
-                YouMap.Map.SetMapCenter(ui.item.Latitude, ui.item.Longitude);
+                //YouMap.Map.SetMapCenter(ui.item.X, ui.item.Y);
+                //YouMap.Map.GetPlaceById(ui.item.Id);
+                YouMap.Map.NavigateToPlaceById(ui.item.Id);
                 return false;
             }
         })
 		.data("autocomplete")._renderItem = function (ul, item) {
 
-		    return $("<li></li>")
+		    var img = $("<img/>");
+		    img.attr("src", item.Icon);
+		    var anchor = $("<a/>");
+		    anchor.append(img);
+		    anchor.append("<strong>" + item.Title + " </strong><span>" + item.Address + "</span>");
+		    return $("<li/>")
 				.data("item.autocomplete", item)
-	            .append("<img src='" + item.Icon + "'/>")
-				.append("<a>" + "<strong>" +item.Title + " </strong><span>" + item.Address + "</span></a>")		
+	            .append(anchor)
 				.appendTo(ul);
 		};
         $(".search-google-btn").click(function() {
