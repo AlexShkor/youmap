@@ -119,7 +119,7 @@ namespace YouMap
                 .AddEndpoint(type => type.FullName.EndsWith("Message"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
                 .Dispatcher(d => d
                             .AddHandlers(typeof(PlaceAR).Assembly)
-                            .AddHandlers(typeof(PlaceDocumentEventHandler).Assembly)
+                            //.AddHandlers(typeof(PlaceDocumentEventHandler).Assembly)
                             //.AddHandlers(typeof(NotificationTempService).Assembly)
                             //.AddHandlers(typeof(CreditIdentityAlertDocumentEventHandler).Assembly, new[] { "mPower.EventHandlers.Eventual" }) //async event handlers
                 )

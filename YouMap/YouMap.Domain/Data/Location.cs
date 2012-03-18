@@ -30,7 +30,7 @@ namespace YouMap.Domain.Data
 
         public string GetLongitudeString()
         {
-            return Latitude.ToString(CultureInfo.InvariantCulture);
+            return Longitude.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

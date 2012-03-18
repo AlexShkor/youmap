@@ -630,7 +630,9 @@
     <Content Include="Scripts\Ajax\AutoAjax.js" />
     <Content Include="Scripts\custom\geolocation.js" />
     <Content Include="Scripts\custom\google.js" />
+    <Content Include="Scripts\custom\init.js" />
     <Content Include="Scripts\custom\search.js" />
+    <Content Include="Scripts\custom\ui.js" />
     <Content Include="Scripts\custom\vkmap.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\Ajax\Request.js" />

@@ -5,8 +5,6 @@ using System.Security;
 using System.Security.Authentication;
 using System.Web;
 using System.Web.Security;
-using Paralect.Domain;
-using YouMap.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Auth;

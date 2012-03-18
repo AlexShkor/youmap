@@ -1,13 +1,5 @@
 ﻿YouMap = { };
 
-//region GLOBAL
-
-$(document).ready(function () {
-    VK.init({
-        apiId: 2831071
-    });
-});
-
 var getMap = function() {
     return YouMap.Map.GetMap();
 };
@@ -39,7 +31,7 @@ YouMap.Map = function ($) {
                 openPlaceInfo(places[i]);
             }
         }
-
+        
         setTimeout(function() {
             YouMap.Geolocation.Locate(function (x, y) {
                 setMapCenter(x, y);
@@ -79,6 +71,7 @@ YouMap.Map = function ($) {
             VK.Widgets.Like(id, {
                 pageUrl: url,
                 pageImage: image,
+                type: 'button',
                 pageTitle: title,
                 pageDescription: desc,
                 width: 100
@@ -316,6 +309,20 @@ YouMap.AddEvent = function($) {
             $(this).parent().remove();
             $.colorbox.resize();
         });
+        $("#submitEvent").bind("success", function (event, data) {
+            var message = $("#placeFields #Title").val();
+            if ($("#placeFields #PlaceTitle").val()) {
+                message += ". Встреча в \"" + $("#placeFields #PlaceTitle").val() + "\"";
+            }
+            if ($("#placeFields input[name='UserIds']").length > 0) {
+                var hiddens = $("#placeFields input[name='UserIds']");
+                var users = new Array();
+                users.push("*id" + $(hiddens).val());
+                message += ". Участники: " + users.join(", ");
+            }
+            VK.Api.call("wall.post", { message: message, attachments: window.location.origin + data.jsonItems.url }, function() {
+            });
+        });
     };
 
 
@@ -333,7 +340,7 @@ YouMap.AddEvent = function($) {
     var addFriend = function(friend) {
         var span = $("<li/>")
                             .append(friend.first_name + " " + friend.last_name + " (<a>x</a>)")
-                            .append("<input type='hidden' name='UserIds' value=" + friend.uid + "/>");
+                            .append("<input type='hidden' name='UserIds' value='" + friend.uid + "'/>");
         span.data("photo", friend.photo);
         span.appendTo(".friends-select");
     };

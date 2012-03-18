@@ -1,14 +1,17 @@
 ﻿<div>
-<div class="actions">
-<a class="colorbox" href="@Url.Action("CheckIn","Map")">Отметиться</a>     
-</div>
+    <div class="actions">
+        <a class="colorbox awesome small" href="@Url.Action("CheckIn","Map")">Отметиться</a>     
+    </div>
 
-<div>
-    <input type="checkbox" name="ShareLocation" id="ShareLocation" checked="checked"/>
-<label for="ShareLocation">Показывать меня друзьям</label>
-            </div>
-<div>
-    <input type="checkbox" name="ShowFriends" id="ShowFriends" checked="checked"/>
-    <label for="ShowFriends">Показывать друзей</label>      
+    <div>
+        <input type="checkbox" name="ShareLocation" id="ShareLocation" checked="checked"/>
+        <label for="ShareLocation">Показывать меня друзьям</label>
+    </div>
+    <div>
+        <input type="checkbox" name="ShowFriends" id="ShowFriends" checked="checked"/>
+        <label for="ShowFriends">Показывать друзей</label>      
+    </div>
 </div>
+<div>
+    @Html.ActionLink("Выйти", "LogOff", "Account",null,new{id="logoutLink"})
 </div>

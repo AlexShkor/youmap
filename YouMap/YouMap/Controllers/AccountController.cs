@@ -224,7 +224,7 @@ namespace YouMap.Controllers
 
         public ActionResult Profile()
         {
-            return RespondTo();
+            return PartialView();
         }
     }
 }

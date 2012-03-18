@@ -26,7 +26,10 @@ $(document).ready(function () {
         if (!validate(form[0])) {
             return;
         }
-        Request.named(form.attr("action")).setForm(form).addSuccess("resize", YouMap.Map.SetMapHeight).send();
+        var button = $(this);
+        Request.named(form.attr("action")).setForm(form).addSuccess("resize", YouMap.Map.SetMapHeight).addSuccess("triggerSuccess", function(data) {
+            button.trigger("success", [data]);
+        }).send();
         return false;
     });
 

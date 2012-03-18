@@ -15,8 +15,8 @@
 	font-size: 13px; font-weight: bold; line-height: 1; text-shadow: 0 -1px 1px rgba(0,0,0,0.25); 
 }
 
-	.awesome:hover							{ background-color: #111; color: #fff; }
-	.awesome:active							{ top: 1px; }
+	.awesome:hover					{ background-color: #111; color: #fff; text-decoration: none}
+	.awesome:active		, .awesome.toggle							{ top: 1px; }
 	.small.awesome, .small.awesome:visited 			{ font-size: 11px; }
 	.awesome, .awesome:visited,
 	.medium.awesome, .medium.awesome:visited 		{ font-size: 13px; font-weight: bold; line-height: 1; text-shadow: 0 -1px 1px rgba(0,0,0,0.25); }
@@ -46,4 +46,14 @@
 input.awesome
 {
     border: none;
+}
+
+.awesome.toggle
+{
+    background-color: #CCCCCC;
+}
+
+.actions
+{
+    padding: 2px;
 }

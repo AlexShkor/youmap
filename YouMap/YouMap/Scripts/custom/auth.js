@@ -8,11 +8,6 @@
             $("#vkLogin").live("click", function() {
                 VK.Auth.login(vkLoginCallback,permissions);
             });
-            Request.get("/Account/LoginVk").addSuccess("loginVK", function(data) {
-                if (data.JsonItems.Success) {
-                    VK.Auth.getLoginStatus(vkLoginCallback);
-                }
-            }).send();
         }
     };
 

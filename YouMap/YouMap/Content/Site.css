@@ -25,7 +25,7 @@ a
     cursor: pointer;
 }
 
-header a:active {
+a:active {
     color: #12eb87;
 }
 
@@ -432,3 +432,7 @@ color: #12eb87;
     padding: 2px;
 }
 
+#ui-datepicker-div
+{
+    background-color: whitesmoke;
+}

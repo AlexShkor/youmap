@@ -7,7 +7,7 @@ YouMap.Vk.Panel = function($) {
             $("#showSettings").click(function () {
                 $("#vkPanel .container").slideToggle("fast");
             });
-            $("#ShowFriends").click(function() {
+            $("input[name='ShowFriends']").live('click',function() {
                 if ($(this).is(':checked')) {
                     YouMap.Vk.Map.ShowFriends();
                 } else {
@@ -43,17 +43,18 @@ YouMap.Vk.Panel = function($) {
                 $("#checkin textarea").html(result[0].formatted_address);
             });
         }
-        $(".checkin .ajax-submit").click(function () {
-
-            var relativeUrl = $("#checkin #CheckInUrl").val();
+        var relativeUrl = null;
+        $(".checkin .ajax-submit").click(function() {
+            relativeUrl = $("#checkin #CheckInUrl").val();
             if (!relativeUrl) {
                 var location = YouMap.Map.GetUserLocation();
                 $(".checkin #Latitude").val(location.x);
                 $(".checkin #Longitude").val(location.y);
                 relativeUrl = "/?latitude=" + location.x + "&longitude=" + location.y;
             }
-            VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + relativeUrl}, function() {
-
+        });
+        $(".checkin .ajax-submit").bind("success",function () {
+                VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + relativeUrl}, function() {
             });
         });
     };
@@ -154,23 +155,40 @@ YouMap.Vk.Map = function($) {
             friends[i].options.marker.setMap(map);
         }
     };
-    
+
+    var lastTempMarkersUrl = null;
     var userInfo = function () {
-        $("#showEvents, #showCheckins").live("click",function () {
-            Request.get($(this).attr("url")).addSuccess("onLoaded", function (data) {
-                tempMarkers = data.JsonItems.model;
-                for (var i = 0; i < events.length; i++) {
-                    var options = events[i];
-                    createMarker(options);
-                }
-            }).send();
+        $(".showEvents, .showCheckins").live("click", function () {
+            $(this).toggleClass("toggle");
+            var url = $(this).attr("href");
+            if (url == lastTempMarkersUrl) {
+                hideMarkers(tempMarkers);
+                lastTempMarkersUrl = null;
+            } else {
+                lastTempMarkersUrl = url;
+                Request.get(url).addSuccess("onLoaded", function (data) {
+                    hideMarkers(tempMarkers);
+                    tempMarkers = data.jsonItems.model;
+                    for (var i = 0; i < tempMarkers.length; i++) {
+                        var options = tempMarkers[i];
+                        createMarker(options);
+                    }
+                }).send();
+            }
             return false;
         });
+    };
+
+    var hideMarkers = function (markers) {
+        for (var i in markers) {
+            markers[i].marker.setMap(null);
+        }
     };
 
     var createMarker = function(options) {
         options.click = openInfo;
         options.marker = YouMap.Google.CreateMarker(getMap(), options);
+        YouMap.Google.AddMarker(getMap(),options.marker);
     };
 
     return {

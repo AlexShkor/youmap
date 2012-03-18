@@ -37,6 +37,10 @@ input[type="submit"] {
     font-size: 1.2em;
     padding: 5px;
 }
+input.input-100
+{
+    width: 100px;
+}
 
 
 /* Styles for editor and display helpers
@@ -162,3 +166,5 @@ margin: 5px;
 .validation-summary-valid {
     display: none;
 }
+
+

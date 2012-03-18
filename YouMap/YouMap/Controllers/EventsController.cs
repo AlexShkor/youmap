@@ -78,7 +78,9 @@ namespace YouMap.Controllers
             {
                 var place = _placeDocumentService.GetById(placeId);
                 model.PlaceId = place.Id;
-                model.PlateTitle = place.Title;
+                model.PlaceTitle = place.Title;
+                model.Latitude = place.Location.GetLatitudeString();
+                model.Longitude = place.Location.GetLongitudeString();
             }
             return RespondTo(model);
         }
@@ -86,10 +88,6 @@ namespace YouMap.Controllers
         [HttpPost]
         public ActionResult Create(EventEditModel model)
         {
-            if(model.Start < DateTime.Now.Date)
-            {
-                ModelState.AddModelError("Start","Начало встречи должно быть в будущем.");
-            }
             if (!ModelState.IsValid)
             {
                 return Create();
@@ -97,16 +95,17 @@ namespace YouMap.Controllers
             var command = new User_AddEventCommand
                               {
                                   Id = _idGenerator.Generate(),
-                                  Location = model.PlaceId.HasValue() ? null : Location.Parse(model.Latitude, model.Longitude),
+                                  Location = Location.Parse(model.Latitude, model.Longitude),
                                   Memo = model.Memo,
                                   OwnerId = User.Id,
                                   PlaceId = model.PlaceId,
                                   Private = model.Private,
-                                  Start = model.Start.Value,
+                                  Start = model.GetStartDateTime(),
                                   Title = model.Title,
-                                  UsersIds = model.UsersIds
+                                  UsersIds = model.UserIds
                               };
             Send(command);
+            AjaxResponse.AddJsonItem("url",Url.Action("Index","Map",new {placeId = model.PlaceId}));
             AjaxResponse.ClosePopup = true;
             return RespondTo(model);
         }
@@ -139,11 +138,11 @@ namespace YouMap.Controllers
         [HttpGet]
         public ActionResult Show(string userid)
         {
-            var model = new List<MarkerModel>();
+            var model = new List<EventMarkerModel>();
             if (true)
             {
                 //IT'S FAKE!!!
-                model = _userDocumentService.GetAll().SelectMany(x => x.Events).Select(MapToMarker).ToList();
+                model = _userDocumentService.GetAll().SelectMany(x => x.Events ?? new List<EventDocument>()).Select(MapToMarker).ToList();
             }
             //TODO: Implement this
             else
@@ -156,17 +155,29 @@ namespace YouMap.Controllers
             return RespondTo(model);
         }
 
-        private MarkerModel MapToMarker(EventDocument doc)
+        private EventMarkerModel MapToMarker(EventDocument doc)
         {
-            return new MarkerModel
-                       {
-                           X = doc.Location.Latitude,
-                           Y = doc.Location.Longitude,
-                           Icon = _imageService.EventIconModel,
-                           Shadow = _imageService.EventShadowModel,
-                           InfoWindowUrl = Url.Action("Details",new{id=doc.Id}),
-                          Title = doc.Title
-                       };
+            var marker = new EventMarkerModel
+                             {
+                                 PlaceId = doc.PlaceId,
+                                 Icon = _imageService.EventIconModel,
+                                 Shadow = _imageService.EventShadowModel,
+                                 InfoWindowUrl = Url.Action("Details", new {id = doc.Id}),
+                                 Title = doc.Title
+                             };
+            //TODO: need to be removed, becouse all events must have location 
+            if (doc.Location != null)
+            {
+                marker.X = doc.Location.Latitude;
+                marker.Y = doc.Location.Longitude;
+            }
+            else
+            {
+                var place = _placeDocumentService.GetById(doc.PlaceId);
+                marker.X = place.Location.Latitude;
+                marker.Y = place.Location.Longitude;
+            }
+            return marker;
         }
     }
 }

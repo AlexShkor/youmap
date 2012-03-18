@@ -127,7 +127,7 @@ namespace YouMap.Controllers
                 model.PlaceId = place.Id;
                 model.CheckInUrl = Url.Action("Index", "Map", new {PlaceId = place.Id});
                 model.Latitude = place.Location.GetLatitudeString();
-                model.Latitude = place.Location.GetLongitudeString();
+                model.Longitude = place.Location.GetLongitudeString();
                 model.LogoUrl = _imageService.GetPlaceLogoUrl(place);
                 model.SetMemoWithTemplate(place.Title);
             }

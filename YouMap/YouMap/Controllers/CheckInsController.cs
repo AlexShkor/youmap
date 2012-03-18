@@ -45,7 +45,9 @@ namespace YouMap.Controllers
                 X = doc.Location.Latitude,
                 Y = doc.Location.Longitude,
                 Title = doc.Title,
-                InfoWindowUrl = Url.Action("Details")
+                InfoWindowUrl = Url.Action("Details"),
+                Icon = null,
+                Shadow = null
             };
         }
 

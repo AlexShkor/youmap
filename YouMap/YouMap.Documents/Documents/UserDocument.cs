@@ -68,6 +68,7 @@ namespace YouMap.Documents.Documents
             CheckIns = new List<CheckInDocument>();
             Permissions = new List<UserPermissionEnum>();
             Friends = new HashSet<string>();
+            Events = new List<EventDocument>();
         }
     }
 
