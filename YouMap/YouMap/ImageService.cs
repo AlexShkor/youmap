@@ -83,5 +83,42 @@ namespace YouMap
         {
             get { return Path.Combine(UserFiles, "Places","default-logo.png").Replace("\\", "/"); }
         }
+
+        public MarkerIcon FriendShadowModel
+        {
+            get
+            {
+                return new MarkerIcon
+                           {
+                               Path = "/UserFiles/border.png",
+                               Size = new Size(60, 60),
+                               Point = new Point(0, 0),
+                               Anchor = new Point(0, 60)
+                           };
+            }
+        }
+
+        public MarkerIcon FriendIconModel
+        {
+            get
+            {
+                return new MarkerIcon
+                {
+                    Size = new Size(50, 50),
+                    Point = new Point(0, 0),
+                    Anchor = new Point(-7, 57)
+                };
+            }
+        }
+
+        public MarkerIcon EventIconModel
+        {
+            get { return null; }
+        }
+
+        public MarkerIcon EventShadowModel
+        {
+            get { return null; }
+        }
     }
 }

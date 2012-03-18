@@ -30,7 +30,15 @@ namespace YouMap.Controllers
 
         public ActionResult UserInfo(string id)
         {
-            return RespondTo();
+            var user = _userDocumentService.GetById(id);
+            var tempModel = new UserInfoModel {Id = id};
+            //var model = new UserInfoModel {Id = user.Id};
+            return RespondTo(tempModel);
+        }
+
+        public ActionResult UpdateFriendsList()
+        {
+            throw new NotImplementedException();
         }
 
         private UserListItem MapToListItem(UserDocument doc)

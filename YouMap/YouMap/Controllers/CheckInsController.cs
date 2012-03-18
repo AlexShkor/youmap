@@ -19,8 +19,9 @@ namespace YouMap.Controllers
 
         public ActionResult Show(string userId)
         {
-            var user = _documentService.GetByFilter(new UserFilter {IdOrVkIdEqual = userId}).First();
-            var model = user.CheckIns.Select(Map).ToList();
+            //var user = _documentService.GetByFilter(new UserFilter {IdOrVkIdEqual = userId}).First();
+            //var model = user.CheckIns.Select(Map).ToList();
+            var model = _documentService.GetAll().SelectMany(x => x.CheckIns).Select(MapToMarker).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
         }
@@ -35,6 +36,22 @@ namespace YouMap.Controllers
                            PlaceId = doc.PlaceId,
                            Visited = doc.Visited
                        };
+        }
+
+        public MarkerModel MapToMarker(CheckInDocument doc)
+        {
+            return new MarkerModel
+            {
+                X = doc.Location.Latitude,
+                Y = doc.Location.Longitude,
+                Title = doc.Title,
+                InfoWindowUrl = Url.Action("Details")
+            };
+        }
+
+        public ActionResult Details()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -62,9 +62,10 @@ namespace YouMap.Controllers
                 var luceneDocs = _placeLuceneService.Search(term);
                 if (luceneDocs.Any())
                 {
+                    var filter = new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id)};
                     var places =
-                        _documentService.GetByFilter(new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id)}).
-                            Select(Map);
+                        _documentService.GetByFilter(filter).
+                            Select(MapForSearch);
                     return Json(places);
                 }
             }
@@ -88,7 +89,14 @@ namespace YouMap.Controllers
                 model.Map = new MapModel();
                 model.DisplayMap = true;
             }
-            AjaxResponse.Render(".control-content", "AddPlace", model);
+            return RespondTo(model);
+        }
+
+        [HttpGet]
+        public ActionResult PlaceInfo(string id)
+        {
+            var doc = _documentService.GetById(id);
+            var model = Map(doc);
             return RespondTo(model);
         }
 
@@ -122,17 +130,28 @@ namespace YouMap.Controllers
             return RespondTo(model);
         }
 
-        private PlaceModel Map(PlaceDocument doc)
+         private object MapForSearch(PlaceDocument doc)
+         {
+             return new
+                        {
+                            Id = doc.Id,
+                            Address = doc.Address,
+                            Description = doc.Description,
+                            X = doc.Location.Latitude,
+                            Y = doc.Location.Longitude,
+                            Title = doc.Title,
+                            CategoryId = doc.CategoryId,
+                        };
+         }
+
+        private PlaceInfoModel Map(PlaceDocument doc)
         {
-            return new PlaceModel
+            return new PlaceInfoModel
             {
                 Id = doc.Id,
-                Address = doc.Address,
                 Description = doc.Description,
-                Icon = _imageService.GetIconModel(doc.CategoryId),
-                X = doc.Location.Latitude,
-                Y = doc.Location.Longitude,
-                Title = doc.Title
+                Logo = _imageService.GetPlaceLogoUrl(doc),
+                Title = doc.Title,
             };
         }
 

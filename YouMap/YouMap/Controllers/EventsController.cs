@@ -10,6 +10,7 @@ using YouMap.Domain.Data;
 using YouMap.Framework;
 using YouMap.Framework.Environment;
 using YouMap.Framework.Utils.Extensions;
+using YouMap.Helpers;
 using YouMap.Models;
 
 namespace YouMap.Controllers
@@ -20,12 +21,14 @@ namespace YouMap.Controllers
         private readonly UserDocumentService _userDocumentService;
         private readonly PlaceDocumentService _placeDocumentService;
         private readonly IIdGenerator _idGenerator;
+        private readonly ImageService _imageService;
 
-        public EventsController(ICommandService commandService, UserDocumentService userDocumentService, PlaceDocumentService placeDocumentService, IIdGenerator idGenerator) : base(commandService)
+        public EventsController(ICommandService commandService, UserDocumentService userDocumentService, PlaceDocumentService placeDocumentService, IIdGenerator idGenerator, ImageService imageService) : base(commandService)
         {
             _userDocumentService = userDocumentService;
             _placeDocumentService = placeDocumentService;
             _idGenerator = idGenerator;
+            _imageService = imageService;
         }
 
         public ActionResult Index(string id)
@@ -136,7 +139,34 @@ namespace YouMap.Controllers
         [HttpGet]
         public ActionResult Show(string userid)
         {
-            throw new NotImplementedException();
+            var model = new List<MarkerModel>();
+            if (true)
+            {
+                //IT'S FAKE!!!
+                model = _userDocumentService.GetAll().SelectMany(x => x.Events).Select(MapToMarker).ToList();
+            }
+            //TODO: Implement this
+            else
+            {
+                var user = _userDocumentService.GetById(userid);
+                // -2 hours to display just started events, need to be replaced with filter
+                model = user.Events.Where(x => x.Start >= DateTime.Now.AddHours(-2)).Select(MapToMarker).ToList();
+            }
+            AjaxResponse.AddJsonItem("model",model);
+            return RespondTo(model);
+        }
+
+        private MarkerModel MapToMarker(EventDocument doc)
+        {
+            return new MarkerModel
+                       {
+                           X = doc.Location.Latitude,
+                           Y = doc.Location.Longitude,
+                           Icon = _imageService.EventIconModel,
+                           Shadow = _imageService.EventShadowModel,
+                           InfoWindowUrl = Url.Action("Details",new{id=doc.Id}),
+                          Title = doc.Title
+                       };
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
@@ -47,7 +48,8 @@ namespace YouMap.Controllers
                     place.OpenOnLoad = true;
                 }
             }
-            model.Json = JsonConvert.SerializeObject(model);
+            var js = new JavaScriptSerializer();
+            model.Json = js.Serialize(model);
             if (Request.IsAjaxRequest())
             {
                 return PartialView(model);
@@ -55,24 +57,6 @@ namespace YouMap.Controllers
             return View(model);
         }
 
-        private PlaceModel Map(PlaceDocument doc)
-        {
-            return new PlaceModel
-                       {
-                           Id = doc.Id,
-                           Address = doc.Address,
-                           Description = doc.Description,
-                           Icon = _imageService.GetIconModel(doc.CategoryId),
-                           X = doc.Location.Latitude,
-                           Y = doc.Location.Longitude,
-                           Title = doc.Title,
-                           Shadow = _imageService.IconShadowModel,
-                           CategoryId = doc.CategoryId,
-                           InfoWindowUrl = Url.Action("PlaceInfo",new{id=doc.Id})
-                       };
-        }
-
-        
         public ActionResult CheckNearby(double? latitude, double? longitude)
         {
             if (latitude.HasValue && longitude.HasValue && SessionContext.IsUserAuthorized())
@@ -108,11 +92,21 @@ namespace YouMap.Controllers
             return PartialView(model);
         }
 
-        [HttpGet]
-        public ActionResult PlaceInfo(string id)
+        private PlaceModel Map(PlaceDocument doc)
         {
-            var doc = _documentService.GetById(id);
-            return RespondTo(Map(doc));
+            return new PlaceModel
+            {
+                Id = doc.Id,
+                Address = doc.Address,
+                Description = doc.Description,
+                Icon = _imageService.GetIconModel(doc.CategoryId),
+                X = doc.Location.Latitude,
+                Y = doc.Location.Longitude,
+                Title = doc.Title,
+                Shadow = _imageService.IconShadowModel,
+                CategoryId = doc.CategoryId,
+                InfoWindowUrl = Url.Action("PlaceInfo", "Places", new { id = doc.Id })
+            };
         }
 
         [HttpGet]

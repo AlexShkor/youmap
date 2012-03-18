@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using YouMap.Framework.Utils;
 
@@ -58,7 +59,8 @@ namespace YouMap.Framework.Mvc.Ajax
 
         public void AddJsonItem(String key, Object jsonObject)
         {
-            var json = JsonConvert.SerializeObject(jsonObject);
+            var js = new JavaScriptSerializer();
+            var json = js.Serialize(jsonObject);
             Json[key] = json;
         }
 

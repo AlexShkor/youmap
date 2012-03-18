@@ -58,6 +58,8 @@ YouMap.Vk.Panel = function($) {
         });
     };
 
+
+
     return {
         Initialize: initialize,
         UserView: userView,
@@ -69,6 +71,7 @@ YouMap.Vk.Panel = function($) {
 YouMap.Vk.Map = function($) {
 
     var friends = null;
+    var tempMarkers = new Array();
     
     var initialize = function() {
         VK.Observer.subscribe("auth.login", getFriends);
@@ -78,6 +81,7 @@ YouMap.Vk.Map = function($) {
                 getFriends();
             }
         });
+        userInfo();
     };
 
     var getFriends = function() {
@@ -93,9 +97,9 @@ YouMap.Vk.Map = function($) {
                 }).join(",");
                 Request.post("/Vk/GetUsersLocation").addParams({ ids: ids }).
                     addSuccess("getuserslocations", function (data) {
-                        for (var i = 0; i < data.jsonItems.locations.length; i++) {
+                        for (var i = 0; i < data.jsonItems.model.length; i++) {
                             for (var j = 0; j < friends.length; j++) {
-                                var item = data.jsonItems.locations[i];
+                                var item = data.jsonItems.model[i];
                                 var friend = friends[j];
                                 if (item.Id == friend.uid) {
                                     createFriendMarker(friend,item );
@@ -111,8 +115,8 @@ YouMap.Vk.Map = function($) {
     var createFriendMarker = function (friend, item) {
         var options = {
             Id: friend.Uid,
-            X: item.Latitude,
-            Y: item.Longitude,
+            X: item.X,
+            Y: item.Y,
             InfoWindowUrl: item.InfoWindowUrl,
             Title: friend.first_name + " " + friend.last_name,
             Icon: {
@@ -125,24 +129,15 @@ YouMap.Vk.Map = function($) {
                 Point: { X: 0, Y: 0, IsEmpty: true },
                 Anchor: { X: -7, Y: 57, IsEmpty: false }
             },
-            Shadow: {
-                Path: window.location.origin + "/UserFiles/border.png",
-                Size: {
-                    Width: 60,
-                    Height: 60,
-                    IsEmpty: false
-                },
-                Point: { X: 0, Y: 0, IsEmpty: true },
-                Anchor: { X: 0, Y: 60, IsEmpty: false }
-            },
-            click: openFriendInfo
+            Shadow: item.Shadow,
+            click: openInfo
         };
         var map = getMap();
         options.marker = YouMap.Google.CreateMarker(map, options);
         friend.options = options;
     };
     
-    var openFriendInfo = function(options) {
+    var openInfo = function(options) {
         $.get(options.InfoWindowUrl, function(content) {
             YouMap.Google.OpenWindow(getMap(), options.marker, content);
         });
@@ -159,9 +154,29 @@ YouMap.Vk.Map = function($) {
             friends[i].options.marker.setMap(map);
         }
     };
+    
+    var userInfo = function () {
+        $("#showEvents, #showCheckins").live("click",function () {
+            Request.get($(this).attr("url")).addSuccess("onLoaded", function (data) {
+                tempMarkers = data.JsonItems.model;
+                for (var i = 0; i < events.length; i++) {
+                    var options = events[i];
+                    createMarker(options);
+                }
+            }).send();
+            return false;
+        });
+    };
+
+    var createMarker = function(options) {
+        options.click = openInfo;
+        options.marker = YouMap.Google.CreateMarker(getMap(), options);
+    };
+
     return {
         Initialize: initialize,
         ShowFriends: showFriendsMarkers,
-        HideFriends: hideFriendsMarkers
+        HideFriends: hideFriendsMarkers,
+        UserInfo: userInfo
     };
 }(jQuery);

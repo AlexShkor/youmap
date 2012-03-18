@@ -3,30 +3,8 @@
 
 <script>
     $(document).ready(function () {
-        var config = {
-            X: @(Model.Latitude.ToString(CultureInfo.InvariantCulture)),
-            Y: @(Model.Longitude.ToString(CultureInfo.InvariantCulture)),
-            Zoom: @(Model.Zoom)
-        };
-        var places = [
-            @foreach(var item in Model.Places)
-            {
-                var place = item;
-                <text>
-                {
-                    Id: '@(place.Id)',
-                    Icon: @IconOptions(place.Icon),
-                    Shadow: @IconOptions(place.Shadow),
-                    X: @(place.X.ToString(CultureInfo.InvariantCulture)),
-                    Y: @(place.Y.ToString(CultureInfo.InvariantCulture)),
-                    CategoryId: '@(place.CategoryId)',
-                    Title: '@(place.Title)',
-                    InfoWindowUrl: '@(place.InfoWindowUrl)',
-                    OpenOnLoad: '@place.OpenOnLoad' == "True"
-                }@(Model.Places.Last() == place ? "":",")
-                </text>
-            }
-        ];
+        var config = @( Html.Raw(Model.Json));
+        var places = config.Places;
 	YouMap.Map.Initialize(config,places);
 });
 </script>
