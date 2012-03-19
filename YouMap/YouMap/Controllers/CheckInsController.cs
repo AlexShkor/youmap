@@ -26,7 +26,7 @@ namespace YouMap.Controllers
             return RespondTo(model);
         }
 
-        public  CheckInModel Map(CheckInDocument doc)
+        private CheckInModel Map(CheckInDocument doc)
         {
             return new CheckInModel
                        {
@@ -38,7 +38,7 @@ namespace YouMap.Controllers
                        };
         }
 
-        public MarkerModel MapToMarker(CheckInDocument doc)
+        private MarkerModel MapToMarker(CheckInDocument doc)
         {
             return new MarkerModel
             {

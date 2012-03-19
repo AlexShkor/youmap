@@ -96,6 +96,12 @@ namespace YouMap
             CreateUser(email, password, UserPermissionEnum.User);
         }
 
+        public void LoginWithUid(string uid)
+        {
+            var user = _userDocumentService.GetByFilter(new UserFilter() { VkId = uid }).First();
+            SetAuthCookie(user, false);
+        }
+
         public void LogOn(VkLoginModel model, bool remember = true)
         {
             var user = GetVkUser(model.Id);
@@ -212,6 +218,7 @@ namespace YouMap
         VkAuthenticationService VkAuth { get;}
         void Logout();
         bool HasAdmin { get; }
+        void LoginWithUid(string uid);
     }
 
     public interface IVkAuthenticationService

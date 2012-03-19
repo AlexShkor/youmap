@@ -8,12 +8,17 @@
             $("#vkLogin").live("click", function() {
                 VK.Auth.login(vkLoginCallback,permissions);
             });
+            //setTimeout(function() {
+            //    VK.Auth.getLoginStatus(getStatusCallback);
+            //}, 1);
         }
     };
 
     var vkLoginCallback = function (response) {
         if (response.session) {
-
+            if ($("#vkErrorPopup").length > 0) {
+                $.colorbox.close();
+            }
             Request.post("/Account/LoginVk").addParams({
                 Expire: response.session.expire,
                 Sig: response.session.sig,
@@ -34,6 +39,17 @@
             /* Пользователь нажал кнопку Отмена в окне авторизации */
         }
     };
+
+    var getStatusCallback = function(response) {
+        if (response.session) {
+            Request.post("/Account/LoginVkStatus").addParams(
+                {
+                  //  uid: response.session.uid
+                }
+            ).send();
+    }
+    };
+
     return {
         Initialize: initialize
     };

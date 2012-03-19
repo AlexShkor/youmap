@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
+using YouMap.Documents.Documents;
+
 namespace YouMap.Models
 {
     public class PlaceModel: MarkerModel
@@ -21,6 +25,10 @@ namespace YouMap.Models
     public class EventMarkerModel: MarkerModel
     {
         public string PlaceId { get; set; }
+
+        public List<EventListItem> Events { get; set; }
+
+        public string Content { get; set; }
     }
 
     public class MarkerModel

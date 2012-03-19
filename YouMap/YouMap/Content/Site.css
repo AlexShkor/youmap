@@ -342,7 +342,7 @@ ul.list-vertical
 {
     padding: 0;
     float:left; 
-    width:500px; 
+    width:400px; 
     height:27px; 
     line-height:27px;
     text-indent:10px; 
@@ -354,6 +354,7 @@ ul.list-vertical
     border-top:solid 1px #c0c0c0; 
     border-right:none;
     opacity: 0.5;
+
 font-size: 16px;
 color: #4D90FE;
 font-weight: bold;
@@ -362,6 +363,7 @@ font-weight: bold;
 
 #searchSubmit
 {
+        opacity: 0.1;
     margin-left: 10px;
     cursor: pointer;
     height: 29px;
@@ -378,6 +380,7 @@ font-weight: bold;
 #searchSubmit:hover {
     background: #357AE8; 
     border: 1px solid #2F5BB7;
+    opacity: 1;
 }
 /* Clear floats */
 .fclear {clear:both}
@@ -449,7 +452,7 @@ color: #12eb87;
     box-shadow: 0 0 6px #999;
 }
 
-.title a:hover
+#title a:hover
 {
     text-decoration: none;
 }

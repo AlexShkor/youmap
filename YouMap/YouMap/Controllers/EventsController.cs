@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Framework;
 using YouMap.Framework.Environment;
+using YouMap.Framework.Utils;
 using YouMap.Framework.Utils.Extensions;
 using YouMap.Helpers;
 using YouMap.Models;
 
 namespace YouMap.Controllers
 {
-    [Authorize]
     public class EventsController : BaseController
     {
         private readonly UserDocumentService _userDocumentService;
@@ -43,17 +44,7 @@ namespace YouMap.Controllers
             }
             var model = events.Select(MapToListItem);
             return RespondTo(model);
-        }
-
-        public EventListItem MapToListItem(EventDocument doc)
-        {
-            return new EventListItem
-                       {
-                           Id = doc.Id,
-                           Title = doc.Title,
-                           StartDate = FormatEventStartDate(doc.Start.Date)
-                       };
-        }
+        }      
 
         private static string FormatEventStartDate(DateTime date)
         {
@@ -65,10 +56,11 @@ namespace YouMap.Controllers
             {
                 return "завтра в " + date.ToShortTimeString();
             }
-            return date.ToString("dd/MM/YYYY hh:mm");
+            return date.ToString("dd.MM.yyyy hh:mm");
         }
 
         [HttpGet]
+        [VkAccess]
         public ActionResult Create(string placeId = null)
         {
             var model = new EventEditModel();
@@ -86,6 +78,7 @@ namespace YouMap.Controllers
         }
 
         [HttpPost]
+        [VkAccess]
         public ActionResult Create(EventEditModel model)
         {
             if (!ModelState.IsValid)
@@ -138,21 +131,57 @@ namespace YouMap.Controllers
         [HttpGet]
         public ActionResult Show(string userid)
         {
-            var model = new List<EventMarkerModel>();
+            var docs = new List<EventDocument>();
             if (true)
             {
                 //IT'S FAKE!!!
-                model = _userDocumentService.GetAll().SelectMany(x => x.Events ?? new List<EventDocument>()).Select(MapToMarker).ToList();
+               docs = _userDocumentService.GetAll().SelectMany(x => x.Events ?? new List<EventDocument>()).ToList();
             }
             //TODO: Implement this
             else
             {
                 var user = _userDocumentService.GetById(userid);
                 // -2 hours to display just started events, need to be replaced with filter
-                model = user.Events.Where(x => x.Start >= DateTime.Now.AddHours(-2)).Select(MapToMarker).ToList();
+               // model = user.Events.Where(x => x.Start >= DateTime.Now.AddHours(-2)).Select(MapToMarker).ToList();
             }
+            var model = docs.GroupBy(x=> x.PlaceId).Select(MapToMarkerGroup).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
+        }
+
+        private EventMarkerModel MapToMarkerGroup(IGrouping<string,EventDocument> group)
+        {
+            var eventsList = group.OrderByDescending(x=> x.Start).Select(MapToListItem).ToList();
+            var marker =  new EventMarkerModel
+                       {
+                           PlaceId = group.Key,
+                           Icon = _imageService.EventIconModel,
+                           Shadow = _imageService.EventShadowModel,
+                           InfoWindowUrl = Url.Action("Details", new {id = group.Key}),
+                           Events = eventsList,
+                           Content = RenderEventsListToString(eventsList)
+                       };
+            var place = _placeDocumentService.GetById(group.Key);
+            marker.X = place.Location.Latitude;
+            marker.Y = place.Location.Longitude;
+            return marker;
+        }
+
+        private string RenderEventsListToString(List<EventListItem> eventsList)
+        {
+            return MvcUtils.RenderPartialToStringRazor(ControllerContext, "EventsList", eventsList, ViewData,TempData);
+        }
+
+        private EventListItem MapToListItem(EventDocument doc)
+        {
+            return new EventListItem
+            {
+                Id = doc.Id,
+                Title = doc.Title,
+                StartDate = FormatEventStartDate(doc.Start.Date),
+                Url = Url.Action("Details",new {id = doc.Id}),
+                UsersIds = doc.UsersIds
+            };
         }
 
         private EventMarkerModel MapToMarker(EventDocument doc)

@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFilters\RoleAttribute.cs" />
+    <Compile Include="ActionFilters\VkAccessAttribute.cs" />
     <Compile Include="App_GlobalResources\EditorLocalization.bg-BG.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1021,6 +1022,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Places\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\VkError.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\EventsList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

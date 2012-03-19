@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace YouMap.Models
 {
     public class EventListItem
@@ -7,5 +9,9 @@ namespace YouMap.Models
         public string Title { get; set; }
 
         public string StartDate { get; set; }
+
+        public string Url { get; set; }
+
+        public List<string> UsersIds { get; set; }
     }
 }

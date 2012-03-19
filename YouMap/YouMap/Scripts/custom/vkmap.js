@@ -25,7 +25,7 @@ YouMap.Vk.Panel = function($) {
         $("#profilePanel .actions a").click(function() {
             $("#profilePanel .container").slideToggle("fast");
         });
-        $("#logoutLink").click(function() {
+        $("#logoutLink").live("click",function() {
             VK.Auth.logout();
         });
     };
@@ -186,9 +186,25 @@ YouMap.Vk.Map = function($) {
     };
 
     var createMarker = function(options) {
-        options.click = openInfo;
+        options.click = openContent;
         options.marker = YouMap.Google.CreateMarker(getMap(), options);
         YouMap.Google.AddMarker(getMap(),options.marker);
+    };
+
+    var openContent = function (options) {
+        var html = $(options.Content);
+        var anchors = html.find(".users a");
+        var uids = jQuery.map(anchors, function (n, i) {
+            return $(n).data("uid");
+        });
+        VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function(result) {
+            for (var i = 0; i < result.response.length; i++) {
+                var user = result.response[i];
+                html.find("#linkFor" + user.uid).html(user.first_name + " " + user.last_name);
+            }
+            YouMap.Google.OpenWindow(getMap(), options.marker, html.html());
+        });
+        
     };
 
     return {

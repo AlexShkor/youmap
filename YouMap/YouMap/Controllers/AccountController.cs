@@ -175,6 +175,23 @@ namespace YouMap.Controllers
             return Result();
         }
 
+        [HttpPost]
+        //TODO: remove it
+            //UNSAFE
+        public ActionResult LoginVkStatus(string uid)
+        {
+            try
+            {
+                _authenticationService.LoginWithUid(uid);
+                RenderTopBar();
+            }
+            catch (Exception exception)
+            {
+                ModelState.AddModelError("Error", exception.Message);
+            }
+            return Result();
+        }
+
         private void RenderTopBar()
         {
             AjaxResponse.Render("#topBar", "TopBar", new{});

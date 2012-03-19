@@ -1,0 +1,17 @@
+﻿@model List<EventListItem>
+
+<div class="events-list">
+    <ul>
+        @foreach(var item in Model)
+        {
+            <li><a href="@item.Url">@item.Title</a> @item.StartDate
+                <div class="users">
+                    @foreach(var user in item.UsersIds)
+                    {
+                        <a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+</div>

@@ -111,6 +111,7 @@ namespace YouMap.Controllers
 
         [HttpGet]
         [ActionName("CheckIn")]
+        [VkAccess]
         public ActionResult CheckInGet(CheckInModel model)
         {
             model = model ?? new CheckInModel();  

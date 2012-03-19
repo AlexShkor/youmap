@@ -6,6 +6,12 @@ YouMap.Search = function($) {
     var initialize = function (searchUrl) {
         SearchUrl = searchUrl;
 
+        $("#searchField").focusin(function() {
+            $("#searchSubmit").css("opacity", "1");
+        });
+        $("#searchField").focusout(function() {
+            $("#searchSubmit").css("opacity", "0.1");
+        });
         $("#searchField").autocomplete({
             minLength: 2,
             source: searchUrl,
