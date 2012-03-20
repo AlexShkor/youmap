@@ -93,7 +93,7 @@ namespace YouMap
             {
                 throw new AuthenticationException("User already exist");
             }
-            CreateUser(email, password, UserPermissionEnum.User);
+            CreateUser(email, password, UserPermissionEnum.User, UserPermissionEnum.Advertiser);
         }
 
         public void LoginWithUid(string uid)

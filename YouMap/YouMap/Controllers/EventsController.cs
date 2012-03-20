@@ -151,7 +151,7 @@ namespace YouMap.Controllers
 
         private EventMarkerModel MapToMarkerGroup(IGrouping<string,EventDocument> group)
         {
-            var eventsList = group.OrderByDescending(x=> x.Start).Select(MapToListItem).ToList();
+            var eventsList = group.OrderByDescending(x=> x.Start).Take(10).Select(MapToListItem).ToList();
             var marker =  new EventMarkerModel
                        {
                            PlaceId = group.Key,

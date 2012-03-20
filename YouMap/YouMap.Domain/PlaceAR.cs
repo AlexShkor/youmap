@@ -24,6 +24,7 @@ namespace YouMap.Domain
                 Description = data.Description,
                 Address = data.Address,
                 CreatorId = data.CreatorId,
+                Status = data.Status,
                 CategoryId = data.CategoryId,
                 Logo = data.Logo,
                 WorkDays = data.WorkDays,

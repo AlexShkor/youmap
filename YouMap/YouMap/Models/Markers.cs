@@ -31,6 +31,15 @@ namespace YouMap.Models
         public string Content { get; set; }
     }
 
+    public class CheckInMarkerModel : MarkerModel
+    {
+        public string PlaceId { get; set; }
+
+        public List<CheckInListItem> Events { get; set; }
+
+        public string Content { get; set; }
+    }  
+
     public class MarkerModel
     {
         public string Title { get; set; }

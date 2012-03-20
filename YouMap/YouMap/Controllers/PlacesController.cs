@@ -119,7 +119,7 @@ namespace YouMap.Controllers
                 var location = Location.Parse(model.Latitude, model.Longitude);
                 model.Id = _idGenerator.Generate();
                 TrySaveImage(model);
-                var command = new Place_CreateCommand()
+                var command = new Place_CreateCommand
                 {
                     Id = model.Id,
                     Logo = model.LogoFileName,
@@ -128,7 +128,8 @@ namespace YouMap.Controllers
                     Description = model.Description,
                     Address = model.Address,
                     CategoryId = model.CategoryId,
-                    WorkDays = model.WorkDays
+                    WorkDays = model.WorkDays,
+                    Status = IsAdmin ? PlaceStatusEnum.Active : PlaceStatusEnum.Hidden
                 };
                 Send(command);
                 AjaxResponse.RedirectUrl = Url.Action("Index");

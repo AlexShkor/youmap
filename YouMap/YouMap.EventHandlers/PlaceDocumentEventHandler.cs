@@ -5,6 +5,7 @@ using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 using YouMap.Domain.Events;
 
 namespace YouMap.EventHandlers
@@ -34,7 +35,8 @@ namespace YouMap.EventHandlers
                               Description = message.Description,
                               CategoryId = message.CategoryId,
                               WorkDays = message.WorkDays.ToList(),
-                              Logo = message.Logo
+                              Logo = message.Logo,
+                              Status = message.Status
                           };
             _documentService.Save(doc);
         }

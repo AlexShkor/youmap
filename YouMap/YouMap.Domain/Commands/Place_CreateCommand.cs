@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Paralect.Domain;
 using Paralect.ServiceBus;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 using YouMap.Framework;
 
 namespace YouMap.Domain.Commands
@@ -24,6 +25,8 @@ namespace YouMap.Domain.Commands
         public IEnumerable<DayOfWeek> WorkDays { get; set; }
 
         public string Logo { get; set; }
+
+        public PlaceStatusEnum Status { get; set; }
     }
 
     public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
@@ -44,7 +47,8 @@ namespace YouMap.Domain.Commands
                                Location = message.Location,
                                WorkDays = message.WorkDays,
                                Logo = message.Logo,
-                               CategoryId = message.CategoryId
+                               CategoryId = message.CategoryId,
+                               Status = message.Status,
                            };
             var ar = new PlaceAR(data,message.Metadata);
             Repository.Save(ar);

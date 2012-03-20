@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Paralect.Domain;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 
 namespace YouMap.Domain
 {
@@ -26,5 +27,7 @@ namespace YouMap.Domain
         public IEnumerable<DayOfWeek> WorkDays { get; set; }
 
         public string Logo { get; set; }
+
+        public PlaceStatusEnum Status { get; set; }
     }
 }

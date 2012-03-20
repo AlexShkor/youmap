@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using YouMap.Domain.Data;
+using YouMap.Domain.Enums;
 
 namespace YouMap.Domain
 {
@@ -25,5 +26,7 @@ namespace YouMap.Domain
         public string CategoryId { get; set; }
 
         public string Logo { get; set; }
+
+        public PlaceStatusEnum Status { get; set; }
     }
 }

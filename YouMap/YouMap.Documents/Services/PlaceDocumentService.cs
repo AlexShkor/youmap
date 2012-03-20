@@ -40,6 +40,10 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.EQ("OwnerId", filter.OwnerId));
             }
+            if (filter.StatusEq.HasValue)
+            {
+                query = Query.And(query, Query.EQ("Status", filter.StatusEq.Value));
+            }
             if (filter.Location != null)
             {
                 query = Query.And(query, Query.EQ("Location", BsonValue.Create(filter.Location)));
@@ -95,6 +99,8 @@ namespace YouMap.Documents.Services
         public List<PlaceStatusEnum> StatusNotIn { get; set; }
 
         public string PlaceId { get; set; }
+
+        public PlaceStatusEnum? StatusEq { get; set; }
 
         public PlaceDocumentFilter()
         {

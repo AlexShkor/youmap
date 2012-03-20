@@ -310,6 +310,7 @@
     <Compile Include="Controllers\CheckInsController.cs" />
     <Compile Include="Factories\Models\PlaceModelFactory.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
+    <Compile Include="Models\CheckInListItem.cs" />
     <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\PlaceInfoModel.cs" />
     <Compile Include="Models\UserInfoModel.cs" />

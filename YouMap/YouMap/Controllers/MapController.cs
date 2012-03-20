@@ -33,7 +33,10 @@ namespace YouMap.Controllers
         public ActionResult Index(MapFilter filter)
         {
             var model = new MapModel();
-            model.Places = _documentService.GetAll().Select(Map).ToList();
+            model.Places = _documentService.GetByFilter(new PlaceDocumentFilter
+                                                            {
+                                                                StatusEq = PlaceStatusEnum.Active
+                                                            }).Select(Map).ToList();
             if (filter.Latitude.HasValue() && filter.Longitude.HasValue())
             {
                 var location = Location.Parse(filter.Latitude, filter.Longitude);
