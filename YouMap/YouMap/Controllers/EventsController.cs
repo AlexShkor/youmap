@@ -158,7 +158,6 @@ namespace YouMap.Controllers
                            Icon = _imageService.EventIconModel,
                            Shadow = _imageService.EventShadowModel,
                            InfoWindowUrl = Url.Action("Details", new {id = group.Key}),
-                           Events = eventsList,
                            Content = RenderEventsListToString(eventsList)
                        };
             var place = _placeDocumentService.GetById(group.Key);

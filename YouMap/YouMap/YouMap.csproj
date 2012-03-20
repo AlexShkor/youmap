@@ -636,6 +636,8 @@
     <Content Include="Scripts\custom\search.js" />
     <Content Include="Scripts\custom\ui.js" />
     <Content Include="Scripts\custom\vkmap.js" />
+    <Content Include="Scripts\infobox.js" />
+    <Content Include="Scripts\infobox_packed.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\Ajax\Request.js" />
     <Content Include="Scripts\Ajax\Result.js" />
@@ -1029,6 +1031,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Events\EventsList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CheckIns\CheckInsList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

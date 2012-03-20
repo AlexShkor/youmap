@@ -28,7 +28,8 @@
             clickable: options.Clickable || true,
             draggable: options.Draggable || false,
             icon: options.Icon ? createImage(options.Icon) : null,
-            shadow: options.Shadow ? createImage(options.Shadow) : null
+            shadow: options.Shadow ? createImage(options.Shadow) : null,
+            //animation: google.maps.Animation.DROP
         };
         // create
         var marker = new google.maps.Marker(markerOptions);
@@ -53,7 +54,26 @@
                 infowindow.close();
             }
             infowindow = new google.maps.InfoWindow({ content: content });
-            infowindow.open(map, marker);        
+            //var myOptions = {
+            //    content: content
+            //    , disableAutoPan: false
+            //    , maxWidth: 0
+            //    , pixelOffset: new google.maps.Size(-140, 0)
+            //    , zIndex: null
+            //    , boxStyle: {
+            //        'background-color': "black"
+            //      , opacity: 0.75
+            //      , width: "280px"
+            //    }
+            //    , closeBoxMargin: "10px 2px 2px 2px"
+            //    , closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+            //    , infoBoxClearance: new google.maps.Size(1, 1)
+            //    , isHidden: false
+            //    , pane: "floatPane"
+            //    , enableEventPropagation: false
+            //};
+            //infowindow = new InfoBox(myOptions);
+            infowindow.open(map, marker);
     };
     var addMarker = function(map, marker) {
         marker.setMap(map);

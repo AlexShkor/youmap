@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Framework;
+using YouMap.Framework.Utils;
 using YouMap.Models;
 
 namespace YouMap.Controllers
@@ -19,11 +20,9 @@ namespace YouMap.Controllers
 
         public ActionResult Show(string userId)
         {
-            var docs = _documentService.GetByFilter(new UserFilter { IdOrVkIdEqual = userId }).First().CheckIns;
-            docs = _documentService.GetAll().SelectMany(x => x.CheckIns).ToList();
-            var model  =
-                _documentService.GetByFilter(new UserFilter {IdOrVkIdEqual = userId}).First()
-                    .CheckIns.GroupBy(x => x.PlaceId ?? x.Location.ToString()).Select(MapToMarker).ToList();
+            //var docs = _documentService.GetByFilter(new UserFilter { IdOrVkIdEqual = userId }).First().CheckIns;
+            var docs = _documentService.GetAll().SelectMany(x => x.CheckIns).ToList();
+            var model  = docs.GroupBy(x => x.PlaceId ?? x.Location.ToString()).Select(MapToMarker).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
         }
@@ -55,12 +54,13 @@ namespace YouMap.Controllers
 
         private MarkerModel MapToMarker(IGrouping<string,CheckInDocument> group)
         {
-            var checkIns = group.Select(MapToListItem);
+            var checkIns = group.OrderBy(x=> x.Visited).Take(10).Select(MapToListItem);
             return new MarkerModel
             {
                 X = group.First().Location.Latitude,
                 Y = group.First().Location.Longitude,
                 InfoWindowUrl = Url.Action("Details"),
+                Content = MvcUtils.RenderPartialToStringRazor(ControllerContext,"CheckInsList",checkIns,ViewData,TempData),
                 Icon = null,
                 Shadow = null
             };
@@ -75,7 +75,8 @@ namespace YouMap.Controllers
         {
             return new CheckInListItem
                        {
-
+                           Memo = doc.Memo,
+                           Visited = doc.Visited.ToShortDateString()
                        };
         }
     }

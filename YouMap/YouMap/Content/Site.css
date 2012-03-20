@@ -380,7 +380,7 @@ font-weight: bold;
 #searchSubmit:hover {
     background: #357AE8; 
     border: 1px solid #2F5BB7;
-    opacity: 1;
+    opacity: 1 !important;
 }
 /* Clear floats */
 .fclear {clear:both}

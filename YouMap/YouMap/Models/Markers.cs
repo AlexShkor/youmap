@@ -25,19 +25,11 @@ namespace YouMap.Models
     public class EventMarkerModel: MarkerModel
     {
         public string PlaceId { get; set; }
-
-        public List<EventListItem> Events { get; set; }
-
-        public string Content { get; set; }
     }
 
     public class CheckInMarkerModel : MarkerModel
     {
         public string PlaceId { get; set; }
-
-        public List<CheckInListItem> Events { get; set; }
-
-        public string Content { get; set; }
     }  
 
     public class MarkerModel
@@ -57,6 +49,8 @@ namespace YouMap.Models
         public MarkerIcon Icon { get; set; }
 
         public bool Draggable { get; set; }
+
+        public string Content { get; set; }
 
         public MarkerModel()
         {

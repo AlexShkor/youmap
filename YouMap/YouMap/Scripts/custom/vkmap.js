@@ -156,6 +156,7 @@ YouMap.Vk.Map = function($) {
         }
     };
 
+    //TODO: need to be separateo into two methods, for events and checkins
     var lastTempMarkersUrl = null;
     var userInfo = function () {
         $(".showEvents, .showCheckins").live("click", function () {
@@ -188,19 +189,22 @@ YouMap.Vk.Map = function($) {
     var createMarker = function(options) {
         options.click = openContent;
         options.marker = YouMap.Google.CreateMarker(getMap(), options);
-        YouMap.Google.AddMarker(getMap(),options.marker);
+        YouMap.Google.AddMarker(getMap(), options.marker);  
     };
 
+    //TODO: need to be separateo into two methods, for events and checkins
     var openContent = function (options) {
         var html = $(options.Content);
         var anchors = html.find(".users a");
         var uids = jQuery.map(anchors, function (n, i) {
             return $(n).data("uid");
         });
-        VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function(result) {
-            for (var i = 0; i < result.response.length; i++) {
-                var user = result.response[i];
-                html.find("#linkFor" + user.uid).html(user.first_name + " " + user.last_name);
+        VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function (result) {
+            if (result && result.response) {
+                for (var i = 0; i < result.response.length; i++) {
+                    var user = result.response[i];
+                    html.find("#linkFor" + user.uid).html(user.first_name + " " + user.last_name);
+                }
             }
             YouMap.Google.OpenWindow(getMap(), options.marker, html.html());
         });
