@@ -207,5 +207,12 @@ namespace YouMap.Controllers
             }
             return marker;
         }
+
+        public ActionResult List(string placeId)
+        {
+            var model = _userDocumentService.GetEventsListForPlace(placeId,3).Select(MapToListItem);
+            AjaxResponse.Render("#eventsList", "EventsList", model);
+            return Result();
+        }
     }
 }

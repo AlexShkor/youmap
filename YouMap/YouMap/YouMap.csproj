@@ -549,6 +549,8 @@
     <Content Include="Content\2012.1.214\Windows7\sprite-vertical.png" />
     <Content Include="Content\2012.1.214\Windows7\sprite.png" />
     <Content Include="Content\ajax-loader.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\colorbox.css" />
     <Content Include="Content\forms.css" />
     <Content Include="Content\images\alert-overlay.png" />

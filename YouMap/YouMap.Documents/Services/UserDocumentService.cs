@@ -26,11 +26,11 @@ namespace YouMap.Documents.Services
         protected override QueryComplete BuildFilterQuery(UserFilter filter)
         {
             var query = Query.And(Query.Null);
-            if (!string.IsNullOrEmpty(filter.UserName))
+            if (filter.UserName.HasValue())
             {
                 query = Query.And(query, Query.EQ("UserName", filter.UserName));
             }
-            else if (!string.IsNullOrEmpty(filter.UserNameOrEmail))
+            else if (filter.UserNameOrEmail.HasValue())
             {
                 query = Query.And(query,
                                   Query.Or(Query.EQ("UserName", filter.UserNameOrEmail),
@@ -40,7 +40,7 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(query, Query.EQ("_id", filter.UserId));
             }
-            if (!string.IsNullOrEmpty(filter.Email))
+            if (filter.Email.HasValue())
             {
                 query = Query.And(query, Query.EQ("Email", filter.Email));
             }
@@ -69,7 +69,45 @@ namespace YouMap.Documents.Services
                 query = Query.And(Query.EQ("Friends",filter.EventsForUserWithId),Query.Or(Query.EQ("Events.Private", false),
                                   Query.EQ("Events.UsersIds", filter.EventsForUserWithId)));
             }
+            if (filter.EventInPlace.HasValue())
+            {
+                query = Query.And(Query.EQ("Events.PlaceId",filter.EventInPlace));
+            }
+            if (filter.CheckInPlace.HasValue())
+            {
+                query = Query.And(Query.EQ("CheckIns.PlaceId", filter.CheckInPlace));
+            }
             return query;
+        }
+
+        public IOrderedEnumerable<EventDocument> GetEventsListForPlace(string placeId, int count)
+        {
+            var events =  GetByFilter(new UserFilter
+                                   {
+                                       EventInPlace = placeId
+                                   }).SelectMany(x => x.Events).Where(
+                                       x =>
+                                       x.PlaceId == placeId).ToList();
+            var date = DateTime.Now;
+            var prev = events.Where(x => x.Start < date).OrderByDescending(
+                x => x.Start).Take(count);
+            var next = events.Where(x => x.Start >= date).OrderBy(x => x.Start).Take(count);
+            return prev.Concat(next).OrderBy(x => x.Start);
+        }
+
+        public IOrderedEnumerable<CheckInDocument> GetCheckInsListForPlace(string placeId, int count)
+        {
+            var events = GetByFilter(new UserFilter
+            {
+                CheckInPlace = placeId
+            }).SelectMany(x => x.CheckIns).Where(
+                                       x =>
+                                       x.PlaceId == placeId).ToList();
+            var date = DateTime.Now;
+            var prev = events.Where(x => x.Visited < date).OrderByDescending(
+                x => x.Visited).Take(count);
+            var next = events.Where(x => x.Visited >= date).OrderBy(x => x.Visited).Take(count);
+            return prev.Concat(next).OrderBy(x => x.Visited);
         }
     }
 
@@ -101,5 +139,9 @@ namespace YouMap.Documents.Services
         public string EventsForUserWithId { get; set; }
 
         public string IdOrVkIdEqual { get; set; }
+
+        public string EventInPlace { get; set; }
+
+        public string CheckInPlace { get; set; }
     }
 }

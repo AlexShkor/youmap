@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CheckInListItem>
+
+<div class="checkins-list">
+    <ul>
+        @foreach(var item in Model)
+        {
+            <li><span>@item.Visited</span>
+            <p>@item.Memo</p>
+            </li>
+        }
+    </ul>
+</div>

@@ -79,5 +79,12 @@ namespace YouMap.Controllers
                            Visited = doc.Visited.ToShortDateString()
                        };
         }
+
+        public ActionResult List(string placeId)
+        {
+            var model = _documentService.GetCheckInsListForPlace(placeId, 3).Select(MapToListItem);
+            AjaxResponse.Render("#checkinsList","CheckInsList",model);
+            return Result();
+        }
     }
 }

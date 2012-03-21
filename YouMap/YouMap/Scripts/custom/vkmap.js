@@ -156,7 +156,7 @@ YouMap.Vk.Map = function($) {
         }
     };
 
-    //TODO: need to be separateo into two methods, for events and checkins
+    //TODO: need to be separated into two methods, for events and checkins
     var lastTempMarkersUrl = null;
     var userInfo = function () {
         $(".showEvents, .showCheckins").live("click", function () {
@@ -192,7 +192,7 @@ YouMap.Vk.Map = function($) {
         YouMap.Google.AddMarker(getMap(), options.marker);  
     };
 
-    //TODO: need to be separateo into two methods, for events and checkins
+    //TODO: need to be separated into two methods, for events and checkins
     var openContent = function (options) {
         var html = $(options.Content);
         var anchors = html.find(".users a");
