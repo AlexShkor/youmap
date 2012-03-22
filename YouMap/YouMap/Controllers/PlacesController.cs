@@ -132,7 +132,13 @@ namespace YouMap.Controllers
                     Status = IsAdmin ? PlaceStatusEnum.Active : PlaceStatusEnum.Hidden
                 };
                 Send(command);
-                AjaxResponse.RedirectUrl = Url.Action("Index");
+                return RespondTo(r =>
+                                     {
+                                         var url = Url.Action("Index", "Map", new {placeId = model.Id});
+                                         AjaxResponse.RedirectUrl = url;
+                                         r.Html = () => Redirect(url);
+                                         r.Json = Result;
+                                     });
             }
             return RespondTo(model);
         }

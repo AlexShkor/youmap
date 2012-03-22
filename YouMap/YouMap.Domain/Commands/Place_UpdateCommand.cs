@@ -48,6 +48,7 @@ namespace YouMap.Domain.Commands
                                CategoryId = message.CategoryId
                            };
             ar.Update(data);
+            Repository.Save(ar);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿@using YouMap.Controllers
 @model YouMap.Models.PlaceInfoModel
-
-<div data-id="@Model.Id" class="place-info-window">
+@*<div data-id="@Model.Id" class="place-info-window">
     <div>
         <div class="place-logo">
             <img src="@(Model.Logo)"/>
@@ -26,5 +25,56 @@
         <div id="eventsList"></div>
         <a class="ajax-link" href="@Url.Action("List", "CheckIns", new { placeId = Model.Id })">События</a>
         <div id="checkinsList"></div>
+    </div>
+</div>*@
+<div data-id="@Model.Id" class="accordion place-info">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle">
+                <strong>@Model.Title</strong>
+            </a>
+        </div>
+        <div class="accordion-body">
+            <div class="accordion-inner">
+                <div>
+                    <a class="place-logo thumbnail">
+                        <img src="@(Model.Logo)"/>
+                    </a>
+                    <div class="info">
+                        <div class="place-actions">
+                            <ul>
+                                <li><a class="colorbox" href="@Url.Action("CheckIn", "Map", new { PlaceId = Model.Id })">
+                                    Отметиться</a></li>
+                                <li><a class="colorbox" href="@Url.Action("Create", "Events", new { PlaceId = Model.Id })">
+                                    Создать встречу</a></li>
+                                <li>
+                                    <div id="vk_like_place_@(Model.Id)" class="share-container"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="ajax-link accordion-toggle" href="@Url.Action("List", "CheckIns", new { placeId = Model.Id })">
+                События</a>
+        </div>
+        <div class="accordion-body">
+            <div id="checkinsList" class="accordion-inner">
+            </div>
+        </div>
+    </div>
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="ajax-link accordion-toggle" href="@Url.Action("List", "Events", new { placeId = Model.Id })">
+                Встречи</a>
+        </div>
+        <div id="collapseThree" class="accordion-body">
+            <div id="eventsList" class="accordion-inner">
+            </div>
+        </div>
     </div>
 </div>

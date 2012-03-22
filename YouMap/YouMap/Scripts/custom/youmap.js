@@ -57,24 +57,33 @@ YouMap.Map = function ($) {
         var temp = options;
         var marker = options.Marker;
         $.get(options.InfoWindowUrl, function (result) {
-            
             YouMap.Google.OpenWindow(map, marker, result);
-            var id = "vk_like_place_" + temp.Id;
-            var placeInfoWindow = $("#" + id).parents(".place-info-window");
-            var baseUri = window.location.origin;
-            var url = baseUri + options.InfoWindowUrl;
-            var title = $("h2", placeInfoWindow).html();
-            var desc = $("p", placeInfoWindow).html();
-            var image = baseUri + $("img", placeInfoWindow).attr("src");
+            setTimeout(function() {
+               
+                var id = "vk_like_place_" + temp.Id;
+                var placeInfoWindow = $("#" + id).find(".place-info");
+                var baseUri = window.location.origin;
+                var url = baseUri + options.InfoWindowUrl;
+                var title = $("h2", placeInfoWindow).html();
+                var desc = $("p", placeInfoWindow).html();
+                var image = baseUri + $("img", placeInfoWindow).attr("src");
 
-            VK.Widgets.Like(id, {
-                pageUrl: url,
-                pageImage: image,
-                type: 'button',
-                pageTitle: title,
-                pageDescription: desc,
-                width: 100
-            });
+                var r = VK.Widgets.Like(id, {
+                    pageUrl: url,
+                    pageImage: image,
+                    type: 'button',
+                    pageTitle: title,
+                    pageDescription: desc,
+                    width: 100
+                });
+                if (r) {
+                    $("#" + id).hide();
+                }
+                $(".accordion").accordion({
+                    header: '.accordion-heading'
+                }
+                );
+            },10);
         });
     };
 
@@ -94,6 +103,7 @@ YouMap.Map = function ($) {
 
     var openUserInfo = function() {
         $.get(userProfileUrl, function (content) {
+
             YouMap.Google.OpenWindow(getMap(), userMarker, content);
         });
     };

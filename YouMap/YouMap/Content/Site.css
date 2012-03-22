@@ -398,7 +398,43 @@ color: #12eb87;
     float: left;
 }
 
+.place-info
+{
 
+    width: 300px;
+    height: 200px;
+}
+
+    .place-info .place-logo
+    {
+
+        float: left;
+    }
+
+     .place-info .info
+    {
+
+        float: left;
+    }
+
+     .place-info .place-logo.thumbnail
+{
+         width: 120px;
+         height: 80px;
+         text-align: center;
+}
+
+.events-list, .checkins-list
+{
+    height: 80px;
+    width: 260px;
+    overflow: hidden;
+}
+.accordion-inner
+{
+
+    height: 100px;
+}
 .place-info-window
 {
     width: 300px;
