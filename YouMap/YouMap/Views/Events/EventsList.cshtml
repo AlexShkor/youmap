@@ -4,7 +4,7 @@
     <ul>
         @foreach(var item in Model)
         {
-            <li><a href="@item.Url">@item.Title</a> @item.StartDate
+            <li><a href="@item.Url">@item.Title</a> <span>@item.StartDate</span>
                 <div class="users">
                     @foreach(var user in item.UsersIds)
                     {

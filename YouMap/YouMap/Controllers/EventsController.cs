@@ -10,6 +10,7 @@ using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Framework;
 using YouMap.Framework.Environment;
+using YouMap.Framework.Extensions;
 using YouMap.Framework.Utils;
 using YouMap.Framework.Utils.Extensions;
 using YouMap.Helpers;
@@ -177,7 +178,7 @@ namespace YouMap.Controllers
             {
                 Id = doc.Id,
                 Title = doc.Title,
-                StartDate = FormatEventStartDate(doc.Start.Date),
+                StartDate = doc.Start.ToInfoString(),
                 Url = Url.Action("Details",new {id = doc.Id}),
                 UsersIds = doc.UsersIds
             };

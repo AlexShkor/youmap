@@ -92,7 +92,7 @@ namespace YouMap.Documents.Services
             var prev = events.Where(x => x.Start < date).OrderByDescending(
                 x => x.Start).Take(count);
             var next = events.Where(x => x.Start >= date).OrderBy(x => x.Start).Take(count);
-            return prev.Concat(next).OrderBy(x => x.Start);
+            return prev.Concat(next).OrderByDescending(x => x.Start);
         }
 
         public IOrderedEnumerable<CheckInDocument> GetCheckInsListForPlace(string placeId, int count)
@@ -107,7 +107,7 @@ namespace YouMap.Documents.Services
             var prev = events.Where(x => x.Visited < date).OrderByDescending(
                 x => x.Visited).Take(count);
             var next = events.Where(x => x.Visited >= date).OrderBy(x => x.Visited).Take(count);
-            return prev.Concat(next).OrderBy(x => x.Visited);
+            return prev.Concat(next).OrderByDescending(x => x.Visited);
         }
     }
 

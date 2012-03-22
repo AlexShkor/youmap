@@ -38,7 +38,7 @@ namespace YouMap.Controllers
                                                 Id = x,
                                                 X = 53.90234 + (random.NextDouble() - random.NextDouble())/10,
                                                 Y = 27.561896 + (random.NextDouble() - random.NextDouble()) / 10,
-                                                Visited = (DateTime.Now - DateTime.Now.AddDays(- random.Next(100))).ToDisplayString(),
+                                                Visited = (DateTime.Now - DateTime.Now.AddDays(- random.Next(100))).ToPastString(),
                                                 InfoWindowUrl = Url.Action("UserInfo","Users",new {id=x}),
                                                 Shadow = _imageService.FriendShadowModel,
                                             }).Take(5);

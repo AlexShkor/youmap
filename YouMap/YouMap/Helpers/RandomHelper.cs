@@ -35,7 +35,7 @@ namespace YouMap.Helpers
 
         public static string PrettyDate()
         {
-            return  (DateTime.Now - DateTime.Now.AddDays(-random.Next(100))).ToDisplayString();
+            return  (DateTime.Now - DateTime.Now.AddDays(-random.Next(100))).ToPastString();
         }
     }
 }

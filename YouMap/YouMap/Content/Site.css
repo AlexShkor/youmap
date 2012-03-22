@@ -423,13 +423,25 @@ color: #12eb87;
          height: 80px;
          text-align: center;
 }
-
+.events-list .users
+{
+    display: none;
+}
+.events-list li span
+{
+    float: right;
+}
 .events-list, .checkins-list
 {
-    height: 80px;
     width: 260px;
     overflow: hidden;
 }
+    .events-list ul, .checkins-list ul
+    {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
 .accordion-inner
 {
 
