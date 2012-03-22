@@ -68,7 +68,7 @@ YouMap.Map = function ($) {
                 var desc = $("p", placeInfoWindow).html();
                 var image = baseUri + $("img", placeInfoWindow).attr("src");
 
-                var r = VK.Widgets.Like(id, {
+                VK.Widgets.Like(id, {
                     pageUrl: url,
                     pageImage: image,
                     type: 'button',
@@ -76,14 +76,10 @@ YouMap.Map = function ($) {
                     pageDescription: desc,
                     width: 100
                 });
-                if (r) {
-                    $("#" + id).hide();
-                }
                 $(".accordion").accordion({
                     header: '.accordion-heading'
-                }
-                );
-            },10);
+                });
+            },100);
         });
     };
 

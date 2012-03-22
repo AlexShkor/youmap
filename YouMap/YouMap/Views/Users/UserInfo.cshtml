@@ -1,6 +1,6 @@
 ﻿@model UserInfoModel
 
 <div class="actions">
-    <a id="showEvents" class="showEvents awesome small" href="@Url.Action("Show","Events", new{userId = Model.Id})">Встречи</a>
-    <a id="showCheckins" class="showCheckins awesome small" href="@Url.Action("Show","CheckIns", new{userId = Model.Id})">Отметки</a>
+    <a id="showEvents" class="showEvents btn btn-small" href="@Url.Action("Show","Events", new{userId = Model.Id})">Встречи</a>
+    <a id="showCheckins" class="showCheckins btn btn-small" href="@Url.Action("Show","CheckIns", new{userId = Model.Id})">Отметки</a>
 </div>
