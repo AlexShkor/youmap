@@ -326,8 +326,9 @@ YouMap.AddEvent = function($) {
     var friends;
     
     var initialize = function () {
-        $("#PrivateTrue, #PrivateFalse").change(function() {
-            if ($(this).val() == "True") {
+        $("#addFriends").click(function () {
+            
+            if (!$(".friends-select").parent().is(":visible")) {
                 showFriendsList();
                 $("#friendsSelect").focus();
             } else {

@@ -100,7 +100,8 @@ namespace YouMap.Domain
         {
             Apply(new User_EventAddedEvent
                       {
-                          Id = _id,
+                          UserId = _id,
+                          Id = data.EventId,
                           Location = data.Location,
                           Memo = data.Memo,
                           OwnerId = data.OwnerId,

@@ -13,5 +13,6 @@ namespace YouMap.Domain.Data
         bool Private { get; set; }
         string PlaceId { get; set; }
         string OwnerId { get; set; }
+        string EventId { get; set; }
     }
 }

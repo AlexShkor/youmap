@@ -17,5 +17,6 @@ namespace YouMap.Domain.Events
         public string PlaceId { get; set; }
         public string OwnerId { get; set; }
         public string OwnerName { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -86,10 +86,9 @@ namespace YouMap.Controllers
             {
                 return Create();
             }
-            var user = _userDocumentService.GetById(User.Id);
             var command = new User_AddEventCommand
                               {
-                                  Id = _idGenerator.Generate(),
+                                  EventId = _idGenerator.Generate(),
                                   Location = Location.Parse(model.Latitude, model.Longitude),
                                   Memo = model.Memo,
                                   OwnerId = User.Id,
@@ -134,6 +133,27 @@ namespace YouMap.Controllers
             model.OwnerId = user.Id;
             model.OwnerVkId = user.Vk.Id;
             model.OwnerName = user.FullName;
+            model.ActionUrl = Url.Action("Join", new { eventId = model.Id });
+            model.ActionTitle = "Принять участие";
+            model.LinkClass = "btn-success";
+            if (User != null)
+            {
+                if (model.OwnerId != User.Id)
+                {
+                    if (model.UsersIds.Contains(User.VkId))
+                    {
+                        model.ActionUrl = Url.Action("Left", new {eventId = model.Id});
+                        model.ActionTitle = "Покинуть встречу";
+                        model.LinkClass = "btn-danger";
+                    }
+                }
+                else
+                {
+                    model.ActionUrl = Url.Action("Delete", new {eventId = model.Id});
+                    model.ActionTitle = "Удалить встречу";
+                    model.LinkClass = "btn-danger";
+                }
+            }
             return RespondTo(model);
         }
 
@@ -229,9 +249,18 @@ namespace YouMap.Controllers
 
         public ActionResult Join(string eventid)
         {
+            if (User == null)
+            {
+                AjaxResponse.Render("#cboxLoadedContent","VkError",String.Empty);
+                return Result();
+            }
             var owner = _userDocumentService.GetByFilter(new UserFilter {EventIdEq = eventid}).First();
             var @event = owner.Events.First(x => x.Id == eventid);
-            if (!@event.Private)
+            if (@event.Private)
+            {
+                ModelState.AddModelError("Error", "Вы не можете присоединиться к закрытой встрече.");
+            }
+            if (ModelState.IsValid)
             {
                 var command = new User_JoinToEventCommand
                                   {
@@ -240,12 +269,23 @@ namespace YouMap.Controllers
                                       UserId = owner.Id
                                   };
                 Send(command);
+                AjaxResponse.ClosePopup = true;
             }
             else
             {
-                ModelState.AddModelError("Error", "Вы не можете присоединиться к закрытой встрече.");
+                AjaxResponse.Options.ErrorsSummaryContainer = "#eventValidation";
             }
             return Result();
+        }
+
+        public ActionResult Delete(string eventid)
+        {
+            return new EmptyResult();
+        }
+
+        public ActionResult Left(string eventid)
+        {
+            return new EmptyResult();
         }
     }
 }

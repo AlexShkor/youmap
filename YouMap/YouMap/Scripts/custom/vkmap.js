@@ -197,30 +197,39 @@ YouMap.Vk.Map = function($) {
         YouMap.Google.AddMarker(getMap(), options.marker);  
     };
 
-    //TODO: need to be separated into two methods, for events and checkins
-    var openContent = function (options) {
-        var html = $(options.Content);
+
+    var loadFriendsLiks = function(html, callback) {
         var anchors = html.find(".users a");
         var uids = jQuery.map(anchors, function (n, i) {
             return $(n).data("uid");
         });
         if (VK)
-        VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function (result) {
-            if (result && result.response) {
-                for (var i = 0; i < result.response.length; i++) {
-                    var user = result.response[i];
-                    html.find("#linkFor" + user.uid).html(user.first_name + " " + user.last_name);
+            VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function (result) {
+                if (result && result.response) {
+                    for (var i = 0; i < result.response.length; i++) {
+                        var user = result.response[i];
+                        html.find("#linkFor" + user.uid).html(user.first_name + " " + user.last_name);
+                    }
                 }
-            }
-            YouMap.Google.OpenWindow(getMap(), options.marker, $("<div/>").append(html).html());
+                if (callback) {
+                    callback(html);
+                }
+            });
+    };
+
+    //TODO: need to be separated into two methods, for events and checkins
+    var openContent = function (options) {
+        var html = $(options.Content);
+        loadFriendsLiks(html, function(elem) {
+            YouMap.Google.OpenWindow(getMap(), options.marker, $("<div/>").append(elem).html());
         });
-        
     };
 
     return {
         Initialize: initialize,
         ShowFriends: showFriendsMarkers,
         HideFriends: hideFriendsMarkers,
-        UserInfo: userInfo
+        UserInfo: userInfo,
+        LoadFriendsLiks: loadFriendsLiks
     };
 }(jQuery);

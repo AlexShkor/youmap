@@ -8,7 +8,7 @@ namespace YouMap.Domain.Commands
 {
     public class User_AddEventCommand : Command, IEventData
     {
-        public string Id { get; set; }
+        public string EventId { get; set; }
         public string Title { get; set; }
         public string Memo { get; set; }
         public Location Location { get; set; }

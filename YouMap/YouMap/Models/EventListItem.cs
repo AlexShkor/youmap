@@ -29,5 +29,11 @@ namespace YouMap.Models
         public bool Started { get; set; }
 
         public bool DisplayUsers { get; set; }
+
+        public string ActionUrl { get; set; }
+
+        public string ActionTitle { get; set; }
+
+        public string LinkClass { get; set; }
     }
 }

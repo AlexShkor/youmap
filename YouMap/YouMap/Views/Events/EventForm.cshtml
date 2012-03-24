@@ -15,7 +15,9 @@
 	@Html.HiddenFor(x=> x.Id)
 	@Html.HiddenFor(x=> x.Longitude)
 	@Html.HiddenFor(x=> x.Latitude)
- <div class="editor-field" @Html.DisplayIf(Model.Private)>
+
+          <a href="#" id="addFriends" class="btn btn-mini">Пригласить друзей</a>
+        <div class="editor-field" @Html.DisplayIf(Model.Private)>
             <div id="friendsValue" @Html.DisplayIf(false)>
               
                 @foreach (var friendId in Model.UserIds)
@@ -24,7 +26,6 @@
                 }
             </div>
             <div class="editor-label">
-                @Html.LabelFor(m => m.UserIds, "Выберите друзей")
                 <sub> (начните вводить имя)</sub>
             </div>
             <div class="editor-field">
@@ -35,8 +36,8 @@
         </div>
 
         <div class="editor-field">
-            <label for="PrivateFalse"><input id="PrivateFalse" @Html.CheckedIf(!Model.Private) name="Private" type="radio" value="False"/>Для всеx друзей</label>
-            <label for="PrivateTrue"><input id="PrivateTrue" @Html.CheckedIf(Model.Private) name="Private" type="radio"  value="True"/>Для выбранных друзей</label>
+            <label for="PrivateFalse"><input id="PrivateFalse" @Html.CheckedIf(!Model.Private) name="Private" type="radio" value="False"/>Открытая встреча</label>
+            <label for="PrivateTrue"><input id="PrivateTrue" @Html.CheckedIf(Model.Private) name="Private" type="radio"  value="True"/>Закрытая встреча</label>
             @Html.ValidationMessageFor(m => m.Private)
         </div>
        
