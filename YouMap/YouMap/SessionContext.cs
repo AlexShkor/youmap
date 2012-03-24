@@ -50,6 +50,7 @@ namespace YouMap
                                   Email = value.Email,
                                   Id = value.Id,
                                   Name = value.Name,
+                                  VkId = value.VkId,
                                   Permissions = value.Permissions
                               };
                 SetSessionValue(UserKey,user);
@@ -139,6 +140,9 @@ namespace YouMap
     public class UserIdentity : IUserIdentity, IIdentity
     {
         public string Id { get; set; }
+
+        public string VkId { get; set; }
+
         public string Email { get; set; }
         public string Name { get; set; }
 

@@ -6,6 +6,7 @@ namespace YouMap.Domain.Auth
     public interface IUserIdentity
     {
         string Id { get; }
+        string VkId { get; }
         string Email { get; }
         string Name { get; }
         bool HasPermissions(params UserPermissionEnum[] permission);

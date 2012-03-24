@@ -423,11 +423,40 @@ color: #12eb87;
          height: 80px;
          text-align: center;
 }
+.events-list.well
+{
+    padding: 10px 0;
+}
+.events-list.well li
+{
+    padding: 4px 25px;
+    background-color: #fafafa;
+}
+    .events-list.well li.active
+    {
+            padding: 4px 15px;
+        background-color: transparent;
+    }
+.events-list.well li.active a
+{
+    
+    font-weight: bold;
+}
+.events-list.well
+{
+
+    padding: 0;
+}
+.events-list ul
+{
+    list-style: none;
+    padding: 0;
+}
 .events-list .users
 {
-    display: none;
 }
-.events-list li span
+.events-list li span,
+.checkins-list li span
 {
     float: right;
 }
@@ -442,6 +471,10 @@ color: #12eb87;
         padding: 0;
         list-style: none;
     }
+span.started
+{
+    opacity: 0.6;
+}
 .accordion-inner
 {
 

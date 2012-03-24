@@ -6,22 +6,23 @@
     
     @Html.Partial("Styles")
     @Html.Partial("Scripts")
+    @RenderSection("head",false)
 </head>
-<body>
-    <div class="page">
-        <header>
-            @Html.Action("Navigation", "Categories")
-            <div id="title">
-                <a href="/"><h1>YOUMAP</h1></a>
-                @*@Html.Partial("AjaxLoader")*@
-            </div>
-            <div id="topBar">
-                @Html.Partial("TopBar")
-            </div>
-        </header>
-        <section id="main">
-            @RenderBody()
-        </section>
-    </div>
-</body>
+    <body>
+        <div class="page">
+            <header>
+                @Html.Action("Navigation", "Categories")
+                <div id="title">
+                    <a href="/"><h1>YOUMAP</h1></a>
+                    @*@Html.Partial("AjaxLoader")*@
+                </div>
+                <div id="topBar">
+                    @Html.Partial("TopBar")
+                </div>
+            </header>
+            <section id="main">
+                @RenderBody()
+            </section>
+        </div>
+    </body>
 </html>

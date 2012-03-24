@@ -355,7 +355,7 @@ namespace YouMap.Controllers
             }
             catch
             {
-                ModelState.AddModelError("Icon", "Не удалось сохранить изображение на сервере.");
+                //ModelState.AddModelError("Icon", "Не удалось сохранить изображение на сервере.");
             }
         }
 

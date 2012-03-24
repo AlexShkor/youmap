@@ -27,5 +27,10 @@ namespace YouMap.Domain.Data
         public String Href { get; set; }
 
         public String Nickname { get; set; }
+
+        public string GetVkUrl()
+        {
+            return "http://vk.com/id" + Id;
+        }
     }
 }

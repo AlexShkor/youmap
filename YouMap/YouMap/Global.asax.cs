@@ -9,6 +9,7 @@ using Paralect.ServiceLocator.StructureMap;
 using Paralect.Transitions;
 using Paralect.Transitions.Mongo;
 using StructureMap;
+using YouMap.Admin;
 using YouMap.Domain;
 using YouMap.EventHandlers;
 using YouMap.Framework;
@@ -79,10 +80,11 @@ namespace YouMap
             container.Configure(config =>
             {
                 config.For<IIdGenerator>().Use<MongoObjectIdGenerator>();
+                config.For<IContainer>().Use(container);
                 //config.For<MembershipApiService>().Add(
                 //    new MembershipApiService(tenant.MembershipApiKey,
                 //                                settings.MembershipBaseUrl));
-               // config.For<IEncryptionService>().Singleton().Use(encrypt);
+                // config.For<IEncryptionService>().Singleton().Use(encrypt);
                 //config.For<IEmailHtmlBuilder>().Use<NuggetHtmlBuilder>();
                 //config.For<ITransUnionService>().Use<TransUnionService>();
                 //config.For<IIntuitService>().Use<IntuitService>();
@@ -140,6 +142,7 @@ namespace YouMap
 
             container.Configure(config =>
             {
+                config.For<ITransitionRepository>().Singleton().Use(transitionsRepository);
                 config.For<ITransitionStorage>().Singleton().Use(transitionsStorage);
                 config.For<IDataTypeRegistry>().Singleton().Use(dataTypeRegistry);
                 config.For<IEventBus>().Use<DualEventBus>();
@@ -148,6 +151,7 @@ namespace YouMap
                 config.For<ICommandService>().Use<CommandService>();
                 config.For<ISessionContext>().Singleton().Use<SessionContext>();
                 config.For<IAuthenticationService>().Use<AuthenticationService>();
+                config.For<DeploymentHelper>().Use<DeploymentHelper>();
             });
 
             #endregion

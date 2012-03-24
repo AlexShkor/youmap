@@ -19,8 +19,6 @@ namespace YouMap.Domain.Commands
         public string OwnerId { get; set; }
     }
 
-   
-
     public class User_CreateEventCommandHandler: CommandHandler<User_AddEventCommand>
     {
         public User_CreateEventCommandHandler(IRepository repository) : base(repository)

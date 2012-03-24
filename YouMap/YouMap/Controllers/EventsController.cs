@@ -11,6 +11,7 @@ using YouMap.Domain.Data;
 using YouMap.Framework;
 using YouMap.Framework.Environment;
 using YouMap.Framework.Extensions;
+using YouMap.Framework.Mvc.Ajax;
 using YouMap.Framework.Utils;
 using YouMap.Framework.Utils.Extensions;
 using YouMap.Helpers;
@@ -40,8 +41,7 @@ namespace YouMap.Controllers
             var events = doc.Events;
             if (doc.Id != User.Id)
             {
-                var user = _userDocumentService.GetById(User.Id);
-                events = events.Where(x=> !x.Private || x.UsersIds.Contains(User.Id) || x.UsersIds.Contains(user.Vk.Id)).ToList();
+                events = events.Where(x=> !x.Private || x.UsersIds.Contains(User.Id) || x.UsersIds.Contains(User.VkId)).ToList();
             }
             var model = events.Select(MapToListItem);
             return RespondTo(model);
@@ -86,6 +86,7 @@ namespace YouMap.Controllers
             {
                 return Create();
             }
+            var user = _userDocumentService.GetById(User.Id);
             var command = new User_AddEventCommand
                               {
                                   Id = _idGenerator.Generate(),
@@ -126,33 +127,41 @@ namespace YouMap.Controllers
         [HttpGet]
         public ActionResult Details(string id)
         {
-            return RespondTo();
+            var user = _userDocumentService.GetByFilter(new UserFilter{EventIdEq = id}).First();
+            var model = user.Events.Where(x => x.Id == id).Select(MapToListItem).First();
+            var place = _placeDocumentService.GetById(model.PlaceId);
+            model.PlaceTitle = place.Title;
+            model.OwnerId = user.Id;
+            model.OwnerVkId = user.Vk.Id;
+            model.OwnerName = user.FullName;
+            return RespondTo(model);
         }
 
         [HttpGet]
         public ActionResult Show(string userid)
         {
-            var docs = new List<EventDocument>();
-            if (true)
-            {
-                //IT'S FAKE!!!
-               docs = _userDocumentService.GetAll().SelectMany(x => x.Events ?? new List<EventDocument>()).ToList();
-            }
-            //TODO: Implement this
-            else
-            {
-                var user = _userDocumentService.GetById(userid);
+            //var user = _userDocumentService.GetById(userid);
+            var user = _userDocumentService.GetAll().First(x => x.VkId != null);
+            var docs = user.Events;
+
                 // -2 hours to display just started events, need to be replaced with filter
                // model = user.Events.Where(x => x.Start >= DateTime.Now.AddHours(-2)).Select(MapToMarker).ToList();
-            }
-            var model = docs.GroupBy(x=> x.PlaceId).Select(MapToMarkerGroup).ToList();
+            
+            var model = docs.GroupBy(x=> x.PlaceId).Select(x=> MapToMarkerGroup(x,user)).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
         }
 
-        private EventMarkerModel MapToMarkerGroup(IGrouping<string,EventDocument> group)
+        private EventMarkerModel MapToMarkerGroup(IGrouping<string,EventDocument> group, UserDocument user)
         {
             var eventsList = group.OrderByDescending(x=> x.Start).Take(10).Select(MapToListItem).ToList();
+            foreach (var item in eventsList)
+            {
+                item.OwnerName = user.FullName;
+                item.OwnerId = user.Id;
+                item.OwnerVkId = user.VkId;
+                item.DisplayUsers = true;
+            }
             var marker =  new EventMarkerModel
                        {
                            PlaceId = group.Key,
@@ -169,7 +178,7 @@ namespace YouMap.Controllers
 
         private string RenderEventsListToString(List<EventListItem> eventsList)
         {
-            return MvcUtils.RenderPartialToStringRazor(ControllerContext, "EventsList", eventsList, ViewData,TempData);
+            return MvcUtils.RenderPartialToStringRazor(ControllerContext, "EventsListWindow", eventsList, ViewData,TempData);
         }
 
         private EventListItem MapToListItem(EventDocument doc)
@@ -177,8 +186,10 @@ namespace YouMap.Controllers
             return new EventListItem
             {
                 Id = doc.Id,
+                PlaceId = doc.PlaceId,
                 Title = doc.Title,
                 StartDate = doc.Start.ToInfoString(),
+                Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
                 UsersIds = doc.UsersIds
             };
@@ -213,6 +224,27 @@ namespace YouMap.Controllers
         {
             var model = _userDocumentService.GetEventsListForPlace(placeId,3).Select(MapToListItem);
             AjaxResponse.Render("#eventsList", "EventsList", model);
+            return Result();
+        }
+
+        public ActionResult Join(string eventid)
+        {
+            var owner = _userDocumentService.GetByFilter(new UserFilter {EventIdEq = eventid}).First();
+            var @event = owner.Events.First(x => x.Id == eventid);
+            if (!@event.Private)
+            {
+                var command = new User_JoinToEventCommand
+                                  {
+                                      EventId = @event.Id,
+                                      NewMemberId = User.VkId,
+                                      UserId = owner.Id
+                                  };
+                Send(command);
+            }
+            else
+            {
+                ModelState.AddModelError("Error", "Вы не можете присоединиться к закрытой встрече.");
+            }
             return Result();
         }
     }

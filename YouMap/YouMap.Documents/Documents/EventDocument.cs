@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 using YouMap.Domain.Data;
 
 namespace YouMap.Documents.Documents
 {
     public class EventDocument
     {
+        [BsonId]
         public string Id { get; set; } 
         public string Title { get; set; } 
         public string Memo { get; set; }

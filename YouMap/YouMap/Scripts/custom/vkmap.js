@@ -25,7 +25,8 @@ YouMap.Vk.Panel = function($) {
         $("#profilePanel .actions a").click(function() {
             $("#profilePanel .container").slideToggle("fast");
         });
-        $("#logoutLink").live("click",function() {
+        $("#logoutLink").live("click", function () {
+            if (VK)
             VK.Auth.logout();
         });
     };
@@ -53,7 +54,8 @@ YouMap.Vk.Panel = function($) {
                 relativeUrl = "/?latitude=" + location.x + "&longitude=" + location.y;
             }
         });
-        $(".checkin .ajax-submit").bind("success",function () {
+        $(".checkin .ajax-submit").bind("success", function () {
+            if (VK)
                 VK.Api.call("wall.post", { message: $(".checkin textarea").val(), attachments: window.location.origin + relativeUrl}, function() {
             });
         });
@@ -74,18 +76,21 @@ YouMap.Vk.Map = function($) {
     var friends = null;
     var tempMarkers = new Array();
     
-    var initialize = function() {
-        VK.Observer.subscribe("auth.login", getFriends);
-        VK.Observer.subscribe("auth.logout", hideFriendsMarkers);
-        VK.Auth.getLoginStatus(function (response) {
-            if (response.session) {
-                getFriends();
-            }
-        });
+    var initialize = function () {
+        if (VK) {
+            VK.Observer.subscribe("auth.login", getFriends);
+            VK.Observer.subscribe("auth.logout", hideFriendsMarkers);
+            VK.Auth.getLoginStatus(function(response) {
+                if (response.session) {
+                    getFriends();
+                }
+            });
+        }
         userInfo();
     };
 
-    var getFriends = function() {
+    var getFriends = function () {
+        if (VK)
         VK.Api.call('friends.get', { fields: "uid,first_name,last_name,photo" }, function (r) {
             if (r.response) {
                 if (friends) {
@@ -199,6 +204,7 @@ YouMap.Vk.Map = function($) {
         var uids = jQuery.map(anchors, function (n, i) {
             return $(n).data("uid");
         });
+        if (VK)
         VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function (result) {
             if (result && result.response) {
                 for (var i = 0; i < result.response.length; i++) {
@@ -206,7 +212,7 @@ YouMap.Vk.Map = function($) {
                     html.find("#linkFor" + user.uid).html(user.first_name + " " + user.last_name);
                 }
             }
-            YouMap.Google.OpenWindow(getMap(), options.marker, html.html());
+            YouMap.Google.OpenWindow(getMap(), options.marker, $("<div/>").append(html).html());
         });
         
     };

@@ -189,7 +189,7 @@ namespace YouMap
             command.Metadata.UserId = command.UserId;
             _commandService.Send(command);
             var identity = new UserIdentity
-                               {Id = command.UserId, Name = String.Format("{0} {1}", model.FirstName, model.LastName), Permissions = command.Permissions};
+                               {Id = command.UserId, VkId = model.Id,Name = String.Format("{0} {1}", model.FirstName, model.LastName), Permissions = command.Permissions};
             SetAuthCookie(identity, true);
         }
 

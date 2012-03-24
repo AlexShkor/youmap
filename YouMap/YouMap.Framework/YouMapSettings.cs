@@ -2,12 +2,12 @@ namespace YouMap.Framework
 {
     public class Settings
     {
-        public string MongoWriteDatabaseConnectionString = "mongodb://localhost:27020/youmap_write1";
-        public string MongoReadDatabaseConnectionString = "mongodb://localhost:27020/youmap_read1";
-        public string MongoTempDatabaseConnectionString = "mongodb://localhost:27020/youmap_temp1";
+        public string MongoWriteDatabaseConnectionString = "mongodb://localhost:27020/youmap_write2";
+        public string MongoReadDatabaseConnectionString = "mongodb://localhost:27020/youmap_read2";
+        public string MongoTempDatabaseConnectionString = "mongodb://localhost:27020/youmap_temp2";
         public string InputQueueName = "youmap_input_msmq";
         public string ErrorQueueName = "youmap_error_msmq";
-        public string LuceneIndexesDirectory = "c:\\data\\lucene";
+        public string LuceneIndexesDirectory = "c:\\data\\lucene2";
         //{
 
 

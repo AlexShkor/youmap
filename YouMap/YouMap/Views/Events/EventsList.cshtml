@@ -4,13 +4,8 @@
     <ul>
         @foreach(var item in Model)
         {
-            <li><a href="@item.Url">@item.Title</a> <span>@item.StartDate</span>
-                <div class="users">
-                    @foreach(var user in item.UsersIds)
-                    {
-                        <a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
-                    }
-                </div>
+            <li>
+                <a class="colorbox" href="@item.Url">@item.Title</a> <span class="@(item.Started? "started":"")">@item.StartDate</span>
             </li>
         }
     </ul>

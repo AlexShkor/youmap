@@ -9,15 +9,15 @@ namespace YouMap.Framework.Extensions
         {
             if (source.TotalSeconds < 60)
             {
-                return String.Format("{0} секунд назад", source.TotalSeconds);
+                return String.Format("{0} секунд назад", source.Seconds);
             }
             if (source.TotalMinutes < 60)
             {
-                return String.Format("{0} минут назад", source.TotalMinutes);
+                return String.Format("{0} минут назад", source.Minutes);
             }
             if (source.TotalHours < 24)
             {
-                return String.Format("{0} часов назад", source.TotalHours);
+                return String.Format("{0} часов назад", source.Hours);
             }
             return String.Format("{0} дней назад назад", source.TotalDays);
         }
@@ -30,7 +30,7 @@ namespace YouMap.Framework.Extensions
             }
             if (source.TotalSeconds < 60)
             {
-                return String.Format("через {0} секунд",source.TotalSeconds);
+                return String.Format("через {0} секунд",source.Seconds);
             }
             if (source.TotalMinutes < 2)
             {
@@ -46,7 +46,7 @@ namespace YouMap.Framework.Extensions
             }
             if (source.TotalMinutes < 60)
             {
-                return String.Format("через {0} минут", source.TotalMinutes);
+                return String.Format("через {0} минут", source.Minutes);
             }
             /*
              (- 5 сек) = 5 секунд назад
@@ -90,7 +90,7 @@ namespace YouMap.Framework.Extensions
                 {
                     return timespan.ToPastString();
                 }
-                return timespan.ToFutureString();
+                return (TimeSpan.FromTicks(- timespan.Ticks)).ToFutureString();
             }
             if (current.Date == date.Date)
             {

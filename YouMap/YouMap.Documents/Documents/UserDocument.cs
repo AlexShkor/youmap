@@ -13,6 +13,11 @@ namespace YouMap.Documents.Documents
         [BsonId]
         public string Id { get; set; }
 
+        public string VkId
+        {
+            get { return Vk != null ? Vk.Id : null; }
+        }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

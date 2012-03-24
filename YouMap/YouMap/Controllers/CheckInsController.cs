@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Framework;
+using YouMap.Framework.Extensions;
 using YouMap.Framework.Utils;
 using YouMap.Models;
 
@@ -20,9 +21,10 @@ namespace YouMap.Controllers
 
         public ActionResult Show(string userId)
         {
-            //var docs = _documentService.GetByFilter(new UserFilter { IdOrVkIdEqual = userId }).First().CheckIns;
-            var docs = _documentService.GetAll().SelectMany(x => x.CheckIns).ToList();
-            var model  = docs.GroupBy(x => x.PlaceId ?? x.Location.ToString()).Select(MapToMarker).ToList();
+            //var user = _documentService.GetByFilter(new UserFilter {IdOrVkIdEqual = userId}).First();
+
+            var user = _documentService.GetAll().First(x => x.VkId != null);
+            var model  = user.CheckIns.GroupBy(x => x.PlaceId ?? x.Location.ToString()).Select(x=> MapToMarker(x,user)).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
         }
@@ -52,9 +54,14 @@ namespace YouMap.Controllers
             };
         }
 
-        private MarkerModel MapToMarker(IGrouping<string,CheckInDocument> group)
+        private MarkerModel MapToMarker(IGrouping<string, CheckInDocument> @group, UserDocument user)
         {
-            var checkIns = group.OrderBy(x=> x.Visited).Take(10).Select(MapToListItem);
+            var checkIns = group.OrderBy(x=> x.Visited).Take(10).Select(MapToListItem).ToList();
+            foreach (var item in checkIns)
+            {
+                item.UserName = user.FullName;
+                item.Url = user.Vk.GetVkUrl();
+            }
             return new MarkerModel
             {
                 X = group.First().Location.Latitude,
@@ -76,15 +83,26 @@ namespace YouMap.Controllers
             return new CheckInListItem
                        {
                            Memo = doc.Memo,
-                           Visited = doc.Visited.ToShortDateString()
+                           Visited = doc.Visited.ToInfoString()
                        };
         }
 
         public ActionResult List(string placeId)
         {
-            var model = _documentService.GetCheckInsListForPlace(placeId, 3).Select(MapToListItem);
+            var model = _documentService.GetCheckInsGroupsForPlace(placeId, 3).Select(MapToListItem).SelectMany(x=> x);
             AjaxResponse.Render("#checkinsList","CheckInsList",model);
             return Result();
+        }
+
+        private IEnumerable<CheckInListItem> MapToListItem(IGrouping<UserDocument, CheckInDocument> arg)
+        {
+            var model =arg.Select(MapToListItem).ToList();
+            foreach (var item in model)
+            {
+                item.UserName = arg.Key.FullName;
+                item.Url = arg.Key.Vk.GetVkUrl();
+            }
+            return model;
         }
     }
 }

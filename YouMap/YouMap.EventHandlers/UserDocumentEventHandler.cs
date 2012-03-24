@@ -14,6 +14,7 @@ namespace YouMap.EventHandlers
         IMessageHandler<User_ImportedFromVkEvent>,
         IMessageHandler<User_MarkUdatedEvent>,
         IMessageHandler<User_EventAddedEvent>,
+        IMessageHandler<User_EventMemberAddedEvent>,
         IMessageHandler<User_CheckInAddedEvent>
     {
         private readonly UserDocumentService _documentService;
@@ -89,6 +90,13 @@ namespace YouMap.EventHandlers
                               UsersIds = message.UsersIds.ToList()
                           };
             var update = Update.PushWrapped("Events", doc);
+            _documentService.Update(query,update);
+        }
+
+        public void Handle(User_EventMemberAddedEvent message)
+        {
+            var query = Query.And(Query.EQ("_id", message.UserId), Query.EQ("Events._id",message.EventId));
+            var update = Update.PushWrapped("Events.UsersIds", message.NewMemberId);
             _documentService.Update(query,update);
         }
     }

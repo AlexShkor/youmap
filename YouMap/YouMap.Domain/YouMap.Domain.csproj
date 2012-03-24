@@ -73,6 +73,7 @@
     <Compile Include="Commands\Place_ChangeStatusCommand.cs" />
     <Compile Include="Commands\Place_UpdateCommand.cs" />
     <Compile Include="Commands\User_AddEventCommand.cs" />
+    <Compile Include="Commands\User_JoinToEventCommand.cs" />
     <Compile Include="Data\CheckInData.cs" />
     <Compile Include="Commands\User_AddCheckInCommand.cs" />
     <Compile Include="Commands\User_UpdateMarkCommand.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Events\User_CheckInAddedEvent.cs" />
     <Compile Include="Events\User_CreatedEvent.cs" />
     <Compile Include="Events\User_EventAddedEvent.cs" />
+    <Compile Include="Events\User_EventMemberAddedEvent.cs" />
     <Compile Include="Events\User_PasswordChangedEvent.cs" />
     <Compile Include="Events\User_SetLastMarkEvent.cs" />
     <Compile Include="PlaceAR.cs" />

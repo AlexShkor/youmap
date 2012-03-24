@@ -4,9 +4,9 @@
     <ul>
         @foreach(var item in Model)
         {
-            <li><span>@item.Visited</span>
-            <p>@item.Memo</p>
+            <li><a  href="@item.Url">@item.UserName</a> <span>@item.Visited
+                                                        </span>
             </li>
         }
-    </ul>
+</ul>
 </div>

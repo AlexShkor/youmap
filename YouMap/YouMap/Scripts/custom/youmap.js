@@ -58,16 +58,21 @@ YouMap.Map = function ($) {
         var marker = options.Marker;
         $.get(options.InfoWindowUrl, function (result) {
             YouMap.Google.OpenWindow(map, marker, result);
-            setTimeout(function() {
-               
-                var id = "vk_like_place_" + temp.Id;
-                var placeInfoWindow = $("#" + id).find(".place-info");
-                var baseUri = window.location.origin;
-                var url = baseUri + options.InfoWindowUrl;
-                var title = $("h2", placeInfoWindow).html();
-                var desc = $("p", placeInfoWindow).html();
-                var image = baseUri + $("img", placeInfoWindow).attr("src");
+            drawPlaceVkLike(temp.Id,options.InfoWindowUrl);
+            drawAccordion();         
+        });
+    };
 
+    var drawPlaceVkLike = function (placeId, infoUrl) {
+        setTimeout(function() {
+            var id = "vk_like_place_" + placeId;
+            var placeInfoWindow = $("#" + id).find(".place-info");
+            var baseUri = window.location.origin;
+            var url = baseUri + infoUrl ;
+            var title = $("h2", placeInfoWindow).html();
+            var desc = $("p", placeInfoWindow).html();
+            var image = baseUri + $("img", placeInfoWindow).attr("src");
+            if (VK) {
                 VK.Widgets.Like(id, {
                     pageUrl: url,
                     pageImage: image,
@@ -76,13 +81,20 @@ YouMap.Map = function ($) {
                     pageDescription: desc,
                     width: 100
                 });
-                $(".accordion").accordion({
-                    header: '.accordion-heading'
-                });
-            },100);
-        });
+            }
+        }, 0);       
     };
 
+    var drawAccordion = function () {
+        if ($(".accordion").length == 0) {
+            setTimeout(drawAccordion, 100);
+            return;
+        }
+        $(".accordion").parent("div").css("overflow", "hidden");
+        $(".accordion").accordion({
+            header: '.accordion-heading'
+        });
+    };
 
     var navigateToPlace = function(place) {
         setMapCenter(place.X, place.Y);

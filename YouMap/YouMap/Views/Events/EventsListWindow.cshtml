@@ -1,0 +1,21 @@
+﻿@model IEnumerable<EventListItem>
+
+<div class="events-list well">
+    <ul class="nav nav-list">
+        @foreach(var item in Model)
+        {
+            <li class="active"><a class="colorbox" href="@item.Url">@item.Title</a> <span class="@(item.Started? "started":"")">@item.StartDate</span>
+
+            </li>
+            <li>
+                                <div class="users" @Html.DisplayIf(item.DisplayUsers)>
+                <a data-uid="@item.OwnerVkId" id="linkFor@(item.OwnerVkId)" href="http://vk.com/id@(item.OwnerVkId)">@item.OwnerName</a>
+                    @foreach(var user in item.UsersIds)
+                    {
+                        <a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+</div>

@@ -13,5 +13,21 @@ namespace YouMap.Models
         public string Url { get; set; }
 
         public List<string> UsersIds { get; set; }
+
+        public string OwnerId { get; set; }
+
+        public string OwnerVkId { get; set; }
+
+        public string OwnerName { get; set; }
+
+        public string PlaceId { get; set; }
+
+        public string PlaceTitle { get; set; }
+
+        public object Memo { get; set; }
+
+        public bool Started { get; set; }
+
+        public bool DisplayUsers { get; set; }
     }
 }

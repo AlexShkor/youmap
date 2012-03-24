@@ -111,5 +111,15 @@ namespace YouMap.Domain
                           UsersIds = data.UsersIds
                       });
         }
+
+        public void AddMemberToEvent(string newMemberId, string eventId)
+        {
+            Apply(new User_EventMemberAddedEvent
+                      {
+                          UserId = _id,
+                          NewMemberId = newMemberId,
+                          EventId = eventId
+                      });
+        }
     }
 }

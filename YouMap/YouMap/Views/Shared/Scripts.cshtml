@@ -18,6 +18,36 @@
     <script src="@Url.Content("~/Scripts/custom/search.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/custom/vkmap.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.colorbox.js")" type="text/javascript"></script>
-<script src="http://vkontakte.ru/js/api/openapi.js" type="text/javascript" charset="windows-1251"></script>
+<script>
+    $(function() {
+        VK.init({
+            apiId: 2831071
+        });
+    });
+    
+</script>
 
-    @Html.Telerik().ScriptRegistrar().jQuery(false)
+@*Sync VK API*@
+<script src="http://vk.com/js/api/openapi.js" type="text/javascript" charset="windows-1251"></script>
+@*<div id="vk_api_transport"></div>
+<script type="text/javascript">
+  window.vkAsyncInit = function() {
+      VK.init({
+          apiId: 2831071
+      });
+  };
+  VK = undefined;
+  setTimeout(function() {
+    var el = document.createElement("script");
+    el.type = "text/javascript";
+    el.src = "http://vk.com/js/api/openapi.js";
+    el.async = true;
+    document.getElementById("vk_api_transport").appendChild(el);
+    if (VK)
+        {
+      window.vkAsyncInit();
+    }
+  }, 0);
+</script>*@
+
+@Html.Telerik().ScriptRegistrar().jQuery(false)

@@ -1,0 +1,32 @@
+﻿@model EventListItem
+
+<div>
+    <div>
+        <div>
+            <h2>@Model.Title</h2>
+        </div>
+        <div>
+            <div>
+                @Model.StartDate
+            </div>
+            <div>
+                @Model.PlaceTitle
+            </div>
+            <div>
+                @Model.OwnerName
+            </div>
+<div>
+                <a href="@Url.Action("Join","Events", new {eventId = Model.Id})"></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <p>@Model.Memo</p>
+    </div>   
+    <div class="users">
+        @foreach(var user in Model.UsersIds)
+        {
+            <a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
+        }
+    </div>
+</div>

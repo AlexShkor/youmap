@@ -1,0 +1,30 @@
+﻿@model YouMap.Controllers.ReadModelGenerationModel
+
+@section head
+{
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+}
+
+
+<div style="padding: 10px">
+    @Html.ValidationSummary()
+    <br />
+
+    @using (Html.BeginForm("Regenerate", "Admin"))
+    {
+        <h3>
+            4. Regenerate Read Model</h3>
+        <div class="box">
+            Read connection string @Html.TextBoxFor(x => x.ReadConnectionString, new { style = "width: 400px;" })
+            <br />
+            Write connection string @Html.TextBoxFor(x => x.WriteConnectionString, new { style = "width: 400px;" })
+            <br />
+            <span style="padding: 5px; background-color: #ffcccc;">Warning! It will <b>remove all
+                data</b> from read database before regeneration.</span>
+            <div style="padding-top: 8px;">
+                <input type="submit" value="Regenerate" />
+            </div>
+        </div>
+    }
+    <br />
+</div>

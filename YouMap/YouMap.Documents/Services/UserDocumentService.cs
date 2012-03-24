@@ -77,15 +77,20 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(Query.EQ("CheckIns.PlaceId", filter.CheckInPlace));
             }
+            if (filter.EventIdEq.HasValue())
+            {
+                query = Query.And(Query.EQ("Events._id", filter.EventIdEq));
+            }
             return query;
         }
 
         public IOrderedEnumerable<EventDocument> GetEventsListForPlace(string placeId, int count)
         {
-            var events =  GetByFilter(new UserFilter
-                                   {
-                                       EventInPlace = placeId
-                                   }).SelectMany(x => x.Events).Where(
+            var users = GetByFilter(new UserFilter
+                                        {
+                                            EventInPlace = placeId
+                                        });
+            var events = users.SelectMany(x => x.Events).Where(
                                        x =>
                                        x.PlaceId == placeId).ToList();
             var date = DateTime.Now;
@@ -97,17 +102,38 @@ namespace YouMap.Documents.Services
 
         public IOrderedEnumerable<CheckInDocument> GetCheckInsListForPlace(string placeId, int count)
         {
-            var events = GetByFilter(new UserFilter
-            {
-                CheckInPlace = placeId
-            }).SelectMany(x => x.CheckIns).Where(
-                                       x =>
-                                       x.PlaceId == placeId).ToList();
+            var users = GetByFilter(new UserFilter
+                                        {
+                                            CheckInPlace = placeId
+                                        });
+            return CheckInsForUsers(users, placeId, count);
+        }
+
+        private static IOrderedEnumerable<CheckInDocument> CheckInsForUsers(IEnumerable<UserDocument> users, string placeId, int count)
+        {
+            var events = users.SelectMany(x => x.CheckIns).Where(
+                x =>
+                x.PlaceId == placeId).ToList();
             var date = DateTime.Now;
             var prev = events.Where(x => x.Visited < date).OrderByDescending(
                 x => x.Visited).Take(count);
             var next = events.Where(x => x.Visited >= date).OrderBy(x => x.Visited).Take(count);
             return prev.Concat(next).OrderByDescending(x => x.Visited);
+        }
+
+        public IEnumerable<IGrouping<UserDocument, CheckInDocument>> GetCheckInsGroupsForPlace(string placeId, int count)
+        {
+            var users = GetByFilter(new UserFilter
+                                        {
+                                            CheckInPlace = placeId
+                                        });
+            var item = CheckInsForUsers(users, placeId, count);
+            return item.GroupBy(c => users.First(x => x.CheckIns.Contains(c)));
+        }
+
+        public EventDocument GetEventById(string eventid)
+        {
+            return GetByFilter(new UserFilter {EventIdEq = eventid}).SelectMany(x => x.Events).First(x => x.Id == eventid);
         }
     }
 
@@ -143,5 +169,7 @@ namespace YouMap.Documents.Services
         public string EventInPlace { get; set; }
 
         public string CheckInPlace { get; set; }
+
+        public string EventIdEq { get; set; }
     }
 }
