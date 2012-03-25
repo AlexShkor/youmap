@@ -225,11 +225,46 @@ YouMap.Vk.Map = function($) {
         });
     };
 
+    var initEventDetails = function(model) {
+        loadFriendsLiks($(".event-details"));      
+        if (VK) {
+            VK.Widgets.Like("eventVkLike", {
+                pageUrl: model.ShareUrl,
+                type: 'mini',
+                pageTitle: model.Title,
+                pageDescription: createEventShareMessage(model),
+                width: 100
+            });
+        }
+    };
+    
+    var createEventShareMessage = function (model) {
+        var message = model.Title;
+        if (model.PlaceTitle) {
+            message += ".\n Встреча в \"" + model.PlaceTitle + "\"";
+        }
+        if (model.UsersIds && model.UsersIds.length > 0) {
+            var users = new Array();
+            users.push("*id" + model.OwnerVkId);
+            for (var i = 0; i < model.UsersIds.length; i++) {
+                users.push("*id" + model.UsersIds[i]);
+            }
+            message += ".\n Участники: " + users.join(", ");
+        }
+        message += ".\n" + model.StartDate;
+        if (model.Memo) {
+            message += ".\n" + model.Memo;
+        }
+        return message;
+    };
+
     return {
         Initialize: initialize,
         ShowFriends: showFriendsMarkers,
         HideFriends: hideFriendsMarkers,
         UserInfo: userInfo,
-        LoadFriendsLiks: loadFriendsLiks
+        LoadFriendsLiks: loadFriendsLiks,
+        InitEventDetails: initEventDetails,
+        CreateEventShareMessage: createEventShareMessage
     };
 }(jQuery);

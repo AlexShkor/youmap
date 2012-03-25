@@ -102,6 +102,7 @@ namespace YouMap.Controllers
                                   {
                                       Id = model.Id,
                                       Name = model.Name,
+                                      Order= model.Order,
                                       Icon = model.FileName,
                                       IsTop = model.IsTop
                                   };
@@ -132,6 +133,7 @@ namespace YouMap.Controllers
                 var command = new Category_CreateCommand
                                   {
                                       Id = model.Id,
+                                      Order = model.Order,
                                       Name = model.Name,
                                       Icon = model.FileName,
                                       IsTop = model.IsTop
@@ -176,12 +178,13 @@ namespace YouMap.Controllers
             return Path.Combine(dir, filename);
         }
 
+        [OutputCache(Duration = 360)]
         public ActionResult Navigation()
         {
             var model = _documentService.GetByFilter(new CategoryFilter
                                                          {
                                                              IsTop = true
-                                                         }).Select(Map);
+                                                         }).OrderBy(x=> x.Order).Select(Map);
             return PartialView(model);
         }
     }

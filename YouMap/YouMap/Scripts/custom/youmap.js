@@ -30,7 +30,9 @@ YouMap.Map = function ($) {
                 navigateToPlace(places[i]);
             }
         }
-        
+        if (config.OpenPopupUrl) {
+            colorbox(config.OpenPopupUrl);
+        }
         setTimeout(function() {
             YouMap.Geolocation.Locate(function (x, y) {
                 setMapCenter(x, y);
@@ -51,6 +53,7 @@ YouMap.Map = function ($) {
             geocoder = new google.maps.Geocoder();
         }
         YouMap.Vk.Map.Initialize();
+        
     };
 
     var openPlaceInfo = function(options) {
@@ -76,7 +79,7 @@ YouMap.Map = function ($) {
                 VK.Widgets.Like(id, {
                     pageUrl: url,
                     pageImage: image,
-                    type: 'button',
+                    type: 'mini',
                     pageTitle: title,
                     pageDescription: desc,
                     width: 100
@@ -342,23 +345,9 @@ YouMap.AddEvent = function($) {
             $.colorbox.resize();
         });
         $("#submitEvent").bind("success", function (event, data) {
-            var message = $("#placeFields #Title").val();
-            if ($("#placeFields #PlaceTitle").val()) {
-                message += ".\n Встреча в \"" + $("#placeFields #PlaceTitle").val() + "\"";
-            }
-            if ($("#placeFields input[name='UserIds']").length > 0) {
-                var hiddens = $("#placeFields input[name='UserIds']");
-                var users = new Array();               
-                for (var i = 0; i < hiddens.length; i++) {
-                    users.push("*id" + $(hiddens[i]).val());
-                }
-                message += ".\n Участники: " + users.join(", ");
-            }
-            message += ".\n" + $("#placeFields #Start").val() + " " + $("#placeFields #Hour").val() + ":" + $("#placeFields #Minute").val();
-            if ($("#placeFields #Memo").val()) {
-                message += ".\n" + $("#placeFields #Memo").val();
-            }
-            VK.Api.call("wall.post", { message: message, attachments: window.location.origin + data.jsonItems.url }, function() {
+            var model = data.jsonItems.model;
+            var message = YouMap.Vk.Map.CreateEventShareMessage(model);
+            VK.Api.call("wall.post", { message: message, attachments: window.location.origin + model.ShareUrl }, function () {
             });
         });
     };

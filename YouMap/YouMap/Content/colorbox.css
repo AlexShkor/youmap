@@ -55,6 +55,10 @@ margin-left: 10px;
     box-shadow: 0 0 6px #FFF;
 }
 
+#cboxContent h5
+{
+    color: peachPuff;
+}
 #cboxContent fieldset
 {
     color: white;

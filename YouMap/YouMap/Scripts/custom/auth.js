@@ -4,14 +4,14 @@
     var loginned = false;
     var initialize = function (isUserLoginned) {
         loginned = isUserLoginned;
-        if (!loginned) {
             $("#vkLogin").live("click", function() {
-                VK.Auth.login(vkLoginCallback,permissions);
+                VK.Auth.login(vkLoginCallback, permissions);
+                return false;
             });
             //setTimeout(function() {
             //    VK.Auth.getLoginStatus(getStatusCallback);
-            //}, 1);
-        }
+        //}, 1);
+           // $("#vkMobileLogin").attr("href", "http://oauth.vk.com/authorize?client_id=2831071&response_type=token&scope=1027" + false ? "&redirect_uri=localhost" : "&redirect_uri=localhost");
     };
 
     var vkLoginCallback = function (response) {

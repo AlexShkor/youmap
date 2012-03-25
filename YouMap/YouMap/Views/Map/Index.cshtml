@@ -3,7 +3,7 @@
 
 <script>
     $(document).ready(function () {
-        var config = @( Html.Raw(Model.Json));
+        var config = @( Html.Raw(Model.ToJson()));
         var places = config.Places;
 	YouMap.Map.Initialize(config,places);
 });

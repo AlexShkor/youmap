@@ -166,5 +166,12 @@ margin: 5px;
 .validation-summary-valid {
     display: none;
 }
-
+#colorbox .validation-summary-errors
+{
+    color: #F99;
+}
+#colorbox .field-validation-error
+{
+    color: #F88;
+}
 

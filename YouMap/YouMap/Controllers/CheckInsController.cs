@@ -21,9 +21,9 @@ namespace YouMap.Controllers
 
         public ActionResult Show(string userId)
         {
-            //var user = _documentService.GetByFilter(new UserFilter {IdOrVkIdEqual = userId}).First();
+            var user = _documentService.GetById(userId);
 
-            var user = _documentService.GetAll().First(x => x.VkId != null);
+            //var user = _documentService.GetAll().First(x => x.VkId != null);
             var model  = user.CheckIns.GroupBy(x => x.PlaceId ?? x.Location.ToString()).Select(x=> MapToMarker(x,user)).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
@@ -56,7 +56,7 @@ namespace YouMap.Controllers
 
         private MarkerModel MapToMarker(IGrouping<string, CheckInDocument> @group, UserDocument user)
         {
-            var checkIns = group.OrderBy(x=> x.Visited).Take(10).Select(MapToListItem).ToList();
+            var checkIns = group.OrderByDescending(x=> x.Visited).Take(10).Select(MapToListItem).ToList();
             foreach (var item in checkIns)
             {
                 item.UserName = user.FullName;

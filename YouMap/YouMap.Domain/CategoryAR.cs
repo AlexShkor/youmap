@@ -20,6 +20,7 @@ namespace YouMap.Domain
                           Id = message.Id,
                           Icon = message.Icon,
                           Name = message.Name,
+                          Order = message.Order,
                           IsTop = message.IsTop
                       });
         }
@@ -32,6 +33,7 @@ namespace YouMap.Domain
                           Id = message.Id,
                           Name = message.Name,
                           Icon = message.Icon,
+                          Order = message.Order,
                           IsTop = message.IsTop
                       });
         }

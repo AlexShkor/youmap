@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,21 +20,24 @@ namespace YouMap.Controllers
 {
     public class MapController : BaseController
     {
-        private readonly PlaceDocumentService _documentService;
+        private const int MaxCountPerDay = 2;
+        private readonly PlaceDocumentService _placeDocumentService;
         private readonly ImageService _imageService;
+        private readonly UserDocumentService _userDocumentService;
 
 
-        public MapController(ICommandService commandService, PlaceDocumentService documentService, ImageService imageService)
+        public MapController(ICommandService commandService, PlaceDocumentService placeDocumentService, ImageService imageService, UserDocumentService userDocumentService)
             : base(commandService)
         {
-            _documentService = documentService;
+            _placeDocumentService = placeDocumentService;
             _imageService = imageService;
+            _userDocumentService = userDocumentService;
         }
 
         public ActionResult Index(MapFilter filter)
         {
             var model = new MapModel();
-            model.Places = _documentService.GetByFilter(new PlaceDocumentFilter
+            model.Places = _placeDocumentService.GetByFilter(new PlaceDocumentFilter
                                                             {
                                                                 StatusEq = PlaceStatusEnum.Active
                                                             }).Select(Map).ToList();
@@ -51,8 +55,10 @@ namespace YouMap.Controllers
                     place.OpenOnLoad = true;
                 }
             }
-            var js = new JavaScriptSerializer();
-            model.Json = js.Serialize(model);
+            if (filter.EventId.HasValue())
+            {
+                model.OpenPopupUrl = Url.Action("Details", "Events", new {id = filter.EventId});
+            }
             if (Request.IsAjaxRequest())
             {
                 return PartialView(model);
@@ -124,9 +130,12 @@ namespace YouMap.Controllers
                 var location = Location.Parse(model.Latitude, model.Longitude);
                 filter.Location = location;
             }
-            var place = _documentService.GetByFilter(filter).SingleOrDefault();
+            var user = _userDocumentService.GetById(User.Id);
+            model.LeftCount = MaxCountPerDay  - user.CheckIns.Count(x => x.PlaceId == model.PlaceId &&  x.Visited.Date == DateTime.Now.Date); 
+            var place = _placeDocumentService.GetByFilter(filter).SingleOrDefault();
             if (place != null)
             {
+                model.Limited = true;
                 model.DisplayPlace = true;
                 model.PlaceId = place.Id;
                 model.CheckInUrl = Url.Action("Index", "Map", new {PlaceId = place.Id});
@@ -141,6 +150,12 @@ namespace YouMap.Controllers
         [HttpPost]
         public ActionResult CheckIn(CheckInModel model)
         {
+            var user = _userDocumentService.GetById(User.Id);
+            model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.Visited.Date == DateTime.Now.Date); 
+            if (model.PlaceId.HasValue() && model.LeftCount<= 0 )
+            {
+                ModelState.AddModelError("Error","Сегодня вы уже не можете отметиться в этом месте.");
+            }
             if (ModelState.IsValid)
             {
                 var location = Location.Parse(model.Latitude, model.Longitude);

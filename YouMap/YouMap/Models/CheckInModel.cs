@@ -22,6 +22,18 @@ namespace YouMap.Models
 
         public DateTime Visited { get; set; }
 
+        public int LeftCount { get; set; }
+
+        public bool Enabled
+        {
+            get
+            {
+                return LeftCount > 0;
+            }
+        }
+
+        public bool Limited { get; set; }
+
 
         private const string CheckInMemoTemlate = @"Я сейчас в ""{0}"".";
 

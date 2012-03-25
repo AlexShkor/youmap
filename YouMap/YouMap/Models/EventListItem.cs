@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace YouMap.Models
 {
@@ -35,5 +36,15 @@ namespace YouMap.Models
         public string ActionTitle { get; set; }
 
         public string LinkClass { get; set; }
+
+        public bool Private { get; set; }
+
+        public string ShareUrl { get; set; }
+
+        public string ToJson()
+        {
+            var js = new JavaScriptSerializer();
+            return js.Serialize(this);
+        }
     }
 }

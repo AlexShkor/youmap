@@ -96,7 +96,7 @@ namespace YouMap.EventHandlers
         public void Handle(User_EventMemberAddedEvent message)
         {
             var query = Query.And(Query.EQ("_id", message.UserId), Query.EQ("Events._id",message.EventId));
-            var update = Update.PushWrapped("Events.UsersIds", message.NewMemberId);
+            var update = Update.AddToSet("Events.$.UsersIds", message.NewMemberId);
             _documentService.Update(query,update);
         }
     }

@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\MobileAttribute.cs" />
     <Compile Include="ActionFilters\RoleAttribute.cs" />
     <Compile Include="ActionFilters\VkAccessAttribute.cs" />
     <Compile Include="Admin\DeploymentHelper.cs" />
@@ -1047,6 +1048,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Events\EventsListWindow.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\LoginState.Mobile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Profile.Mobile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

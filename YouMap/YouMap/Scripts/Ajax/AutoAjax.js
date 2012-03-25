@@ -1,4 +1,17 @@
 ﻿
+var colorbox = function(url) {
+    $.colorbox({
+        href: url,
+        onComplete: function () {
+            $.colorbox.resize();
+        },
+        overlayClose: true,
+        scrolling: false,
+        close: "<a>закрыть</a>"
+    });
+
+};
+
 $(document).ready(function () {
     $(document).on("click", ".ajax-link", function (event) {
         var url = $(this).attr("href");
@@ -8,15 +21,7 @@ $(document).ready(function () {
 
     $(document).on("click", ".colorbox", function (event) {
         var url = $(this).attr("href");
-        $.colorbox({
-            href: url,
-            onComplete: function() {
-                $.colorbox.resize();
-            },
-            overlayClose: true,
-            scrolling: false,
-            close: "<a>закрыть</a>"
-        });
+        colorbox(url);
         return false;
     });
 

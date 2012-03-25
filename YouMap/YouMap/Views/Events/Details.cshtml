@@ -1,18 +1,19 @@
 ﻿@model EventListItem
 <script>
-    YouMap.Vk.Map.LoadFriendsLiks($(".event-details"))
+    YouMap.Vk.Map.InitEventDetails(@Html.Raw(Model.ToJson()))
 </script>
 <div class="event-details">
     <div>
         <div>
             <h2>@Model.Title</h2>
+
         </div>
         <table class="table">
             <tr>
                 <th>Время</th>
                 <th>Место</th>
                 <th>Организатор</th>
-                <th></th>
+                <th>@(Model.Private ? "закрытая встреча" : "" )</th>
             </tr>
             <tr>
                 <td>
@@ -26,9 +27,9 @@
                 </td>
                 <td>
                     <a class="ajax-link btn @Model.LinkClass" href="@Model.ActionUrl">@Model.ActionTitle</a>
+                    <div id="eventVkLike"></div>
                 </td>
-            </tr>
-            
+            </tr>          
         </table>
     </div>
     <div>

@@ -86,9 +86,10 @@ namespace YouMap.Controllers
             {
                 return Create();
             }
+            model.Id = _idGenerator.Generate();
             var command = new User_AddEventCommand
                               {
-                                  EventId = _idGenerator.Generate(),
+                                  EventId = model.Id,
                                   Location = Location.Parse(model.Latitude, model.Longitude),
                                   Memo = model.Memo,
                                   OwnerId = User.Id,
@@ -99,9 +100,24 @@ namespace YouMap.Controllers
                                   UsersIds = model.UserIds
                               };
             Send(command);
-            AjaxResponse.AddJsonItem("url",Url.Action("Index","Map",new {placeId = model.PlaceId}));
+            AjaxResponse.AddJsonItem("model",MapToListItem(model));
             AjaxResponse.ClosePopup = true;
             return RespondTo(model);
+        }
+
+        private EventListItem MapToListItem(EventEditModel model)
+        {
+            return new EventListItem
+                       {
+                           Id = model.Id,
+                           UsersIds = model.UserIds,
+                           OwnerVkId = User.VkId,
+                           Title = model.Title,
+                           PlaceTitle = model.PlaceTitle,
+                           StartDate = model.GetStartDateTime().ToInfoString(),
+                           Memo = model.Memo,
+                           ShareUrl = Url.Action("Index", "Map", new {placeId = model.PlaceId, eventId = model.Id})
+                       };
         }
 
         [HttpGet]
@@ -124,6 +140,7 @@ namespace YouMap.Controllers
 
 
         [HttpGet]
+        [VkAccess]
         public ActionResult Details(string id)
         {
             var user = _userDocumentService.GetByFilter(new UserFilter{EventIdEq = id}).First();
@@ -161,7 +178,7 @@ namespace YouMap.Controllers
         public ActionResult Show(string userid)
         {
             //var user = _userDocumentService.GetById(userid);
-            var user = _userDocumentService.GetAll().First(x => x.VkId != null);
+            var user = _userDocumentService.GetById(userid);
             var docs = user.Events;
 
                 // -2 hours to display just started events, need to be replaced with filter
@@ -208,9 +225,12 @@ namespace YouMap.Controllers
                 Id = doc.Id,
                 PlaceId = doc.PlaceId,
                 Title = doc.Title,
+                Private = doc.Private,
+                Memo =  doc.Memo,
                 StartDate = doc.Start.ToInfoString(),
                 Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
+                ShareUrl = Url.Action("Index","Map", new {placeId = doc.PlaceId, eventId = doc.Id}),
                 UsersIds = doc.UsersIds
             };
         }
@@ -280,12 +300,16 @@ namespace YouMap.Controllers
 
         public ActionResult Delete(string eventid)
         {
-            return new EmptyResult();
+            AjaxResponse.Options.ErrorsSummaryContainer = "#eventValidation";
+            ModelState.AddModelError("Error", "Встреча не может быть удалена, пока в ней есть участники.");
+            return Result();
         }
 
         public ActionResult Left(string eventid)
         {
-            return new EmptyResult();
+            AjaxResponse.Options.ErrorsSummaryContainer = "#eventValidation";
+            ModelState.AddModelError("Error", "Не удалось покинуть встречу.");
+            return Result();
         }
     }
 }

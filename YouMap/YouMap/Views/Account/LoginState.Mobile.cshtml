@@ -1,0 +1,15 @@
+﻿@using YouMap.Models
+@model UserViewModel
+@if (Model.IsAuthenticated)
+{
+    
+<a href="@Url.Action("Profile","Account")">@Model.DisplayName</a>
+}
+else
+{
+        <a id="vkLogin" href="http://oauth.vk.com/authorize?client_id=2831071&response_type=token&redirect_uri=close.html&scope=1027">Войти</a>
+}
+
+<script>
+	YouMap.Auth.Initialize('@Request.IsAuthenticated' == 'True');
+</script>

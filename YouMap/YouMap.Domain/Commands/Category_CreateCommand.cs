@@ -12,6 +12,8 @@ namespace YouMap.Domain.Commands
         public string Icon { get; set; }
 
         public bool IsTop { get; set; }
+
+        public int Order { get; set; }
     }
 
     public class Category_CreateCommandHandler: CommandHandler<Category_CreateCommand>

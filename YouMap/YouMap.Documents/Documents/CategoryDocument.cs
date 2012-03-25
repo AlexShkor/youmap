@@ -12,5 +12,7 @@ namespace YouMap.Documents.Documents
         public string Icon { get; set; }
 
         public bool IsTop { get; set; }
+
+        public int Order { get; set; }
     }
 }

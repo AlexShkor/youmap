@@ -26,7 +26,8 @@ namespace YouMap.EventHandlers
                               Id = message.Id,
                               Name = message.Name,
                               Icon = message.Icon,
-                              IsTop = message.IsTop
+                              IsTop = message.IsTop,
+                              Order= message.Order
                           };
             _documentService.Save(doc);
         }
@@ -36,7 +37,8 @@ namespace YouMap.EventHandlers
             var query = Query.EQ("_id", message.Id);
             var update = Update.Set("Name", message.Name)
                         .Set("Icon", message.Icon)
-                        .Set("IsTop", message.IsTop);
+                        .Set("IsTop", message.IsTop)
+                        .Set("Order", message.Order);
             _documentService.Update(query,update);
         }
 

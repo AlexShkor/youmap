@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
@@ -8,6 +9,7 @@ using YouMap.Domain.Enums;
 using YouMap.Framework;
 using YouMap.Framework.Environment;
 using YouMap.Framework.Extensions;
+using YouMap.Framework.Utils.Extensions;
 using YouMap.Models;
 
 namespace YouMap.Controllers
@@ -29,22 +31,37 @@ namespace YouMap.Controllers
 
         public ActionResult GetUsersLocation(string ids)
         {
-            var ar = ids.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
-            var random = new Random();
-            
+            if (ids.HasValue())
+            {
+                var ar = ids.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
+                //var random = new Random();
+                //var result = ar.Select(x => new FriendMarkerModel
+                //                                {
+                //                                    Id = x,
+                //                                    X = 53.90234 + (random.NextDouble() - random.NextDouble()) / 10,
+                //                                    Y = 27.561896 + (random.NextDouble() - random.NextDouble()) / 10,
+                //                                    Visited = (DateTime.Now - DateTime.Now.AddDays(-random.Next(100))).ToPastString(),
+                //                                    InfoWindowUrl = Url.Action("UserInfo", "Users", new { id = x }),
+                //                                    Shadow = _imageService.FriendShadowModel,
+                //                                }).Take(5);
+                var users = _documentService.GetByFilter(new UserFilter {VkIdIn = ar});
+                var result = users.Where(x=> x.CheckIns.Any()).Select(x =>
+                                              {
+                                                  var last = x.CheckIns.OrderBy(c => c.Visited).Last();
+                                                  return new FriendMarkerModel
+                                                             {
+                                                                 Id = x.VkId,
+                                                                 X = last.Location.Latitude,
+                                                                 Y = last.Location.Longitude,
+                                                                 Visited = last.Visited.ToInfoString(),
+                                                                 InfoWindowUrl =
+                                                                     Url.Action("UserInfo", "Users", new {id = x.Id}),
+                                                                 Shadow = _imageService.FriendShadowModel,
+                                                             };
+                                              });
 
-            var result = ar.Select(x => new FriendMarkerModel
-                                            {
-                                                Id = x,
-                                                X = 53.90234 + (random.NextDouble() - random.NextDouble())/10,
-                                                Y = 27.561896 + (random.NextDouble() - random.NextDouble()) / 10,
-                                                Visited = (DateTime.Now - DateTime.Now.AddDays(- random.Next(100))).ToPastString(),
-                                                InfoWindowUrl = Url.Action("UserInfo","Users",new {id=x}),
-                                                Shadow = _imageService.FriendShadowModel,
-                                            }).Take(5);
-            var r = _documentService.GetByFilter(new UserFilter {VkIdIn = ar});
-           
-            AjaxResponse.AddJsonItem("model", result);
+                AjaxResponse.AddJsonItem("model", result);
+            }
             return Result();
         }
 

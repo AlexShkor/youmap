@@ -12,13 +12,17 @@
             <div>
                 @Html.HiddenFor(x => x.PlaceId)
                 @Html.HiddenFor(x => x.CheckInUrl)
+                @if(Model.Limited)
+                {
+                    <h5>У вас осталось @Model.LeftCount отметки здесь.</h5>
+                }
             </div>
         <div>
             @Html.HiddenFor(x=> x.Latitude)
             @Html.HiddenFor(x=> x.Longitude)
             @Html.TextAreaFor(x => x.Memo)
             <p>
-                <input type="submit" class="ajax-submit awesome small" value="Отметится" />
+                <input type="submit" @(!Model.Enabled ? "disabled=disabled" : "") class="ajax-submit awesome small" value="Отметится" />
             </p>
         </div>
     }

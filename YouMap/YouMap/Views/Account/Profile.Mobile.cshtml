@@ -1,0 +1,18 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+}
+<div>
+    <div>
+        
+        <label for="ShareLocation"><input type="checkbox" name="ShareLocation" id="ShareLocation" checked="checked"/>Показывать меня друзьям</label>
+    </div>
+    <div>
+        
+        <label for="ShowFriends"><input type="checkbox" name="ShowFriends" id="ShowFriends" checked="checked"/>Показывать друзей</label>      
+    </div>
+</div>
+<div>
+    <a class="colorbox btn-small btn-primary btn" href="@Url.Action("CheckIn","Map")">Отметиться</a>    
+    <a id="logoutLink" class="btn-small btn" href="@Url.Action("LogOff","Account")">Выйти</a>   
+</div>

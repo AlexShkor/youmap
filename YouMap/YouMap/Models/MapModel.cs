@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Web.Script.Serialization;
 using YouMap.Controllers;
 
 namespace YouMap.Models
@@ -18,7 +19,7 @@ namespace YouMap.Models
 
         public IEnumerable<PlaceModel> Places { get; set; }
 
-        public string Json { get; set; }
+        public string OpenPopupUrl { get; set; }
 
         public MapModel()
         {
@@ -34,6 +35,13 @@ namespace YouMap.Models
         {
             Zoom = 17;
         }
+
+        public string ToJson()
+        {
+            var js = new JavaScriptSerializer();
+            return js.Serialize(this);
+        }
+
     }
 
     public class MarkerIcon

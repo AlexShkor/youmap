@@ -12,6 +12,9 @@ namespace YouMap.Models
         [Display(Name = "Иконка")]
         public HttpPostedFileBase Icon { get; set; }
 
+        [Display(Name = "Порядок")]
+        public int Order { get; set; }
+
         public string FileName { get; set; }
 
         [Display(Name = "Отображать в меню?")]

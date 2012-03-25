@@ -206,7 +206,8 @@ ul#menu li.selected a {
 
 .place-actions ul
 {
-    list-style: none;    
+    list-style: none;
+    padding-left: 15px;    
 }
 
 /* MISC  
@@ -511,6 +512,7 @@ span.started
     clear: both;
     padding-top: 2px;
 }
+
 .place-info-window .place-actions a
 {
     padding: 2px;
@@ -551,8 +553,9 @@ span.started
 {
     color: black;
 }
-    .event-details a
+    .event-details p
     {
+        width: 400px;
     }
 
     .event-details tr:hover td,.event-details tr:hover th
@@ -566,3 +569,8 @@ span.started
         -moz-box-shadow: 0 0 6px #999;
         box-shadow: 0 0 6px #999;
     }
+
+.accordion.place-info .accordion-heading
+{
+    background-color: whitesmoke;
+}

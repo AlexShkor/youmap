@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using YouMap.ActionFilters;
 using YouMap.Domain.Auth;
 using YouMap.Domain.Enums;
 using YouMap.Framework;
@@ -221,6 +222,7 @@ namespace YouMap.Controllers
             return View();
         }
 
+        [Mobile]
         public ActionResult LoginState()
         {
             var model = Map(User);
@@ -239,6 +241,7 @@ namespace YouMap.Controllers
             return model;
         }
 
+        [Mobile]
         public ActionResult Profile()
         {
             return PartialView();

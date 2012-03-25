@@ -11,5 +11,7 @@ namespace YouMap.Domain
         public string Icon { get; set; }
 
         public bool IsTop { get; set; }
+
+        public int Order { get; set; }
     }
 }
