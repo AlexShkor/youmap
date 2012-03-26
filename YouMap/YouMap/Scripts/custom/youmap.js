@@ -61,24 +61,21 @@ YouMap.Map = function ($) {
         var marker = options.Marker;
         $.get(options.InfoWindowUrl, function (result) {
             YouMap.Google.OpenWindow(map, marker, result);
-            drawPlaceVkLike(temp.Id,options.InfoWindowUrl);
+            drawPlaceVkLike(temp.Id, options.Title, $(result).find("img").attr("src"));
             drawAccordion();         
         });
     };
 
-    var drawPlaceVkLike = function (placeId, infoUrl) {
+    var drawPlaceVkLike = function (placeId, title,image) {
         setTimeout(function() {
             var id = "vk_like_place_" + placeId;
-            var placeInfoWindow = $("#" + id).find(".place-info");
             var baseUri = window.location.origin;
-            var url = baseUri + infoUrl ;
-            var title = $("h2", placeInfoWindow).html();
-            var desc = $("p", placeInfoWindow).html();
-            var image = baseUri + $("img", placeInfoWindow).attr("src");
+            var url = baseUri + "/?placeId=" + placeId;
+            var desc = "На YouMap.BY.";
             if (VK) {
                 VK.Widgets.Like(id, {
                     pageUrl: url,
-                    pageImage: image,
+                    pageImage: baseUri + image,
                     type: 'mini',
                     pageTitle: title,
                     pageDescription: desc,
@@ -119,7 +116,7 @@ YouMap.Map = function ($) {
         });
     };
 
-    var updateUserMarker = function (x,y,dontCheckNearby) {
+    var updateUserMarker = function (x, y) {
         userLocation = {x: x, y: y};
         if (userMarker) {
             YouMap.Google.SetPosition(userMarker, x, y);
@@ -131,13 +128,24 @@ YouMap.Map = function ($) {
                 click: openUserInfo
             });
         }
-        if (!dontCheckNearby) {
-            Request.get("/Map/CheckNearby").addParams({
-                Latitude: x,
-                Longitude: y
-            }).send();
-        }
     };
+
+    var userDragging = false;
+
+    var toggleUserDrag = function () {
+        var x = userMarker.position.Ua;
+        var y = userMarker.position.Va;
+        YouMap.Google.RemoveMarker(userMarker);
+        userMarker = YouMap.Google.CreateMarker(map, {
+            X: x,
+            Y: y,
+            Title: "Я",
+            click: openUserInfo,
+            Draggable: !userDragging
+        });
+        userDragging = !userDragging;
+    };
+    
 
     var getUserLocation = function() {
         return userLocation;
@@ -237,6 +245,10 @@ YouMap.Map = function ($) {
         }
     };
 
+    var submitUserLocation = function() {
+        
+    };
+
     return {
         Initialize: initialize,
         SetMapCenter: setMapCenter,
@@ -247,8 +259,11 @@ YouMap.Map = function ($) {
         GetMap: function () {
             return map;
         },
+        SetUserLocation: updateUserMarker,
+        SubmitUserLocation: submitUserLocation,
         FilterPlaces: filterPlaces,
-        NavigateToPlaceById: navigateToPlaceById
+        NavigateToPlaceById: navigateToPlaceById,
+        ToggleUserDrag: toggleUserDrag
     };
 } (jQuery);
 

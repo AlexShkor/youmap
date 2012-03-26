@@ -27,7 +27,24 @@ YouMap.Vk.Panel = function($) {
         });
         $("#logoutLink").live("click", function () {
             if (VK)
-            VK.Auth.logout();
+                VK.Auth.logout();
+        });
+        $("#openChangeLocationBox").live("click", function () {
+            $(this).parent().find("#changeLocationBox").slideToggle("fast");
+            $(this).parent().prev().slideToggle("fast");
+        });
+        $("#toggleDrag").live("click", function() {
+            $(this).toggleClass("btn-primary");
+            $(this).toggleClass("btn-danger");
+            var text = $(this).html();
+            $(this).html($(this).data("alttext"));
+            $(this).data("alttext", text);
+            YouMap.Map.ToggleUserDrag();
+        });
+        $("#dragToAddress").live("click", function () {
+            YouMap.Map.SearchGoogle($(this).parents(".well").find("input").val(), function(x, y) {
+                YouMap.Map.SetUserLocation(x, y);
+            });
         });
     };
 
@@ -85,19 +102,26 @@ YouMap.Vk.Map = function($) {
                     getFriends();
                 }
             });
+            startFriendsTracking();
         }
         userInfo();
+    };
+
+    var startFriendsTracking = function() {
+        setTimeout(function() {
+            getFriends();
+            startFriendsTracking();
+        },30000);
     };
 
     var getFriends = function () {
         if (VK)
         VK.Api.call('friends.get', { fields: "uid,first_name,last_name,photo" }, function (r) {
             if (r.response) {
-                if (friends) {
+                if (friends || r.response.length == 0) {
                     return;
                 }
                 friends = r.response;
-
                 var ids = friends.map(function(item) {
                     return item.uid;
                 }).join(",");

@@ -1,4 +1,4 @@
-﻿<div>
+﻿<div class="well">
     <div>
         
         <label for="ShareLocation"><input type="checkbox" name="ShareLocation" id="ShareLocation" checked="checked"/>Показывать меня друзьям</label>
@@ -6,6 +6,16 @@
     <div>
         
         <label for="ShowFriends"><input type="checkbox" name="ShowFriends" id="ShowFriends" checked="checked"/>Показывать друзей</label>      
+    </div>
+</div>
+<div class="well">
+    <a id="openChangeLocationBox" class="btn-mini btn" href="#">Изменить моё расположение</a>   
+    <div  id="changeLocationBox" @Html.DisplayIf(false)>
+        <div><a class="btn btn-mini btn-primary" data-alttext="Закрепить маркер" id="toggleDrag">Перетащить маркер</a></div>        
+        <div><a class="btn btn-mini btn-primary" id="dragToAddress">Переместить марке в</a></div>        
+        <div><input class="input-small input-100" style="float: none" type="text"/></div>        
+        
+        
     </div>
 </div>
 <div>

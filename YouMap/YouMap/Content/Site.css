@@ -291,7 +291,7 @@ div#title {
             clear: left;
             padding: 4px;
         }
-        .slide-popup .container label, .slide-popup .container input
+        .slide-popup .container fieldset label, .slide-popup .container fieldset input
         {
             float: left;
         }

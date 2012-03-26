@@ -5,6 +5,13 @@ namespace YouMap.Framework
 {
     public class Settings
     {
+        private static Settings _current;
+
+        public static Settings Current {get
+        {
+            return _current = _current ?? new Settings();
+        }}
+
         public string MongoWriteDatabaseConnectionString // = "mongodb://localhost:27020/youmap_write2";
         {
             get { return WebConfigurationManager.AppSettings["MongoWriteDatabaseConnectionString"]; }
@@ -33,6 +40,11 @@ namespace YouMap.Framework
         public string LuceneIndexesDirectory
         {
             get { return WebConfigurationManager.AppSettings["LuceneIndexesDirectory"]; }
+        }
+
+        public string VkAppId
+        {
+            get { return WebConfigurationManager.AppSettings["VkAppId"]; }
         }
 
     }

@@ -151,7 +151,7 @@ namespace YouMap.Controllers
         public ActionResult CheckIn(CheckInModel model)
         {
             var user = _userDocumentService.GetById(User.Id);
-            model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.Visited.Date == DateTime.Now.Date); 
+            model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.PlaceId == model.PlaceId && x.Visited.Date == DateTime.Now.Date); 
             if (model.PlaceId.HasValue() && model.LeftCount<= 0 )
             {
                 ModelState.AddModelError("Error","Сегодня вы уже не можете отметиться в этом месте.");
