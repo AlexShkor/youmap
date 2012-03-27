@@ -70,6 +70,7 @@
     <Compile Include="Auth\IUserIdentity.cs" />
     <Compile Include="CategoryAR.cs" />
     <Compile Include="Commands\Place_AssignCommand.cs" />
+    <Compile Include="Commands\Place_ChangeLayerCommand.cs" />
     <Compile Include="Commands\Place_ChangeStatusCommand.cs" />
     <Compile Include="Commands\Place_UpdateCommand.cs" />
     <Compile Include="Commands\User_AddEventCommand.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Events\Place_AssignedEvent.cs" />
     <Compile Include="Events\Place_StatusChangedEvent.cs" />
     <Compile Include="Events\Place_UpdatedEvent.cs" />
+    <Compile Include="Events\Plave_LayerChangedEvent.cs" />
     <Compile Include="Events\User_CheckInAddedEvent.cs" />
     <Compile Include="Events\User_CreatedEvent.cs" />
     <Compile Include="Events\User_EventAddedEvent.cs" />

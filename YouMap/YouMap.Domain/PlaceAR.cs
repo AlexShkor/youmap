@@ -25,6 +25,7 @@ namespace YouMap.Domain
                 Address = data.Address,
                 CreatorId = data.CreatorId,
                 Status = data.Status,
+                Layer = data.Layer,
                 CategoryId = data.CategoryId,
                 Logo = data.Logo,
                 WorkDays = data.WorkDays,
@@ -79,9 +80,19 @@ namespace YouMap.Domain
                 CreatorId = data.CreatorId,
                 CategoryId = data.CategoryId,
                 Logo = data.Logo,
+                Layer = data.Layer,
                 WorkDays = data.WorkDays,
                 Location = data.Location
             });
+        }
+
+        public void ChangeLayer(int layer)
+        {
+            Apply(new Plave_LayerChangedEvent
+                      {
+                          PlaceId = _id,
+                          Layer = layer
+                      });
         }
     }
 }

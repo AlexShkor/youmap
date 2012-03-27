@@ -128,6 +128,7 @@ namespace YouMap.Controllers
                     Description = model.Description,
                     Address = model.Address,
                     CategoryId = model.CategoryId,
+                    Layer = model.Layer,
                     WorkDays = model.WorkDays,
                     Status = IsAdmin ? PlaceStatusEnum.Active : PlaceStatusEnum.Hidden
                 };
@@ -141,6 +142,17 @@ namespace YouMap.Controllers
                                      });
             }
             return RespondTo(model);
+        }
+
+        public ActionResult ChangeLayer(string id, int layer)
+        {
+            var command =new Place_ChangeLayerCommand
+            {
+                PlaceId = id,
+                Layer = layer
+            };
+            Send(command);
+            return RedirectToAction("Index");
         }
 
          private object MapForSearch(PlaceDocument doc)
@@ -253,6 +265,7 @@ namespace YouMap.Controllers
                            WorkDays = place.WorkDays,
                            Latitude = place.Location.GetLatitudeString(),
                            Longitude = place.Location.GetLongitudeString(),
+                           Layer = place.Layer,
                            Categories = GetCategorySelectList()
                        };
             if (!Request.IsAjaxRequest())
@@ -276,6 +289,7 @@ namespace YouMap.Controllers
                                       Logo = model.LogoFileName,
                                       Location = location,
                                       Title = model.Title,
+                                      Layer = model.Layer,
                                       Description = model.Description,
                                       Address = model.Address,
                                       CategoryId = model.CategoryId,

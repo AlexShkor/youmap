@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using YouMap.Controllers;
@@ -38,13 +39,19 @@ namespace YouMap.Models
 
         public string LogoFileName { get; set; }
 
+        [Range(0,5)]
+        public int Layer { get; set; }
+
+        public IEnumerable<SelectListItem> Layers { get; set; } 
+
         public string Id { get; set; }
 
         public HttpPostedFileBase LogoFile { get; set; }
 
         public AddPlaceModel()
         {
-            DaysOfWeek = YouMap.Framework.Helpers.SelectListHelper.WorkDaysOfWeek();
+            DaysOfWeek = Framework.Helpers.SelectListHelper.WorkDaysOfWeek();
+            Layers = new SelectList(Enumerable.Range(0,5));
         }
     }
 }

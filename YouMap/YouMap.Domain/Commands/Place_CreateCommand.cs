@@ -27,6 +27,8 @@ namespace YouMap.Domain.Commands
         public string Logo { get; set; }
 
         public PlaceStatusEnum Status { get; set; }
+
+        public int Layer { get; set; }
     }
 
     public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
@@ -45,6 +47,7 @@ namespace YouMap.Domain.Commands
                                Description = message.Description,
                                CreatorId = message.Metadata.UserId,
                                Location = message.Location,
+                               Layer = message.Layer,
                                WorkDays = message.WorkDays,
                                Logo = message.Logo,
                                CategoryId = message.CategoryId,

@@ -23,6 +23,7 @@ namespace YouMap.Documents.Lucene
                 queries.Add(JoinQueriesOr(
                     BuildFuzzyQueryOr("Memo", words),
                     BuildFuzzyQueryOr("Title", words),
+                    BuildPrefixQueryAnd("Title", words),
                     BuildFuzzyQueryOr("Address", words)));
             }
             var query = queries.Count == 0 ? new MatchAllDocsQuery() : JoinQueriesAnd(queries.ToArray());

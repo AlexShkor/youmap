@@ -26,5 +26,7 @@ namespace YouMap.Domain.Events
         public IEnumerable<DayOfWeek> WorkDays { get; set; }
 
         public string Logo { get; set; }
+
+        public int Layer { get; set; }
     }
 }

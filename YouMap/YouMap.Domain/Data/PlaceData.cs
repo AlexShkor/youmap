@@ -28,5 +28,7 @@ namespace YouMap.Domain
         public string Logo { get; set; }
 
         public PlaceStatusEnum Status { get; set; }
+
+        public int Layer { get; set; }
     }
 }

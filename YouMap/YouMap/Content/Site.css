@@ -553,10 +553,7 @@ span.started
 {
     color: black;
 }
-    .event-details p
-    {
-        width: 400px;
-    }
+
 
     .event-details tr:hover td,.event-details tr:hover th
     {

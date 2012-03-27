@@ -28,5 +28,7 @@ namespace YouMap.Documents.Documents
         public List<DayOfWeek> WorkDays { get; set; }
 
         public string Logo { get; set; }
+
+        public int Layer { get; set; }
     }
 }

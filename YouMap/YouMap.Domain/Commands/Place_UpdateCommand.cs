@@ -23,6 +23,8 @@ namespace YouMap.Domain.Commands
         public IEnumerable<DayOfWeek> WorkDays { get; set; }
 
         public string Logo { get; set; }
+
+        public int Layer { get; set; }
     }
 
     public class  Place_UpdateCommandHandler: CommandHandler<Place_UpdateCommand>
@@ -44,6 +46,7 @@ namespace YouMap.Domain.Commands
                                CreatorId = message.Metadata.UserId,
                                Location = message.Location,
                                WorkDays = message.WorkDays,
+                               Layer = message.Layer,
                                Logo = message.Logo,
                                CategoryId = message.CategoryId
                            };

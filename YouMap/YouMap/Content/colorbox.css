@@ -106,3 +106,7 @@ float: left;
 padding: 2px;
 cursor: pointer;
 }
+   #cboxContent  .event-details
+    {
+        width: 400px;
+    }

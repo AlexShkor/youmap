@@ -144,12 +144,24 @@ YouMap.Map = function ($) {
             X: x,
             Y: y,
             Title: "Я",
-            click: openUserInfo,
+            click: userDragging? openFinishDrag : openUserInfo,
             Draggable: !userDragging
         });
         userDragging = !userDragging;
+        if (!userDragging) {
+            submitUserLocation();
+        }
     };
-    
+
+    var openFinishDrag = function() {
+        var anchor = $("<a href='#' class='btn btn-mini btn-danger>Закрепить маркер<a/>");
+        anchor.click(function() {
+            toggleUserDrag();
+            return false;
+        });
+        YouMap.Google.OpenWindow(getMap(), userMarker, anchor);
+    };
+
 
     var getUserLocation = function() {
         return userLocation;
