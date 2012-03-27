@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Web.Script.Serialization;
 using YouMap.Controllers;
+using YouMap.Domain.Data;
 
 namespace YouMap.Models
 {
@@ -20,6 +21,8 @@ namespace YouMap.Models
         public IEnumerable<PlaceModel> Places { get; set; }
 
         public string OpenPopupUrl { get; set; }
+
+        public Location UserLocation { get; set; }
 
         public MapModel()
         {

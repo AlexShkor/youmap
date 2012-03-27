@@ -55,6 +55,10 @@ namespace YouMap.Controllers
                     place.OpenOnLoad = true;
                 }
             }
+            if (SessionContext.Location != null)
+            {
+                model.UserLocation = SessionContext.Location;
+            }
             if (filter.EventId.HasValue())
             {
                 model.OpenPopupUrl = Url.Action("Details", "Events", new {id = filter.EventId});

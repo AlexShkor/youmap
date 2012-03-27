@@ -14,7 +14,7 @@ YouMap.Map = function ($) {
     var userProfileUrl = "/Account/Profile";
     var city = "Минск";
     var country = "Беларусь";
-
+    var isCustomUserLocation = false;
     var map = null;
     var places = new Array();
 
@@ -33,15 +33,19 @@ YouMap.Map = function ($) {
         if (config.OpenPopupUrl) {
             colorbox(config.OpenPopupUrl);
         }
-        setTimeout(function() {
-            YouMap.Geolocation.Locate(function (x, y) {
-                setMapCenter(x, y);
-                updateUserMarker(x, y);
-            });
-        }, 100);
-
-       
-        startUpdateLocation();
+        if (config.UserLocation) {  
+            setMapCenter(config.UserLocation.Latitude, config.UserLocation.Longitude);
+            updateUserMarker(config.UserLocation.Latitude, config.UserLocation.Longitude);
+            isCustomUserLocation = true;
+        } else {
+            setTimeout(function() {
+                YouMap.Geolocation.Locate(function(x, y) {
+                    setMapCenter(x, y);
+                    updateUserMarker(x, y);
+                });
+            }, 100);
+            startUpdateLocation();
+        }
         $("#map").css("width", "auto");
 
         setMapHeight();
@@ -246,7 +250,10 @@ YouMap.Map = function ($) {
     };
 
     var submitUserLocation = function() {
-        
+        Request.post("/Vk/SubmitLocation").addParams({
+            X: userMarker.position.Ua,
+            Y: userMarker.position.Va
+        }).send();
     };
 
     return {

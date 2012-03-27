@@ -44,6 +44,7 @@ YouMap.Vk.Panel = function($) {
         $("#dragToAddress").live("click", function () {
             YouMap.Map.SearchGoogle($(this).parents(".well").find("input").val(), function(x, y) {
                 YouMap.Map.SetUserLocation(x, y);
+                YouMap.Map.SubmitUserLocation();
             });
         });
     };

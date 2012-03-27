@@ -97,5 +97,11 @@ namespace YouMap.Controllers
             model.IsVkUser = User != null && User.HasPermissions(UserPermissionEnum.VkUser);
             return PartialView("Panel",model);
         }
+
+        public ActionResult SubmitLocation(string x, string y)
+        {
+            SessionContext.Location = Location.Parse(x, y);
+            return Result();
+        }
     }
 }
