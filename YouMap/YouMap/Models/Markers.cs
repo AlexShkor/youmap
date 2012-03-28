@@ -13,6 +13,8 @@ namespace YouMap.Models
         public string Address { get; set; }
 
         public string Id { get; set; }
+
+        public int Layer { get; set; }
     }
 
     public class FriendMarkerModel: MarkerModel

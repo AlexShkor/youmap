@@ -18,21 +18,23 @@ YouMap.Map = function ($) {
     var map = null;
     var places = new Array();
 
-    var initialize = function (config,placesconfigs) {
-        places = placesconfigs;
+    var initialize = function (config) {
         map = YouMap.Google.CreateMap(config);
-        for (var i = 0; i < places.length; i++) {
-            places[i].click = openPlaceInfo;
-            var marker = YouMap.Google.CreateMarker(map, places[i]);    
-            YouMap.Google.AddMarker(map, marker);
-            places[i].Marker = marker;
-            if (places[i].OpenOnLoad) {
-                navigateToPlace(places[i]);
+        Request.get(window.location).addSuccess(function (data) {
+            places = data.jsonItems.model.Places;
+            for (var i = 0; i < places.length; i++) {
+                places[i].click = openPlaceInfo;
+                var marker = YouMap.Google.CreateMarker(places[i]);
+                YouMap.Google.AddMarker(marker);
+                places[i].Marker = marker;
+                if (places[i].OpenOnLoad) {
+                    navigateToPlace(places[i]);
+                }
             }
-        }
-        if (config.OpenPopupUrl) {
-            colorbox(config.OpenPopupUrl);
-        }
+            if (config.OpenPopupUrl) {
+                colorbox(config.OpenPopupUrl);
+            }
+        }).send();       
         if (config.UserLocation) {  
             setMapCenter(config.UserLocation.Latitude, config.UserLocation.Longitude);
             updateUserMarker(config.UserLocation.Latitude, config.UserLocation.Longitude);
@@ -113,6 +115,35 @@ YouMap.Map = function ($) {
         }
     };
 
+
+    var currentLayer = 0;
+
+    var setLayer = function(layer) {
+        for (var i = 0; i < places.length; i++) {
+            var place = places[i];
+            if (place.Layer < layer) {
+                hidePlaceWithLayer(place, layer);
+            } else {
+                showPlaceWithLayer(place, layer);
+            }
+        }
+        currentLayer = layer;
+    };
+
+    var hidePlaceWithLayer = function(place, layer) {
+        if (layer > currentLayer || place.Layer < currentLayer) {
+            return;
+        }
+        YouMap.Google.RemoveMarker(place.Marker);
+    };
+    
+    var showPlaceWithLayer = function(place, layer) {
+        if (layer >= currentLayer || place.Layer >= currentLayer) {
+            return;
+        }
+        YouMap.Google.AddMarker(place.Marker);
+    };
+
     var openUserInfo = function() {
         $.get(userProfileUrl, function (content) {
 
@@ -125,7 +156,7 @@ YouMap.Map = function ($) {
         if (userMarker) {
             YouMap.Google.SetPosition(userMarker, x, y);
         } else {
-            userMarker = YouMap.Google.CreateMarker(map,{
+            userMarker = YouMap.Google.CreateMarker({
                 X: x,
                 Y: y,
                 Title: "Я",
@@ -140,7 +171,7 @@ YouMap.Map = function ($) {
         var x = userMarker.position.lat();
         var y = userMarker.position.lng();
         YouMap.Google.RemoveMarker(userMarker);
-        userMarker = YouMap.Google.CreateMarker(map, {
+        userMarker = YouMap.Google.CreateMarker({
             X: x,
             Y: y,
             Title: "Я",
@@ -330,7 +361,7 @@ YouMap.AddPlace = function ($) {
         if (marker) {
             YouMap.Google.SetPosition(marker, x, y);
         } else {
-            marker = YouMap.Google.CreateMarker(getMap(),{
+            marker = YouMap.Google.CreateMarker({
                 X: x,
                 Y: y,
                 Draggable: true,

@@ -4,41 +4,9 @@
 <script>
     $(document).ready(function () {
         var config = @( Html.Raw(Model.ToJson()));
-        var places = config.Places;
-	YouMap.Map.Initialize(config,places);
+	YouMap.Map.Initialize(config);
 });
 </script>
 <div id="mapHolder">
     <div id="map"></div>
-    @*   @(Html.Telerik().GoogleMap().Name("map")
-           .Latitude(Model.Latitude).Longitude(Model.Longitude).Zoom(Model.Zoom)
-           .Markers(x=>
-                        {
-                            foreach (var item2 in Model.Markers)
-                            {
-                                PlaceModel marker = item2;
-                                x.Add().Title(marker.Title)
-                                    .Latitude(marker.Latitude)
-                                    .Longitude(marker.Longitude)
-                                    .Icon(marker.Icon.Path, marker.Icon.Size, marker.Icon.Point, marker.Icon.Anchor)
-                                    .Shadow(Model.IconShadow.Path, Model.IconShadow.Size, Model.IconShadow.Point, Model.IconShadow.Anchor)
-                                    .Clickable(true)
-                                    .Window(y => y.Add().Content(
-                                        @<text>
-                                             @Html.Partial("PlaceInfo",marker)
-                                         </text>
-                                                     ));
-                            }
-                        }))*@
 </div>
-
-@helper IconOptions(MarkerIcon iconShadow)
-{
-    <text> { 
-        Path: '@(iconShadow.Path)', 
-        Size: { Width: @(iconShadow.Size.Width), Height:@(iconShadow.Size.Height)},
-        Point: { X: @(iconShadow.Point.X), Y: @(iconShadow.Point.Y)},
-        Anchor: { X: @(iconShadow.Anchor.X), Y: @(iconShadow.Anchor.Y)} 
-            }
-    </text>
-}

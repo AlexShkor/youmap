@@ -163,8 +163,7 @@ YouMap.Vk.Map = function($) {
             Shadow: item.Shadow,
             click: openInfo
         };
-        var map = getMap();
-        options.marker = YouMap.Google.CreateMarker(map, options);
+        options.marker = YouMap.Google.CreateMarker(options);
         friend.options = options;
     };
     
@@ -218,7 +217,7 @@ YouMap.Vk.Map = function($) {
 
     var createMarker = function(options) {
         options.click = openContent;
-        options.marker = YouMap.Google.CreateMarker(getMap(), options);
+        options.marker = YouMap.Google.CreateMarker(options);
         YouMap.Google.AddMarker(getMap(), options.marker);  
     };
 

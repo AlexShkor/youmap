@@ -37,10 +37,10 @@ namespace YouMap.Controllers
         public ActionResult Index(MapFilter filter)
         {
             var model = new MapModel();
-            model.Places = _placeDocumentService.GetByFilter(new PlaceDocumentFilter
-                                                            {
-                                                                StatusEq = PlaceStatusEnum.Active
-                                                            }).Select(Map).ToList();
+            if (SessionContext.Location != null)
+            {
+                model.UserLocation = SessionContext.Location;
+            }
             if (filter.Latitude.HasValue() && filter.Longitude.HasValue())
             {
                 var location = Location.Parse(filter.Latitude, filter.Longitude);
@@ -48,26 +48,29 @@ namespace YouMap.Controllers
                 model.Longitude = location.Longitude;
                 model.ZooomToPlace();
             }
-            if (filter.PlaceId.HasValue())
+            return RespondTo(request =>
             {
-                foreach (var place in model.Places.Where(x => x.Id == filter.PlaceId))
+                request.Html = () => View(model);
+                request.Ajax = () => PartialView(model);
+                request.Json = () =>
                 {
-                    place.OpenOnLoad = true;
-                }
-            }
-            if (SessionContext.Location != null)
-            {
-                model.UserLocation = SessionContext.Location;
-            }
-            if (filter.EventId.HasValue())
-            {
-                model.OpenPopupUrl = Url.Action("Details", "Events", new {id = filter.EventId});
-            }
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView(model);
-            }
-            return View(model);
+                    model.Places =_placeDocumentService.GetByFilter(new PlaceDocumentFilter{StatusEq = PlaceStatusEnum.Active}).Select(Map).ToList();
+                    if (filter.PlaceId.HasValue())
+                    {
+                        foreach (var place in model.Places.Where(x => x.Id == filter.PlaceId))
+                        {
+                            place.OpenOnLoad = true;
+                        }
+                    }
+
+                    if (filter.EventId.HasValue())
+                    {
+                        model.OpenPopupUrl = Url.Action("Details", "Events", new{id = filter.EventId});
+                    }
+                    AjaxResponse.AddJsonItem("model",model);
+                    return Result();
+                };
+            });
         }
 
         public ActionResult CheckNearby(double? latitude, double? longitude)
@@ -115,6 +118,7 @@ namespace YouMap.Controllers
                 Icon = _imageService.GetIconModel(doc.CategoryId),
                 X = doc.Location.Latitude,
                 Y = doc.Location.Longitude,
+                Layer = doc.Layer,
                 Title = doc.Title,
                 Shadow = _imageService.IconShadowModel,
                 CategoryId = doc.CategoryId,

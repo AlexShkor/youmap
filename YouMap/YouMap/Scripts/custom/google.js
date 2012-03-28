@@ -1,5 +1,7 @@
 ﻿YouMap.Google = function($) {
 
+    var map = null;
+
     var createMap = function (options) {
         var innerOptions = {
             zoom: options.Zoom,
@@ -7,7 +9,7 @@
             center: new google.maps.LatLng(options.X, options.Y)
         };
         
-        var map = new google.maps.Map($("#map")[0], innerOptions);
+        map = new google.maps.Map($("#map")[0], innerOptions);
         return map;
     };
     
@@ -18,7 +20,7 @@
             new google.maps.Point(options.Anchor.X, options.Anchor.Y));
         return image;
     };
-    var createMarker = function (map, options) {
+    var createMarker = function (options) {
         var x = options.X;
         var y = options.Y;
         var markerOptions = {
@@ -49,7 +51,7 @@
     };
 
     var infowindow = null;
-    var openWindow = function(map,marker,content) {
+    var openWindow = function(marker,content) {
             if (infowindow) {
                 infowindow.close();
             }
@@ -75,7 +77,7 @@
             //infowindow = new InfoBox(myOptions);
             infowindow.open(map, marker);
     };
-    var addMarker = function(map, marker) {
+    var addMarker = function(marker) {
         marker.setMap(map);
     };
 
