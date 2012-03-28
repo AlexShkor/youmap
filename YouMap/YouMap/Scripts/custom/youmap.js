@@ -137,8 +137,8 @@ YouMap.Map = function ($) {
     var userDragging = false;
 
     var toggleUserDrag = function () {
-        var x = userMarker.position.Ua;
-        var y = userMarker.position.Va;
+        var x = userMarker.position.lat();
+        var y = userMarker.position.lng();
         YouMap.Google.RemoveMarker(userMarker);
         userMarker = YouMap.Google.CreateMarker(map, {
             X: x,
@@ -221,7 +221,7 @@ YouMap.Map = function ($) {
                 var location = results[0].geometry.location;
                 map.setCenter(location);
                 map.setZoom(getZoom(results[0].geometry.viewport));
-                callback(location.Ua,location.Va);
+                callback(location.lat(),location.lng());
 
             } else {
                 alert("Пошло что-то не так, потому что: " + status);
@@ -263,8 +263,8 @@ YouMap.Map = function ($) {
 
     var submitUserLocation = function() {
         Request.post("/Vk/SubmitLocation").addParams({
-            X: userMarker.position.Ua,
-            Y: userMarker.position.Va
+            X: userMarker.position.lat(),
+            Y: userMarker.position.lng()
         }).send();
     };
 

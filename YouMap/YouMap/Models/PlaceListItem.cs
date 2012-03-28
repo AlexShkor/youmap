@@ -17,5 +17,7 @@
         public string HideAction { get; set; }
 
         public bool DisplayBlockAction { get; set; }
+
+        public int Layer { get; set; }
     }
 }

@@ -38,6 +38,16 @@ namespace YouMap
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Map", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+            routes.MapRoute(
+                "MapIndex",
+                "{controller}/{action}/Place/{placeId}/Event/{eventId}",
+                new
+                    {
+                        controller = "Map",
+                        action = "Index",
+                        placeId = UrlParameter.Optional,
+                        eventId = UrlParameter.Optional
+                    });
 
         }
 

@@ -193,8 +193,8 @@ namespace YouMap.Controllers
                 Title = doc.Title,
                 HideAction = doc.Status == PlaceStatusEnum.Hidden ? "Activate" : "Hide",
                 HideLabel = doc.Status == PlaceStatusEnum.Hidden ? "Активировать" : "Спрятать",
-                DisplayBlockAction = IsAdmin && doc.Status != PlaceStatusEnum.Blocked
-               
+                DisplayBlockAction = IsAdmin && doc.Status != PlaceStatusEnum.Blocked,
+                Layer = doc.Layer        
             };
             return model;
         }

@@ -51,7 +51,7 @@ namespace YouMap.Models
         public AddPlaceModel()
         {
             DaysOfWeek = Framework.Helpers.SelectListHelper.WorkDaysOfWeek();
-            Layers = new SelectList(Enumerable.Range(0,5));
+            Layers = new SelectList(Enumerable.Range(0,6));
         }
     }
 }

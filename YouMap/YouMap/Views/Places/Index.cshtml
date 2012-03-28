@@ -9,45 +9,53 @@
     <p>Список мест пуст</p>
 }
 <table class="table">
+    <thead>
+        <th>Название</th>
+        <th>Адресс</th>
+        <th>Описание</th>
+        <th>Слой</th>
+        <th>Действия</th>
+    </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.Title
+                    <h5>@item.Title</h5>
                 </td>
                 <td>
                     @item.Address
                 </td>
-                <td>
-                    @item.Description.Ellipsize(200)
+                <td style="width: 500px">
+                    <div class="well"> @item.Description.Ellipsize(200)</div>                 
                 </td>
                 <td>
-                    (
-                    @for (int i = 0; i < 6; i++)
-                    {
-                        <a href="@Url.Action("ChangeLayer",new{id = item.Id, layer = i})">[@i]</a>
-                    }
-                    )
+                    <div class="btn-group">
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            <a class="btn btn-mini @Html.ClassIf("btn-primary",item.Layer == i)"  href="@Url.Action("ChangeLayer",new{id = item.Id, layer = i})">@i</a>
+                        }
+                    </div>
                 </td>
                 <td>
-                    @Html.ActionLink("Изменить", "Edit", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.ActionLink(item.HideLabel, item.HideAction, new { id = item.Id })
-                </td>
-                <td>
-                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-                </td>
-                @if (item.DisplayBlockAction)
-                {
-                    <td>
-                        @Html.ActionLink("Заблокировать", "Block", new { id = item.Id })
-                    </td>
-                    <td>
-                        @Html.ActionLink("Сменить владельца", "Assign", new {@class="ajax-link", id = item.Id })
-                    </td>
-                }
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-primary">Изменить</a>
+                            <a href="@Url.Action(item.HideAction, new { id = item.Id })" class="btn">@item.HideLabel</a>
+                            <a class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action( "Delete", new { id = item.Id })">Удалить</a></li>
+           
+                                @if (item.DisplayBlockAction)
+                                {
+                                    <li class="divider"></li>
+                                    <li><a href="@Url.Action("Block", new {id = item.Id})">Заблокировать</a></li>
+                                    <li><a href="@Url.Action("Assign", new {id = item.Id})">Сменить владельца</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </td>               
             </tr>
         }
     </tbody>

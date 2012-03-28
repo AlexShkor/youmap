@@ -230,7 +230,8 @@ namespace YouMap.Controllers
                 StartDate = doc.Start.ToInfoString(),
                 Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
-                ShareUrl = Url.Action("Index","Map", new {placeId = doc.PlaceId, eventId = doc.Id}),
+                ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id }),
+                //ShareUrl = Url.Action("Index","Map", new {placeId = doc.PlaceId, eventId = doc.Id}),
                 UsersIds = doc.UsersIds
             };
         }

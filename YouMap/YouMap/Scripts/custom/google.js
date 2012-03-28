@@ -28,7 +28,7 @@
             clickable: options.Clickable || true,
             draggable: options.Draggable || false,
             icon: options.Icon ? createImage(options.Icon) : null,
-            shadow: options.Shadow ? createImage(options.Shadow) : null,
+            shadow: options.Shadow ? createImage(options.Shadow) : null
             //animation: google.maps.Animation.DROP
         };
         // create

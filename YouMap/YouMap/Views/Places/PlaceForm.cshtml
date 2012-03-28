@@ -1,4 +1,5 @@
-﻿@using System.Web.Mvc.Html
+﻿@using System.Collections.Concurrent
+@using System.Web.Mvc.Html
 @using YouMap.Models
 @model AddPlaceModel
 @using (Html.BeginForm())
@@ -55,7 +56,7 @@
                 @Html.LabelFor(m => m.Layer, "Слой")
             </div>
             <div class="editor-field">
-                @Html.TextBoxFor(m => m.Layer)
+                @Html.DropDownListFor(m => m.Layer,Model.Layers,new Dictionary<string, object>(){{"data-toggle","dropdown"}})
                 @Html.ValidationMessageFor(m => m.Layer)
             </div>
             <div class="editor-label">

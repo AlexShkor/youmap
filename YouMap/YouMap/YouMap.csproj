@@ -635,6 +635,7 @@
     <Content Include="Scripts\2012.1.214\telerik.upload.min.js" />
     <Content Include="Scripts\2012.1.214\telerik.window.min.js" />
     <Content Include="Scripts\Ajax\AutoAjax.js" />
+    <Content Include="Scripts\bootstrap-dropdown.js" />
     <Content Include="Scripts\custom\geolocation.js" />
     <Content Include="Scripts\custom\google.js" />
     <Content Include="Scripts\custom\init.js" />
