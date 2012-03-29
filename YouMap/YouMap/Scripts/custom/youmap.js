@@ -19,8 +19,8 @@ YouMap.Map = function ($) {
     var places = new Array();
 
     var initialize = function (config) {
-        map = YouMap.Google.CreateMap(config);
-        Request.get(window.location).addSuccess(function (data) {
+        map = YouMap.Google.CreateMap(config,zoomCallback);
+        Request.get(window.location.href).addSuccess("markersload",function (data) {
             places = data.jsonItems.model.Places;
             for (var i = 0; i < places.length; i++) {
                 places[i].click = openPlaceInfo;
@@ -66,7 +66,7 @@ YouMap.Map = function ($) {
         var temp = options;
         var marker = options.Marker;
         $.get(options.InfoWindowUrl, function (result) {
-            YouMap.Google.OpenWindow(map, marker, result);
+            YouMap.Google.OpenWindow(marker, result);
             drawPlaceVkLike(temp.Id, options.Title, $(result).find("img").attr("src"));
             drawAccordion();         
         });
@@ -114,9 +114,25 @@ YouMap.Map = function ($) {
             }
         }
     };
-
-
-    var currentLayer = 0;
+    
+    var layer;
+    var zoomCallback = function () {
+        layer = (16 - map.zoom);
+        if (layer < 0) {
+            layer = 0;
+        }
+        if (layer> 5) {
+            layer = 5;
+        }
+        setTimeout(function() {
+            if (layer != currentLayer) {
+                setLayer(layer);
+            }
+        }, 1000);
+        
+    };
+    
+    var currentLayer = 999;
 
     var setLayer = function(layer) {
         for (var i = 0; i < places.length; i++) {
@@ -131,23 +147,23 @@ YouMap.Map = function ($) {
     };
 
     var hidePlaceWithLayer = function(place, layer) {
-        if (layer > currentLayer || place.Layer < currentLayer) {
-            return;
-        }
+        //if (layer > currentLayer || place.Layer < currentLayer) {
+        //    return;
+        //}
         YouMap.Google.RemoveMarker(place.Marker);
     };
     
     var showPlaceWithLayer = function(place, layer) {
-        if (layer >= currentLayer || place.Layer >= currentLayer) {
-            return;
-        }
+        //if (layer >= currentLayer || place.Layer >= currentLayer) {
+        //    return;
+        //}
         YouMap.Google.AddMarker(place.Marker);
     };
 
     var openUserInfo = function() {
         $.get(userProfileUrl, function (content) {
 
-            YouMap.Google.OpenWindow(getMap(), userMarker, content);
+            YouMap.Google.OpenWindow(userMarker, content);
         });
     };
 
@@ -190,7 +206,7 @@ YouMap.Map = function ($) {
             toggleUserDrag();
             return false;
         });
-        YouMap.Google.OpenWindow(getMap(), userMarker, anchor);
+        YouMap.Google.OpenWindow(userMarker, anchor);
     };
 
 
@@ -286,7 +302,7 @@ YouMap.Map = function ($) {
                 if (filter.categories.length > 0 && filter.categories.indexOf(place.CategoryId) == -1) {
                     YouMap.Google.RemoveMarker(place.Marker);
                 } else {
-                    YouMap.Google.AddMarker(map, place.Marker);
+                    YouMap.Google.AddMarker(place.Marker);
                 }
             }
         }

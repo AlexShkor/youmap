@@ -169,7 +169,7 @@ YouMap.Vk.Map = function($) {
     
     var openInfo = function(options) {
         $.get(options.InfoWindowUrl, function(content) {
-            YouMap.Google.OpenWindow(getMap(), options.marker, content);
+            YouMap.Google.OpenWindow(options.marker, content);
         });
     };
 
@@ -179,9 +179,8 @@ YouMap.Vk.Map = function($) {
         }
     };
     var showFriendsMarkers = function () {
-        var map = getMap();
         for (var i in friends) {
-            friends[i].options.marker.setMap(map);
+            YouMap.Google.AddMarker(friends[i].options.marker);
         }
     };
 
@@ -218,7 +217,7 @@ YouMap.Vk.Map = function($) {
     var createMarker = function(options) {
         options.click = openContent;
         options.marker = YouMap.Google.CreateMarker(options);
-        YouMap.Google.AddMarker(getMap(), options.marker);  
+        YouMap.Google.AddMarker(options.marker);  
     };
 
 
@@ -245,7 +244,7 @@ YouMap.Vk.Map = function($) {
     var openContent = function (options) {
         var html = $(options.Content);
         loadFriendsLiks(html, function(elem) {
-            YouMap.Google.OpenWindow(getMap(), options.marker, $("<div/>").append(elem).html());
+            YouMap.Google.OpenWindow(options.marker, $("<div/>").append(elem).html());
         });
     };
 
