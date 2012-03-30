@@ -27,6 +27,7 @@ YouMap.Map = function ($) {
                 var marker = YouMap.Google.CreateMarker(places[i]);
                 YouMap.Google.AddMarker(marker);
                 places[i].Marker = marker;
+                places[i].VisibleByFilter = true;
                 if (places[i].OpenOnLoad) {
                     navigateToPlace(places[i]);
                 }
@@ -150,14 +151,17 @@ YouMap.Map = function ($) {
         //if (layer > currentLayer || place.Layer < currentLayer) {
         //    return;
         //}
-        YouMap.Google.RemoveMarker(place.Marker);
+        //YouMap.Google.RemoveMarker(place.Marker);
+        place.VisibleByLayer = false;
+        updatePlace(place);
     };
     
     var showPlaceWithLayer = function(place, layer) {
         //if (layer >= currentLayer || place.Layer >= currentLayer) {
         //    return;
         //}
-        YouMap.Google.AddMarker(place.Marker);
+        place.VisibleByLayer = true;
+        updatePlace(place);
     };
 
     var openUserInfo = function() {
@@ -300,11 +304,21 @@ YouMap.Map = function ($) {
             var place = places[i];
             if (filter.categories ) {
                 if (filter.categories.length > 0 && filter.categories.indexOf(place.CategoryId) == -1) {
-                    YouMap.Google.RemoveMarker(place.Marker);
+                    place.VisibleByFilter = false;
+                    
                 } else {
-                    YouMap.Google.AddMarker(place.Marker);
+                    place.VisibleByFilter = true;
                 }
+                updatePlace(place);
             }
+        }
+    };
+
+    var updatePlace = function (place) {
+        if ((place.VisibleByFilter && place.VisibleByLayer) || place.VisibleBySearch) {
+            YouMap.Google.AddMarker(place.Marker);
+        } else {
+            YouMap.Google.RemoveMarker(place.Marker);
         }
     };
 
