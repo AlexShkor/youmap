@@ -12,10 +12,12 @@ namespace YouMap.Controllers
 {
     public class CheckInsController : BaseController
     {
+        private readonly ImageService _imageService;
         private readonly UserDocumentService _documentService;
 
-        public CheckInsController(ICommandService commandService, UserDocumentService documentService) : base(commandService)
+        public CheckInsController(ImageService imageService,ICommandService commandService, UserDocumentService documentService) : base(commandService)
         {
+            _imageService = imageService;
             _documentService = documentService;
         }
 
@@ -49,7 +51,7 @@ namespace YouMap.Controllers
                 Y = doc.Location.Longitude,
                 Title = doc.Title,
                 InfoWindowUrl = Url.Action("Details"),
-                Icon = null,
+                Icon = _imageService.CheckInIconModel,
                 Shadow = null
             };
         }
@@ -68,7 +70,7 @@ namespace YouMap.Controllers
                 Y = group.First().Location.Longitude,
                 InfoWindowUrl = Url.Action("Details"),
                 Content = MvcUtils.RenderPartialToStringRazor(ControllerContext,"CheckInsList",checkIns,ViewData,TempData),
-                Icon = null,
+                Icon = _imageService.CheckInIconModel,
                 Shadow = null
             };
         }

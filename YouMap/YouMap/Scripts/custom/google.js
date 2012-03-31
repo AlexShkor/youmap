@@ -2,7 +2,7 @@
 
     var map = null;
 
-    var createMap = function (options) {
+    var createMap = function (options, zoomCallback) {
         var innerOptions = {
             zoom: options.Zoom,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -10,6 +10,9 @@
         };
         
         map = new google.maps.Map($("#map")[0], innerOptions);
+        google.maps.event.addListener(map, 'zoom_changed', function (data) {
+            zoomCallback(data);
+        });
         return map;
     };
     

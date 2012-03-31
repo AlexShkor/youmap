@@ -19,14 +19,15 @@ YouMap.Map = function ($) {
     var places = new Array();
 
     var initialize = function (config) {
-        map = YouMap.Google.CreateMap(config);
-        Request.get(window.location).addSuccess(function (data) {
+        map = YouMap.Google.CreateMap(config,zoomCallback);
+        Request.get(window.location.href).addSuccess("markersload",function (data) {
             places = data.jsonItems.model.Places;
             for (var i = 0; i < places.length; i++) {
                 places[i].click = openPlaceInfo;
                 var marker = YouMap.Google.CreateMarker(places[i]);
                 YouMap.Google.AddMarker(marker);
                 places[i].Marker = marker;
+                places[i].VisibleByFilter = true;
                 if (places[i].OpenOnLoad) {
                     navigateToPlace(places[i]);
                 }
@@ -66,7 +67,7 @@ YouMap.Map = function ($) {
         var temp = options;
         var marker = options.Marker;
         $.get(options.InfoWindowUrl, function (result) {
-            YouMap.Google.OpenWindow(map, marker, result);
+            YouMap.Google.OpenWindow(marker, result);
             drawPlaceVkLike(temp.Id, options.Title, $(result).find("img").attr("src"));
             drawAccordion();         
         });
@@ -114,9 +115,25 @@ YouMap.Map = function ($) {
             }
         }
     };
-
-
-    var currentLayer = 0;
+    
+    var layer;
+    var zoomCallback = function () {
+        layer = (16 - map.zoom);
+        if (layer < 0) {
+            layer = 0;
+        }
+        if (layer> 5) {
+            layer = 5;
+        }
+        setTimeout(function() {
+            if (layer != currentLayer) {
+                setLayer(layer);
+            }
+        }, 1000);
+        
+    };
+    
+    var currentLayer = 999;
 
     var setLayer = function(layer) {
         for (var i = 0; i < places.length; i++) {
@@ -131,23 +148,26 @@ YouMap.Map = function ($) {
     };
 
     var hidePlaceWithLayer = function(place, layer) {
-        if (layer > currentLayer || place.Layer < currentLayer) {
-            return;
-        }
-        YouMap.Google.RemoveMarker(place.Marker);
+        //if (layer > currentLayer || place.Layer < currentLayer) {
+        //    return;
+        //}
+        //YouMap.Google.RemoveMarker(place.Marker);
+        place.VisibleByLayer = false;
+        updatePlace(place);
     };
     
     var showPlaceWithLayer = function(place, layer) {
-        if (layer >= currentLayer || place.Layer >= currentLayer) {
-            return;
-        }
-        YouMap.Google.AddMarker(place.Marker);
+        //if (layer >= currentLayer || place.Layer >= currentLayer) {
+        //    return;
+        //}
+        place.VisibleByLayer = true;
+        updatePlace(place);
     };
 
     var openUserInfo = function() {
         $.get(userProfileUrl, function (content) {
 
-            YouMap.Google.OpenWindow(getMap(), userMarker, content);
+            YouMap.Google.OpenWindow(userMarker, content);
         });
     };
 
@@ -190,7 +210,7 @@ YouMap.Map = function ($) {
             toggleUserDrag();
             return false;
         });
-        YouMap.Google.OpenWindow(getMap(), userMarker, anchor);
+        YouMap.Google.OpenWindow(userMarker, anchor);
     };
 
 
@@ -284,11 +304,21 @@ YouMap.Map = function ($) {
             var place = places[i];
             if (filter.categories ) {
                 if (filter.categories.length > 0 && filter.categories.indexOf(place.CategoryId) == -1) {
-                    YouMap.Google.RemoveMarker(place.Marker);
+                    place.VisibleByFilter = false;
+                    
                 } else {
-                    YouMap.Google.AddMarker(map, place.Marker);
+                    place.VisibleByFilter = true;
                 }
+                updatePlace(place);
             }
+        }
+    };
+
+    var updatePlace = function (place) {
+        if ((place.VisibleByFilter && place.VisibleByLayer) || place.VisibleBySearch) {
+            YouMap.Google.AddMarker(place.Marker);
+        } else {
+            YouMap.Google.RemoveMarker(place.Marker);
         }
     };
 
