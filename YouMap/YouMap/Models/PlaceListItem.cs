@@ -1,4 +1,6 @@
-﻿namespace YouMap.Models
+﻿using System.Collections.Generic;
+
+namespace YouMap.Models
 {
     public class PlaceListItem
     {
@@ -19,5 +21,12 @@
         public bool DisplayBlockAction { get; set; }
 
         public int Layer { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public PlaceListItem()
+        {
+            Tags = new List<string>();
+        }
     }
 }

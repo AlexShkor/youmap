@@ -29,6 +29,8 @@ namespace YouMap.Domain.Commands
         public PlaceStatusEnum Status { get; set; }
 
         public int Layer { get; set; }
+
+        public List<string> Tags { get; set; }
     }
 
     public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
@@ -52,6 +54,7 @@ namespace YouMap.Domain.Commands
                                Logo = message.Logo,
                                CategoryId = message.CategoryId,
                                Status = message.Status,
+                               Tags = message.Tags
                            };
             var ar = new PlaceAR(data,message.Metadata);
             Repository.Save(ar);

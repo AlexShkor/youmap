@@ -576,6 +576,7 @@
     <Content Include="Content\mobile\jquery.mobile.structure-1.0.css" />
     <Content Include="Content\mobile\jquery.mobile.structure-1.0.min.css" />
     <Content Include="Content\table.css" />
+    <Content Include="Content\tagit-simple-blue.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -639,6 +640,7 @@
     <Content Include="Scripts\custom\geolocation.js" />
     <Content Include="Scripts\custom\google.js" />
     <Content Include="Scripts\custom\init.js" />
+    <Content Include="Scripts\custom\Places.Index.js" />
     <Content Include="Scripts\custom\search.js" />
     <Content Include="Scripts\custom\ui.js" />
     <Content Include="Scripts\custom\vkmap.js" />
@@ -665,6 +667,7 @@
     <Content Include="Scripts\mobile\jquery.mobile-1.0.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\tagit.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

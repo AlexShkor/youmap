@@ -30,5 +30,7 @@ namespace YouMap.Domain
         public PlaceStatusEnum Status { get; set; }
 
         public int Layer { get; set; }
+
+        public List<string> Tags { get; set; }
     }
 }

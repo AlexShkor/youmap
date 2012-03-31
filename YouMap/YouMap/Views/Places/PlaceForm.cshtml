@@ -60,6 +60,18 @@
                 @Html.ValidationMessageFor(m => m.Layer)
             </div>
             <div class="editor-label">
+                @Html.LabelFor(m => m.Tags, "Теги")
+            </div>
+            <div class="editor-field">
+                <ul id="tagit" name="Tags">
+                    @foreach(var tag in Model.Tags)
+                    {
+                        <li>@tag</li>
+                    }
+                </ul>
+                @Html.ValidationMessageFor(m => m.Tags)
+            </div>
+            <div class="editor-label">
                 @Html.LabelFor(x => x.WorkDays, "Дни работы")
             </div>
             <div class="editor-field">

@@ -129,6 +129,7 @@ namespace YouMap.Controllers
                     Address = model.Address,
                     CategoryId = model.CategoryId,
                     Layer = model.Layer,
+                    Tags = model.Tags,
                     WorkDays = model.WorkDays,
                     Status = IsAdmin ? PlaceStatusEnum.Active : PlaceStatusEnum.Hidden
                 };
@@ -191,12 +192,35 @@ namespace YouMap.Controllers
                 Description = doc.Description,
                 Icon = _imageService.GetIconForCategory(doc.CategoryId),
                 Title = doc.Title,
+                Tags =  doc.Tags,
                 HideAction = doc.Status == PlaceStatusEnum.Hidden ? "Activate" : "Hide",
                 HideLabel = doc.Status == PlaceStatusEnum.Hidden ? "Активировать" : "Спрятать",
                 DisplayBlockAction = IsAdmin && doc.Status != PlaceStatusEnum.Blocked,
                 Layer = doc.Layer        
             };
             return model;
+        }
+
+        [HttpPost]
+        public ActionResult EditTags(string placeId, string tags)
+        {
+            var arr = tags.Split(new string[] {","}, StringSplitOptions.RemoveEmptyEntries);
+            var place = _documentService.GetById(placeId);
+            var command = new Place_UpdateCommand()
+                              {
+                                  Id = place.Id,
+                                  Logo = place.Logo,
+                                  Location = place.Location,
+                                  Title = place.Title,
+                                  Layer = place.Layer,
+                                  Description = place.Description,
+                                  Address = place.Address,
+                                  CategoryId = place.CategoryId,
+                                  WorkDays = place.WorkDays,
+                                  Tags = arr.ToList()
+                              };
+            SendAsync(command);
+            return Result();
         }
 
         [HttpGet]
@@ -266,7 +290,8 @@ namespace YouMap.Controllers
                            Latitude = place.Location.GetLatitudeString(),
                            Longitude = place.Location.GetLongitudeString(),
                            Layer = place.Layer,
-                           Categories = GetCategorySelectList()
+                           Categories = GetCategorySelectList(),
+                           Tags = place.Tags
                        };
             if (!Request.IsAjaxRequest())
             {
@@ -293,7 +318,8 @@ namespace YouMap.Controllers
                                       Description = model.Description,
                                       Address = model.Address,
                                       CategoryId = model.CategoryId,
-                                      WorkDays = model.WorkDays
+                                      WorkDays = model.WorkDays,
+                                      Tags  = model.Tags
                                   };
                 Send(command);
             }

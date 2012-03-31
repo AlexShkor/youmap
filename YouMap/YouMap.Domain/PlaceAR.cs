@@ -29,6 +29,7 @@ namespace YouMap.Domain
                 CategoryId = data.CategoryId,
                 Logo = data.Logo,
                 WorkDays = data.WorkDays,
+                Tags = data.Tags,
                 Location = data.Location
             });
         }
@@ -79,6 +80,7 @@ namespace YouMap.Domain
                 Address = data.Address,
                 CreatorId = data.CreatorId,
                 CategoryId = data.CategoryId,
+                Tags = data.Tags,
                 Logo = data.Logo,
                 Layer = data.Layer,
                 WorkDays = data.WorkDays,

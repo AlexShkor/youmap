@@ -30,5 +30,13 @@ namespace YouMap.Documents.Documents
         public string Logo { get; set; }
 
         public int Layer { get; set; }
+
+        public List<string> Tags { get; set; }
+
+        public PlaceDocument()
+        {
+            Tags = new List<string>();
+            WorkDays = new List<DayOfWeek>();
+        }
     }
 }

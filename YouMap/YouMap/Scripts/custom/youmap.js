@@ -342,6 +342,7 @@ YouMap.AddPlace = function ($) {
             }
         });
         $("#Address").focusout(setMarkerPosition);
+        $("#tagit").tagit({ select: true });
        
     };
     

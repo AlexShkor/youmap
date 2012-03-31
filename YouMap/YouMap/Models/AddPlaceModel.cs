@@ -48,10 +48,13 @@ namespace YouMap.Models
 
         public HttpPostedFileBase LogoFile { get; set; }
 
+        public List<string> Tags { get; set; }
+
         public AddPlaceModel()
         {
             DaysOfWeek = Framework.Helpers.SelectListHelper.WorkDaysOfWeek();
             Layers = new SelectList(Enumerable.Range(0,6));
+            Tags = new List<string>();
         }
     }
 }

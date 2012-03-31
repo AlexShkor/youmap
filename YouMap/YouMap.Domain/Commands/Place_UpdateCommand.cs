@@ -25,6 +25,8 @@ namespace YouMap.Domain.Commands
         public string Logo { get; set; }
 
         public int Layer { get; set; }
+
+        public List<string> Tags { get; set; }
     }
 
     public class  Place_UpdateCommandHandler: CommandHandler<Place_UpdateCommand>
@@ -48,6 +50,7 @@ namespace YouMap.Domain.Commands
                                WorkDays = message.WorkDays,
                                Layer = message.Layer,
                                Logo = message.Logo,
+                               Tags = message.Tags,
                                CategoryId = message.CategoryId
                            };
             ar.Update(data);

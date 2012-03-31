@@ -37,6 +37,7 @@ namespace YouMap.EventHandlers
                               CategoryId = message.CategoryId,
                               Layer = message.Layer,
                               WorkDays = message.WorkDays.ToList(),
+                              Tags = message.Tags,
                               Logo = message.Logo,
                               Status = message.Status
                           };
@@ -69,6 +70,7 @@ namespace YouMap.EventHandlers
             doc.CategoryId = message.CategoryId;
             doc.WorkDays = message.WorkDays.ToList();
             doc.Logo = message.Logo;
+            doc.Tags = message.Tags;
             _documentService.Save(doc);
         }
 
