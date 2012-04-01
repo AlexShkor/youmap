@@ -148,18 +148,11 @@ YouMap.Map = function ($) {
     };
 
     var hidePlaceWithLayer = function(place, layer) {
-        //if (layer > currentLayer || place.Layer < currentLayer) {
-        //    return;
-        //}
-        //YouMap.Google.RemoveMarker(place.Marker);
         place.VisibleByLayer = false;
         updatePlace(place);
     };
     
     var showPlaceWithLayer = function(place, layer) {
-        //if (layer >= currentLayer || place.Layer >= currentLayer) {
-        //    return;
-        //}
         place.VisibleByLayer = true;
         updatePlace(place);
     };
@@ -316,9 +309,17 @@ YouMap.Map = function ($) {
 
     var updatePlace = function (place) {
         if ((place.VisibleByFilter && place.VisibleByLayer) || place.VisibleBySearch) {
-            YouMap.Google.AddMarker(place.Marker);
+            if (place.Marker.getMap()) {
+                return;
+            } else {
+                YouMap.Google.AddMarker(place.Marker);
+            }
         } else {
-            YouMap.Google.RemoveMarker(place.Marker);
+            if (place.Marker.getMap()) {
+                YouMap.Google.RemoveMarker(place.Marker);
+            } else {
+                return;
+            }       
         }
     };
 
