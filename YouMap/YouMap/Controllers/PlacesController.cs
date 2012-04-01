@@ -9,6 +9,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
+using SoundInTheory.DynamicImage.Fluent;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Lucene;
@@ -219,7 +220,7 @@ namespace YouMap.Controllers
                                   WorkDays = place.WorkDays,
                                   Tags = arr.ToList()
                               };
-            SendAsync(command);
+            Send(command);
             return Result();
         }
 
@@ -401,13 +402,13 @@ namespace YouMap.Controllers
 
         private String SaveImage(HttpPostedFileBase file, string id)
         {
-            var image = new WebImage(file.InputStream);
-            if (image.Width > 120 || image.Height > 80)
-            {
-                image = image.Resize(120, 80);
-            }
             var filename = String.Format("logo{0}x{1}", 120, 80) + Path.GetExtension(file.FileName);
-            image.Save(GetSavePathFor(id, filename));
+            var memoryStream = new MemoryStream();
+            file.InputStream.CopyTo(memoryStream);
+            var layer = LayerBuilder.Image.SourceBytes(memoryStream.ToArray())
+                .WithFilter(FilterBuilder.Resize.To(120, 80)).ToLayer();
+            layer.Process();
+            layer.Bitmap.Save(GetSavePathFor(id, filename));
             return filename;
         }
 

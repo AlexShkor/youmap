@@ -22,8 +22,8 @@ namespace YouMap
 
         private string YouIcon { get { return Path.Combine(UserFiles, "Y.png"); } }
         private string IconShadow { get { return Path.Combine(UserFiles, "shadow.png"); } }
-        private string EventIconPath { get { return Path.Combine(UserFiles, "checkin.png"); } }
-        private string CheckinIconPath { get { return Path.Combine(UserFiles, "event.png"); } }
+        private string EventIconPath { get { return Path.Combine(UserFiles, "event.png"); } }
+        private string CheckinIconPath { get { return Path.Combine(UserFiles, "checkin.png"); } }
 
         private readonly CategoryDocumentService _categoriesDocumentService;
 
@@ -68,7 +68,7 @@ namespace YouMap
                 return new MarkerIcon()
                 {
                     Path = EventIconPath.Replace("\\", "/"),
-                    Anchor = new Point(0, 30),
+                    Anchor = new Point(30, 0),
                     Point = Point.Empty,
                     Size = new Size(30, 30)
 

@@ -22,6 +22,7 @@ $(document).ready(function() {
             }).send();
             $(this).before(ul);
         }
+        return false;
     });
 
     var getItems = function (elem) {

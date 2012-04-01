@@ -85,6 +85,9 @@
     <Reference Include="Prelude">
       <HintPath>..\libs\Prelude.dll</HintPath>
     </Reference>
+    <Reference Include="SoundInTheory.DynamicImage">
+      <HintPath>..\packages\DynamicImage.2.1.1\lib\NET40\SoundInTheory.DynamicImage.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
