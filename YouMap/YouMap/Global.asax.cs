@@ -9,6 +9,7 @@ using Paralect.ServiceLocator.StructureMap;
 using Paralect.Transitions;
 using Paralect.Transitions.Mongo;
 using StructureMap;
+using YouMap.ActionFilters;
 using YouMap.Admin;
 using YouMap.Domain;
 using YouMap.EventHandlers;
@@ -72,6 +73,8 @@ namespace YouMap
         {
             AreaRegistration.RegisterAllAreas();
 
+   
+            GlobalFilters.Filters.Add(new RedirectMobileDevicesAttribute(), 1);
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
