@@ -168,10 +168,13 @@ Errors.prototype = {
         this.clear(options);
 
         this.forEach(Function.reference(this, function (error) {
-            if (options.errorsSummaryContainer != null) {
-                $(options.errorsSummaryContainer).show();
-                $(options.errorsSummaryContainer).append('<li>' + error.getMessage() + ' </li>');
-            }
+            //if (options.errorsSummaryContainer != null) {
+            //    $(options.errorsSummaryContainer).show();
+            //    $(options.errorsSummaryContainer).append('<li>' + error.getMessage() + ' </li>');
+            //}
+            $.jGrowl(error.getMessage(), {
+                theme: 'danger'
+            });
             //TODO: Display error near element
             //$('#' + error.getName()).after('<div name="' + this.ERROR_NAME_ATTRIBUTE + '" class="the_error" style=color:red; padding:1px;">' + error.getMessage() + '</div>');
             

@@ -21,7 +21,7 @@
         {
             <tr>
                 <td>
-                    <h5>@item.Title</h5>
+                    <a href="@item.MapUrl"><h5>@item.Title</h5></a>
                 </td>
                 <td>
                     @item.Address
@@ -43,7 +43,7 @@
                     <div class="btn-group">
                         @for (int i = 0; i < 6; i++)
                         {
-                            <a class="btn btn-mini @Html.ClassIf("btn-primary",item.Layer == i)"  href="@Url.Action("ChangeLayer",new{id = item.Id, layer = i})">@i</a>
+                            <a class="ajax-link layer-btn btn btn-mini @Html.ClassIf("btn-primary",item.Layer == i)"  href="@Url.Action("ChangeLayer",new{id = item.Id, layer = i})">@i</a>
                         }
                     </div>
                 </td>

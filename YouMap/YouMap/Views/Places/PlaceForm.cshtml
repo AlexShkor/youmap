@@ -49,7 +49,7 @@
             </div>
             <div class="editor-field">
                 @Html.HiddenFor(x=> x.LogoFileName)
-                @Html.Telerik().Upload().Name("LogoFile")
+                <input type="file" name="LogoFile" />
                 @Html.ValidationMessageFor(m => m.LogoFile)
             </div>
             <div class="editor-label">

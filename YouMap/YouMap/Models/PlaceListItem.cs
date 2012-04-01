@@ -24,6 +24,8 @@ namespace YouMap.Models
 
         public List<string> Tags { get; set; }
 
+        public string MapUrl { get; set; }
+
         public PlaceListItem()
         {
             Tags = new List<string>();

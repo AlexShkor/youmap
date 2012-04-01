@@ -14,7 +14,19 @@ YouMap.Search = function($) {
         });
         $("#searchField").autocomplete({
             minLength: 2,
-            source: searchUrl,
+            source: function (request, response) {
+                Request.get(searchUrl).addParams({ term: request.term }).addSuccess("search", function (r) {
+                    var data = r.jsonItems.places;
+                    for (var i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        item.Distance = getDistance(item.X, item.Y)
+                    }
+                    data.sort(function(a, b) {
+                        return a.Distance - b.Distance;
+                    });
+                    response(data);
+                }).send();
+            },
             deferRequestBy: 300,
             focus: function (event, ui) {
                 $("#searchField").val(ui.item.Title);
@@ -37,7 +49,7 @@ YouMap.Search = function($) {
 		    img.attr("src", item.Icon);
 		    var anchor = $("<a/>");
 		    anchor.append(img);
-		    anchor.append("<strong>" + item.Title + " </strong><span>" + item.Address + "</span>");
+		    anchor.append("<strong>" + item.Title + " </strong><span> - " + item.Address + "</span><span style='float:right'>" + item.Distance +" км</span>");
 		    return $("<li/>")
 				.data("item.autocomplete", item)
 	            .append(anchor)
@@ -55,6 +67,30 @@ YouMap.Search = function($) {
         });
     };
 
+Number.prototype.toRad = function()
+{
+  return this/180;
+}
+
+var getDistance = function(lat1,lon1)
+{
+var pos = YouMap.Map.GetUserLocation();
+var lat2 = pos.lat();
+var lon2 = pos.lng();
+
+  var R = 6371; // km
+var dLat = (lat2-lat1).toRad();
+var dLon = (lon2-lon1).toRad();
+var lat1 = lat1.toRad();
+var lat2 = lat2.toRad();
+
+var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+var d = R * c;
+return d.toFixed(1);
+};
+     
     var navigation = function() {
         $("#menu a").click(function() {
             $(this).toggleClass("selected");

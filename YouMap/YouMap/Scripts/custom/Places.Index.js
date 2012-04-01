@@ -25,6 +25,11 @@ $(document).ready(function() {
         return false;
     });
 
+    $(".layer-btn").click(function() {
+        $(this).parent().find(".layer-btn").removeClass("btn-primary");
+        $(this).addClass("btn-primary");
+    }); 
+
     var getItems = function (elem) {
         var initialTags = new Array();
         var tagit = $(elem).parent().find("ul.tagit");

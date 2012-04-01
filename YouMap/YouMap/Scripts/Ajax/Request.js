@@ -402,15 +402,20 @@ Request.prototype = {
         }
 
         result.getErrors().clear(options);
-        if (options.successSummaryContainer != null && options.successMessage != null) {
-            $(options.successSummaryContainer).html('');
-            $(options.successSummaryContainer).parent().show();
-            $(options.successSummaryContainer).append('<li>' + options.successMessage + ' </li>');
-            //            setTimeout(function() {
-            //                $('#' + options.successSummaryContainer).parent().hide();
-            //            }, 10000);
-        }
+        if (options.successMessage != null) {
+            $.jGrowl(options.successMessage,{
+                theme: 'success'
+            });
 
+            if (options.successSummaryContainer != null) {
+                $(options.successSummaryContainer).html('');
+                $(options.successSummaryContainer).parent().show();
+                $(options.successSummaryContainer).append('<li>' + options.successMessage + ' </li>');
+                //            setTimeout(function() {
+                //                $('#' + options.successSummaryContainer).parent().hide();
+                //            }, 10000);
+            }
+        }
         // Call success functions
         for (var i in this.successFunctions) {
             var func = this.successFunctions[i];

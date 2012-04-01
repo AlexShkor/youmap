@@ -64,17 +64,17 @@ namespace YouMap.Controllers
         {
             if (!string.IsNullOrEmpty(term))
             {
-                var luceneDocs = _placeLuceneService.Search(term);
+                var luceneDocs = _placeLuceneService.Search(term,PlaceStatusEnum.Active);
                 if (luceneDocs.Any())
                 {
                     var filter = new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id )};
                     var places =
                         _documentService.GetByFilter(filter).
                             Select(MapForSearch);
-                    return Json(places);
+                    AjaxResponse.AddJsonItem("places",places);
                 }
             }
-            return Json(new { });
+            return Result();
         }
 
         public ActionResult SearchForm()
@@ -154,7 +154,12 @@ namespace YouMap.Controllers
                 Layer = layer
             };
             Send(command);
-            return RedirectToAction("Index");
+            AjaxResponse.Options.SuccessMessage = String.Format("Слой изменен на {0}",layer);
+            return RespondTo(r =>
+                                 {
+                                     r.Json = Result;
+                                     r.Html = () => RedirectToAction("Index");
+                                 });
         }
 
          private object MapForSearch(PlaceDocument doc)
@@ -193,6 +198,7 @@ namespace YouMap.Controllers
                 Description = doc.Description,
                 Icon = _imageService.GetIconForCategory(doc.CategoryId),
                 Title = doc.Title,
+                MapUrl = Url.Action("Index","Map", new {placeId = doc.Id}),
                 Tags =  doc.Tags,
                 HideAction = doc.Status == PlaceStatusEnum.Hidden ? "Activate" : "Hide",
                 HideLabel = doc.Status == PlaceStatusEnum.Hidden ? "Активировать" : "Спрятать",
@@ -221,6 +227,7 @@ namespace YouMap.Controllers
                                   Tags = arr.ToList()
                               };
             Send(command);
+            AjaxResponse.Options.SuccessMessage = String.Format("{0} изменен.", place.Title);
             return Result();
         }
 
@@ -323,8 +330,15 @@ namespace YouMap.Controllers
                                       Tags  = model.Tags
                                   };
                 Send(command);
+                return RespondTo(r =>
+                                     {
+                                         var url = Url.Action("Index", "Map", new {placeId = model.Id});
+                                         AjaxResponse.RedirectUrl = url;
+                                         r.Html = () => Redirect(url);
+                                         r.Json = Result;
+                                     });   
             }
-            return Result();
+            return RespondTo(model);
         }
 
         private void CheckPermissions(PlaceDocument place)

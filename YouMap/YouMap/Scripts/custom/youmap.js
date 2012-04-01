@@ -129,7 +129,7 @@ YouMap.Map = function ($) {
             if (layer != currentLayer) {
                 setLayer(layer);
             }
-        }, 1000);
+        }, 100);
         
     };
     
@@ -208,7 +208,7 @@ YouMap.Map = function ($) {
 
 
     var getUserLocation = function() {
-        return userLocation;
+        return userMarker.position;
     };
    
     var startUpdateLocation = function() {
