@@ -67,7 +67,7 @@ namespace YouMap.Controllers
                 var luceneDocs = _placeLuceneService.Search(term);
                 if (luceneDocs.Any())
                 {
-                    var filter = new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id)};
+                    var filter = new PlaceDocumentFilter {IdIn = luceneDocs.Select(x => x.Id )};
                     var places =
                         _documentService.GetByFilter(filter).
                             Select(MapForSearch);

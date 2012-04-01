@@ -63,8 +63,8 @@ namespace YouMap.Documents.Lucene
                            Title = doc.Get("Title"),
                            Address = doc.Get("Address"),
                            Memo = doc.Get("Memo"),
-                           Status = (PlaceStatusEnum)int.Parse(doc.Get("Status")),
-                           Tags = doc.Get("Tags").Split(new []{','},StringSplitOptions.RemoveEmptyEntries)
+                           Status = (PlaceStatusEnum)int.Parse(doc.Get("Status") ?? "0" ),
+                           Tags = (doc.Get("Tags")??"").Split(new []{','},StringSplitOptions.RemoveEmptyEntries)
                        };
         }
     }
