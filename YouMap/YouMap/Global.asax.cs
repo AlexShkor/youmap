@@ -37,7 +37,8 @@ namespace YouMap
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Map", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Map", action = "Index", id = UrlParameter.Optional } 
+                , new string[] { "YouMap.Controllers" }// Parameter defaults
             );
             routes.MapRoute(
                 "MapIndex",
@@ -48,7 +49,7 @@ namespace YouMap
                         action = "Index",
                         placeId = UrlParameter.Optional,
                         eventId = UrlParameter.Optional
-                    });
+                    }, new string[] { "YouMap.Controllers" });
 
         }
 

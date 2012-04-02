@@ -1,0 +1,29 @@
+﻿@model YouMap.Models.CheckInModel
+
+<script>
+    $(document).ready(function () {
+        YouMap.Vk.Panel.CheckInInit();
+    });
+</script> 
+
+<div id="checkin" class="checkin">
+    @using(Html.BeginForm("CheckIn","Map"))
+    {
+            <div>
+                @Html.HiddenFor(x => x.PlaceId)
+                @Html.HiddenFor(x => x.CheckInUrl)
+                @if(Model.Limited)
+                {
+                    <h5>У вас осталось @Model.LeftCount отметки здесь.</h5>
+                }
+            </div>
+        <div>
+            @Html.HiddenFor(x=> x.Latitude)
+            @Html.HiddenFor(x=> x.Longitude)
+            @Html.TextAreaFor(x => x.Memo)
+            <p>
+                <input type="submit" @(!Model.Enabled ? "disabled=disabled" : "") class="ajax-submit awesome small" value="Отметится" />
+            </p>
+        </div>
+    }
+</div>

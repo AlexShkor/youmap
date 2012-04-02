@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "YOUMAP";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">Управление</li>
+    <li>@Html.ActionLink("Отметится", "CheckIn", "Home")</li>
+    <li>@Html.ActionLink("Встречи", "Index", "Events" )</li>
+    <li>@Html.ActionLink("Друзья", "Index", "Friends" )</li>
+    <li>@Html.ActionLink("Места", "Index", "Places")</li>
+    <li>@Html.ActionLink("Настройки", "Settings", "Home")</li>
+    <li>@Html.ActionLink("Карта", "Map", "Home")</li>
+</ul>

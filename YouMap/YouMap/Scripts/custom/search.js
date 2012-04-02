@@ -67,29 +67,29 @@ YouMap.Search = function($) {
         });
     };
 
-Number.prototype.toRad = function()
-{
-  return this/180;
-}
+    Number.prototype.toRad = function() {
+        return this / 90;
+    };
 
-var getDistance = function(lat1,lon1)
-{
-var pos = YouMap.Map.GetUserLocation();
-var lat2 = pos.lat();
-var lon2 = pos.lng();
+    var getDistance = function(lat1, lon1) {
+        var pos = YouMap.Map.GetUserLocation();
+        //var lat2 = pos.lat();
+        //var lon2 = pos.lng();
+        var point = new google.maps.LatLng(lat1, lon1);
+        var d = google.maps.geometry.spherical.computeDistanceBetween(pos, point);
+        d = d / 1000;
+        //var R = 6371; // km
+        //var dLat = (lat2 - lat1).toRad();
+        //var dLon = (lon2 - lon1).toRad();
+        //var lat1 = lat1.toRad();
+        //var lat2 = lat2.toRad();
 
-  var R = 6371; // km
-var dLat = (lat2-lat1).toRad();
-var dLon = (lon2-lon1).toRad();
-var lat1 = lat1.toRad();
-var lat2 = lat2.toRad();
-
-var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-var d = R * c;
-return d.toFixed(1);
-};
+        //var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        //    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        //var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        //var d = R * c;
+        return d.toFixed(1);
+    };
      
     var navigation = function() {
         $("#menu a").click(function() {
@@ -108,7 +108,7 @@ return d.toFixed(1);
             categories: categories
         });
     };
-    
+
     return {
         Initialize: initialize,
         Navigation: navigation

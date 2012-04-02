@@ -311,7 +311,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UploadLocalization.zh-CN.resx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Mobile\Controllers\MapController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\EventsController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\FriendsController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\PlacesController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="AuthenticationService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -710,7 +713,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Mobile\Models\" />
-    <Folder Include="Areas\Mobile\Views\Shared\" />
+    <Folder Include="Areas\Mobile\Views\Events\" />
+    <Folder Include="Areas\Mobile\Views\Friends\" />
+    <Folder Include="Areas\Mobile\Views\Places\" />
     <Folder Include="Content\images\place_icons\" />
     <Folder Include="Factories\Commands\" />
   </ItemGroup>
@@ -1009,7 +1014,7 @@
     <Content Include="Views\Places\Assign.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Styles.Mobile.cshtml" />
+    <Content Include="Areas\Mobile\Views\Shared\Styles.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Events\EventForm.cshtml" />
@@ -1033,10 +1038,10 @@
     <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Areas\Mobile\Views\Shared\_Layout.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Scripts.Mobile.cshtml" />
+    <Content Include="Areas\Mobile\Views\Shared\Scripts.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Styles.cshtml" />
@@ -1073,6 +1078,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Mobile\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Shared\VkError.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

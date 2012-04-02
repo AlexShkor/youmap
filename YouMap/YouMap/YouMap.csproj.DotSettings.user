@@ -1,3 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=Areas_005CMobile_005CViews_005C_005FLayout_002EMobile_002Ecshtml/@EntryIndexedValue">Areas\Mobile\Views\_Layout.Mobile.cshtml</s:String>
 	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=Views_005CPlaces_005C_005FLayout/@EntryIndexedValue">Views\Places\_Layout</s:String>
+	
 	<s:Boolean x:Key="/Default/Housekeeping/ProjectSettingsUpgraded/IsUpgraded/@EntryValue">True</s:Boolean></wpf:ResourceDictionary>

@@ -128,7 +128,6 @@ namespace YouMap.Controllers
 
         [HttpGet]
         [ActionName("CheckIn")]
-        [VkAccess]
         public ActionResult CheckInGet(CheckInModel model)
         {
             model = model ?? new CheckInModel();  
@@ -152,33 +151,35 @@ namespace YouMap.Controllers
                 model.LogoUrl = _imageService.GetPlaceLogoUrl(place);
                 model.SetMemoWithTemplate(place.Title);
             }
-            return PartialView(model);
+            return RespondTo(model);
         }
 
         [HttpPost]
         public ActionResult CheckIn(CheckInModel model)
         {
             var user = _userDocumentService.GetById(User.Id);
-            model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.PlaceId == model.PlaceId && x.Visited.Date == DateTime.Now.Date); 
-            if (model.PlaceId.HasValue() && model.LeftCount<= 0 )
+            model.LeftCount = MaxCountPerDay -
+                              user.CheckIns.Count(x => x.PlaceId == model.PlaceId && x.Visited.Date == DateTime.Now.Date);
+            if (model.PlaceId.HasValue() && model.LeftCount <= 0)
             {
-                ModelState.AddModelError("Error","Сегодня вы уже не можете отметиться в этом месте.");
+                ModelState.AddModelError("Error", "Сегодня вы уже не можете отметиться в этом месте.");
             }
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var location = Location.Parse(model.Latitude, model.Longitude);
-                var command = new User_AddCheckInCommand
-                                  {
-                                      Memo = model.Memo,
-                                      Title = model.Memo.Ellipsize(50),
-                                      Location =  location,
-                                      PlaceId = model.PlaceId,
-                                      UserId = User.Id
-                                  };
-                Send(command);
-                AjaxResponse.ClosePopup = true;
+                return CheckInGet(model);
             }
-            return RespondTo();
+            var location = Location.Parse(model.Latitude, model.Longitude);
+            var command = new User_AddCheckInCommand
+                              {
+                                  Memo = model.Memo,
+                                  Title = model.Memo.Ellipsize(50),
+                                  Location = location,
+                                  PlaceId = model.PlaceId,
+                                  UserId = User.Id
+                              };
+            Send(command);
+            AjaxResponse.ClosePopup = true;
+            return RespondTo(model);
         }
     }
 
