@@ -24,22 +24,6 @@ namespace YouMap.Areas.Mobile.Controllers
             return View("Index");
         }
 
-        public ActionResult Events()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ActionResult Friends()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ActionResult Places()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public ActionResult Settings()
         {
             throw new NotImplementedException();

@@ -111,6 +111,7 @@
     <Compile Include="Environment\HttpApplicationStructureMapContext.cs" />
     <Compile Include="Environment\IIdGenerator.cs" />
     <Compile Include="Environment\MongoObjectIdGenerator.cs" />
+    <Compile Include="Extensions\Boolean.cs" />
     <Compile Include="Extensions\TimeSpan.cs" />
     <Compile Include="Helpers\SelectListHelper.cs" />
     <Compile Include="Mvc\Helpers\HtmlHelpers.cs" />

@@ -208,7 +208,10 @@ YouMap.Map = function ($) {
 
 
     var getUserLocation = function() {
-        return userMarker.position;
+        if (userMarker) {
+            return userMarker.position;
+        }
+        return null;
     };
    
     var startUpdateLocation = function() {

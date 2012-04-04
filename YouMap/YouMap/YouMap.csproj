@@ -715,7 +715,6 @@
     <Folder Include="Areas\Mobile\Models\" />
     <Folder Include="Areas\Mobile\Views\Events\" />
     <Folder Include="Areas\Mobile\Views\Friends\" />
-    <Folder Include="Areas\Mobile\Views\Places\" />
     <Folder Include="Content\images\place_icons\" />
     <Folder Include="Factories\Commands\" />
   </ItemGroup>
@@ -1090,6 +1089,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Mobile\Views\Home\CheckIn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Places\SelectList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\Near.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

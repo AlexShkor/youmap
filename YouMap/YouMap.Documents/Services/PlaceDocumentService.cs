@@ -61,7 +61,7 @@ namespace YouMap.Documents.Services
 
         public IEnumerable<PlaceDocument> GetPlacesForLocation(Location location, int count = 100)
         {
-            return GetNear(location, count, 0.01);
+            return GetNear(location, count, 0.1);
         }
 
         public IEnumerable<PlaceDocument> GetNear(Location location, int count = 100, double radiusInKm = 1)

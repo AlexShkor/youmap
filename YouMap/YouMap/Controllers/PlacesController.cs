@@ -402,6 +402,23 @@ namespace YouMap.Controllers
             return RespondTo(model);
         }
 
+        public ActionResult Near(string x, string y)
+        {
+            var location = Location.Parse(x, y);
+            var places = _documentService.GetPlacesForLocation(location);
+            var model = places.Select(MapSelectList);
+            return PartialView(model);
+        }
+
+        private SelectListItem MapSelectList(PlaceDocument doc)
+        {
+            return new SelectListItem
+                       {
+                           Text = doc.Title,
+                           Value = doc.Id
+                       };
+        }
+
         private void TrySaveImage(AddPlaceModel model)
         {
             try

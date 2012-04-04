@@ -55,12 +55,22 @@ YouMap.Vk.Panel = function($) {
         });
     };
 
-    var checkInInit = function () {
+    var checkInInit = function (located) {
+        if (!located) {
+            YouMap.Geolocation.Locate(function(x, y) {
+                Request.get("/Places/Near").addParams({
+                    x: x,
+                    y: y
+                }).send();
+            });
+        }
         if (!$("#checkin #PlaceId").val()) {
             var loc = YouMap.Map.GetUserLocation();
-            YouMap.Map.SearchByLocation(loc.x, loc.y, function (result) {
-                $("#checkin textarea").html(result[0].formatted_address);
-            });
+            if (loc) {
+                YouMap.Map.SearchByLocation(loc.lat(), loc.lng(), function(result) {
+                    $("#checkin textarea").html(result[0].formatted_address);
+                });
+            }
         }
         var relativeUrl = null;
         $(".checkin .ajax-submit").click(function() {
