@@ -13,14 +13,22 @@
 <div id="checkin" class="checkin">
     @using (Html.BeginForm("CheckIn", "Home"))
     {
-        <div id="checkinParams">
-            @Html.HiddenFor(x => x.PlaceId)
-            @Html.HiddenFor(x => x.CheckInUrl)
+        <div >
+            @Html.HiddenFor(x => x.PlaceId)        
             @if (Model.Limited)
             {
-                <h5>У вас осталось @Model.LeftCount отметки здесь.</h5>
+                <h5 >У вас осталось @Model.LeftCount отметки здесь.</h5>
+            }else
+            {
+                @Html.Label("PlaceId","Выберите место")
+                <select id="placeSelectList">
+                </select>
             }
         </div>
+        <div>
+            @Html.HiddenFor(x => x.CheckInUrl)
+        </div>
+       
         <div>
             @Html.HiddenFor(x => x.Latitude)
             @Html.HiddenFor(x => x.Longitude)

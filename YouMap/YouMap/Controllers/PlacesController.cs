@@ -407,15 +407,30 @@ namespace YouMap.Controllers
             var location = Location.Parse(x, y);
             var places = _documentService.GetPlacesForLocation(location);
             var model = places.Select(MapSelectList);
-            return PartialView(model);
+            return RespondTo(r =>
+                          {
+                              r.Ajax = () => PartialView("SelectList", model);
+                              r.Html = () => View("SelectList", model);
+                              r.Json = () =>
+                                           {
+                                               AjaxResponse.Render("#placeSelectList", "SelectList", model);
+                                               return Result();
+                                           };
+                          });
         }
 
-        private SelectListItem MapSelectList(PlaceDocument doc)
+        private PlaceSelectListItem MapSelectList(KeyValuePair<double,PlaceDocument> doc)
         {
-            return new SelectListItem
+            return MapSelectList(doc.Value);
+        }
+
+        private PlaceSelectListItem MapSelectList(PlaceDocument doc)
+        {
+            return new PlaceSelectListItem
                        {
                            Text = doc.Title,
-                           Value = doc.Id
+                           Value = doc.Id,
+                           Url = Url.Action("Index","Map",new {placeId = doc.Id})
                        };
         }
 
@@ -452,5 +467,10 @@ namespace YouMap.Controllers
             }
             return Path.Combine(dir, filename);
         }
+    }
+
+    public class PlaceSelectListItem: SelectListItem
+    {
+        public string Url { get; set; }
     }
 }

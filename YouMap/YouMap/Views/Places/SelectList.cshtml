@@ -1,0 +1,8 @@
+﻿@model IEnumerable<YouMap.Controllers.PlaceSelectListItem>
+
+<select name="PlaceId" id="PlaceId">
+    @foreach (var item in Model)
+    {
+        <option data-url="@item.Url" value="@item.Value" @(item.Selected ? "selected": "")>@item.Text</option>
+    }
+</select>

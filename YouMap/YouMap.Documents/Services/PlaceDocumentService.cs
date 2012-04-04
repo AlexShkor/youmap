@@ -59,30 +59,29 @@ namespace YouMap.Documents.Services
             return query;
         }
 
-        public IEnumerable<PlaceDocument> GetPlacesForLocation(Location location, int count = 100)
+        public IDictionary<double, PlaceDocument> GetPlacesForLocation(Location location, int count = 100)
         {
-            return GetNear(location, count, 0.1);
+            return GetNear(location, count, 0.8);
         }
 
-        public IEnumerable<PlaceDocument> GetNear(Location location, int count = 100, double radiusInKm = 1)
+        public IDictionary<double,PlaceDocument> GetNear(Location location, int count = 100, double radiusInKm = 1)
         {
-            var near = Query.And();
-
-            var options = GeoNearOptions
-                .SetMaxDistance(radiusInKm / EarthRadius)
-                .SetSpherical(true);
-            var result = Items.GeoNearAs<PlaceDocument>(near,
+            
+            var query = Query.EQ("Status", PlaceStatusEnum.Active);
+            //TODO: FIX  distance calculation!
+            var options = GeoNearOptions.SetMaxDistance(radiusInKm);
+            var result = Items.GeoNearAs<PlaceDocument>(query,
                                                         location.Longitude,
                                                         location.Latitude,
                                                         count,
                                                         options
                 );
-            return result.Response.Cast<PlaceDocument>();
+            return result.Hits.ToDictionary(x => x.Distance, y => y.Document);
         }
 
         public PlaceDocument GetPlaceForLocation(Location location)
         {
-            return GetPlacesForLocation(location, 1).SingleOrDefault();
+            return GetPlacesForLocation(location, 1).SingleOrDefault().Value;
         }
     }
 

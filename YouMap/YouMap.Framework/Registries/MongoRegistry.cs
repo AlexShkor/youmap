@@ -12,8 +12,14 @@ namespace YouMap.Framework.Registries
             container.Configure(config =>
             {
                 // Mongo Read database
-                config.For<MongoRead>().Singleton().Use(() => 
-                    new MongoRead(settings.MongoReadDatabaseConnectionString));
+                config.For<MongoRead>().Singleton().Use(() =>
+                                                            {
+                                                                var MongoRead =
+                                                                    new MongoRead(
+                                                                        settings.MongoReadDatabaseConnectionString);
+                                                                MongoRead.EnsureIndexes();
+                                                                return MongoRead;
+                                                            });
 
                 // Mongo Write database
                 config.For<MongoWrite>().Singleton().Use(() => 
