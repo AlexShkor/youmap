@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Paralect.Domain;
-using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Domain.Events;
 using YouMap.Framework;
@@ -9,6 +10,8 @@ namespace YouMap.Domain
 {
     public class UserAR : YoumapAR
     {
+        public HashSet<string> Friends { get; set; }  
+
         public UserAR()
         {
             
@@ -74,28 +77,6 @@ namespace YouMap.Domain
                       });
         }
 
-        #region Object Reconstruction
-
-        protected void On(User_CreatedEvent created)
-        {
-            _id = created.UserId;
-        }
-
-        protected void On(User_MarkUdatedEvent user)
-        {
-        }
-
-        protected void On(User_PasswordChangedEvent user)
-        {
-        }
-
-        protected void On(User_ImportedFromVkEvent user)
-        {
-            _id = user.UserId;
-        }
-
-        #endregion
-
         public void AddEvent(IEventData data)
         {
             Apply(new User_EventAddedEvent
@@ -122,5 +103,45 @@ namespace YouMap.Domain
                           EventId = eventId
                       });
         }
+
+        public void AddFriends(List<Friend> friends)
+        {
+            var newFriends = friends.Where(x => !Friends.Contains(x.VkId)).ToList();
+            if (newFriends.Any())
+            {
+                Apply(new User_FriendsAddedEvent
+                          {
+                              UserId = _id,
+                              Friends = newFriends
+                          });
+            }
+        }
+
+        #region Object Reconstruction
+
+        protected void On(User_CreatedEvent created)
+        {
+            _id = created.UserId;
+        }
+
+        protected void On(User_MarkUdatedEvent user)
+        {
+        }
+
+        protected void On(User_PasswordChangedEvent user)
+        {
+        }
+
+        protected void On(User_ImportedFromVkEvent user)
+        {
+            _id = user.UserId;
+        }
+
+        protected void On(User_FriendsAddedEvent user)
+        {
+            Friends.SymmetricExceptWith(user.Friends.Select(x=> x.VkId));
+        }
+        #endregion
+
     }
 }

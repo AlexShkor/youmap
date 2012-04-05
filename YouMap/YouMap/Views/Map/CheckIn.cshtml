@@ -9,7 +9,7 @@
 <div id="checkin" class="checkin">
     @using(Html.BeginForm("CheckIn","Map"))
     {
-        <div >
+        <div id="placeHolder">
             @Html.HiddenFor(x => x.PlaceId)        
             @if (Model.Limited)
             {

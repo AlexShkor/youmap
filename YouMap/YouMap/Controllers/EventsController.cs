@@ -12,6 +12,7 @@ using YouMap.Framework;
 using YouMap.Framework.Environment;
 using YouMap.Framework.Extensions;
 using YouMap.Framework.Mvc.Ajax;
+using YouMap.Framework.Services;
 using YouMap.Framework.Utils;
 using YouMap.Framework.Utils.Extensions;
 using YouMap.Helpers;
@@ -47,17 +48,15 @@ namespace YouMap.Controllers
             return RespondTo(model);
         }      
 
-        private static string FormatEventStartDate(DateTime date)
+        public ActionResult Index(EventsFilter filter)
         {
-            if (date.Date == DateTime.Now.Date)
+            var docFilter = new UserFilter {EventStartAfter = DateTime.Now};
+            if (filter.HoursNext.HasValue)
             {
-                return date.ToShortTimeString();
+                docFilter.EventStartBefore = DateTime.Now.AddHours(filter.HoursNext.Value);
+                docFilter.PagingInfo = filter.PagingInfo;
             }
-            if (date.Date == DateTime.Now.AddDays(1).Date)
-            {
-                return "завтра в " + date.ToShortTimeString();
-            }
-            return date.ToString("dd.MM.yyyy hh:mm");
+            var doc = _userDocumentService.GetByFilter(docFilter);
         }
 
         [HttpGet]
@@ -231,7 +230,6 @@ namespace YouMap.Controllers
                 Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
                 ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id }),
-                //ShareUrl = Url.Action("Index","Map", new {placeId = doc.PlaceId, eventId = doc.Id}),
                 UsersIds = doc.UsersIds
             };
         }
@@ -311,6 +309,19 @@ namespace YouMap.Controllers
             AjaxResponse.Options.ErrorsSummaryContainer = "#eventValidation";
             ModelState.AddModelError("Error", "Не удалось покинуть встречу.");
             return Result();
+        }
+    }
+
+    public class EventsFilter
+    {
+        public int? HoursAgo { get; set; }
+        public int? HoursNext { get; set; }
+        public string Search { get; set; }
+        public PagingInfo PagingInfo { get; set; }
+
+        public EventsFilter()
+        {
+            PagingInfo = new PagingInfo {Take = 20};
         }
     }
 }

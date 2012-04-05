@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
+using YouMap.Domain.Commands;
+using YouMap.Domain.Data;
 using YouMap.Framework;
 using YouMap.Models;
 
@@ -30,15 +32,30 @@ namespace YouMap.Controllers
 
         public ActionResult UserInfo(string id)
         {
-            var user = _userDocumentService.GetById(id);
-            var tempModel = new UserInfoModel {Id = id};
-            //var model = new UserInfoModel {Id = user.Id};
-            return RespondTo(tempModel);
+            //var user = _userDocumentService.GetById(id);
+            var model = new UserInfoModel { Id = id };
+            return RespondTo(model);
         }
 
-        public ActionResult UpdateFriendsList()
+        public ActionResult UpdateFriends(string friends, string names)
         {
-            throw new NotImplementedException();
+            
+            var list = friends.Split(new [] {","}, StringSplitOptions.RemoveEmptyEntries);
+            var namesList = names.Split(new [] {","}, StringSplitOptions.RemoveEmptyEntries);
+            var friendsList = list.Zip(namesList, (x, y) => new Friend {VkId = x, FullName = y});
+            var user = _userDocumentService.GetById(User.Id);
+            var newFriends = friendsList.Where(x=> !user.Friends.Contains(x.VkId)).ToList();
+            if (newFriends.Any())
+            {
+                var command = new User_AddFriendsCommand
+                                  {
+                                      UserId = User.Id,
+                                      Friends = newFriends
+                                  };
+                Send(command);
+                AjaxResponse.AddJsonItem("added",true);
+            }
+            return Result();
         }
 
         private UserListItem MapToListItem(UserDocument doc)

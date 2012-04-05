@@ -81,6 +81,14 @@ namespace YouMap.Documents.Services
             {
                 query = Query.And(Query.EQ("Events._id", filter.EventIdEq));
             }
+            if (filter.EventStartAfter.HasValue)
+            {
+                query = Query.And(Query.GTE("Events.Start", filter.EventStartAfter));
+            }
+            if (filter.EventStartBefore.HasValue)
+            {
+                query = Query.And(Query.LTE("Events.Start", filter.EventStartBefore));
+            }
             return query;
         }
 
@@ -139,7 +147,6 @@ namespace YouMap.Documents.Services
 
     public class UserFilter : BaseFilter
     {
-
         public string UserId { get; set; }
 
         public string FirstName { get; set; }
@@ -171,5 +178,9 @@ namespace YouMap.Documents.Services
         public string CheckInPlace { get; set; }
 
         public string EventIdEq { get; set; }
+
+        public DateTime? EventStartBefore { get; set; }
+
+        public DateTime? EventStartAfter { get; set; }
     }
 }

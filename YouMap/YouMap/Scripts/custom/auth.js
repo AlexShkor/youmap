@@ -32,6 +32,11 @@
                 Href: response.session.user.href,
                 Nickname: response.session.user.nickname
             }).send();
+            VK.Api.call("users.get", { uids: uids.join(","), fields: "uid, first_name, last_name" }, function (result) {
+                if (result && result.response) {
+                    Request.get("/Users/UpdateFriends").setJSON(result.response).send();
+                }
+            });
             if (response.settings) {
                 /* Выбранные настройки доступа пользователя, если они были запрошены */
             }

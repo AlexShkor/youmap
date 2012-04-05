@@ -413,7 +413,14 @@ namespace YouMap.Controllers
                               r.Html = () => View("SelectList", model);
                               r.Json = () =>
                                            {
-                                               AjaxResponse.Render("#placeSelectList", "SelectList", model);
+                                               if (model.Any())
+                                               {
+                                                   AjaxResponse.Render("#placeSelectList", "SelectList", model);
+                                               }
+                                               else
+                                               {
+                                                   AjaxResponse.AddUpdateItem("#placeHolder","");
+                                               }
                                                return Result();
                                            };
                           });
