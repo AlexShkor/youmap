@@ -52,7 +52,6 @@ namespace YouMap.Controllers
         {
             var eventStartAfter = DateTime.Now;
             var docFilter = new UserFilter {EventStartAfter = eventStartAfter};
-            DateTime? eventStartBefore = null;
             if (filter.HoursNext.HasValue)
             {
                 docFilter.EventStartBefore = eventStartAfter.AddHours(filter.HoursNext.Value);
@@ -60,11 +59,14 @@ namespace YouMap.Controllers
             }
             var doc = _userDocumentService.GetByFilter(docFilter);
             //TODO: Refactor this, maybe move to lucene
-            var model = doc.SelectMany(x => x.Events).Where(
-                x => x.Start >= eventStartAfter && x.Start <= docFilter.EventStartBefore)
-                .Take(20)
-                .Select(MapToListItem);
-            return View();
+            var events = doc.SelectMany(x => x.Events).Where(
+                x => x.Start >= eventStartAfter);
+            if (docFilter.EventStartBefore.HasValue)
+            {
+                events = events.Where(x => x.Start <= docFilter.EventStartBefore);
+            }
+            var model = events.Take(20).Select(MapToListItem);
+            return View(model);
         }
 
         [HttpGet]
