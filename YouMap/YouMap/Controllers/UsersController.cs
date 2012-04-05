@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -37,12 +38,13 @@ namespace YouMap.Controllers
             return RespondTo(model);
         }
 
-        public ActionResult UpdateFriends(string friends, string names)
+        
+        public ActionResult UpdateFriends(string json)
         {
-            
-            var list = friends.Split(new [] {","}, StringSplitOptions.RemoveEmptyEntries);
-            var namesList = names.Split(new [] {","}, StringSplitOptions.RemoveEmptyEntries);
-            var friendsList = list.Zip(namesList, (x, y) => new Friend {VkId = x, FullName = y});
+            var js = new JavaScriptSerializer();
+            var friendsList =
+                js.Deserialize<List<FriendModel>>(json).Select(
+                    x => new Friend {VkId = x.uid, FullName = x.first_name + " " + x.last_name});
             var user = _userDocumentService.GetById(User.Id);
             var newFriends = friendsList.Where(x=> !user.Friends.Contains(x.VkId)).ToList();
             if (newFriends.Any())
@@ -67,5 +69,12 @@ namespace YouMap.Controllers
                 IsActive = doc.IsActive
             };
         }
+    }
+
+    public class FriendModel
+    {
+        public string uid;
+        public string first_name;
+        public string last_name;
     }
 }

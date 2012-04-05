@@ -14,10 +14,10 @@ namespace YouMap.Domain
 
         public UserAR()
         {
-            
+            Friends  = new HashSet<string>();
         }
 
-        public UserAR(string userId, UserData userData, ICommandMetadata metadata)
+        public UserAR(string userId, UserData userData, ICommandMetadata metadata): this()
         {
             _id = userId;
             SetCommandMetadata(metadata);

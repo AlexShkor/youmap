@@ -104,7 +104,7 @@ namespace YouMap.EventHandlers
         public void Handle(User_FriendsAddedEvent message)
         {
             var query = Query.EQ("_id", message.UserId);
-            var update = Update.PushWrapped("Friends", message.Friends.Select(x => x.VkId));
+            var update = Update.PushAll("Friends", new BsonArray(message.Friends.Select(x => x.VkId)));
             _documentService.Update(query,update);
         }
     }

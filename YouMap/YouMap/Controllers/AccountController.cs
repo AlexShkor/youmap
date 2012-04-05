@@ -17,8 +17,6 @@ namespace YouMap.Controllers
         {
             get { return _authenticationService.VkAuth; }
         }
-        //
-        // GET: /Account/LogOn
 
         public AccountController(
             ICommandService commandService, 
@@ -27,14 +25,10 @@ namespace YouMap.Controllers
             _authenticationService = authenticationService;
         }
 
-
         public ActionResult LogOn()
         {
             return RespondTo(new LogOnModel());
         }
-
-        //
-        // POST: /Account/LogOn
 
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
@@ -68,9 +62,7 @@ namespace YouMap.Controllers
             _authenticationService.Logout();
             return RedirectToAction("Index", "Map");
         }
-
-        
-
+      
         [HttpGet]
         public ActionResult SetupAdmin()
         {
@@ -222,7 +214,6 @@ namespace YouMap.Controllers
             return View();
         }
 
-        [Mobile]
         public ActionResult LoginState()
         {
             var model = Map(User);
@@ -241,7 +232,6 @@ namespace YouMap.Controllers
             return model;
         }
 
-        [Mobile]
         public ActionResult Profile()
         {
             return PartialView();

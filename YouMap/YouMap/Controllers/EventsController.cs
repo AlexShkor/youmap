@@ -1,7 +1,7 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
@@ -15,8 +15,8 @@ using YouMap.Framework.Mvc.Ajax;
 using YouMap.Framework.Services;
 using YouMap.Framework.Utils;
 using YouMap.Framework.Utils.Extensions;
-using YouMap.Helpers;
 using YouMap.Models;
+#endregion
 
 namespace YouMap.Controllers
 {
@@ -50,13 +50,21 @@ namespace YouMap.Controllers
 
         public ActionResult Index(EventsFilter filter)
         {
-            var docFilter = new UserFilter {EventStartAfter = DateTime.Now};
+            var eventStartAfter = DateTime.Now;
+            var docFilter = new UserFilter {EventStartAfter = eventStartAfter};
+            DateTime? eventStartBefore = null;
             if (filter.HoursNext.HasValue)
             {
-                docFilter.EventStartBefore = DateTime.Now.AddHours(filter.HoursNext.Value);
+                docFilter.EventStartBefore = eventStartAfter.AddHours(filter.HoursNext.Value);
                 docFilter.PagingInfo = filter.PagingInfo;
             }
             var doc = _userDocumentService.GetByFilter(docFilter);
+            //TODO: Refactor this, maybe move to lucene
+            var model = doc.SelectMany(x => x.Events).Where(
+                x => x.Start >= eventStartAfter && x.Start <= docFilter.EventStartBefore)
+                .Take(20)
+                .Select(MapToListItem);
+            return View();
         }
 
         [HttpGet]
