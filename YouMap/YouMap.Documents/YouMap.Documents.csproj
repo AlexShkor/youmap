@@ -98,6 +98,7 @@
     <Compile Include="Documents\PlaceDocument.cs" />
     <Compile Include="Documents\UserDocument.cs" />
     <Compile Include="Documents\UserMarkDocument.cs" />
+    <Compile Include="Lucene\EventsLuceneService.cs" />
     <Compile Include="Lucene\LuceneDateFormatter.cs" />
     <Compile Include="Lucene\LuceneIndexService.cs" />
     <Compile Include="Lucene\PlaceLuceneService.cs" />

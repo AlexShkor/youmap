@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryDocumentEventHandler.cs" />
+    <Compile Include="EventsLuceneEventHandler.cs" />
     <Compile Include="PlaceDocumentEventHandler.cs" />
     <Compile Include="PlaceLuceneEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
