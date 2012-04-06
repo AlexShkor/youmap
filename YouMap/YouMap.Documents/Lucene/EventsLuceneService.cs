@@ -9,6 +9,8 @@ namespace YouMap.Documents.Lucene
 {
     public class EventsLuceneService: LuceneIndexService<EventLucene>
     {
+        private DateTime _startDate = new DateTime(2010,1,1);
+
         public EventsLuceneService(Settings settings) : base(settings)
         {
         }
@@ -38,13 +40,16 @@ namespace YouMap.Documents.Lucene
 
         protected override Document MapToLucene(EventLucene item)
         {
-         
             var doc = new Document();
             doc.Add(new Field("_id", item.Id, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("PlaceId", item.PlaceId, Field.Store.YES, Field.Index.NOT_ANALYZED));
             if (item.Title != null)
                 doc.Add(new Field("Title", item.Title, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS)); 
             if (item.PlaceTitle != null)
                 doc.Add(new Field("PlaceTitle", item.PlaceTitle, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
+            if (item.StartDate.HasValue)
+                doc.Add(new Field("StartDate", DateTools.DateToString(item.StartDate.Value, DateTools.Resolution.MINUTE),
+                                  Field.Store.YES, Field.Index.NOT_ANALYZED));
             if (item.Memo != null)
                 doc.Add(new Field("Memo", item.Memo, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
             if (item.MembersIds != null && item.MembersIds.Any())
@@ -68,7 +73,9 @@ namespace YouMap.Documents.Lucene
                 Id = doc.Get("_id"),
                 Title = doc.Get("Title"),
                 Memo = doc.Get("Memo"),
+                StartDate = DateTools.StringToDate(doc.Get("StartDate")),
                 PlaceTitle = doc.Get("PlaceTitle"),
+                PlaceId = doc.Get("PlaceId"),
             };
         }
     }
@@ -90,8 +97,12 @@ namespace YouMap.Documents.Lucene
 
         public List<string> MembersIds { get; set; }
 
-        public List<string> MembersNames{ get; set; }
+        public List<string> MembersNames { get; set; }
 
         public string PlaceTitle { get; set; }
+
+        public DateTime? StartDate { get; set; }
+
+        public string PlaceId { get; set; }
     }
 }
