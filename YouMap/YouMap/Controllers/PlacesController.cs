@@ -46,6 +46,7 @@ namespace YouMap.Controllers
             _userDocumentService = userDocumentService;
         }
 
+        [Admin]
         public ActionResult Index()
         {
             var filter = new PlaceDocumentFilter();         

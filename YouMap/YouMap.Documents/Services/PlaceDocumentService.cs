@@ -74,8 +74,7 @@ namespace YouMap.Documents.Services
                                                         location.Longitude,
                                                         location.Latitude,
                                                         count,
-                                                        options
-                );
+                                                        options);
             return result.Hits.ToDictionary(x => x.Distance, y => y.Document);
         }
 

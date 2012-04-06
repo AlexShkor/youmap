@@ -26,6 +26,8 @@ namespace YouMap.Models
 
         public string MapUrl { get; set; }
 
+        public string Distance { get; set; }
+
         public PlaceListItem()
         {
             Tags = new List<string>();
