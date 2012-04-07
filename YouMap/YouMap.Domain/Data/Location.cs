@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 
 namespace YouMap.Domain.Data
@@ -36,6 +37,18 @@ namespace YouMap.Domain.Data
         public override string ToString()
         {
             return string.Format("{0},{1}", GetLatitudeString(), GetLongitudeString());
+        }
+
+        public static Location TryParse(string latitude, string longitude)
+        {
+            try
+            {
+                return Parse(latitude, longitude);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

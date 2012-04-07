@@ -92,6 +92,20 @@ namespace YouMap.Documents.Services
             return query;
         }
 
+        protected override IMongoSortBy BuildSortExpression(UserFilter filter)
+        {
+            if (filter.OrderBy  == null)
+            {
+                return SortBy.Null;
+            }
+            switch (filter.OrderBy)
+            {
+                case UserOrderByEnum.LastCheckInDate:
+                    return SortBy.Descending("LastCheckInDate");
+            }
+            return SortBy.Null;
+        }
+
         public IOrderedEnumerable<EventDocument> GetEventsListForPlace(string placeId, int count)
         {
             var users = GetByFilter(new UserFilter
@@ -145,6 +159,7 @@ namespace YouMap.Documents.Services
         }
     }
 
+
     public class UserFilter : BaseFilter
     {
         public string UserId { get; set; }
@@ -182,5 +197,12 @@ namespace YouMap.Documents.Services
         public DateTime? EventStartBefore { get; set; }
 
         public DateTime? EventStartAfter { get; set; }
+
+        public UserOrderByEnum? OrderBy { get; set; }
+    }
+
+    public enum UserOrderByEnum
+    {
+        LastCheckInDate
     }
 }

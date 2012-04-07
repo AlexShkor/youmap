@@ -72,7 +72,7 @@ namespace YouMap.EventHandlers
                                   Visited = message.Visited,
                                   PlaceId = message.PlaceId
                               };
-            var update = Update.PushWrapped("CheckIns", checkIn);
+            var update = Update.PushWrapped("CheckIns", checkIn).Set("LastCheckInDate",message.Visited);
             _documentService.Update(query,update);
         }
 

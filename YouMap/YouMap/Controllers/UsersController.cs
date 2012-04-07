@@ -43,7 +43,7 @@ namespace YouMap.Controllers
         {
             var js = new JavaScriptSerializer();
             var friendsList =
-                js.Deserialize<List<FriendModel>>(json).Select(
+                js.Deserialize<List<VkFriendModel>>(json).Select(
                     x => new Friend {VkId = x.uid, FullName = x.first_name + " " + x.last_name});
             var user = _userDocumentService.GetById(User.Id);
             var newFriends = friendsList.Where(x=> !user.Friends.Contains(x.VkId)).ToList();
@@ -71,7 +71,7 @@ namespace YouMap.Controllers
         }
     }
 
-    public class FriendModel
+    public class VkFriendModel
     {
         public string uid;
         public string first_name;

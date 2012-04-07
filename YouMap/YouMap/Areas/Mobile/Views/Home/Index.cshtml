@@ -1,10 +1,19 @@
 ﻿
+
 @{
     ViewBag.Title = "YOUMAP";
 }
 
 <h2>@ViewBag.Message</h2>
 
+@if (ViewBag.AutoLogin != null && (bool)ViewBag.AutoLogin)
+{
+    <script>
+        $(document).ready(function() {
+            YouMap.Auth.AutoLogin();
+        });
+    </script>
+}
 <ul data-role="listview" data-inset="true">
     <li data-role="list-divider">Управление</li>
     <li>@Html.ActionLink("Отметится", "CheckIn", "Home")</li>
@@ -13,4 +22,5 @@
     <li>@Html.ActionLink("Места", "Index", "Places")</li>
     <li>@Html.ActionLink("Настройки", "Settings", "Home")</li>
     <li>@Html.ActionLink("Карта", "Map", "Home")</li>
+    <li><a href="@ViewBag.VkAuthUrl">Войти</a></li>
 </ul>

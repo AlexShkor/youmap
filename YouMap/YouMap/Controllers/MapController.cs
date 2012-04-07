@@ -137,11 +137,11 @@ namespace YouMap.Controllers
                 var location = Location.Parse(model.Latitude, model.Longitude);
                 filter.Location = location;
             }
-            var user = _userDocumentService.GetById(User.Id);
-            model.LeftCount = MaxCountPerDay  - user.CheckIns.Count(x => x.PlaceId == model.PlaceId &&  x.Visited.Date == DateTime.Now.Date); 
             var place = _placeDocumentService.GetByFilter(filter).SingleOrDefault();
             if (place != null)
             {
+                var user = _userDocumentService.GetById(User.Id);
+                model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.PlaceId == model.PlaceId && x.Visited.Date == DateTime.Now.Date); 
                 model.Limited = true;
                 model.DisplayPlace = true;
                 model.PlaceId = place.Id;
@@ -168,7 +168,7 @@ namespace YouMap.Controllers
             {
                 return CheckInGet(model);
             }
-            var location = Location.Parse(model.Latitude, model.Longitude);
+            Location location = Location.TryParse(model.Latitude, model.Longitude) ?? SessionContext.Location;
             var command = new User_AddCheckInCommand
                               {
                                   Memo = model.Memo,

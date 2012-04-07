@@ -45,17 +45,12 @@
         }
     };
 
-    var getStatusCallback = function(response) {
-        if (response.session) {
-            Request.post("/Account/LoginVkStatus").addParams(
-                {
-                  //  uid: response.session.uid
-                }
-            ).send();
-    }
+    var autoLogin = function() {
+        VK.Auth.login(vkLoginCallback, permissions);
     };
 
     return {
-        Initialize: initialize
+        Initialize: initialize,
+        AutoLogin : autoLogin
     };
 } (jQuery);

@@ -4,6 +4,9 @@ using System.Globalization;
 using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
+using Lucene.Net.Spatial.GeoHash;
+using Lucene.Net.Spatial.Tier;
+using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 using YouMap.Framework;
 
@@ -16,7 +19,7 @@ namespace YouMap.Documents.Lucene
             SetIndexName("Places");
         }
 
-        public virtual IEnumerable<PlaceLucene> Search(string searchText,PlaceStatusEnum? statusEqual = null)
+        public virtual IEnumerable<PlaceLucene> Search(string searchText,PlaceStatusEnum? statusEqual = null, Location location = null)
         {
             var queries = new List<Query>();
             if (!String.IsNullOrEmpty(searchText))
@@ -35,6 +38,11 @@ namespace YouMap.Documents.Lucene
                 queries.Add(BuildMatchQuery("Status", ((int)statusEqual.Value).ToString()));
             }
             var query = queries.Count == 0 ? new MatchAllDocsQuery() : JoinQueriesAnd(queries.ToArray());
+            //Need TO Test geto spatil search
+            if (location != null)
+            {
+                query = Distance(location, 100).GetQuery(query);
+            }
             return Search(query);
         }
 
@@ -51,8 +59,17 @@ namespace YouMap.Documents.Lucene
                 doc.Add(new Field("Tags", string.Join(",",item.Tags), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
             if (item.Address != null)
                 doc.Add(new Field("Address", item.Address, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS));
-            
+            if (item.Location != null)
+            {
+                doc.Add(new Field("X", item.Location.GetLatitudeString(), Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("Y", item.Location.GetLongitudeString(), Field.Store.YES, Field.Index.ANALYZED));
+            }
             return doc;
+        }
+
+        public DistanceQueryBuilder Distance(Location location, double distance)
+        {
+            return new DistanceQueryBuilder(location.Latitude, location.Longitude, distance, "X", "Y", "", false);
         }
 
         protected override PlaceLucene MapFromLucene(Document doc)
@@ -64,7 +81,8 @@ namespace YouMap.Documents.Lucene
                            Address = doc.Get("Address"),
                            Memo = doc.Get("Memo"),
                            Status = (PlaceStatusEnum)int.Parse(doc.Get("Status") ?? "0" ),
-                           Tags = (doc.Get("Tags")??"").Split(new []{','},StringSplitOptions.RemoveEmptyEntries)
+                           Tags = (doc.Get("Tags")??"").Split(new []{','},StringSplitOptions.RemoveEmptyEntries),
+                           //Location = Location.Parse(doc.Get("X"),doc.Get("Y"))
                        };
         }
     }
@@ -82,5 +100,7 @@ namespace YouMap.Documents.Lucene
         public IEnumerable<string> Tags { get; set; }
 
         public PlaceStatusEnum Status { get; set; }
+
+        public Location Location { get; set; }
     }
 }

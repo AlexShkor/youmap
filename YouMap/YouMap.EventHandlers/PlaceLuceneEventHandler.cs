@@ -25,7 +25,8 @@ namespace YouMap.EventHandlers
                               Address = message.Address,
                               Memo = message.Description,
                               Title = message.Title,
-                              Tags = message.Tags
+                              Tags = message.Tags,
+                              Location = message.Location
                           };
             _lucene.Insert(doc);
         }
@@ -39,6 +40,7 @@ namespace YouMap.EventHandlers
                 Memo = message.Description,
                 Title = message.Title,
                 Tags = message.Tags,
+                Location = message.Location
             };
             _lucene.Update(doc);
         }

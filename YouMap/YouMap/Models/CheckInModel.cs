@@ -28,7 +28,7 @@ namespace YouMap.Models
         {
             get
             {
-                return LeftCount > 0;
+                return Limited && LeftCount > 0;
             }
         }
 

@@ -45,6 +45,7 @@ YouMap.Map = function ($) {
                 YouMap.Geolocation.Locate(function(x, y) {
                     setMapCenter(x, y);
                     updateUserMarker(x, y);
+                    submitUserLocation();
                 });
             }, 100);
             startUpdateLocation();

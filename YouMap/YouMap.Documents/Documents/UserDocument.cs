@@ -50,6 +50,8 @@ namespace YouMap.Documents.Documents
 
         public bool IsActive { get; set; }
 
+        public DateTime? LastCheckInDate { get; set; }
+
         public List<CheckInDocument> CheckIns { get; set; }
 
         public List<EventDocument> Events { get; set; }
