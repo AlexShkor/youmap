@@ -34,7 +34,7 @@ namespace YouMap.Areas.Mobile.Controllers
         public ActionResult Index(PlaceFilterModel filter)
         {
             var location = filter.HasLocation() ? filter.GetLocation() : SessionContext.Location;
-            var places = _placeDocumentService.GetNear(location, filter.Count ?? 50, 500);
+            var places = _placeDocumentService.GetNear(location, filter.Count ?? 50, 5);
             var model = places.Select(MapListItem);
             return View(model);
         }
@@ -58,7 +58,7 @@ namespace YouMap.Areas.Mobile.Controllers
                 Title = doc.Title,
                 MapUrl = Url.Action("Details", "Places", new { id = doc.Id }),
                 Tags = doc.Tags,
-                Distance = "2 км",
+                Distance = string.Format("{0:0.0} км", pair.Key),
                 Layer = doc.Layer
             };
             return model;

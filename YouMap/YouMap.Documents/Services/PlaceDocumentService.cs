@@ -69,13 +69,13 @@ namespace YouMap.Documents.Services
             
             var query = Query.EQ("Status", PlaceStatusEnum.Active);
             //TODO: FIX  distance calculation!
-            var options = GeoNearOptions.SetMaxDistance(radiusInKm);
+            var options = GeoNearOptions.SetMaxDistance(radiusInKm/EarthRadius).SetSpherical(true);
             var result = Items.GeoNearAs<PlaceDocument>(query,
-                                                        location.Longitude,
                                                         location.Latitude,
+                                                        location.Longitude,
                                                         count,
                                                         options);
-            return result.Hits.ToDictionary(x => x.Distance, y => y.Document);
+            return result.Hits.ToDictionary(x => x.Distance * EarthRadius, y => y.Document);
         }
 
         public PlaceDocument GetPlaceForLocation(Location location)
