@@ -16,7 +16,7 @@ namespace YouMap.Models
         [Required(ErrorMessage = "Введите адресс")]
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "Адресс не найден, укажите адресс и нажмите кнопку поиска. Перетащите маркер на нуэную позицию, если требуется.")]
+        [Required(ErrorMessage = "Адресс не найден, укажите адресс и нажмите кнопку поиска. Перетащите маркер на нужную позицию, если требуется.")]
         public string Latitude { get; set; }
 
         [Required(ErrorMessage = "Ошибка.")]

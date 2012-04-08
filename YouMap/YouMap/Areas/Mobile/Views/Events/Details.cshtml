@@ -1,0 +1,52 @@
+﻿@model EventListItem
+
+@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = Model.Title;
+}
+<script>
+    YouMap.Vk.Map.InitEventDetails(@Html.Raw(Model.ToJson()))
+</script>
+<div class="event-details">
+    <div>
+        <div>
+            <h2>@Model.Title</h2>
+
+        </div>
+        <table class="table">
+            <tr>
+                <th>Время</th>
+                <th>Место</th>
+                <th>Организатор</th>
+                <th>@(Model.Private ? "закрытая встреча" : "" )</th>
+            </tr>
+            <tr>
+                <td>
+                    @Model.StartDate
+                </td>
+                <td>
+                    @Model.PlaceTitle
+                </td>
+                <td>
+                   <a href="http://vk.com/id@(Model.OwnerVkId)"> @Model.OwnerName</a>
+                </td>
+                <td>
+                    <a class="ajax-link btn @Model.LinkClass" href="@Model.ActionUrl">@Model.ActionTitle</a>
+                    <div id="eventVkLike"></div>
+                </td>
+            </tr>          
+        </table>
+    </div>
+    <div>
+        <p>@Model.Memo</p>
+    </div>   
+    <div style="display: none" id="eventValidation" class="validation-summary-errors"></div>
+    <div class="users well">Участники:
+        <a data-uid="@Model.OwnerVkId" id="linkFor@(Model.OwnerVkId)" href="http://vk.com/id@(Model.OwnerVkId)">@Model.OwnerName</a>
+        @foreach(var user in Model.UsersIds)
+        {
+            <span>; </span><a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
+        }
+    </div>
+</div>
+

@@ -1112,6 +1112,15 @@
   <ItemGroup>
     <Content Include="Areas\Mobile\Views\CheckIns\Details.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Home\Settings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Home\LoginState.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Home\Main.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

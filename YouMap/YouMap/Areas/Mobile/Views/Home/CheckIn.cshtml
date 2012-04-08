@@ -20,7 +20,7 @@
                 <h5 >У вас осталось @Model.LeftCount отметки здесь.</h5>
             }else
             {
-                @Html.Label("PlaceId","Выберите место")
+                @Html.Label("PlaceId","Места поблизости")
                 <select id="placeSelectList">
                 </select>
             }
@@ -34,7 +34,7 @@
             @Html.HiddenFor(x => x.Longitude)
             @Html.TextAreaFor(x => x.Memo)
             <p>
-                <input type="submit" @(!Model.Enabled ? "disabled=disabled" : "") class="ajax-submit awesome small" value="Отметится" />
+                <input type="submit" class="ajax-submit awesome small" value="Отметится" />
             </p>
         </div>
     }

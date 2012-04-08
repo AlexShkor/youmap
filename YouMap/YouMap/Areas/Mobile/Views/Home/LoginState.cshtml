@@ -1,0 +1,15 @@
+﻿@using YouMap.Models
+@model UserViewModel
+@if (Model.IsAuthenticated)
+{
+    
+<a data-theme="b" data-icon="gear" class="ui-btn-right" href="@Url.Action("Settings","Home")">@Model.DisplayName</a>
+}
+else
+{
+        <a class="ui-btn-right" href="@Model.VkLoginUrl">Войти</a>
+}
+
+<script>
+	YouMap.Auth.Initialize('@Request.IsAuthenticated' == 'True');
+</script>

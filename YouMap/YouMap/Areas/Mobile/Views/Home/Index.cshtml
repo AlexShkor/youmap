@@ -1,26 +1,16 @@
-﻿
-
+﻿@model MapModel
+           
 @{
-    ViewBag.Title = "YOUMAP";
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = "Карта";
 }
 
-<h2>@ViewBag.Message</h2>
-
-@if (ViewBag.AutoLogin != null && (bool)ViewBag.AutoLogin)
-{
-    <script>
-        $(document).ready(function() {
-            YouMap.Auth.AutoLogin();
-        });
-    </script>
-}
-<ul data-role="listview" data-inset="true">
-    <li data-role="list-divider">Управление</li>
-    <li>@Html.ActionLink("Отметиться", "CheckIn", "Home")</li>
-    <li>@Html.ActionLink("Встречи", "Index", "Events" )</li>
-    <li>@Html.ActionLink("Друзья", "Index", "Friends" )</li>
-    <li>@Html.ActionLink("Места", "Index", "Places")</li>
-    <li>@Html.ActionLink("Настройки", "Settings", "Home")</li>
-    <li>@Html.ActionLink("Карта", "Map", "Home")</li>
-    <li><a href="@ViewBag.VkAuthUrl">Войти</a></li>
-</ul>
+<script>
+    $(document).ready(function () {
+        var config = @( Html.Raw(Model.ToJson()));
+	YouMap.Map.Initialize(config);
+});
+</script>
+<div id="mapHolder">
+    <div id="map"></div>
+</div>

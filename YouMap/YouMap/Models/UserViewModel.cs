@@ -10,6 +10,8 @@
 
         public LogOnModel LogOnModel { get; set; }
 
+        public string VkLoginUrl { get; set; }
+
         public UserViewModel()
         {
             LogOnModel = new LogOnModel();
