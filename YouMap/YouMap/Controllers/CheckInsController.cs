@@ -13,7 +13,7 @@ namespace YouMap.Controllers
     public class CheckInsController : BaseController
     {
         private readonly ImageService _imageService;
-        private readonly UserDocumentService _documentService;
+        protected readonly UserDocumentService _documentService;
 
         public CheckInsController(ImageService imageService,ICommandService commandService, UserDocumentService documentService) : base(commandService)
         {
@@ -56,7 +56,7 @@ namespace YouMap.Controllers
             };
         }
 
-        private MarkerModel MapToMarker(IGrouping<string, CheckInDocument> @group, UserDocument user)
+        protected MarkerModel MapToMarker(IGrouping<string, CheckInDocument> @group, UserDocument user)
         {
             var checkIns = group.OrderByDescending(x=> x.Visited).Take(10).Select(MapToListItem).ToList();
             foreach (var item in checkIns)
@@ -96,7 +96,7 @@ namespace YouMap.Controllers
             return Result();
         }
 
-        private IEnumerable<CheckInListItem> MapToListItem(IGrouping<UserDocument, CheckInDocument> arg)
+        public IEnumerable<CheckInListItem> MapToListItem(IGrouping<UserDocument, CheckInDocument> arg)
         {
             var model =arg.Select(MapToListItem).ToList();
             foreach (var item in model)

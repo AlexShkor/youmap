@@ -1,16 +1,18 @@
-﻿@model YouMap.Models.CheckInModel
+﻿@using YouMap.Framework.Extensions
+@model YouMap.Models.CheckInModel
 
 <script>
     $(document).ready(function () {
-        YouMap.Vk.Panel.CheckInInit();
+        YouMap.Vk.Panel.CheckInInit(@Model.DisplayPlace.ToJS());
     });
 </script> 
 
 <div id="checkin" class="checkin">
     @using(Html.BeginForm("CheckIn","Map"))
     {
+        @Html.HiddenFor(x => x.PlaceId)     
         <div id="placeHolder">
-            @Html.HiddenFor(x => x.PlaceId)        
+               
             @if (Model.Limited)
             {
                 <h5 >У вас осталось @Model.LeftCount отметки здесь.</h5>

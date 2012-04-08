@@ -309,6 +309,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UploadLocalization.zh-CN.resx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Mobile\Controllers\CheckInsController.cs" />
     <Compile Include="Areas\Mobile\Controllers\EventsController.cs" />
     <Compile Include="Areas\Mobile\Controllers\FriendsController.cs" />
     <Compile Include="Areas\Mobile\Controllers\HomeController.cs" />
@@ -712,7 +713,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Mobile\Models\" />
-    <Folder Include="Areas\Mobile\Views\Events\" />
     <Folder Include="Content\images\place_icons\" />
     <Folder Include="Factories\Commands\" />
   </ItemGroup>
@@ -1099,6 +1099,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Mobile\Views\Friends\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Friends\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\Events\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\CheckIns\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Views\CheckIns\Details.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

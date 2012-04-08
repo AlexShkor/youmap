@@ -72,6 +72,10 @@ namespace YouMap.Areas.Mobile.Controllers
                 Description = doc.Description,
                 Logo = _imageService.GetPlaceLogoUrl(doc),
                 Title = doc.Title,
+                CheckInsLink = Url.Action("ForPlace","CheckIns", new{placeId = doc.Id}),
+                EventsLink = Url.Action("ForPlace","Events", new{placeId = doc.Id}),
+                MapLink = Url.Action("Index","Home", new{placeId = doc.Id}),
+                CheckInLink = Url.Action("CheckIn","Home",new{placeId = doc.Id})
             };
         }
 

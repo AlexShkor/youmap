@@ -22,7 +22,7 @@ namespace YouMap.Controllers
 {
     public class EventsController : BaseController
     {
-        private readonly UserDocumentService _userDocumentService;
+        protected readonly UserDocumentService _userDocumentService;
         private readonly PlaceDocumentService _placeDocumentService;
         private readonly IIdGenerator _idGenerator;
         private readonly ImageService _imageService;
@@ -227,7 +227,7 @@ namespace YouMap.Controllers
             return MvcUtils.RenderPartialToStringRazor(ControllerContext, "EventsListWindow", eventsList, ViewData,TempData);
         }
 
-        private EventListItem MapToListItem(EventDocument doc)
+        protected EventListItem MapToListItem(EventDocument doc)
         {
             return new EventListItem
             {
@@ -328,6 +328,8 @@ namespace YouMap.Controllers
         public int? HoursNext { get; set; }
         public string Search { get; set; }
         public PagingInfo PagingInfo { get; set; }
+        public string UserId { get; set; }
+        public string PlaceId { get; set; }
 
         public EventsFilter()
         {

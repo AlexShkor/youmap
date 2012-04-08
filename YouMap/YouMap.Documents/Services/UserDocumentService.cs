@@ -108,6 +108,11 @@ namespace YouMap.Documents.Services
 
         public IOrderedEnumerable<EventDocument> GetEventsListForPlace(string placeId, int count)
         {
+            return GetEventsListForPlace(placeId, count, count);
+        }
+
+        public IOrderedEnumerable<EventDocument> GetEventsListForPlace(string placeId, int before, int after)
+        {
             var users = GetByFilter(new UserFilter
                                         {
                                             EventInPlace = placeId
@@ -117,30 +122,26 @@ namespace YouMap.Documents.Services
                                        x.PlaceId == placeId).ToList();
             var date = DateTime.Now;
             var prev = events.Where(x => x.Start < date).OrderByDescending(
-                x => x.Start).Take(count);
-            var next = events.Where(x => x.Start >= date).OrderBy(x => x.Start).Take(count);
+                x => x.Start).Take(before);
+            var next = events.Where(x => x.Start >= date).OrderBy(x => x.Start).Take(after);
             return prev.Concat(next).OrderByDescending(x => x.Start);
         }
 
-        public IOrderedEnumerable<CheckInDocument> GetCheckInsListForPlace(string placeId, int count)
+        public IEnumerable<CheckInDocument> GetCheckInsListForPlace(string placeId, int count)
         {
             var users = GetByFilter(new UserFilter
                                         {
                                             CheckInPlace = placeId
                                         });
-            return CheckInsForUsers(users, placeId, count);
+            return CheckInsForUsers(users, placeId).Take(count);
         }
 
-        private static IOrderedEnumerable<CheckInDocument> CheckInsForUsers(IEnumerable<UserDocument> users, string placeId, int count)
+        private static IEnumerable<CheckInDocument> CheckInsForUsers(IEnumerable<UserDocument> users, string placeId)
         {
             var events = users.SelectMany(x => x.CheckIns).Where(
                 x =>
                 x.PlaceId == placeId).ToList();
-            var date = DateTime.Now;
-            var prev = events.Where(x => x.Visited < date).OrderByDescending(
-                x => x.Visited).Take(count);
-            var next = events.Where(x => x.Visited >= date).OrderBy(x => x.Visited).Take(count);
-            return prev.Concat(next).OrderByDescending(x => x.Visited);
+            return events.OrderByDescending(x => x.Visited);
         }
 
         public IEnumerable<IGrouping<UserDocument, CheckInDocument>> GetCheckInsGroupsForPlace(string placeId, int count)
@@ -149,7 +150,7 @@ namespace YouMap.Documents.Services
                                         {
                                             CheckInPlace = placeId
                                         });
-            var item = CheckInsForUsers(users, placeId, count);
+            var item = CheckInsForUsers(users, placeId).Take(count);
             return item.GroupBy(c => users.First(x => x.CheckIns.Contains(c)));
         }
 

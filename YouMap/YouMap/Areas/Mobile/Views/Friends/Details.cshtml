@@ -1,0 +1,23 @@
+﻿@model YouMap.Areas.Mobile.Controllers.FriendModel
+
+@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = Model.Name;
+}
+<fieldset><div class="ui-block-a"><img src=""/></div>
+    <div class="ui-block-b">
+        <p><strong>@Model.LastCheckInTimeAgo</strong></p>
+        <h2>@Model.PlaceTitle</h2>
+        <p>@Model.LastCheckInMessage</p>
+    </div>	 
+</fieldset>
+
+
+<ul data-role="listview" data-inset="true">
+    <li><a href="@Model.EventsLink">Встречи</a></li>
+    <li><a href="@Model.CheckInsLink">Отметки</a></li>
+</ul>
+
+<ul data-role="listview" data-inset="true">
+    <li><a href="@Model.VkLink">Страница Вконтакте</a></li>
+</ul>

@@ -1,0 +1,10 @@
+﻿@model CheckInListItem
+
+
+@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = Model.UserName;
+}
+
+<h2>@Model.Visited</h2>
+<p>@Model.Memo</p>
