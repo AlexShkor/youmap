@@ -6,9 +6,13 @@ namespace YouMap.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            if (((string)filterContext.RouteData.Values["area"] ?? string.Empty).ToLower() == "mobile")
+            {
+                base.OnActionExecuting(filterContext);
+            }
            if (filterContext.HttpContext.Request.Browser.IsMobileDevice)
             {
-                filterContext.Result = new RedirectResult("/Mobile");
+               // filterContext.Result = new RedirectResult("/Mobile");
             }
         }
     }

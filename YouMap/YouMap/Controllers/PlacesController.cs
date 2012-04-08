@@ -407,7 +407,7 @@ namespace YouMap.Controllers
         {
             var location = Location.Parse(x, y);
             var places = _documentService.GetPlacesForLocation(location);
-            var model = places.Select(MapSelectList);
+            var model = places.Select(MapSelectList).SelectMany(m => m);
             return RespondTo(r =>
                           {
                               r.Ajax = () => PartialView("SelectList", model);
@@ -427,9 +427,9 @@ namespace YouMap.Controllers
                           });
         }
 
-        private PlaceSelectListItem MapSelectList(KeyValuePair<double,PlaceDocument> doc)
+        private IEnumerable<PlaceSelectListItem> MapSelectList(IGrouping<double,PlaceDocument> doc)
         {
-            return MapSelectList(doc.Value);
+            return doc.Select(MapSelectList);
         }
 
         private PlaceSelectListItem MapSelectList(PlaceDocument doc)

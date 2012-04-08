@@ -18,9 +18,9 @@ YouMap.Map = function ($) {
     var map = null;
     var places = new Array();
 
-    var initialize = function (config) {
+    var initialize = function (config, mapUrl) {
         map = YouMap.Google.CreateMap(config,zoomCallback);
-        Request.get(window.location.href).addSuccess("markersload",function (data) {
+        Request.get(mapUrl || window.location.href).addSuccess("markersload", function (data) {
             places = data.jsonItems.model.Places;
             for (var i = 0; i < places.length; i++) {
                 places[i].click = openPlaceInfo;
@@ -214,6 +214,8 @@ YouMap.Map = function ($) {
         }
         return null;
     };
+    
+
    
     var startUpdateLocation = function() {
         setTimeout(function() {
@@ -276,8 +278,18 @@ YouMap.Map = function ($) {
             }
         });
     };
-    
 
+    var updateUserLocation = function () {
+        if (!userLocation) {          
+            YouMap.Geolocation.Locate(function(x, y) {
+                userLocation = { x: x, y: y };
+                Request.post("/Vk/SubmitLocation").addParams({
+                    X: x,
+                    Y: y
+                }).send();
+            });
+        }
+    };
 
     var searchByLocation = function(x, y, callback) {
         var location = new google.maps.LatLng(x, y);
@@ -348,7 +360,8 @@ YouMap.Map = function ($) {
         SubmitUserLocation: submitUserLocation,
         FilterPlaces: filterPlaces,
         NavigateToPlaceById: navigateToPlaceById,
-        ToggleUserDrag: toggleUserDrag
+        ToggleUserDrag: toggleUserDrag,
+        UpdateUserLocation: updateUserLocation
     };
 } (jQuery);
 

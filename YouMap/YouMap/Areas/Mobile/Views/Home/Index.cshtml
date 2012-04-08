@@ -8,7 +8,7 @@
 <script>
     $(document).ready(function () {
         var config = @( Html.Raw(Model.ToJson()));
-	YouMap.Map.Initialize(config);
+	YouMap.Map.Initialize(config, '@Url.Action("Index","Home")');
 });
 </script>
 <div id="mapHolder">

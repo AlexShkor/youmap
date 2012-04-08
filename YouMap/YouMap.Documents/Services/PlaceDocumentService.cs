@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -59,12 +60,12 @@ namespace YouMap.Documents.Services
             return query;
         }
 
-        public IDictionary<double, PlaceDocument> GetPlacesForLocation(Location location, int count = 100)
+        public IEnumerable<IGrouping<double, PlaceDocument>> GetPlacesForLocation(Location location, int count = 100)
         {
             return GetNear(location, count, 0.8);
         }
 
-        public IDictionary<double,PlaceDocument> GetNear(Location location, int count = 100, double radiusInKm = 1)
+        public IEnumerable<IGrouping<double, PlaceDocument>> GetNear(Location location, int count = 100, double radiusInKm = 1)
         {
             
             var query = Query.EQ("Status", PlaceStatusEnum.Active);
@@ -76,12 +77,20 @@ namespace YouMap.Documents.Services
                                                         location.Longitude, //incorrect ordering until database regeneration will be done
                                                         count,
                                                         options);
-            return result.Hits.ToDictionary(x => x.Distance * EarthRadius, y => y.Document);
+            return result.Hits.GroupBy(x => x.Distance * EarthRadius,y=> y.Document);
         }
 
         public PlaceDocument GetPlaceForLocation(Location location)
         {
-            return GetPlacesForLocation(location, 1).SingleOrDefault().Value;
+            try
+            {
+                return GetPlacesForLocation(location, 1).First().First();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
     }
 

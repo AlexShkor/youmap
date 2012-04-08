@@ -17,7 +17,7 @@ namespace YouMap.Areas.Mobile
             context.MapRoute(
                 "Mobile_default",
                 "Mobile/{controller}/{action}/{id}",
-                new {action = "Settings", id = UrlParameter.Optional }
+                new {action = "Main", controller = "Home", id = UrlParameter.Optional }
             , new string[] { "YouMap.Areas.Mobile.Controllers" });
         }
     }

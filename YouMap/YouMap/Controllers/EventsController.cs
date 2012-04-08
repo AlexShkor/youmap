@@ -35,32 +35,36 @@ namespace YouMap.Controllers
             _imageService = imageService;
         }
 
-        public ActionResult Index(string id)
-        {
-            id = id ?? User.Id;
-            var doc = _userDocumentService.GetByFilter(new UserFilter {IdOrVkIdEqual = id}).First();
-            var events = doc.Events;
-            if (doc.Id != User.Id)
-            {
-                events = events.Where(x=> !x.Private || x.UsersIds.Contains(User.Id) || x.UsersIds.Contains(User.VkId)).ToList();
-            }
-            var model = events.Select(MapToListItem);
-            return RespondTo(model);
-        }      
+        //public ActionResult Index(string id)
+        //{
+        //    id = id ?? User.Id;
+        //    var doc = _userDocumentService.GetByFilter(new UserFilter {IdOrVkIdEqual = id}).First();
+        //    var events = doc.Events;
+        //    if (doc.Id != User.Id)
+        //    {
+        //        events = events.Where(x=> !x.Private || x.UsersIds.Contains(User.Id) || x.UsersIds.Contains(User.VkId)).ToList();
+        //    }
+        //    var model = events.Select(MapToListItem);
+        //    return RespondTo(model);
+        //}      
 
         public ActionResult Index(EventsFilter filter)
         {
-            var eventStartAfter = DateTime.Now;
-            var docFilter = new UserFilter {EventStartAfter = eventStartAfter};
+            var now = DateTime.Now;
+            var docFilter = new UserFilter {EventStartAfter = now};
             if (filter.HoursNext.HasValue)
             {
-                docFilter.EventStartBefore = eventStartAfter.AddHours(filter.HoursNext.Value);
-                docFilter.PagingInfo = filter.PagingInfo;
+                docFilter.EventStartBefore = now.AddHours(filter.HoursNext.Value); 
             }
+            if (filter.HoursAgo.HasValue)
+            {
+                docFilter.EventStartAfter = now.AddHours(-filter.HoursAgo.Value);
+            }
+            docFilter.PagingInfo = filter.PagingInfo;
             var doc = _userDocumentService.GetByFilter(docFilter);
             //TODO: Refactor this, maybe move to lucene
             var events = doc.SelectMany(x => x.Events).Where(
-                x => x.Start >= eventStartAfter);
+                x => x.Start >= docFilter.EventStartAfter.Value);
             if (docFilter.EventStartBefore.HasValue)
             {
                 events = events.Where(x => x.Start <= docFilter.EventStartBefore);

@@ -35,7 +35,7 @@ namespace YouMap.Areas.Mobile.Controllers
         {
             var location = filter.HasLocation() ? filter.GetLocation() : SessionContext.Location;
             var places = _placeDocumentService.GetNear(location, filter.Count ?? 50, 5);
-            var model = places.Select(MapListItem);
+            var model = places.Select(MapListItem).SelectMany(x=> x);
             return View(model);
         }
 
@@ -46,22 +46,20 @@ namespace YouMap.Areas.Mobile.Controllers
             return View(model);
         }
 
-        private PlaceListItem MapListItem(KeyValuePair<double,PlaceDocument> pair)
+        private IEnumerable<PlaceListItem> MapListItem(IGrouping<double,PlaceDocument> pair)
         {
-            var doc = pair.Value;
-            var model = new PlaceListItem
-            {
-                Id = doc.Id,
-                Address = doc.Address,
-                Description = doc.Description,
-                Icon = _imageService.GetPlaceLogoUrl(doc),
-                Title = doc.Title,
-                MapUrl = Url.Action("Details", "Places", new { id = doc.Id }),
-                Tags = doc.Tags,
-                Distance = string.Format("{0:0.0} км", pair.Key),
-                Layer = doc.Layer
-            };
-            return model;
+            return pair.Select(doc =>  new PlaceListItem
+                                          {
+                                              Id = doc.Id,
+                                              Address = doc.Address,
+                                              Description = doc.Description,
+                                              Icon = _imageService.GetPlaceLogoUrl(doc),
+                                              Title = doc.Title,
+                                              MapUrl = Url.Action("Details", "Places", new {id = doc.Id}),
+                                              Tags = doc.Tags,
+                                              Distance = string.Format("{0:0.0} км", pair.Key),
+                                              Layer = doc.Layer
+                                          });
         }
 
         private PlaceInfoModel Map(PlaceDocument doc)
