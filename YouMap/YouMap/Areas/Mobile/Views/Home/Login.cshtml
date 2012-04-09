@@ -1,0 +1,41 @@
+﻿
+@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = "Авторизация";
+}
+
+@using (Html.BeginForm("Main","Home", FormMethod.Get))
+{
+  <img id="userPhoto"/>
+<p>
+<input type="submit" disabled="disabled" value="Продолжить" />
+</p>
+}
+
+<script>
+    hash = window.location.hash;
+    window.location.hash = "";
+    
+    var queries = hash.split('&');
+    var access_token = queries[0].split('=')[1];
+    var expires_in = queries[0].split('=')[1];
+    var user_id = queries[2].split('=')[1];
+    $(document).ready(function() {
+        $.mobile.showPageLoadingMsg();
+        VK.Api.call('users.get', { uids: [user_id], fields: "uid, first_name, last_name,photo_medium" }, function(r) {
+            if (r.response) {
+                var user = r.response[0];
+                YouMap.Auth.LoginWithToken({
+                    Id: user_id,
+                    Token: access_token,
+                    TokenExpires: expires_in,
+                    FirstName: user.first_name,
+                    LastName: user.last_name
+                });
+                $("#userPhoto").attr("src", user.photo_medium);
+                //add whait image load
+                $.mobile.hidePageLoadingMsg();
+            }
+        });
+    });
+</script>

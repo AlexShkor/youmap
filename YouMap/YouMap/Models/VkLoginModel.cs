@@ -7,13 +7,10 @@ namespace YouMap.Models
     {
         public long Expire { get; set; }
 
-        [Required]
         public string Sig { get; set; }
 
-        [Required]
         public string Sid { get; set; }
 
-        [Required]
         public string Mid { get; set; }
 
         public string Secret { get; set; }
@@ -33,5 +30,9 @@ namespace YouMap.Models
         public String Href { get; set; }
 
         public String Nickname { get; set; }
+
+        public String TokenExpires { get; set; }
+
+        public String Token { get; set; }
     }
 }

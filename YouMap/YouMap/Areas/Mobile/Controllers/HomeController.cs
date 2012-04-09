@@ -8,6 +8,7 @@ using YouMap.Documents.Services;
 using YouMap.Domain.Auth;
 using YouMap.Domain.Enums;
 using YouMap.Framework;
+using YouMap.Framework.Utils.Extensions;
 using YouMap.Models;
 
 namespace YouMap.Areas.Mobile.Controllers
@@ -32,6 +33,7 @@ namespace YouMap.Areas.Mobile.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult VkAuthCallback(string access_token, string expires_in, string user_id)
         {
             //var url = Request.Url;
@@ -41,6 +43,14 @@ namespace YouMap.Areas.Mobile.Controllers
             //access_token = access_token ?? dict["access_token"];
             //expires_in = expires_in ?? dict["expires_in"];
             //user_id = user_id ?? dict["user_id"];
+            if (!access_token.HasValue() &&
+                !expires_in.HasValue() &&
+                !user_id.HasValue()
+                )
+            {
+                return View("Login");
+            }
+
             var user = _userDocumentService.GetByFilter(new UserFilter() {VkId = user_id}).FirstOrDefault();
 
             if (user !=null)

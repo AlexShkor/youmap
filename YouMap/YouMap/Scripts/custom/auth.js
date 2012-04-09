@@ -46,11 +46,16 @@
     };
 
     var autoLogin = function() {
-        VK.Auth.login(vkLoginCallback, permissions);
+        //VK.Auth.login(vkLoginCallback, permissions);
+    };
+
+    var loginWithToken = function(model) {
+        Request.post("/Account/LoginVk").addParams(model).send();
     };
 
     return {
         Initialize: initialize,
-        AutoLogin : autoLogin
+        AutoLogin: autoLogin,
+        LoginWithToken: loginWithToken
     };
 } (jQuery);
