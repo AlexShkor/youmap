@@ -4,6 +4,7 @@ using Paralect.Domain;
 using Prelude.Extensions;
 using StructureMap.Attributes;
 using YouMap.Domain.Auth;
+using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 using YouMap.Framework;
 using YouMap.Framework.Exceptions;
@@ -13,6 +14,8 @@ namespace YouMap.Controllers
 {
     public abstract class BaseController : Controller
     {
+        protected readonly Location DefaultLocation = Location.Parse("53.9022474151841", "27.561811187172"); //Minsk central square 
+
         #region Properties
 
         private AjaxResponse _response;

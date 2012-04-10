@@ -37,6 +37,7 @@ namespace YouMap.Controllers
         public ActionResult Index(MapFilter filter)
         {
             var model = new MapModel();
+            model.Defaultlocation = DefaultLocation;
             if (SessionContext.Location != null)
             {
                 model.UserLocation = SessionContext.Location;
@@ -108,7 +109,7 @@ namespace YouMap.Controllers
             return PartialView(model);
         }
 
-        private PlaceModel Map(PlaceDocument doc)
+        protected virtual PlaceModel Map(PlaceDocument doc)
         {
             return new PlaceModel
             {

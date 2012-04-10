@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 using YouMap.Controllers;
 using YouMap.Documents.Services;
 using YouMap.Domain.Auth;
@@ -15,8 +19,8 @@ namespace YouMap.Areas.Mobile.Controllers
 {
     public class HomeController : MapController
     {
-        private UserDocumentService _userDocumentService;
-        private AuthenticationService _authenticationService;
+        private readonly UserDocumentService _userDocumentService;
+        private readonly AuthenticationService _authenticationService;
         public HomeController(ICommandService commandService, PlaceDocumentService placeDocumentService, ImageService imageService,UserDocumentService userDocumentService, AuthenticationService authenticationService) : base(commandService, placeDocumentService, imageService, userDocumentService)
         {
             _userDocumentService = userDocumentService;
@@ -34,33 +38,35 @@ namespace YouMap.Areas.Mobile.Controllers
         }
 
         [HttpGet]
-        public ActionResult VkAuthCallback(string access_token, string expires_in, string user_id)
+        public ActionResult VkAuthCallback(string code)
         {
-            //var url = Request.Url;
-            //var queries = url.ToString().Split('#');
-            //queries = queries[1].Split('&');
-            //var dict = queries.ToDictionary(x => x.Split('=')[0], y => y.Split('=')[1]);
-            //access_token = access_token ?? dict["access_token"];
-            //expires_in = expires_in ?? dict["expires_in"];
-            //user_id = user_id ?? dict["user_id"];
-            if (!access_token.HasValue() &&
-                !expires_in.HasValue() &&
-                !user_id.HasValue()
-                )
+            var wc = new WebClient();
+            var result = String.Empty;
+            try
+            {
+                result =
+                    wc.DownloadString(
+                        String.Format("https://oauth.vk.com/access_token?client_id={0}&client_secret={1}&code={2}",
+                                      Framework.Settings.Current.VkAppId,
+                                      Framework.Settings.Current.VkAppSecret, 
+                                      code));
+            }
+            catch (Exception)
+            {
+            }
+            var js = new JavaScriptSerializer();
+            var response = js.Deserialize<dynamic>(result) as Dictionary<string, object>;
+            if (response == null || !response.Keys.Contains("user_id"))
+            {
+                return View("VkError");
+            }
+            var userId = response["user_id"].ToString();
+            var user = _userDocumentService.GetByFilter(new UserFilter() {VkId = userId}).FirstOrDefault();
+            if (user == null)
             {
                 return View("Login");
             }
-
-            var user = _userDocumentService.GetByFilter(new UserFilter() {VkId = user_id}).FirstOrDefault();
-
-            if (user !=null)
-            {
-                _authenticationService.SetAuthCookie(user, true);
-            }
-            else
-            {
-                ViewBag.AutoLogin = true;   
-            }            
+            _authenticationService.SetAuthCookie(user, true);
             return View("Main");
         }
 
@@ -80,7 +86,7 @@ namespace YouMap.Areas.Mobile.Controllers
                 model.DisplayAdmin = user.HasPermissions(UserPermissionEnum.Admin);
             }
             model.VkLoginUrl = string.Format(
-                "http://oauth.vk.com/authorize?client_id={0}&scope={1}&redirect_uri={2}?&display=touch&response_type=token",
+                "http://oauth.vk.com/authorize?client_id={0}&scope={1}&redirect_uri={2}?&display=touch&response_type=code",
                 Framework.Settings.Current.VkAppId, 1027,
                 "http://" + Request.Url.Authority + Url.Action("VkAuthCallback"));
             return model;

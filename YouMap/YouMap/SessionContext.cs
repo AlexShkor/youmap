@@ -36,7 +36,6 @@ namespace YouMap
         private const string UserInfoKey = "UserInfo";
         private const string UserKey = "UserId";
         private const string LocationSessionKey = "Location";
-        private readonly Location DefaultLocation = Location.Parse("53.9022474151841", "27.561811187172"); //Minsk central square 
 
         public IUserIdentity User
         {
@@ -133,7 +132,7 @@ namespace YouMap
 
         public Location Location
         {
-            get { return GetSessionValue<Location>(LocationSessionKey) ?? DefaultLocation; }
+            get { return GetSessionValue<Location>(LocationSessionKey); }
             set { SetSessionValue(LocationSessionKey, value); }
         }
     }

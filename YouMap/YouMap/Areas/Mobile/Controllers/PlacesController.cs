@@ -33,7 +33,7 @@ namespace YouMap.Areas.Mobile.Controllers
 
         public ActionResult Index(PlaceFilterModel filter)
         {
-            var location = filter.HasLocation() ? filter.GetLocation() : SessionContext.Location;
+            var location = filter.HasLocation() ? filter.GetLocation() : SessionContext.Location ?? DefaultLocation;
             var places = _placeDocumentService.GetNear(location, filter.Count ?? 50, 5);
             var model = places.Select(MapListItem).SelectMany(x=> x);
             return View(model);

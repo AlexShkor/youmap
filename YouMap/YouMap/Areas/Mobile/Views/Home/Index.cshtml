@@ -1,16 +1,20 @@
-﻿@model MapModel
+﻿@using System.Diagnostics
+@model MapModel
            
 @{
     Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Карта";
+    Debug.Assert(ViewContext.RequestContext.HttpContext.Request.Url != null, "ViewContext.RequestContext.HttpContext.Request.Url != null");
+    var url = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery;
 }
 
 <script>
     $(document).ready(function () {
         var config = @( Html.Raw(Model.ToJson()));
-	YouMap.Map.Initialize(config, '@Url.Action("Index","Home")');
+	YouMap.Map.Initialize(config, '@url');
 });
 </script>
 <div id="mapHolder">
     <div id="map"></div>
 </div>
+

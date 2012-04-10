@@ -47,6 +47,10 @@ namespace YouMap.Framework
             get { return WebConfigurationManager.AppSettings["VkAppId"]; }
         }
 
+        public string VkAppSecret
+        {
+            get { return WebConfigurationManager.AppSettings["VkAppSecret"]; }
+        }
     }
 
     public class DeploySettings

@@ -24,6 +24,10 @@ namespace YouMap.Models
 
         public Location UserLocation { get; set; }
 
+        public Location Defaultlocation { get; set; }
+
+        public string MapUrl { get; set; }
+
         public MapModel()
         {
             Width = 1450;

@@ -185,12 +185,16 @@ YouMap.Vk.Map = function($) {
 
     var hideFriendsMarkers = function() {
         for (var i in friends) {
-            friends[i].options.marker.setMap(null);
+            var friend = friends[i];
+            if (friend.options && friend.options.marker)
+                YouMap.Google.AddMarker(friend.options.marker);
         }
     };
     var showFriendsMarkers = function () {
         for (var i in friends) {
-            YouMap.Google.AddMarker(friends[i].options.marker);
+            var friend = friends[i];
+            if (friend.options && friend.options.marker)
+                YouMap.Google.AddMarker(friend.options.marker);
         }
     };
 

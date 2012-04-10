@@ -8,12 +8,13 @@
 @foreach(var item in Model)
 {
         <li data-corners="false" data-shadow="false" data-wrapperels="div"
-        data-icon="arrow-r" data-iconpos="right" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up">
+        data-icon="arrow-r" data-iconpos="right" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li  ui-btn-up">
         <div class="ui-btn-inner">
             <div class="ui-btn-text">
-                <a href="@item.MapUrl" class="ui-link-inherit">
+                     <img src="@item.Icon" class="ui-li-thumb">
+                <a style="padding-left: 100px;" href="@item.MapUrl" class="ui-link-inherit">
+                                  
                     <p class="ui-li-aside ui-li-desc"><strong>@item.Distance</strong></p>
-                    <img src="@item.Icon" class="ui-li-thumb">
                     <h3 class="ui-li-heading">@item.Title</h3>
                     <p class="ui-li-desc">@item.Address</p>
                 </a>
