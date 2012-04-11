@@ -27,6 +27,7 @@ namespace YouMap.Areas.Mobile.Controllers
             _authenticationService = authenticationService;
         }
 
+
         public ActionResult Main()
         {
             return View();
@@ -90,6 +91,14 @@ namespace YouMap.Areas.Mobile.Controllers
                 Framework.Settings.Current.VkAppId, 1027,
                 "http://" + Request.Url.Authority + Url.Action("VkAuthCallback"));
             return model;
+        }
+
+        protected override PlaceModel Map(Documents.Documents.PlaceDocument doc)
+        {
+            var result =  base.Map(doc);
+            result.InfoWindowUrl = Url.Action("Details", "Places", new {id = doc.Id});
+            result.OpenInNewWindow = true; 
+            return result;
         }
     }
 }

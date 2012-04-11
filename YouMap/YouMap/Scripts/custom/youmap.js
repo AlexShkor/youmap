@@ -29,7 +29,7 @@ YouMap.Map = function ($) {
                 places[i].Marker = marker;
                 places[i].VisibleByFilter = true;
                 if (places[i].OpenOnLoad) {
-                    navigateToPlace(places[i]);
+                    navigateToPlace(places[i], config.DisableAutoOpenPlaceInfo);
                 }
             }
             if (config.OpenPopupUrl) {
@@ -67,6 +67,10 @@ YouMap.Map = function ($) {
     var openPlaceInfo = function(options) {
         var temp = options;
         var marker = options.Marker;
+        if (options.OpenInNewWindow) {
+            window.location = options.InfoWindowUrl;
+            return;
+        }
         $.get(options.InfoWindowUrl, function (result) {
             YouMap.Google.OpenWindow(marker, result);
             drawPlaceVkLike(temp.Id, options.Title, $(result).find("img").attr("src"));
@@ -104,8 +108,11 @@ YouMap.Map = function ($) {
         });
     };
 
-    var navigateToPlace = function(place) {
+    var navigateToPlace = function(place,dontOpen) {
         setMapCenter(place.X, place.Y);
+        if (dontOpen) {
+            return;
+        }
         openPlaceInfo(place);
     };
 

@@ -28,6 +28,8 @@ namespace YouMap.Models
 
         public string MapUrl { get; set; }
 
+        public bool DisableAutoOpenPlaceInfo { get; set; }
+
         public MapModel()
         {
             Width = 1450;

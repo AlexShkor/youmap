@@ -15,6 +15,8 @@ namespace YouMap.Models
         public string Id { get; set; }
 
         public int Layer { get; set; }
+
+        public bool OpenInNewWindow { get; set; }
     }
 
     public class FriendMarkerModel: MarkerModel

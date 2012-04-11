@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "YOUMAP";
+    var need = true;
 }
 
 @section Header
@@ -10,6 +11,20 @@
     @Html.Action("LoginState","Home")
 }
 
+        @if(need)
+        {
+            <script>
+                $(function() {
+                    YouMap.Geolocation.Locate(function(x, y) {
+                        Request.get("/Vk/SubmitLocation").addParams({
+                            x: x,
+                            y: y
+                        }).send();
+                    });
+                });                
+
+            </script>
+        }
 <h2>@ViewBag.Message</h2>
 
 <ul data-role="listview" data-inset="true">

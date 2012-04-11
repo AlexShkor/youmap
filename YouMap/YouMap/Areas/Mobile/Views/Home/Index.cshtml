@@ -6,12 +6,15 @@
     ViewBag.Title = "Карта";
     Debug.Assert(ViewContext.RequestContext.HttpContext.Request.Url != null, "ViewContext.RequestContext.HttpContext.Request.Url != null");
     var url = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery;
+    Model.DisableAutoOpenPlaceInfo = true;
+    var need = true;
 }
+
 
 <script>
     $(document).ready(function () {
         var config = @( Html.Raw(Model.ToJson()));
-	YouMap.Map.Initialize(config, '@url');
+        YouMap.Map.Initialize(config, '@url');
 });
 </script>
 <div id="mapHolder">
