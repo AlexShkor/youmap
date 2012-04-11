@@ -1,0 +1,14 @@
+﻿
+
+@{
+    ViewBag.Title = "Отметиться";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<ulЮ data-role="listview" data-inset="true">
+    <li data-role="list-divider">Отметиться...</li>
+    
+    <li>@Html.ActionLink("Выбрать место", "Index", "Places")</li>
+    <li>@Html.ActionLink("На улице", "CheckIn", "Home", new {refirectUrl = Url.Action("Main")})</li>
+</ulЮ

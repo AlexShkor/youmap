@@ -76,6 +76,11 @@ namespace YouMap.Areas.Mobile.Controllers
             var model = Map(User);
             return PartialView(model);
         }
+        
+        public ActionResult Choise()
+        {
+            return View();
+        }
 
         private UserViewModel Map(IUserIdentity user)
         {

@@ -1,5 +1,5 @@
 ﻿
-@model YouMap.Models.CheckInModel
+@model CheckInModel
 @{
     Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Отметиться";
@@ -20,9 +20,11 @@
                 <h5 >У вас осталось @Model.LeftCount отметки здесь.</h5>
             }else
             {
-                @Html.Label("PlaceId","Места поблизости")
-                <select id="placeSelectList">
-                </select>
+
+            //     @Html.Label("PlaceId","Места поблизости")
+            //    <select id=
+             //   "placeSelectList">
+              //  </select>
             }
         </div>
         <div>
@@ -34,7 +36,7 @@
             @Html.HiddenFor(x => x.Longitude)
             @Html.TextAreaFor(x => x.Memo)
             <p>
-                <input type="submit" class="ajax-submit awesome small" value="Отметится" />
+                <input type="submit" value="Отметится" />
             </p>
         </div>
     }

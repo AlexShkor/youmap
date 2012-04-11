@@ -14,14 +14,16 @@
         @if(need)
         {
             <script>
-                $(function() {
-                    YouMap.Geolocation.Locate(function(x, y) {
-                        Request.get("/Vk/SubmitLocation").addParams({
-                            x: x,
-                            y: y
-                        }).send();
-                    });
-                });                
+    $(function () {
+        setTimeout(function() {
+            YouMap.Geolocation.Locate(function(x, y) {
+                Request.get("/Vk/SubmitLocation").addParams({
+                    x: x,
+                    y: y
+                }).send();
+            });
+        }, 100);
+    });                
 
             </script>
         }
@@ -29,7 +31,7 @@
 
 <ul data-role="listview" data-inset="true">
     <li data-role="list-divider">Управление</li>
-    <li>@Html.ActionLink("Отметиться", "CheckIn", "Home")</li>
+    <li>@Html.ActionLink("Отметиться", "Choise", "Home")</li>
     <li>@Html.ActionLink("Встречи", "Index", "Events" , new{hoursAgo = 1},new{})</li>
     <li>@Html.ActionLink("Друзья", "Index", "Friends" )</li>
     <li>@Html.ActionLink("Места", "Index", "Places")</li>

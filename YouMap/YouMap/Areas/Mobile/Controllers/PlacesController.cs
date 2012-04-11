@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using YouMap.Controllers;
 using YouMap.Documents.Documents;
-using YouMap.Documents.Lucene;
 using YouMap.Documents.Services;
 using YouMap.Domain.Data;
 using YouMap.Framework;
@@ -14,19 +13,16 @@ namespace YouMap.Areas.Mobile.Controllers
 {
     public class PlacesController:BaseController
     {
-        private readonly PlaceLuceneService _placeLuceneService;
         private readonly PlaceDocumentService _placeDocumentService;
         private readonly ImageService _imageService;
 
         public PlacesController(
             ICommandService commandService, 
-            PlaceLuceneService placeLuceneService,
             PlaceDocumentService placeDocumentService,
             ImageService imageService
             )
             : base(commandService)
         {
-            _placeLuceneService = placeLuceneService;
             _placeDocumentService = placeDocumentService;
             _imageService = imageService;
         }
@@ -73,10 +69,9 @@ namespace YouMap.Areas.Mobile.Controllers
                 CheckInsLink = Url.Action("ForPlace","CheckIns", new{placeId = doc.Id}),
                 EventsLink = Url.Action("ForPlace","Events", new{placeId = doc.Id}),
                 MapLink = Url.Action("Index","Home", new{placeId = doc.Id}),
-                CheckInLink = Url.Action("CheckIn","Home",new{placeId = doc.Id})
+                CheckInLink = Url.Action("CheckIn","Home",new{placeId = doc.Id,redirectUrl = Url.Action("Details",new{id=doc.Id})})
             };
         }
-
     }
 
     public class PlaceFilterModel

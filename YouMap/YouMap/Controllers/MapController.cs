@@ -180,7 +180,13 @@ namespace YouMap.Controllers
                               };
             Send(command);
             AjaxResponse.ClosePopup = true;
-            return RespondTo(model);
+            AjaxResponse.RedirectUrl = model.RedirectUrl;
+            return RespondTo(request =>
+                                 {
+                                     request.Ajax = PartialView;
+                                     request.Json = Result;
+                                     request.Html = () => Redirect(model.RedirectUrl ?? Url.Action("Index"));
+                                 });
         }
     }
 

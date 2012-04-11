@@ -22,6 +22,8 @@ namespace YouMap.Models
 
         public DateTime Visited { get; set; }
 
+        public string RedirectUrl { get; set; }
+
         public int LeftCount { get; set; }
 
         public bool Enabled

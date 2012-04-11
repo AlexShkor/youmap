@@ -56,14 +56,14 @@ YouMap.Vk.Panel = function($) {
     };
 
     var checkInInit = function (located) {
-        if (!located) {
-            YouMap.Geolocation.Locate(function(x, y) {
-                Request.get("/Places/Near").addParams({
-                    x: x,
-                    y: y
-                }).send();
-            });
-        }
+        //if (!located) {
+        //    YouMap.Geolocation.Locate(function(x, y) {
+        //        Request.get("/Places/Near").addParams({
+        //            x: x,
+        //            y: y
+        //        }).send();
+        //    });
+        //}
         if (!$("#checkin #PlaceId").val()) {
             var loc = YouMap.Map.GetUserLocation();
             if (loc) {
