@@ -12,11 +12,13 @@ namespace YouMap.Domain.Events
         public string Memo { get; set; }
         public Location Location { get; set; }
         public DateTime Start { get; set; }
+        [Obsolete]
         public IEnumerable<string> UsersIds { get; set; }
         public bool Private { get; set; }
         public string PlaceId { get; set; }
         public string OwnerId { get; set; }
         public string OwnerName { get; set; }
         public string UserId { get; set; }
+        public List<Friend> Members { get; set; }
     }
 }

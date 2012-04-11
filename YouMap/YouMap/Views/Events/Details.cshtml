@@ -38,9 +38,9 @@
     <div style="display: none" id="eventValidation" class="validation-summary-errors"></div>
     <div class="users well">Участники:
         <a data-uid="@Model.OwnerVkId" id="linkFor@(Model.OwnerVkId)" href="http://vk.com/id@(Model.OwnerVkId)">@Model.OwnerName</a>
-        @foreach(var user in Model.UsersIds)
+        @foreach(var user in Model.Members)
         {
-            <span>; </span><a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
+            <span>; </span><a data-uid="@user.Value" id="linkFor@(user.Value)" href="http://vk.com/id@(user.Value)">@(user.Text??"Скрытый участник")</a>
         }
     </div>
 </div>

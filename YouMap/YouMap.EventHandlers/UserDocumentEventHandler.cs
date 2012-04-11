@@ -5,6 +5,7 @@ using Paralect.ServiceBus;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain;
+using YouMap.Domain.Data;
 using YouMap.Domain.Events;
 
 namespace YouMap.EventHandlers
@@ -88,7 +89,7 @@ namespace YouMap.EventHandlers
                               Private = message.Private,
                               Start = message.Start,
                               Title = message.Title,
-                              UsersIds = message.UsersIds.ToList()
+                              Members = message.Members.ToList()
                           };
             var update = Update.PushWrapped("Events", doc);
             _documentService.Update(query,update);
@@ -97,7 +98,9 @@ namespace YouMap.EventHandlers
         public void Handle(User_EventMemberAddedEvent message)
         {
             var query = Query.And(Query.EQ("_id", message.UserId), Query.EQ("Events._id",message.EventId));
-            var update = Update.AddToSet("Events.$.UsersIds", message.NewMemberId);
+            var update = Update.AddToSetWrapped("Events.$.Members",
+                                                new Friend
+                                                    {VkId = message.NewMemberId, FullName = message.NewMemberName});
             _documentService.Update(query,update);
         }
 

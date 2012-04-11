@@ -8,5 +8,6 @@ namespace YouMap.Domain.Events
         public string EventId { get; set; }
         public string UserId { get; set; }
         public string NewMemberId { get; set; }
+        public string NewMemberName { get; set; }
     }
 }

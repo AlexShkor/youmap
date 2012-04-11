@@ -14,7 +14,14 @@ namespace YouMap.Documents.Documents
         public string PlaceId { get; set; }
         public Location Location { get; set; }
         public DateTime Start { get; set; } 
+        [Obsolete]
         public List<string> UsersIds { get; set; } 
         public bool Private { get; set; }
+        public List<Friend> Members { get; set; }
+
+        public EventDocument()
+        {
+            Members = new List<Friend>();
+        }
     }
 }

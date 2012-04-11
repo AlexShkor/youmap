@@ -9,7 +9,7 @@ namespace YouMap.Domain.Data
         string Memo { get; set; }
         Location Location { get; set; }
         DateTime Start { get; set; }
-        IEnumerable<string> UsersIds { get; set; }
+        IEnumerable<Friend> Members { get; set; }
         bool Private { get; set; }
         string PlaceId { get; set; }
         string OwnerId { get; set; }

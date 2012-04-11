@@ -13,10 +13,10 @@ namespace YouMap.Domain.Commands
         public string Memo { get; set; }
         public Location Location { get; set; }
         public DateTime Start { get; set; }
-        public IEnumerable<string> UsersIds { get; set; }
         public bool Private { get; set; }
         public string PlaceId { get; set; }
         public string OwnerId { get; set; }
+        public IEnumerable<Friend> Members { get; set; }
     }
 
     public class User_CreateEventCommandHandler: CommandHandler<User_AddEventCommand>

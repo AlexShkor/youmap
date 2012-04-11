@@ -10,9 +10,9 @@
             <li>
                                 <div class="users" @Html.DisplayIf(item.DisplayUsers)>
                 <a data-uid="@item.OwnerVkId" id="linkFor@(item.OwnerVkId)" href="http://vk.com/id@(item.OwnerVkId)">@item.OwnerName</a>
-                    @foreach(var user in item.UsersIds)
+                    @foreach(var user in item.Members)
                     {
-                        <a data-uid="@user" id="linkFor@(user)" href="http://vk.com/id@(user)">Скрытый участник</a>
+                        <a data-uid="@user.Value" id="linkFor@(user.Value)" href="http://vk.com/id@(user.Value)">@user.Text</a>
                     }
                 </div>
             </li>

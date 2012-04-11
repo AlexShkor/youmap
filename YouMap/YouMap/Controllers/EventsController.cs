@@ -110,7 +110,7 @@ namespace YouMap.Controllers
                                   Private = model.Private,
                                   Start = model.GetStartDateTime(),
                                   Title = model.Title,
-                                  UsersIds = model.UserIds
+                                  Members = model.GetMembers()
                               };
             Send(command);
             AjaxResponse.AddJsonItem("model",MapToListItem(model));
@@ -244,33 +244,18 @@ namespace YouMap.Controllers
                 Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
                 ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id }),
-                UsersIds = doc.UsersIds
+                Members = doc.Members.Select(MapFriendListItem),
+                UsersIds = doc.Members.Select(x=>x.VkId).ToList()
             };
         }
 
-        private EventMarkerModel MapToMarker(EventDocument doc)
+        private SelectListItem MapFriendListItem(Friend friend)
         {
-            var marker = new EventMarkerModel
-                             {
-                                 PlaceId = doc.PlaceId,
-                                 Icon = _imageService.EventIconModel,
-                                 Shadow = _imageService.EventShadowModel,
-                                 InfoWindowUrl = Url.Action("Details", new {id = doc.Id}),
-                                 Title = doc.Title
-                             };
-            //TODO: need to be removed, becouse all events must have location 
-            if (doc.Location != null)
-            {
-                marker.X = doc.Location.Latitude;
-                marker.Y = doc.Location.Longitude;
-            }
-            else
-            {
-                var place = _placeDocumentService.GetById(doc.PlaceId);
-                marker.X = place.Location.Latitude;
-                marker.Y = place.Location.Longitude;
-            }
-            return marker;
+            return new SelectListItem()
+                       {
+                           Value = friend.VkId,
+                           Text = friend.FullName
+                       };
         }
 
         public ActionResult List(string placeId)
@@ -299,7 +284,8 @@ namespace YouMap.Controllers
                                   {
                                       EventId = @event.Id,
                                       NewMemberId = User.VkId,
-                                      UserId = owner.Id
+                                      UserId = owner.Id,
+                                      NewMemberName = User.Name
                                   };
                 Send(command);
                 AjaxResponse.ClosePopup = true;
@@ -308,7 +294,13 @@ namespace YouMap.Controllers
             {
                 AjaxResponse.Options.ErrorsSummaryContainer = "#eventValidation";
             }
-            return Result();
+            return RespondTo(request =>
+                                 {
+                                     request.Html =
+                                         request.Ajax =
+                                         () => RedirectToAction("Details", new {id = @event.Id});
+                                     request.Json = Result;
+                                 });
         }
 
         public ActionResult Delete(string eventid)

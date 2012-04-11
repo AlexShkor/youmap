@@ -485,10 +485,12 @@ YouMap.AddEvent = function($) {
     };
 
 
-    var addFriend = function(friend) {
+    var addFriend = function (friend) {
+        var fullName = friend.first_name + " " + friend.last_name;
         var span = $("<li/>")
-                            .append(friend.first_name + " " + friend.last_name + " (<a>x</a>)")
-                            .append("<input type='hidden' name='UserIds' value='" + friend.uid + "'/>");
+                            .append(fullName + " (<a>x</a>)")
+                            .append("<input type='hidden' name='UserIds' value='" + friend.uid + "'/>")
+                            .append("<input type='hidden' name='UserNames' value='" + fullName + "'/>");
         span.data("photo", friend.photo);
         span.appendTo(".friends-select");
     };

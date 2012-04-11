@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using YouMap.Domain.Data;
 
 namespace YouMap.Models
 {
@@ -22,6 +23,7 @@ namespace YouMap.Models
         public IEnumerable<SelectListItem> AvailableHours { get; set; }
         public IEnumerable<SelectListItem> AvailableMinutes { get; set; } 
         public List<string> UserIds { get; set; }
+        public List<string> UserNames { get; set; }
         public bool Private { get; set; }
         public string PlaceId { get; set; }
         public string PlaceTitle { get; set; }
@@ -29,6 +31,7 @@ namespace YouMap.Models
         public EventEditModel()
         {
             UserIds = new List<string>();
+            UserNames = new List<string>();
             Start = DateTime.Now.AddHours(2);
             Hour = Start.Value.Hour.ToString(CultureInfo.InvariantCulture);
             Minute = "00";
@@ -39,6 +42,15 @@ namespace YouMap.Models
         public DateTime GetStartDateTime()
         {
             return Start.Value.AddHours(int.Parse(Hour)).AddMinutes(int.Parse(Minute));
+        }
+
+        public IEnumerable<Friend> GetMembers()
+        {
+            return UserIds.Zip(UserNames, (id, name) => new Friend()
+                                                            {
+                                                                VkId = id,
+                                                                FullName = name
+                                                            });
         }
     }
 }

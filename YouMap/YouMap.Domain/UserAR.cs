@@ -90,16 +90,17 @@ namespace YouMap.Domain
                           Private = data.Private,
                           PlaceId = data.PlaceId,
                           Start = data.Start,
-                          UsersIds = data.UsersIds
+                          Members = data.Members.ToList()
                       });
         }
 
-        public void AddMemberToEvent(string newMemberId, string eventId)
+        public void AddMemberToEvent(string newMemberId, string newMemberName, string eventId)
         {
             Apply(new User_EventMemberAddedEvent
                       {
                           UserId = _id,
                           NewMemberId = newMemberId,
+                          NewMemberName = newMemberName,
                           EventId = eventId
                       });
         }

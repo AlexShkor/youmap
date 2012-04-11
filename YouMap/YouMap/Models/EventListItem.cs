@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
 namespace YouMap.Models
@@ -12,8 +13,6 @@ namespace YouMap.Models
         public string StartDate { get; set; }
 
         public string Url { get; set; }
-
-        public List<string> UsersIds { get; set; }
 
         public string OwnerId { get; set; }
 
@@ -40,6 +39,16 @@ namespace YouMap.Models
         public bool Private { get; set; }
 
         public string ShareUrl { get; set; }
+
+        public IEnumerable<SelectListItem> Members { get; set; }
+
+        public List<string> UsersIds { get; set; }
+
+        public EventListItem()
+        {
+            UsersIds = new List<string>();
+            Members = new List<SelectListItem>();
+        }
 
         public string ToJson()
         {

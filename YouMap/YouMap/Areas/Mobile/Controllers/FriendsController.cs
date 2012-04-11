@@ -55,10 +55,20 @@ namespace YouMap.Areas.Mobile.Controllers
             return result;
         }
 
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, string vkId)
         {
-            var user = _userDocumentService.GetById(id);
-
+            UserDocument user = null;
+            if (id.HasValue())
+            {
+                user = _userDocumentService.GetById(id);
+            }else if (vkId.HasValue())
+            {
+                user = _userDocumentService.GetByFilter(new UserFilter() {VkId = vkId}).Single();
+                if (user == null)
+                {
+                    return Redirect("http://vk.com/id" + vkId);
+                }
+            }
             var model = Map(user);
             if (model.PlaceId.HasValue())
             {

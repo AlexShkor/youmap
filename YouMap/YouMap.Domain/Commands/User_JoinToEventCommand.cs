@@ -7,6 +7,8 @@ namespace YouMap.Domain.Commands
     {
         public string NewMemberId { get; set; }
 
+        public string NewMemberName { get; set; }
+
         public string UserId { get; set; }
 
         public string EventId { get; set; }
@@ -22,7 +24,7 @@ namespace YouMap.Domain.Commands
         {
             var ar = Repository.GetById<UserAR>(message.UserId);
             ar.SetCommandMetadata(message.Metadata);
-            ar.AddMemberToEvent(message.NewMemberId,message.EventId);
+            ar.AddMemberToEvent(message.NewMemberId,message.NewMemberName,message.EventId);
             Repository.Save(ar);
         }
     }
