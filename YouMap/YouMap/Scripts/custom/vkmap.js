@@ -67,7 +67,7 @@ YouMap.Vk.Panel = function($) {
         if (!$("#checkin #PlaceId").val()) {
             var loc = YouMap.Map.GetUserLocation();
             if (loc) {
-                YouMap.Map.SearchByLocation(loc.lat(), loc.lng(), function(result) {
+                YouMap.Map.SearchByLocation(loc.x, loc.y, function(result) {
                     $("#checkin textarea").html(result[0].formatted_address);
                 });
             }

@@ -1,0 +1,23 @@
+﻿@using YouMap.Framework.Extensions;
+@{
+    bool needToUpdate = ViewBag.NeedToUpdateLocation != null && (bool) ViewBag.NeedToUpdateLocation;
+    var currentLocation = ViewBag.CurrentLocation as YouMap.Domain.Data.Location;
+    if (currentLocation == null)
+    {
+        return;
+    }
+    var x = currentLocation.GetLatitudeString();
+    var y = currentLocation.GetLongitudeString();
+}
+    <script>
+        $(function() {
+            YouMap.Map.SetUserLocation(@x, @y);
+            if (@needToUpdate.ToJS()) {
+                YouMap.Map.UpdateUserLocation();
+            }
+
+        });
+
+    </script>
+
+

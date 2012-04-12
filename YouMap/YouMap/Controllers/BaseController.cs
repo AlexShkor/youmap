@@ -19,6 +19,7 @@ namespace YouMap.Controllers
         #region Properties
 
         private AjaxResponse _response;
+        protected readonly TimeSpan  LocationUpdateDelay = TimeSpan.FromMinutes(30);
 
         public virtual AjaxResponse AjaxResponse
         {
@@ -119,6 +120,16 @@ namespace YouMap.Controllers
             }
 
             CommandService.SendAsync(commands);
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            ViewBag.CurrentLocation = SessionContext.Location ?? DefaultLocation;
+            if ((DateTime.Now - SessionContext.LastLocationUpdate) > LocationUpdateDelay)
+            {
+                ViewBag.NeedToUpdateLocation = true;
+            }
+            base.OnActionExecuting(filterContext);
         }
 
 

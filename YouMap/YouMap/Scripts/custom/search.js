@@ -72,7 +72,8 @@ YouMap.Search = function($) {
     };
 
     var getDistance = function(lat1, lon1) {
-        var pos = YouMap.Map.GetUserLocation();
+        var loc = YouMap.Map.GetUserLocation();
+        var pos = new google.maps.LatLng(loc.x, loc.y);
         //var lat2 = pos.lat();
         //var lon2 = pos.lng();
         var point = new google.maps.LatLng(lat1, lon1);

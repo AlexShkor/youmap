@@ -15,6 +15,7 @@ namespace YouMap
         UserInfo UserInfo { get; set; }
         IUserIdentity User { get;}
         Location Location { get; set; }
+        DateTime LastLocationUpdate { get; set; }
         bool IsUserAuthorized();
         void Logout();
         string GetStringSessionValue(string key);
@@ -76,12 +77,19 @@ namespace YouMap
 
         private T GetSessionValue<T>(string sessionKey)
         {
-            return (T) Session[sessionKey];
+            var value =  Session[sessionKey];
+            return value != null ? (T) value : default(T);
         }
 
         protected HttpSessionState Session
         {
             get { return HttpContext.Current.Session; }
+        }
+
+        public DateTime LastLocationUpdate
+        {
+            get {return GetSessionValue<DateTime>("LastLocationUpdateKey"); }
+            set { SetSessionValue("LastLocationUpdateKey", value); }
         }
 
         public bool IsUserAuthorized()

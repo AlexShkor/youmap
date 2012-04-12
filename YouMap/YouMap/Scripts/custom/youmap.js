@@ -191,6 +191,7 @@ YouMap.Map = function ($) {
     var toggleUserDrag = function () {
         var x = userMarker.position.lat();
         var y = userMarker.position.lng();
+        userLocation = { x: x, y: y };
         YouMap.Google.RemoveMarker(userMarker);
         userMarker = YouMap.Google.CreateMarker({
             X: x,
@@ -216,10 +217,7 @@ YouMap.Map = function ($) {
 
 
     var getUserLocation = function() {
-        if (userMarker) {
-            return userMarker.position;
-        }
-        return null;
+        return userLocation;
     };
     
 
@@ -286,8 +284,7 @@ YouMap.Map = function ($) {
         });
     };
 
-    var updateUserLocation = function () {
-        if (!userLocation) {          
+    var updateUserLocation = function () {       
             YouMap.Geolocation.Locate(function(x, y) {
                 userLocation = { x: x, y: y };
                 Request.post("/Vk/SubmitLocation").addParams({
@@ -295,7 +292,6 @@ YouMap.Map = function ($) {
                     Y: y
                 }).send();
             });
-        }
     };
 
     var searchByLocation = function(x, y, callback) {
@@ -348,8 +344,8 @@ YouMap.Map = function ($) {
 
     var submitUserLocation = function() {
         Request.post("/Vk/SubmitLocation").addParams({
-            X: userMarker.position.lat(),
-            Y: userMarker.position.lng()
+            X: userLocation.x,
+            Y: userLocation.y
         }).send();
     };
 

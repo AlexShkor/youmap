@@ -24,8 +24,6 @@
         // after a form post), hence disabling it.
         $.mobile.ajaxEnabled = false;
     });
-    setTimeout(YouMap.Map.GetUserLocation, 100);
-
     $(function() {
         VK.init({
             apiId: @(Settings.Current.VkAppId)
