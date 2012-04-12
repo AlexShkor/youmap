@@ -9,6 +9,6 @@
 <ulЮ data-role="listview" data-inset="true">
     <li data-role="list-divider">Отметиться...</li>
     
-    <li>@Html.ActionLink("Выбрать место", "Index", "Places")</li>
+    <li>@Html.ActionLink("Выбрать место", "Index", "Places",new{toCheckIn = true},new{})</li>
     <li>@Html.ActionLink("На улице", "CheckIn", "Home", new {refirectUrl = Url.Action("Main")})</li>
 </ulЮ

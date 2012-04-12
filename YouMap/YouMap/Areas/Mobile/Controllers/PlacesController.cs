@@ -31,7 +31,14 @@ namespace YouMap.Areas.Mobile.Controllers
         {
             var location = filter.HasLocation() ? filter.GetLocation() : SessionContext.Location ?? DefaultLocation;
             var places = _placeDocumentService.GetNear(location, filter.Count ?? 50, 5);
-            var model = places.Select(MapListItem).SelectMany(x=> x);
+            var model = places.Select(MapListItem).SelectMany(x => x);
+            if (filter.ToCheckIn)
+            {
+                foreach (var item in model)
+                {
+                    item.MapUrl = Url.Action("CheckIn", "Home", new {placeId = item.Id});
+                }
+            }
             return View(model);
         }
 
@@ -83,6 +90,8 @@ namespace YouMap.Areas.Mobile.Controllers
         public string Term { get; set; }
 
         public int? Count { get; set; }
+
+        public bool ToCheckIn { get; set; }
 
         public Location GetLocation()
         {
