@@ -271,6 +271,9 @@ YouMap.Map = function ($) {
         if (address.indexOf(country) == -1) {
             address += ", " + country;
         }
+        if (geocoder == null) {
+            geocoder = new google.maps.Geocoder
+        }
         geocoder.geocode({ 'address': address }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var location = results[0].geometry.location;
@@ -296,6 +299,9 @@ YouMap.Map = function ($) {
 
     var searchByLocation = function(x, y, callback) {
         var location = new google.maps.LatLng(x, y);
+        if (geocoder == null) {
+            geocoder = new google.maps.Geocoder();
+        }
         geocoder.geocode({ location: location }, function(result, status) {
             callback(result);
         });

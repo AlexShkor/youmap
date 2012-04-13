@@ -47,7 +47,8 @@ namespace YouMap.Documents.Services
             }
             if (filter.Location != null)
             {
-                query = Query.And(query, Query.EQ("Location", BsonValue.Create(filter.Location)));
+                query = Query.And(query, Query.EQ("Location.Latitude", filter.Location.Latitude));
+                query = Query.And(query, Query.EQ("Location.Longitude", filter.Location.Longitude));
             }
             if (filter.IdIn != null && filter.IdIn.Any())
             {

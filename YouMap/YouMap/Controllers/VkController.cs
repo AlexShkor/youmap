@@ -101,6 +101,7 @@ namespace YouMap.Controllers
         public ActionResult SubmitLocation(string x, string y)
         {
             SessionContext.Location = Location.Parse(x, y);
+            SessionContext.LastLocationUpdate = DateTime.Now;
             return Result();
         }
     }

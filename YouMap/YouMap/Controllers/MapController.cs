@@ -133,10 +133,20 @@ namespace YouMap.Controllers
         {
             model = model ?? new CheckInModel();  
             var filter = new PlaceDocumentFilter {PlaceId = model.PlaceId};
-            if (string.IsNullOrEmpty(model.PlaceId) && (model.Latitude.HasValue() && model.Longitude.HasValue()))
+            if (string.IsNullOrEmpty(model.PlaceId))
             {
-                var location = Location.Parse(model.Latitude, model.Longitude);
-                filter.Location = location;
+                if ((model.Latitude.HasValue() && model.Longitude.HasValue()))
+                {
+                    var location = Location.Parse(model.Latitude, model.Longitude);
+                    filter.Location = location;
+                }
+                else
+                {
+                    var location = (SessionContext.Location ?? DefaultLocation);
+                    model.Latitude = location.GetLatitudeString();
+                    model.Longitude = location.GetLongitudeString();
+                    filter.Location = location;
+                }
             }
             var place = _placeDocumentService.GetByFilter(filter).SingleOrDefault();
             if (place != null)
@@ -146,7 +156,7 @@ namespace YouMap.Controllers
                 model.Limited = true;
                 model.DisplayPlace = true;
                 model.PlaceId = place.Id;
-                model.CheckInUrl = Url.Action("Index", "Map", new {PlaceId = place.Id});
+                model.CheckInUrl = Url.Action("Index", "Map", new {PlaceId = place.Id, area=""});
                 model.Latitude = place.Location.GetLatitudeString();
                 model.Longitude = place.Location.GetLongitudeString();
                 model.LogoUrl = _imageService.GetPlaceLogoUrl(place);
@@ -179,6 +189,10 @@ namespace YouMap.Controllers
                                   UserId = User.Id
                               };
             Send(command);
+            if (model.Share)
+            {
+                ShareCheckIn(model);
+            }
             AjaxResponse.ClosePopup = true;
             AjaxResponse.RedirectUrl = model.RedirectUrl;
             return RespondTo(request =>
@@ -187,6 +201,11 @@ namespace YouMap.Controllers
                                      request.Json = Result;
                                      request.Html = () => Redirect(model.RedirectUrl ?? Url.Action("Index"));
                                  });
+        }
+
+        protected virtual void ShareCheckIn(CheckInModel model)
+        {
+            
         }
     }
 

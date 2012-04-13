@@ -14,7 +14,7 @@
                 @if (IsSectionDefined("Header")) {
                     @RenderSection("Header")
                 } else {
-                    <a href="@Url.Action("Main","Home")">Главная</a>
+                    <a data-icon="home" href="@Url.Action("Main","Home")">Главная</a>
                     <h1>@ViewBag.Title</h1>
                     @Html.Action("LoginState","Home")
                 }

@@ -1,4 +1,5 @@
 ﻿
+@using YouMap.Framework.Utils.Extensions
 @model CheckInModel
 @{
     Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
@@ -32,12 +33,17 @@
         </div>
        
         <div>
+            <label for="shareBox"><input id="shareBox" type="checkbox"  checked="checked" value="True" name="Share"/>Рассказать друзьям?</label>
             @Html.HiddenFor(x => x.Latitude)
             @Html.HiddenFor(x => x.Longitude)
+            @Html.Hidden("RedirectUrl",Model.PlaceId.HasValue()? Url.Action("Details","Places",new{id=Model.PlaceId}) : Url.Action("Main"))
+
             @Html.TextAreaFor(x => x.Memo)
             <p>
                 <input type="submit" value="Отметится" />
             </p>
+
+	
         </div>
     }
 </div>

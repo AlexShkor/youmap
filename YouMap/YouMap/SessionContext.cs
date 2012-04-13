@@ -16,6 +16,7 @@ namespace YouMap
         IUserIdentity User { get;}
         Location Location { get; set; }
         DateTime LastLocationUpdate { get; set; }
+        string AccessToken { get; set; }
         bool IsUserAuthorized();
         void Logout();
         string GetStringSessionValue(string key);
@@ -37,6 +38,7 @@ namespace YouMap
         private const string UserInfoKey = "UserInfo";
         private const string UserKey = "UserId";
         private const string LocationSessionKey = "Location";
+        private const string AccessTokenSessionKey = "AccessTokenSessionKey";
 
         public IUserIdentity User
         {
@@ -90,6 +92,12 @@ namespace YouMap
         {
             get {return GetSessionValue<DateTime>("LastLocationUpdateKey"); }
             set { SetSessionValue("LastLocationUpdateKey", value); }
+        }
+
+        public string AccessToken
+        {
+            get { return GetSessionValue<string>(AccessTokenSessionKey); }
+            set { SetSessionValue(AccessTokenSessionKey,value); }
         }
 
         public bool IsUserAuthorized()

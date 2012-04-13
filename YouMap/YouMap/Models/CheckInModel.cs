@@ -24,6 +24,8 @@ namespace YouMap.Models
 
         public string RedirectUrl { get; set; }
 
+        public bool Share { get; set; }
+
         public int LeftCount { get; set; }
 
         public bool Enabled
