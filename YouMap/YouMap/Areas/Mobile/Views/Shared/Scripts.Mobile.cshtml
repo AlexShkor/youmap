@@ -23,6 +23,7 @@
         // when navigating from a mobile to a non-mobile page, or when clicking "back"
         // after a form post), hence disabling it.
         $.mobile.ajaxEnabled = false;
+        $.mobile.listview.prototype.options.filterPlaceholder = "Искать...";
     });
     $(function() {
         VK.init({

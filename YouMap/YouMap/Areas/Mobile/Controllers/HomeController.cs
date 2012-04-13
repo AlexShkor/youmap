@@ -115,7 +115,7 @@ namespace YouMap.Areas.Mobile.Controllers
             }
             model.VkLoginUrl = string.Format(
                 "http://oauth.vk.com/authorize?client_id={0}&scope={1}&redirect_uri={2}?&display=touch&response_type=code",
-                Framework.Settings.Current.VkAppId, 1027 + 8192,
+                2831032, 1027 + 8192,
                 "http://" + Request.Url.Authority + Url.Action("VkAuthCallback"));
             return model;
         }
@@ -126,6 +126,12 @@ namespace YouMap.Areas.Mobile.Controllers
             result.InfoWindowUrl = Url.Action("Details", "Places", new {id = doc.Id});
             result.OpenInNewWindow = true; 
             return result;
+        }
+
+        public ActionResult Logout()
+        {
+            _authenticationService.Logout();
+            return RedirectToAction("Main");
         }
     }
 }
