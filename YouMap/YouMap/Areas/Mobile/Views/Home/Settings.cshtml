@@ -3,9 +3,24 @@
     ViewBag.Title = "Настройки";
 }
 
-<a data-icon="search" data-role="button" id="locateMeBnt" href="#">Опеределить мое месторасположения</a>
-
+<a data-icon="search" data-role="button" id="locateMeBnt" href="#">Обновить мое месторасположения</a>
 <a data-role="button" data-icon="home" id="locateMeByAddress">Переместить меня по адресу</a>
 <input id="Address" name="Address"/>
 
-<a data-role="button" href="@Url.Action("Logout")" data-icon="home" id="logout">Выйти</a>
+@section Footer
+{
+    <div data-role="navbar">
+        <ul>
+            <li><a  href="#" data-icon="grid" id="switchView">Полная версия</a> </li>
+            <li><a class="ui-btn-right" href="@Url.Action("Logout")" data-icon="delete" id="logout">Выйти</a></li>
+        </ul>
+    </div><!-- /navbar -->
+    <script>
+        $(document).ready(function() {
+            $("#switchView").live("click", function() {
+                window.location = '@Url.Action("SwitchView")';
+                return false;
+            });
+        })
+    </script>
+}

@@ -104,6 +104,12 @@ namespace YouMap.Areas.Mobile.Controllers
             return View();
         }
 
+        public ActionResult SwitchView()
+        {
+            Session["FullView"] = true;
+            return RedirectToAction("Index", "Map", new {area = ""});
+        }
+
         private UserViewModel Map(IUserIdentity user)
         {
             var model = new UserViewModel();
