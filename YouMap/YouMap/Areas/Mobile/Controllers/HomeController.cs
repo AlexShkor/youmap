@@ -52,7 +52,7 @@ namespace YouMap.Areas.Mobile.Controllers
                                       "RNlgRjT0PjbBMzVtsuyV", //YouMap Desktop app secret
                                       code));
             }
-            catch (Exception)
+            catch
             {
             }
             var js = new JavaScriptSerializer();
@@ -66,9 +66,33 @@ namespace YouMap.Areas.Mobile.Controllers
             var user = _userDocumentService.GetByFilter(new UserFilter() {VkId = userId}).FirstOrDefault();
             if (user == null)
             {
-                return View("Login");
+                try
+                {
+                    result =
+                        wc.DownloadString(
+                            String.Format("https://api.vk.com/method/users.get?uids={0}&access_token={1}",
+                                          userId,
+                                          SessionContext.AccessToken));
+                }
+                catch
+                {
+                }
+                var users = js.Deserialize<VkArrayResponse<UsersGetDto>>(result).response;
+                if (users.Any())
+                {
+                    var vkUser = users.First();
+                     _authenticationService.Register(new VkLoginModel()
+                                                    {
+                                                        FirstName =vkUser.first_name,
+                                                        LastName = vkUser.last_name
+                                                    });
+                }
+               
             }
-            _authenticationService.SetAuthCookie(user, true);
+            else
+            {
+                _authenticationService.SetAuthCookie(user, true);
+            }
             return View("Main");
         }
 
@@ -139,5 +163,19 @@ namespace YouMap.Areas.Mobile.Controllers
             _authenticationService.Logout();
             return RedirectToAction("Main");
         }
+    }
+
+    public class VkArrayResponse<T>
+    {
+        public List<T> response { get; set; } 
+    }
+    public class UsersGetDto
+    {
+        public string uid { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string photo { get; set; }
+        public string photo_medium { get; set; }
+        public string photo_big { get; set; }
     }
 }
