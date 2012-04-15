@@ -219,12 +219,14 @@ YouMap.Map = function ($) {
     var getUserLocation = function() {
         return userLocation;
     };
-    
 
+    var locateUser = function() {
+        YouMap.Geolocation.Locate(updateUserMarker);
+    };
    
     var startUpdateLocation = function() {
         setTimeout(function() {
-            YouMap.Geolocation.Locate(updateUserMarker);
+            locateUser();
             startUpdateLocation();
         },300000);
     };
@@ -277,8 +279,10 @@ YouMap.Map = function ($) {
         geocoder.geocode({ 'address': address }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var location = results[0].geometry.location;
-                map.setCenter(location);
-                map.setZoom(getZoom(results[0].geometry.viewport));
+                if (map) {
+                    map.setCenter(location);
+                    map.setZoom(getZoom(results[0].geometry.viewport));
+                }
                 callback(location.lat(),location.lng());
 
             } else {
@@ -287,13 +291,14 @@ YouMap.Map = function ($) {
         });
     };
 
-    var updateUserLocation = function () {       
+    var updateUserLocation = function (callback) {       
             YouMap.Geolocation.Locate(function(x, y) {
                 userLocation = { x: x, y: y };
                 Request.post("/Vk/SubmitLocation").addParams({
                     X: x,
                     Y: y
                 }).send();
+                callback(x, y);
             });
     };
 

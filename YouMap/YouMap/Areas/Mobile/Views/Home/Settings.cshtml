@@ -7,6 +7,7 @@
 <a data-role="button" data-icon="home" id="locateMeByAddress">Переместить меня по адресу</a>
 <input id="Address" name="Address"/>
 
+
 @section Footer
 {
     <div data-role="navbar">
@@ -20,6 +21,20 @@
             $("#switchView").live("click", function() {
                 window.location = '@Url.Action("SwitchView")';
                 return false;
+            });
+            $("#locateMeByAddress").click(function () {
+                $.mobile.showPageLoadingMsg();
+                YouMap.Map.SearchGoogle($("#Address").val(), function (x, y) {
+                    YouMap.Map.SetUserLocation(x, y);
+                    YouMap.Map.SubmitUserLocation();
+                    $.mobile.hidePageLoadingMsg();
+                });
+            });
+            $("#locateMeBnt").click(function () {
+                $.mobile.showPageLoadingMsg();
+                YouMap.Map.UpdateUserLocation(function(x,y) {
+                    $.mobile.hidePageLoadingMsg();
+                });
             });
         })
     </script>
