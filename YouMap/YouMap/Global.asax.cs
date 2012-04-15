@@ -74,8 +74,8 @@ namespace YouMap
         {
             AreaRegistration.RegisterAllAreas();
 
-   
-            GlobalFilters.Filters.Add(new RedirectMobileDevicesAttribute(), 1);
+
+            GlobalFilters.Filters.Add(new RedirectMobileDevicesToMobileAreaAttribute(), 1);
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 

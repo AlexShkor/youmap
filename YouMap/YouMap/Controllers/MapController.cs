@@ -51,8 +51,7 @@ namespace YouMap.Controllers
             }
             return RespondTo(request =>
             {
-                request.Html = () => View(model);
-                request.Ajax = () => PartialView(model);
+                request.Html= request.Ajax = () => View(model);
                 request.Json = () =>
                 {
                     model.Places =_placeDocumentService.GetByFilter(new PlaceDocumentFilter{StatusEq = PlaceStatusEnum.Active}).Select(Map).ToList();

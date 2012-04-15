@@ -22,6 +22,12 @@
             <div data-role="content">
                 @RenderBody()
             </div>
+            @if (IsSectionDefined("Footer"))
+            {
+                <div data-role="footer" >
+                    @RenderSection("Footer")
+                </div>
+            }
         </div>
     </body>
 </html>
