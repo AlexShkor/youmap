@@ -7,7 +7,7 @@
 <ul data-role="listview" data-inset="true" data-filter="true">
 @foreach(var item in Model)
 {
-        <li data-corners="false" data-shadow="false" data-wrapperels="div" data-filtertext="@String.Join(", ",item.Tags), @item.Address"
+        <li data-corners="false" data-shadow="false" data-wrapperels="div" data-filtertext="@String.Join(", ",item.Tags), @item.Address, @item.Title"
         data-icon="arrow-r" data-iconpos="right" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li  ui-btn-up">
         <div class="ui-btn-inner">
             <div class="ui-btn-text">
