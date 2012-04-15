@@ -25,14 +25,17 @@ YouMap.Vk.Panel = function($) {
         $("#profilePanel .actions a").click(function() {
             $("#profilePanel .container").slideToggle("fast");
         });
+        $("#logoutLink").die("click");
         $("#logoutLink").live("click", function () {
             if (VK)
                 VK.Auth.logout();
         });
+        $("#openChangeLocationBox").die("click");
         $("#openChangeLocationBox").live("click", function () {
             $(this).parent().find("#changeLocationBox").slideToggle("fast");
             $(this).parent().prev().slideToggle("fast");
         });
+        $("#toggleDrag").die("click");
         $("#toggleDrag").live("click", function() {
             $(this).toggleClass("btn-primary");
             $(this).toggleClass("btn-danger");
@@ -41,6 +44,7 @@ YouMap.Vk.Panel = function($) {
             $(this).data("alttext", text);
             YouMap.Map.ToggleUserDrag();
         });
+        $("#dragToAddress").die("click");
         $("#dragToAddress").live("click", function () {
             YouMap.Map.SearchGoogle($(this).parents(".well").find("input").val(), function(x, y) {
                 YouMap.Map.SetUserLocation(x, y);
@@ -166,7 +170,7 @@ YouMap.Vk.Map = function($) {
             X: item.X,
             Y: item.Y,
             InfoWindowUrl: item.InfoWindowUrl,
-            Title: friend.first_name + " " + friend.last_name,
+            Title: friend.first_name + " " + friend.last_name + " " + item.Visited,
             Icon: {
                 Path: friend.photo,
                 Size: {
