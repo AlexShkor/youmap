@@ -14,10 +14,10 @@
         <div>
             <div class="ui-btn-text">
                 <a href="@item.DetailsLink" class="ui-link-inherit">
-                    <p class="ui-li-aside ui-li-desc">@item.PlaceTitle<strong>@item.LastCheckInTimeAgo</strong></p>
-                    <img src="http://vk.com/images/camera_c.gif" style="margin-left: -70px;" class="ui-li-thumb">
+                    <img src="@(item.Photo??"http://vk.com/images/camera_c.gif")" style="margin-left: -70px;" class="ui-li-thumb">
                     <h3 class="ui-li-heading">@item.Name</h3>
-                    <p class="ui-li-desc">@item.LastCheckInMessage</p>
+                    <div><p class="ui-li-aside ui-li-desc">@item.PlaceTitle<strong>@item.LastCheckInTimeAgo</strong></p>
+                        <p class="ui-li-desc">@item.LastCheckInMessage</p></div>                  
                 </a>
             </div>
             <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>
