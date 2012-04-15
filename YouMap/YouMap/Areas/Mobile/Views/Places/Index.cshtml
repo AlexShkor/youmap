@@ -4,21 +4,18 @@
     Layout = "~/Areas/Mobile/Views/Shared/_Layout.Mobile.cshtml";
     ViewBag.Title = "Места";
 }
-<ul data-role="listview" data-inset="true" data-filter="true">
+<ul data-role="listview" data-filter="true">
 @foreach(var item in Model)
 {
-        <li data-corners="false" data-shadow="false" data-wrapperels="div" data-filtertext="@String.Join(", ",item.Tags), @item.Address, @item.Title"
+        <li data-filtertext="@String.Join(", ",item.Tags), @item.Address, @item.Title"
         data-icon="arrow-r" data-iconpos="right" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li  ui-btn-up">
-        <div class="ui-btn-inner">
-            <div class="ui-btn-text">
-                     <img src="@item.Icon" class="ui-li-thumb">
+        <div>          
                 <a style="padding-left: 100px;" href="@item.MapUrl" class="ui-link-inherit">
-                                  
+                           <img src="@item.Icon" class="ui-li-thumb">       
                     <p class="ui-li-aside ui-li-desc"><strong>@item.Distance</strong></p>
                     <h3 class="ui-li-heading">@item.Title</h3>
                     <p class="ui-li-desc">@item.Address</p>
                 </a>
-            </div>
             <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span>
         </div>
     </li>
