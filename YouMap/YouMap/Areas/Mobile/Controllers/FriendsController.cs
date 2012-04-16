@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using YouMap.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -29,41 +27,8 @@ namespace YouMap.Areas.Mobile.Controllers
         {
             var user = _userDocumentService.GetById(User.Id);
             var friends = _userDocumentService.GetByFilter(new UserFilter{VkIdIn = user.Friends, OrderBy = UserOrderByEnum.LastCheckInDate});
-            var model = friends.Select(Map).ToList();
-            UpdateFriendsPhotos(model);
+            var model = friends.Select(Map);
             return View(model);
-        }
-
-        private void UpdateFriendsPhotos(IEnumerable<FriendModel> model)
-        {
-            if (model != null && model.Any())
-            {
-                var wc = new WebClient();
-                var result = String.Empty;
-                try
-                {
-                    result =
-                        wc.DownloadString(
-                            String.Format("https://api.vk.com/method/friends.get?uid={0}&fields=photo&access_token={1}",
-                                          User.VkId,
-                                          SessionContext.AccessToken));
-                }
-                catch
-                {
-                }
-                if (result.HasValue())
-                {
-                    var js = new JavaScriptSerializer();
-                    var response = js.Deserialize<VkArrayResponse<UsersGetDto>>(result).response;
-                    foreach (var item in model)
-                    {
-                        var friend = item;
-                        var usersGetDto = response.SingleOrDefault(x => x.uid == friend.VkId);
-                        if (usersGetDto != null)
-                            friend.Photo = usersGetDto.photo;
-                    }
-                }
-            }
         }
 
         private FriendModel Map(UserDocument doc)
@@ -140,7 +105,5 @@ namespace YouMap.Areas.Mobile.Controllers
         {
             get { return "http://vk.com/id" + VkId; }
         }
-
-        public string Photo { get; set; }
     }
 }

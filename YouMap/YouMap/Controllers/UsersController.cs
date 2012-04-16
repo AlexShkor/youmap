@@ -5,11 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using YouMap.ActionFilters;
+using YouMap.Areas.Mobile.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Framework;
+using YouMap.Framework.Extensions;
 using YouMap.Models;
 
 namespace YouMap.Controllers
@@ -30,6 +32,14 @@ namespace YouMap.Controllers
             var model = _userDocumentService.GetByFilter(filter ?? new UserFilter()).Select(MapToListItem);
             return View(model);
         }
+
+        public ActionResult Friends(FriendsFilterModel friendsFilterModel)
+        {
+            var user = _userDocumentService.GetById(User.Id);
+            var model = _userDocumentService.GetByFilter(new UserFilter() {VkIdIn = user.Friends}).Select(Map);
+            return View(model);
+        }
+
 
         public ActionResult UserInfo(string id)
         {
@@ -60,6 +70,13 @@ namespace YouMap.Controllers
             return Result();
         }
 
+        public ActionResult Details(string id)
+        {
+            var user = _userDocumentService.GetById(id);
+            var model = Map(user);
+            return View(model);
+        }
+
         private UserListItem MapToListItem(UserDocument doc)
         {
             return new UserListItem
@@ -69,6 +86,35 @@ namespace YouMap.Controllers
                 IsActive = doc.IsActive
             };
         }
+
+        private FriendModel Map(UserDocument doc)
+        {
+            var result = new FriendModel
+            {
+                Name = doc.FullName,
+                VkId = doc.VkId,
+                Id = doc.Id,
+                EventsLink = Url.Action("ForUser", "Events", new { userId = doc.Id }),
+                CheckInsLink = Url.Action("ForUser", "CheckIns", new { userId = doc.Id }),
+                DetailsLink = Url.Action("Details", "Users", new { id = doc.Id }),
+                LastCheckInTimeAgo = "-",
+                LastCheckInMessage = String.Empty
+            };
+            var lastCheckIn = doc.CheckIns.OrderByDescending(x => x.Visited).FirstOrDefault();
+            if (lastCheckIn != null)
+            {
+                result.LastCheckInMessage = lastCheckIn.Memo;
+                result.LastCheckInTimeAgo = lastCheckIn.Visited.ToInfoString();
+                result.PlaceId = lastCheckIn.PlaceId;
+                //result.PlaceTitle = lastCheckIn.PlaceTitle;
+            }
+            return result;
+        }
+    }
+
+    public class FriendsFilterModel
+    {
+
     }
 
     public class VkFriendModel
