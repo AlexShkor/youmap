@@ -1,8 +1,13 @@
-﻿@using YouMap.Framework.Utils.Extensions
+﻿@using YouMap.Documents.Services
+@using YouMap.Framework.Utils.Extensions
 @model System.Collections.Generic.IEnumerable<YouMap.Models.PlaceListItem>
 @{
     ViewBag.Title = "Места";
+    var filter = (PlaceDocumentFilter) ViewBag.Filter;
 }
+
+@Html.Partial("PlaceFilter",filter)
+@Html.Partial("Paging",filter.PagingInfo)
 
 @if(Model.Count() == 0)
 {

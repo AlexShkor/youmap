@@ -19,6 +19,7 @@ using YouMap.Domain.Data;
 using YouMap.Domain.Enums;
 using YouMap.Framework;
 using YouMap.Framework.Environment;
+using YouMap.Framework.Services;
 using YouMap.Models;
 
 namespace YouMap.Controllers
@@ -47,10 +48,12 @@ namespace YouMap.Controllers
         }
 
         [Admin]
-        public ActionResult Index()
+        public ActionResult Index(PlaceDocumentFilter filter)
         {
-            var filter = new PlaceDocumentFilter();         
+            filter = filter ?? new PlaceDocumentFilter();
+            filter.PagingInfo = filter.PagingInfo ?? new PagingInfo();
             filter.StatusNotIn.Add(PlaceStatusEnum.Deleted);
+            ViewBag.Filter = filter;
             if (!IsAdmin)
             {
                 filter.OwnerId = User.Id;

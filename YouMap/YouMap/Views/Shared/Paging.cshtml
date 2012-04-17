@@ -1,0 +1,59 @@
+﻿@model YouMap.Framework.Services.PagingInfo
+
+@{
+    var info = Model;
+}
+
+@if (info.TotalPagesCount > 1)
+            {
+
+                <div id="paging" class="pagination">
+                    <ul>
+                        @{ int pageCount = info.TotalPagesCount; }
+                        @if (info.HasPreviousPage)
+                        {
+                            <li class="@Html.ClassIf("disabled",!info.HasPreviousPage)">
+                                <a href="#" data-page="@(info.CurrentPage - 1)">
+                                    ←
+                                </a>
+                            </li>
+                        }
+                        @{
+                        int startIndex = Math.Min(info.CurrentPage > 4 ? info.CurrentPage - 4 : 1, pageCount - 8);
+                        startIndex = startIndex >= 1 ? startIndex : 1;
+                        if (startIndex > 1)
+                        {
+                                <li class="disabled">...</li>
+                        }
+                        int i;
+                        for (i = startIndex; (i < startIndex + 9) && i <= pageCount; i++)
+                        {
+                                <li class="@Html.ClassIf("active",i == info.CurrentPage)">
+                                        <a href="#"  data-page="@(i)">
+                                            @i
+                                        </a>
+                                </li>
+                        }
+                        if (i < pageCount)
+                        {
+                                <li class="disabled">...</li>
+                        }
+                        }
+                        @if (info.HasNextPage)
+                        {
+                            <li class="@Html.ClassIf("disabled", !info.HasNextPage)">
+                                <a href="#" data-page="@(info.CurrentPage + 1)">
+                                    →
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+            <script>
+                $("#paging li a").click(function () {
+                    var pageNumberInput = $("input[name*='PagingInfo.CurrentPage']");
+                    pageNumberInput.val($(this).data("page"));
+                    pageNumberInput.parents("form").submit();
+                })
+            </script>
