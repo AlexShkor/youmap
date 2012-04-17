@@ -23,7 +23,7 @@
                         startIndex = startIndex >= 1 ? startIndex : 1;
                         if (startIndex > 1)
                         {
-                                <li class="disabled">...</li>
+                                <li class="disabled"><a href="#">...</a> </li>
                         }
                         int i;
                         for (i = startIndex; (i < startIndex + 9) && i <= pageCount; i++)
@@ -36,7 +36,7 @@
                         }
                         if (i < pageCount)
                         {
-                                <li class="disabled">...</li>
+                                <li class="disabled"><a href="#">...</a> </li>
                         }
                         }
                         @if (info.HasNextPage)
