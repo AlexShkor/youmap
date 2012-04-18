@@ -12,6 +12,7 @@ using YouMap.Domain.Commands;
 using YouMap.Domain.Data;
 using YouMap.Framework;
 using YouMap.Framework.Extensions;
+using YouMap.Framework.Services;
 using YouMap.Models;
 
 namespace YouMap.Controllers
@@ -33,13 +34,14 @@ namespace YouMap.Controllers
             return View(model);
         }
 
-        public ActionResult Friends(FriendsFilterModel friendsFilterModel)
+        public ActionResult Friends(FriendsFilterModel filterModel)
         {
             var user = _userDocumentService.GetById(User.Id);
-            var model = _userDocumentService.GetByFilter(new UserFilter() {VkIdIn = user.Friends}).Select(Map);
+            var filter = new UserFilter() {VkIdIn = user.Friends};
+            filter.PagingInfo = filterModel.PagingInfo ?? new PagingInfo() {ItemsPerPage = 25};
+            var model = _userDocumentService.GetByFilter(filter).Select(Map);
             return View(model);
         }
-
 
         public ActionResult UserInfo(string id)
         {
@@ -114,7 +116,7 @@ namespace YouMap.Controllers
 
     public class FriendsFilterModel
     {
-
+        public PagingInfo PagingInfo { get; set; }
     }
 
     public class VkFriendModel

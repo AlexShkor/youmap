@@ -1,0 +1,10 @@
+﻿@model YouMap.Framework.Services.PagingInfo
+
+<a id="loadNext">Загрузить еще @Model.ItemsPerPage</a>
+<script>
+    $("#loadNext").click(function () {
+        var pageNumberInput = $("input[name*='PagingInfo.CurrentPage']");
+        pageNumberInput.val(pageNumberInput + 1);
+        Request.named("pager").setForm(pageNumberInput.parents("form")).send();
+    })
+</script>

@@ -163,6 +163,11 @@ namespace YouMap.Areas.Mobile.Controllers
             _authenticationService.Logout();
             return RedirectToAction("Main");
         }
+
+        public ActionResult Logon()
+        {
+            return View("VkError");
+        }
     }
 
     public class VkArrayResponse<T>

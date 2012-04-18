@@ -313,6 +313,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UploadLocalization.zh-CN.resx</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Mobile\ActionFilters\MobileVkAttribute.cs" />
     <Compile Include="Areas\Mobile\Controllers\CheckInsController.cs" />
     <Compile Include="Areas\Mobile\Controllers\EventsController.cs" />
     <Compile Include="Areas\Mobile\Controllers\FriendsController.cs" />
@@ -1142,6 +1143,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Places\PlaceFilter.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Users\Friends.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Users\FriendsFilter.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Users\UsersGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Pager.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

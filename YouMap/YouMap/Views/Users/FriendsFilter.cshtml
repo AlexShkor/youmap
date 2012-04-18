@@ -1,0 +1,8 @@
+﻿@using System.Web.Mvc
+@model YouMap.Controllers.FriendsFilterModel
+
+@using (Html.BeginForm(null,null,FormMethod.Get))
+{
+    @Html.HiddenFor(x=> x.PagingInfo.CurrentPage)
+    @Html.HiddenFor(x=> x.PagingInfo.ItemsPerPage)
+}   

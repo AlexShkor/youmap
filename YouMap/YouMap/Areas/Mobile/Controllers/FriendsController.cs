@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YouMap.Areas.Mobile.ActionFilters;
 using YouMap.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -23,6 +24,7 @@ namespace YouMap.Areas.Mobile.Controllers
             _placeDocumentService = placeDocumentService;
         }
 
+        [MobileVk]
         public ActionResult Index()
         {
             var user = _userDocumentService.GetById(User.Id);

@@ -1,0 +1,27 @@
+﻿@model System.Collections.Generic.IEnumerable<YouMap.Areas.Mobile.Controllers.FriendModel>
+
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+
+                <tr>
+                    <td><img src=""/></td>
+                    <td>@item.Name</td>
+                    <td>@item.LastCheckInTimeAgo</td>
+                    <td>@item.LastCheckInMessage</td>
+                </tr>
+            }
+        </tbody>
+      </table>
+
+
