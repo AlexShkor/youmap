@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using YouMap.Areas.Mobile.ActionFilters;
+using System.Web.Script.Serialization;
 using YouMap.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
@@ -18,34 +19,67 @@ namespace YouMap.Areas.Mobile.Controllers
         private readonly UserDocumentService _userDocumentService;
         private readonly PlaceDocumentService _placeDocumentService;
 
-        public FriendsController(ICommandService commandService, UserDocumentService userDocumentService, PlaceDocumentService placeDocumentService) : base(commandService)
+        public FriendsController(ICommandService commandService, UserDocumentService userDocumentService, PlaceDocumentService placeDocumentService)
+            : base(commandService)
         {
             _userDocumentService = userDocumentService;
             _placeDocumentService = placeDocumentService;
         }
 
-        [MobileVk]
         public ActionResult Index()
         {
             var user = _userDocumentService.GetById(User.Id);
-            var friends = _userDocumentService.GetByFilter(new UserFilter{VkIdIn = user.Friends, OrderBy = UserOrderByEnum.LastCheckInDate});
-            var model = friends.Select(Map);
+            var friends = _userDocumentService.GetByFilter(new UserFilter { VkIdIn = user.Friends, OrderBy = UserOrderByEnum.LastCheckInDate });
+            var model = friends.Select(Map).ToList();
+            UpdateFriendsPhotos(model);
             return View(model);
+        }
+
+        private void UpdateFriendsPhotos(IEnumerable<FriendModel> model)
+        {
+            if (model != null && model.Any())
+            {
+                var wc = new WebClient();
+                var result = String.Empty;
+                try
+                {
+                    result =
+                        wc.DownloadString(
+                            String.Format("https://api.vk.com/method/friends.get?uid={0}&fields=photo&access_token={1}",
+                                          User.VkId,
+                                          SessionContext.AccessToken));
+                }
+                catch
+                {
+                }
+                if (result.HasValue())
+                {
+                    var js = new JavaScriptSerializer();
+                    var response = js.Deserialize<VkArrayResponse<UsersGetDto>>(result).response;
+                    foreach (var item in model)
+                    {
+                        var friend = item;
+                        var usersGetDto = response.SingleOrDefault(x => x.uid == friend.VkId);
+                        if (usersGetDto != null)
+                            friend.Photo = usersGetDto.photo;
+                    }
+                }
+            }
         }
 
         private FriendModel Map(UserDocument doc)
         {
             var result = new FriendModel
-                       {
-                           Name = doc.FullName,
-                           VkId = doc.VkId,
-                           Id = doc.Id,
-                           EventsLink = Url.Action("ForUser", "Events", new { userId = doc.Id }),
-                           CheckInsLink = Url.Action("ForUser", "CheckIns", new { userId = doc.Id }),
-                           DetailsLink = Url.Action("Details","Friends",new{id = doc.Id}),
-                           LastCheckInTimeAgo =  "-",
-                           LastCheckInMessage = String.Empty
-                       };
+            {
+                Name = doc.FullName,
+                VkId = doc.VkId,
+                Id = doc.Id,
+                EventsLink = Url.Action("ForUser", "Events", new { userId = doc.Id }),
+                CheckInsLink = Url.Action("ForUser", "CheckIns", new { userId = doc.Id }),
+                DetailsLink = Url.Action("Details", "Friends", new { id = doc.Id }),
+                LastCheckInTimeAgo = "-",
+                LastCheckInMessage = String.Empty
+            };
             var lastCheckIn = doc.CheckIns.OrderByDescending(x => x.Visited).FirstOrDefault();
             if (lastCheckIn != null)
             {
@@ -63,9 +97,10 @@ namespace YouMap.Areas.Mobile.Controllers
             if (id.HasValue())
             {
                 user = _userDocumentService.GetById(id);
-            }else if (vkId.HasValue())
+            }
+            else if (vkId.HasValue())
             {
-                user = _userDocumentService.GetByFilter(new UserFilter() {VkId = vkId}).Single();
+                user = _userDocumentService.GetByFilter(new UserFilter() { VkId = vkId }).Single();
                 if (user == null)
                 {
                     return Redirect("http://vk.com/id" + vkId);
@@ -107,5 +142,7 @@ namespace YouMap.Areas.Mobile.Controllers
         {
             get { return "http://vk.com/id" + VkId; }
         }
+
+        public string Photo { get; set; }
     }
 }
