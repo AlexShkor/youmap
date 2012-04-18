@@ -4,12 +4,10 @@
         YouMap.Search.Navigation();
     });
 </script>
-<nav>
-    <ul id="menu">
+
         @foreach (var item in Model)
         {
             <li>@Html.ActionLink(@item.Name, "Index", "Map", new { categoryId = item.Id }, new { categoryId = item.Id })
             </li>
         }
-    </ul>
-</nav>
+

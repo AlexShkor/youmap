@@ -1,5 +1,19 @@
-﻿@model System.Collections.Generic.IEnumerable<YouMap.Areas.Mobile.Controllers.FriendModel>
+﻿
+@using YouMap.Controllers
+@model System.Collections.Generic.IEnumerable<YouMap.Areas.Mobile.Controllers.FriendModel>
 
-@Html.Partial("FriendsFilter",ViewBag.Filter)
-@Html.Partial("UsersGrid",Model)
-@Html.Partial("Pager")
+@{
+    var filter = (FriendsFilterModel)ViewBag.Filter;
+}
+@*@Html.Partial("FriendsFilter",filter)*@
+<style>
+    .friends-list ul
+    {
+        list-style: none;
+    }
+</style>
+<div class="friends-list">
+  @Html.Partial("UsersGrid",Model)  
+</div>
+
+@*@Html.Partial("Pager",filter.PagingInfo)*@

@@ -36,10 +36,12 @@ namespace YouMap.Controllers
 
         public ActionResult Friends(FriendsFilterModel filterModel)
         {
+            filterModel = filterModel ?? new FriendsFilterModel();
             var user = _userDocumentService.GetById(User.Id);
             var filter = new UserFilter() {VkIdIn = user.Friends};
-            filter.PagingInfo = filterModel.PagingInfo ?? new PagingInfo() {ItemsPerPage = 25};
+           // filter.PagingInfo = filterModel.PagingInfo;
             var model = _userDocumentService.GetByFilter(filter).Select(Map);
+            ViewBag.Filter = filterModel;
             return View(model);
         }
 
@@ -117,6 +119,11 @@ namespace YouMap.Controllers
     public class FriendsFilterModel
     {
         public PagingInfo PagingInfo { get; set; }
+
+        public FriendsFilterModel()
+        {
+            PagingInfo = new PagingInfo() { ItemsPerPage = 25 };
+        }
     }
 
     public class VkFriendModel
