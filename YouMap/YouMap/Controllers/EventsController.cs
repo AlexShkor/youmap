@@ -62,15 +62,27 @@ namespace YouMap.Controllers
             }
             docFilter.PagingInfo = filter.PagingInfo;
             var doc = _userDocumentService.GetByFilter(docFilter);
-            //TODO: Refactor this, maybe move to lucene
             var events = doc.SelectMany(x => x.Events).Where(
                 x => x.Start >= docFilter.EventStartAfter.Value);
             if (docFilter.EventStartBefore.HasValue)
             {
                 events = events.Where(x => x.Start <= docFilter.EventStartBefore);
             }
-            var model = events.Take(20).Select(MapToListItem);
+            var model = events.Skip(filter.PagingInfo.Skip).Take(filter.PagingInfo.Take).Select(MapToListItem);
             return View(model);
+        }
+
+        public ActionResult ForPlace(string placeId)
+        {
+            var model = _userDocumentService.GetEventsListForPlace(placeId, 3, 20).Select(MapToListItem);
+            return View("Index", model);
+        }
+
+        public ActionResult ForUser(EventsFilter filter)
+        {
+            var user = _userDocumentService.GetById(filter.UserId);
+            var model = user.Events.OrderByDescending(x => x.Start).Select(MapToListItem);
+            return View("Index", model);
         }
 
         [HttpGet]

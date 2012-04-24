@@ -24,12 +24,12 @@
     </tbody>
 </table>*@
 
-<ul class="thumbnails">
+<ul id="friendsList" class="thumbnails">
      @foreach(var item in Model)
      {
          <li class="span3">
              <div class="thumbnail">
-                 <img src="" alt="">
+                 <img data-vkid="@item.VkId" src="" alt="@item.Name">
                  <div class="caption">
                      <h4>@item.Name</h4>
                      <h5>@item.LastCheckInTimeAgo</h5>
@@ -42,3 +42,12 @@
 </ul>
 
 
+<script>
+    $(function() {
+        YouMap.Vk.Map.LoadFriends('@String.Join(",",Model.Select(x=> x.VkId))', function(result) {
+            for (var i = 0; i < result.length; i++) {
+                $('#friendsList img[data-vkid="' + result[i].uid + '"]').attr("src", result[i].photo_big);
+            }
+        });
+    });
+</script>

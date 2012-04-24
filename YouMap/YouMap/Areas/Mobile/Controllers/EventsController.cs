@@ -16,17 +16,17 @@ namespace YouMap.Areas.Mobile.Controllers
         {
         }
 
-        public ActionResult ForPlace(string placeId)
-        {
-            var model = _userDocumentService.GetEventsListForPlace(placeId, 3, 20).Select(MapToListItem);
-            return View("Index", model);
-        }
+        //public ActionResult ForPlace(string placeId)
+        //{
+        //    var model = _userDocumentService.GetEventsListForPlace(placeId, 3, 20).Select(MapToListItem);
+        //    return View("Index", model);
+        //}
 
-        public ActionResult ForUser(string userId)
-        {
-            var user = _userDocumentService.GetById(userId);
-            var model = user.Events.OrderByDescending(x => x.Start).Select(MapToListItem);
-            return View("Index", model);
-        }
+        //public ActionResult ForUser(string userId)
+        //{
+        //    var user = _userDocumentService.GetById(userId);
+        //    var model = user.Events.OrderByDescending(x => x.Start).Select(MapToListItem);
+        //    return View("Index", model);
+        //}
     }
 }

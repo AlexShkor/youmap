@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<EventListItem>
-
+@*
 <ul>
     @foreach( var item in Model)
     {
@@ -7,4 +7,23 @@
             <a href="@Url.Action("Details","Events",new{id = item.Id})">@item.Title <sub>@item.StartDate</sub></a>
         </li>
     }
+
+</ul>*@
+
+
+<ul id="eventsList" class="thumbnails">
+     @foreach(var item in Model)
+     {
+         <li class="span3">
+             <div class="thumbnail">
+                 @*<img data-vkid="@item.VkId" src="" alt="@item.Name">*@
+                 <div class="caption">
+                     <h4>@item.OwnerName</h4>
+                     <h5>@item.StartDate</h5>
+                     <p>@item.Title</p>
+                     <p><a href="@item.Url" class="btn btn-primary">Подробнее</a></p>
+                 </div>
+             </div>
+         </li>
+     }
 </ul>

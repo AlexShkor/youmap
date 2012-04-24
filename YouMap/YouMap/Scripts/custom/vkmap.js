@@ -265,6 +265,18 @@ YouMap.Vk.Map = function($) {
             });
     };
 
+    var loadFriends = function(uids, callback) {
+        if (VK) {
+            VK.Api.call("users.get", { uids: uids, fields: "photo_big" }, function (result) {
+                if (result && result.response) {
+                    if (callback) {
+                        callback(result.response);
+                    }
+                }
+            });
+        }
+    };
+
     //TODO: need to be separated into two methods, for events and checkins
     var openContent = function (options) {
         var html = $(options.Content);
@@ -312,6 +324,7 @@ YouMap.Vk.Map = function($) {
         HideFriends: hideFriendsMarkers,
         UserInfo: userInfo,
         LoadFriendsLiks: loadFriendsLiks,
+        LoadFriends: loadFriends,
         InitEventDetails: initEventDetails,
         CreateEventShareMessage: createEventShareMessage
     };
