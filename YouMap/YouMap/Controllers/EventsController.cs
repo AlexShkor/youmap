@@ -50,6 +50,7 @@ namespace YouMap.Controllers
 
         public ActionResult Index(EventsFilter filter)
         {
+            filter = filter ?? new EventsFilter();
             var now = DateTime.Now;
             var docFilter = new UserFilter {EventStartAfter = now};
             if (filter.HoursNext.HasValue)
@@ -68,7 +69,9 @@ namespace YouMap.Controllers
             {
                 events = events.Where(x => x.Start <= docFilter.EventStartBefore);
             }
+            filter.PagingInfo.TotalCount = events.Count();
             var model = events.Skip(filter.PagingInfo.Skip).Take(filter.PagingInfo.Take).Select(MapToListItem);
+            ViewBag.Filter = filter;
             return View(model);
         }
 
@@ -255,7 +258,7 @@ namespace YouMap.Controllers
                 StartDate = doc.Start.ToInfoString(),
                 Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
-                ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id }),
+                ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id, controller = "Map", action = "Index"}),
                 Members = doc.Members.Select(MapFriendListItem),
                 UsersIds = doc.Members.Select(x=>x.VkId).ToList()
             };

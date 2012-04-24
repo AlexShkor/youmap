@@ -1,7 +1,7 @@
 ﻿@using System.Web.Mvc
 @model YouMap.Documents.Services.PlaceDocumentFilter
 
-@using (Html.BeginForm(null,null,FormMethod.Get))
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "filter-form" }))
 {
     @Html.HiddenFor(x=> x.PagingInfo.CurrentPage)
     @Html.HiddenFor(x=> x.PagingInfo.ItemsPerPage)

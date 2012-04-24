@@ -50,6 +50,10 @@ namespace YouMap.Controllers
                 model.Longitude = location.Longitude;
                 model.ZooomToPlace();
             }
+            if (filter.EventId.HasValue())
+            {
+                model.OpenPopupUrl = Url.Action("Details", "Events", new { id = filter.EventId });
+            }
             return RespondTo(request =>
             {
                 request.Html= request.Ajax = () => View(model);
@@ -62,11 +66,6 @@ namespace YouMap.Controllers
                         {
                             place.OpenOnLoad = true;
                         }
-                    }
-
-                    if (filter.EventId.HasValue())
-                    {
-                        model.OpenPopupUrl = Url.Action("Details", "Events", new{id = filter.EventId});
                     }
                     AjaxResponse.AddJsonItem("model",model);
                     return Result();
