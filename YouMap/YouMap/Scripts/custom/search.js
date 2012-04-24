@@ -93,7 +93,7 @@ YouMap.Search = function($) {
     };
      
     var navigation = function() {
-        $("#menu a").click(function() {
+        $("#menu a.filter-link").click(function () {
             $(this).toggleClass("selected");
             updateMarkersFilter();
             return false;

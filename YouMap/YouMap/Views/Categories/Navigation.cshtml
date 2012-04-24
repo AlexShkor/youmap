@@ -7,7 +7,10 @@
 
         @foreach (var item in Model)
         {
-            <li>@Html.ActionLink(@item.Name, "Index", "Map", new { categoryId = item.Id }, new { categoryId = item.Id })
+            <li>
+                <a categoryId="@item.Id" class="filter-link"  href="@Url.Action("Index", "Map", new { categoryId = item.Id })">
+                    @item.Name
+                </a>
             </li>
         }
 

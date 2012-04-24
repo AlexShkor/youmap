@@ -12,6 +12,10 @@
         list-style: none;
     }
 </style>
+@if(!Model.Any())
+{
+    <p>Список пользователей пуст</p>
+}
 <div class="friends-list">
   @Html.Partial("UsersGrid",Model)  
 </div>

@@ -42,6 +42,7 @@ namespace YouMap.Controllers
             {
                 model.UserLocation = SessionContext.Location;
             }
+            model.UserIcon = _imageService.UserIconModel;
             if (filter.Latitude.HasValue() && filter.Longitude.HasValue())
             {
                 var location = Location.Parse(filter.Latitude, filter.Longitude);

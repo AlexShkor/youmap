@@ -1,6 +1,8 @@
 ﻿@model UserInfoModel
-
-<div class="actions">
-    <a id="showEvents" class="showEvents btn btn-small" href="@Url.Action("Show","Events", new{userId = Model.Id})">Встречи</a>
-    <a id="showCheckins" class="showCheckins btn btn-small" href="@Url.Action("Show","CheckIns", new{userId = Model.Id})">Отметки</a>
+<h4>@Model.Name</h4>
+<h5>@Model.LastCheckInTimeAgo</h5>
+<p>@Model.LastCheckInMessage</p>
+<div class="actions btn-group">
+    <a id="showEvents" class="showEvents btn btn-small btn-primary" href="@Url.Action("Show","Events", new{userId = Model.Id})">Встречи <sup>@Model.EventsCount</sup></a>
+    <a id="showCheckins" class="showCheckins btn btn-small" href="@Url.Action("Show","CheckIns", new{userId = Model.Id})">Отметки <sup>@Model.CheckInsCount</sup></a>
 </div>

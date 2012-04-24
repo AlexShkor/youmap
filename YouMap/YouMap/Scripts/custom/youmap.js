@@ -11,6 +11,7 @@ YouMap.Map = function ($) {
     var geocoder = null;
     var userLocation = null;
     var userMarker = null;
+    var userIcon = null;
     var userProfileUrl = "/Account/Profile";
     var city = "Минск";
     var country = "Беларусь";
@@ -35,7 +36,8 @@ YouMap.Map = function ($) {
             if (config.OpenPopupUrl) {
                 colorbox(config.OpenPopupUrl);
             }
-        }).send();       
+        }).send();
+        userIcon = config.UserIcon;
         if (config.UserLocation) {  
             setMapCenter(config.UserLocation.Latitude, config.UserLocation.Longitude);
             updateUserMarker(config.UserLocation.Latitude, config.UserLocation.Longitude);
@@ -180,7 +182,8 @@ YouMap.Map = function ($) {
             userMarker = YouMap.Google.CreateMarker({
                 X: x,
                 Y: y,
-                Title: "Я",
+                Icon: userIcon,
+                Title: "Вы здесь",
                 click: openUserInfo
             });
         }
@@ -196,7 +199,8 @@ YouMap.Map = function ($) {
         userMarker = YouMap.Google.CreateMarker({
             X: x,
             Y: y,
-            Title: "Я",
+            Icon: userIcon,
+            Title: "Вы здесь",
             click: userDragging? openFinishDrag : openUserInfo,
             Draggable: !userDragging
         });

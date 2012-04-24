@@ -147,5 +147,19 @@ namespace YouMap
         {
             get { return null; }
         }
+
+        public MarkerIcon UserIconModel
+        {
+            get
+            {
+                return new MarkerIcon
+                           {
+                               Path = "/UserFiles/me.png",
+                               Size = new Size(40, 40),
+                               Point = new Point(0, 0),
+                               Anchor = new Point(40, 40)
+                           };
+            }
+        }
     }
 }

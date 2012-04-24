@@ -10,7 +10,10 @@
 
 </ul>*@
 
-
+@if(!Model.Any())
+{
+    <p>Список событий пуст, попробуйте изменить параметры фильтра.</p>
+}
 <ul id="eventsList" class="thumbnails">
      @foreach(var item in Model)
      {
