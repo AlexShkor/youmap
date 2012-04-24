@@ -61,7 +61,6 @@ namespace YouMap.Controllers
             {
                 docFilter.EventStartAfter = now.AddHours(-filter.HoursAgo.Value);
             }
-            docFilter.PagingInfo = filter.PagingInfo;
             var doc = _userDocumentService.GetByFilter(docFilter);
             var events = doc.SelectMany(x => x.Events).Where(
                 x => x.Start >= docFilter.EventStartAfter.Value);

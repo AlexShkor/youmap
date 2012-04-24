@@ -43,6 +43,8 @@ YouMap.Map = function ($) {
             updateUserMarker(config.UserLocation.Latitude, config.UserLocation.Longitude);
             isCustomUserLocation = true;
         } else {
+            setMapCenter(config.Defaultlocation.Latitude, config.Defaultlocation.Longitude);
+            updateUserMarker(config.Defaultlocation.Latitude, config.Defaultlocation.Longitude);
             setTimeout(function() {
                 YouMap.Geolocation.Locate(function(x, y) {
                     setMapCenter(x, y);
