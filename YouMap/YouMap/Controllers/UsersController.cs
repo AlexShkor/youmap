@@ -34,6 +34,7 @@ namespace YouMap.Controllers
             return View(model);
         }
 
+        [VkAccess]
         public ActionResult Friends(FriendsFilterModel filterModel)
         {
             filterModel = filterModel ?? new FriendsFilterModel();
