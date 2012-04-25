@@ -50,6 +50,7 @@ namespace YouMap.Controllers
 
         public ActionResult Index(EventsFilter filter)
         {
+            filter = filter ?? new EventsFilter();
             var now = DateTime.Now;
             var docFilter = new UserFilter {EventStartAfter = now};
             if (filter.HoursNext.HasValue)
@@ -60,17 +61,30 @@ namespace YouMap.Controllers
             {
                 docFilter.EventStartAfter = now.AddHours(-filter.HoursAgo.Value);
             }
-            docFilter.PagingInfo = filter.PagingInfo;
             var doc = _userDocumentService.GetByFilter(docFilter);
-            //TODO: Refactor this, maybe move to lucene
             var events = doc.SelectMany(x => x.Events).Where(
                 x => x.Start >= docFilter.EventStartAfter.Value);
             if (docFilter.EventStartBefore.HasValue)
             {
                 events = events.Where(x => x.Start <= docFilter.EventStartBefore);
             }
-            var model = events.Take(20).Select(MapToListItem);
+            filter.PagingInfo.TotalCount = events.Count();
+            var model = events.Skip(filter.PagingInfo.Skip).Take(filter.PagingInfo.Take).Select(MapToListItem);
+            ViewBag.Filter = filter;
             return View(model);
+        }
+
+        public ActionResult ForPlace(string placeId)
+        {
+            var model = _userDocumentService.GetEventsListForPlace(placeId, 3, 20).Select(MapToListItem);
+            return View("Index", model);
+        }
+
+        public ActionResult ForUser(EventsFilter filter)
+        {
+            var user = _userDocumentService.GetById(filter.UserId);
+            var model = user.Events.OrderByDescending(x => x.Start).Select(MapToListItem);
+            return View("Index", model);
         }
 
         [HttpGet]
@@ -243,7 +257,7 @@ namespace YouMap.Controllers
                 StartDate = doc.Start.ToInfoString(),
                 Started = doc.Start < DateTime.Now,
                 Url = Url.Action("Details",new {id = doc.Id}),
-                ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id }),
+                ShareUrl = Url.RouteUrl("MapIndex", new { placeId = doc.PlaceId, eventId = doc.Id, controller = "Map", action = "Index"}),
                 Members = doc.Members.Select(MapFriendListItem),
                 UsersIds = doc.Members.Select(x=>x.VkId).ToList()
             };

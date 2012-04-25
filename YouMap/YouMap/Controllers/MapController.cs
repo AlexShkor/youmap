@@ -42,12 +42,17 @@ namespace YouMap.Controllers
             {
                 model.UserLocation = SessionContext.Location;
             }
+            model.UserIcon = _imageService.UserIconModel;
             if (filter.Latitude.HasValue() && filter.Longitude.HasValue())
             {
                 var location = Location.Parse(filter.Latitude, filter.Longitude);
                 model.Latitude = location.Latitude;
                 model.Longitude = location.Longitude;
                 model.ZooomToPlace();
+            }
+            if (filter.EventId.HasValue())
+            {
+                model.OpenPopupUrl = Url.Action("Details", "Events", new { id = filter.EventId });
             }
             return RespondTo(request =>
             {
@@ -61,11 +66,6 @@ namespace YouMap.Controllers
                         {
                             place.OpenOnLoad = true;
                         }
-                    }
-
-                    if (filter.EventId.HasValue())
-                    {
-                        model.OpenPopupUrl = Url.Action("Details", "Events", new{id = filter.EventId});
                     }
                     AjaxResponse.AddJsonItem("model",model);
                     return Result();

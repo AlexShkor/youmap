@@ -24,36 +24,22 @@ namespace YouMap.Controllers
         public ActionResult Show(string userId)
         {
             var user = _documentService.GetById(userId);
-
-            //var user = _documentService.GetAll().First(x => x.VkId != null);
             var model  = user.CheckIns.GroupBy(x => x.PlaceId ?? x.Location.ToString()).Select(x=> MapToMarker(x,user)).ToList();
             AjaxResponse.AddJsonItem("model",model);
             return RespondTo(model);
         }
 
-        private CheckInModel Map(CheckInDocument doc)
+        public ActionResult ForPlace(string placeId)
         {
-            return new CheckInModel
-                       {
-                           Latitude = doc.Location.GetLatitudeString(),
-                           Longitude = doc.Location.GetLongitudeString(),
-                           Memo = doc.Memo,
-                           PlaceId = doc.PlaceId,
-                           Visited = doc.Visited
-                       };
+            var model = _documentService.GetCheckInsGroupsForPlace(placeId, 20).Select(MapToListItem).SelectMany(x => x);
+            return View("Index", model);
         }
 
-        private MarkerModel MapToMarker(CheckInDocument doc)
+        public ActionResult ForUser(string userId)
         {
-            return new MarkerModel
-            {
-                X = doc.Location.Latitude,
-                Y = doc.Location.Longitude,
-                Title = doc.Title,
-                InfoWindowUrl = Url.Action("Details"),
-                Icon = _imageService.CheckInIconModel,
-                Shadow = null
-            };
+            var user = _documentService.GetById(userId);
+            var model = user.CheckIns.OrderByDescending(x => x.Visited).GroupBy(x => user).Select(MapToListItem).SelectMany(x => x);
+            return View("Index", model);
         }
 
         protected MarkerModel MapToMarker(IGrouping<string, CheckInDocument> @group, UserDocument user)

@@ -569,6 +569,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\colorbox.css" />
+    <Content Include="Content\bootstrap-forms.css" />
     <Content Include="Content\jgrowl.css" />
     <Content Include="Content\forms.css" />
     <Content Include="Content\images\alert-overlay.png" />
@@ -1155,6 +1156,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Pager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\EventsFilter.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

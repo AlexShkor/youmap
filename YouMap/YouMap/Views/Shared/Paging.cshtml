@@ -54,6 +54,6 @@
                 $("#paging li a").click(function () {
                     var pageNumberInput = $("input[name*='PagingInfo.CurrentPage']");
                     pageNumberInput.val($(this).data("page"));
-                    pageNumberInput.parents("form").submit();
+                    pageNumberInput.parents("form.filter-form").submit();
                 })
             </script>

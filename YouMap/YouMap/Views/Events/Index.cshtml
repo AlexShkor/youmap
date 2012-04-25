@@ -1,5 +1,6 @@
-﻿@model IEnumerable<EventListItem>
-
+﻿@using YouMap.Controllers
+@model IEnumerable<EventListItem>
+@*
 <ul>
     @foreach( var item in Model)
     {
@@ -7,4 +8,51 @@
             <a href="@Url.Action("Details","Events",new{id = item.Id})">@item.Title <sub>@item.StartDate</sub></a>
         </li>
     }
-</ul>
+
+</ul>*@
+
+@{
+    var filter = (EventsFilter)ViewBag.Filter;
+}
+
+@if (filter != null)
+{
+    @Html.Partial("EventsFilter", filter)
+    @Html.Partial("Paging", filter.PagingInfo)
+}
+@if(!Model.Any())
+{
+    <p>Список событий пуст, попробуйте изменить параметры фильтра.</p>
+}
+<style>
+    .events-list-index ul
+    {
+        list-style: none;
+    }
+    .disabled
+    {
+        color: #CCC;
+    }
+</style>
+<div class="events-list-index">
+    <ul id="eventsList" class="thumbnails">
+        @foreach(var item in Model)
+        {
+            <li class="span2 @Html.ClassIf("disabled",item.Started)">
+                <div class="thumbnail">
+                    @*<img data-vkid="@item.VkId" src="" alt="@item.Name">*@
+                    <div class="caption">
+                        <h4>@item.OwnerName</h4>
+                        <h5>@item.StartDate</h5>
+                        <p>@item.Title</p>
+                        @if(item.Started)
+                        {
+                            <p>(встреча уже началась)</p>
+                        }
+                        <p><a href="@item.ShareUrl" class="btn btn-primary">Показать</a></p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

@@ -48,8 +48,22 @@ namespace YouMap.Controllers
 
         public ActionResult UserInfo(string id)
         {
-            //var user = _userDocumentService.GetById(id);
-            var model = new UserInfoModel { Id = id };
+            var user = _userDocumentService.GetById(id);
+            var model = new UserInfoModel
+                            {
+                                Id = id,
+                                Name = user.FullName,
+                                CheckInsCount = user.CheckIns.Count,
+                                EventsCount = user.Events.Count,
+                                FriendsCount = user.Friends.Count
+                            };
+            if (model.CheckInsCount > 0)
+            {
+                var lastCheckIn = user.CheckIns.OrderByDescending(x => x.Visited).First();
+                model.LastCheckInMessage = lastCheckIn.Memo;
+                model.LastCheckInTimeAgo = lastCheckIn.Visited.ToInfoString();
+                model.PlaceId = lastCheckIn.PlaceId;
+            }
             return RespondTo(model);
         }
 

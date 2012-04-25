@@ -54,7 +54,6 @@
         } else {
             //Your browser doesn't support geolocation.
         }
-        map.setCenter(initialLocation);
     };
     return {
         Initialize: initialize,

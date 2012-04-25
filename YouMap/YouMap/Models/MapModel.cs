@@ -30,6 +30,8 @@ namespace YouMap.Models
 
         public bool DisableAutoOpenPlaceInfo { get; set; }
 
+        public MarkerIcon UserIcon { get; set; }
+
         public MapModel()
         {
             Width = 1450;
