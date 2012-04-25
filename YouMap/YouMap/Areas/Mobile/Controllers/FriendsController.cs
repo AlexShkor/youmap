@@ -144,5 +144,9 @@ namespace YouMap.Areas.Mobile.Controllers
         }
 
         public string Photo { get; set; }
+
+        public int EventsCount { get; set; }
+
+        public int CheckInsCount { get; set; }
     }
 }

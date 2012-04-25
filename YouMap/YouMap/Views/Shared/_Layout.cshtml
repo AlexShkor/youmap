@@ -14,9 +14,9 @@
                 <nav>
                     <ul id="menu">
                         <li class="left">
-                            <a href="@Url.Action("Friends","Users")">Друзья</a>
-                            <a href="@Url.Action("Index","Events")">События</a>
-                            <a href="@Url.Action("Index","Places")">Места</a>
+                            <a class="simple-btn friends" href="@Url.Action("Friends","Users")">Друзья</a>
+                            <a class="simple-btn events" href="@Url.Action("Index","Events")">События</a>
+                            <a class="simple-btn places" href="@Url.Action("List","Places")">Места</a>
                         </li>
                         @Html.Action("Navigation", "Categories")
                     </ul>

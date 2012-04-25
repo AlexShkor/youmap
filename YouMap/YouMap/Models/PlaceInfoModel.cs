@@ -17,5 +17,7 @@
         public string MapLink { get; set; }
 
         public string CheckInLink { get; set; }
+
+        public string Distance { get; set; }
     }
 }

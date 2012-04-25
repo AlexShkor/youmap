@@ -71,14 +71,16 @@ namespace YouMap.Controllers
             return new CheckInListItem
                        {
                            Memo = doc.Memo,
-                           Visited = doc.Visited.ToInfoString()
+                           Visited = doc.Visited.ToInfoString(),
+                           PlaceId = doc.PlaceId,
+                           Url = Url.Action("Index","Map",new{placeId = doc.PlaceId})
                        };
         }
 
         public ActionResult List(string placeId)
         {
             var model = _documentService.GetCheckInsGroupsForPlace(placeId, 3).Select(MapToListItem).SelectMany(x=> x);
-            AjaxResponse.Render("#checkinsList","CheckInsList",model);
+            AjaxResponse.Render("#checkinsList" + placeId,"CheckInsList",model);
             return Result();
         }
 
@@ -88,7 +90,7 @@ namespace YouMap.Controllers
             foreach (var item in model)
             {
                 item.UserName = arg.Key.FullName;
-                item.Url = arg.Key.Vk.GetVkUrl();
+                //item.Url = arg.Key.Vk.GetVkUrl();
             }
             return model;
         }

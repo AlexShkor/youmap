@@ -275,7 +275,7 @@ namespace YouMap.Controllers
         public ActionResult List(string placeId)
         {
             var model = _userDocumentService.GetEventsListForPlace(placeId,3).Select(MapToListItem);
-            AjaxResponse.Render("#eventsList", "EventsList", model);
+            AjaxResponse.Render("#eventsList"+placeId, "EventsList", model);
             return Result();
         }
 
@@ -343,7 +343,9 @@ namespace YouMap.Controllers
 
         public EventsFilter()
         {
-            PagingInfo = new PagingInfo {Take = 20};
+            PagingInfo = new PagingInfo {Take = 50};
+            HoursAgo = 2;
+            HoursNext = 24;
         }
     }
 }

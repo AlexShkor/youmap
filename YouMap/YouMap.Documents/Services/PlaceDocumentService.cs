@@ -68,8 +68,17 @@ namespace YouMap.Documents.Services
 
         public IEnumerable<IGrouping<double, PlaceDocument>> GetNear(Location location, int count = 100, double radiusInKm = 1)
         {
-            
+            return GetNear(null, location, count, radiusInKm);
+        }
+
+        public IEnumerable<IGrouping<double, PlaceDocument>> GetNear(PlaceDocumentFilter filter,Location location, int count = 100, double radiusInKm = 1)
+        {
             var query = Query.EQ("Status", PlaceStatusEnum.Active);
+
+            if (filter != null)
+            {
+                query = BuildFilterQuery(filter);
+            }
             //TODO: FIX  distance calculation!
 
             var options = GeoNearOptions.SetMaxDistance(radiusInKm/EarthRadius).SetSpherical(true);

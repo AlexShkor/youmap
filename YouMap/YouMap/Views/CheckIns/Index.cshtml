@@ -1,0 +1,34 @@
+﻿@using YouMap.Controllers
+@model IEnumerable<CheckInListItem>
+
+@if(!Model.Any())
+{
+    <p>Список отметок пуст.</p>
+}
+<style>
+    .checkins-list-index ul
+    {
+        list-style: none;
+    }
+    .disabled
+    {
+        color: #CCC;
+    }
+</style>
+<div class="checkins-list-index">
+    <ul id="checkinsList" class="thumbnails">
+        @foreach(var item in Model)
+        {
+            <li class="span2">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4>@item.UserName</h4>
+                        <h5>@item.Visited</h5>
+                        <p>@item.Memo</p>
+                        <p><a href="@item.Url" class="btn btn-primary">Показать на карте</a></p>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

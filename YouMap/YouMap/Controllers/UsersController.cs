@@ -117,7 +117,9 @@ namespace YouMap.Controllers
                 CheckInsLink = Url.Action("ForUser", "CheckIns", new { userId = doc.Id }),
                 DetailsLink = Url.Action("Details", "Users", new { id = doc.Id }),
                 LastCheckInTimeAgo = "-",
-                LastCheckInMessage = String.Empty
+                LastCheckInMessage = String.Empty,
+                CheckInsCount = doc.CheckIns.Count,
+                EventsCount = doc.Events.Count
             };
             var lastCheckIn = doc.CheckIns.OrderByDescending(x => x.Visited).FirstOrDefault();
             if (lastCheckIn != null)

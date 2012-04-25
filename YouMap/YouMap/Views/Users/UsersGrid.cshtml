@@ -1,6 +1,4 @@
 ﻿@model System.Collections.Generic.IEnumerable<YouMap.Areas.Mobile.Controllers.FriendModel>
-
-
 @*<table class="table">
     <thead>
         <tr>
@@ -23,28 +21,27 @@
         }
     </tbody>
 </table>*@
-
 <ul id="friendsList" class="thumbnails">
-     @foreach(var item in Model)
-     {
-         <li class="span3">
-             <div class="thumbnail">
-                 <img data-vkid="@item.VkId" src="" alt="@item.Name">
-                 <div class="caption">
-                     <h4>@item.Name</h4>
-                     <h5>@item.LastCheckInTimeAgo</h5>
-                     <p>@item.LastCheckInMessage</p>
-                     <p><a href="@item.EventsLink" class="btn btn-primary">Встречи</a> <a href="@item.CheckInsLink" class="btn">Отметки</a></p>
-                 </div>
-             </div>
-         </li>
-     }
+    @foreach (var item in Model)
+    {
+        <li class="span3">
+            <div class="thumbnail">
+                <img data-vkid="@item.VkId" src="" alt="@item.Name">
+                <div class="caption">
+                    <h4>@item.Name</h4>
+                    <h5>@item.LastCheckInTimeAgo</h5>
+                    <p>@item.LastCheckInMessage</p>
+                    <p><a href="@item.EventsLink" class="btn btn-primary">Встречи <sup>@item.EventsCount
+                        </sup></a><a href="@item.CheckInsLink" class="btn">Отметки <sup>@item.CheckInsCount</sup>
+                        </a></p>
+                </div>
+            </div>
+        </li>
+    }
 </ul>
-
-
 <script>
-    $(function() {
-        YouMap.Vk.Map.LoadFriends('@String.Join(",",Model.Select(x=> x.VkId))', function(result) {
+    $(function () {
+        YouMap.Vk.Map.LoadFriends('@String.Join(",",Model.Select(x=> x.VkId))', function (result) {
             for (var i = 0; i < result.length; i++) {
                 $('#friendsList img[data-vkid="' + result[i].uid + '"]').attr("src", result[i].photo_big);
             }
