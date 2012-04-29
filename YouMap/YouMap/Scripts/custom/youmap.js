@@ -130,7 +130,7 @@ YouMap.Map = function ($) {
     
     var layer;
     var zoomCallback = function () {
-        layer = (16 - map.zoom);
+        layer = (15 - map.zoom);
         if (layer < 0) {
             layer = 0;
         }
