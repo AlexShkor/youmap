@@ -11,6 +11,7 @@ using MongoDB.Bson;
 using MongoDB.Driver.Builders;
 using SoundInTheory.DynamicImage.Fluent;
 using YouMap.ActionFilters;
+using YouMap.Areas.Mobile.Controllers;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Lucene;
 using YouMap.Documents.Services;
@@ -62,6 +63,42 @@ namespace YouMap.Controllers
             var docs = _documentService.GetByFilter(filter);
             var model = docs.Select(MapListItem);
             return View(model);
+        }
+
+        public ActionResult List(PlaceFilterModel filter)
+        {
+            filter = filter ?? new PlaceFilterModel();
+            var location = filter.HasLocation() ? filter.GetLocation() : SessionContext.Location ?? DefaultLocation;
+            var places = _documentService.GetNear(location, filter.PagingInfo.ItemsPerPage, filter.Raduis);
+            var model = places.Select(MapListItem).SelectMany(x => x);
+            ViewBag.Filter = filter;
+            return RespondTo(model, "List");
+        }
+
+        private IEnumerable<PlaceInfoModel> MapListItem(IGrouping<double, PlaceDocument> pair)
+        {
+            return pair.Select(doc =>
+                                   {
+                                       var result = pair.Select(Map).ToList();
+                                       for (int i = 0; i < result.Count(); i++)
+                                       {
+                                           result[i].Distance  = string.Format("{0:0.0} км", pair.Key);; 
+                                       }
+                                       return result;
+                                   }).SelectMany(x=> x);
+
+            //new PlaceListItem
+            //{
+            //    Id = doc.Id,
+            //    Address = doc.Address,
+            //    Description = doc.Description,
+            //    Icon = _imageService.GetPlaceLogoUrl(doc),
+            //    Title = doc.Title,
+            //    MapUrl = Url.Action("Details", "Places", new { id = doc.Id }),
+            //    Tags = doc.Tags,
+            //    Distance = string.Format("{0:0.0} км", pair.Key),
+            //    Layer = doc.Layer
+            //})
         }
 
         public ActionResult Search(string term)

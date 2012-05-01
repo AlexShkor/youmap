@@ -6,6 +6,7 @@ using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Data;
 using YouMap.Framework;
+using YouMap.Framework.Services;
 using YouMap.Framework.Utils.Extensions;
 using YouMap.Models;
 
@@ -93,6 +94,10 @@ namespace YouMap.Areas.Mobile.Controllers
 
         public bool ToCheckIn { get; set; }
 
+        public PagingInfo PagingInfo { get; set; }
+
+        public double Raduis { get; set; }
+
         public Location GetLocation()
         {
             return Location.Parse(NearX, NearY);
@@ -101,6 +106,12 @@ namespace YouMap.Areas.Mobile.Controllers
         public bool HasLocation()
         {
             return NearX.HasValue() && NearY.HasValue();
+        }
+
+        public PlaceFilterModel()
+        {
+            PagingInfo = new PagingInfo() {ItemsPerPage = 50};
+            Raduis = 5;
         }
     }
 }

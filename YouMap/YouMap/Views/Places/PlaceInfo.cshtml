@@ -5,7 +5,9 @@
         <div class="accordion-heading">
             <a class="accordion-toggle">
                 <strong>@Model.Title</strong>
+<strong style="float: right">@Model.Distance</strong>
             </a>
+             
         </div>
         <div class="accordion-body">
             <div class="accordion-inner">
@@ -37,7 +39,7 @@
                 Встречи</a>
         </div>
         <div id="collapseThree" class="accordion-body">
-            <div id="eventsList" class="accordion-inner">
+            <div id="eventsList@(Model.Id)" class="accordion-inner">
             </div>
         </div>
     </div>
@@ -47,7 +49,7 @@
                 Отметки</a>
         </div>
         <div class="accordion-body">
-            <div id="checkinsList" class="accordion-inner">
+            <div id="checkinsList@(Model.Id)" class="accordion-inner">
             </div>
         </div>
     </div>

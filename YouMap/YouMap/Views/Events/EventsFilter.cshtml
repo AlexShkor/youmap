@@ -1,22 +1,21 @@
 ﻿@using System.Web.Mvc
 @model YouMap.Controllers.EventsFilter
            
-@section head
-{
+
     <link href="@Url.Content("~/Content/bootstrap-forms.css")" rel="stylesheet" type="text/css" />
-}
-@using (Html.BeginForm(null, null, FormMethod.Get,new{@class="filter-form"}))
+
+@using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "filter-form form-horizontal well" }))
 {
     <fieldset>
         <div class="control-group">
             @Html.LabelFor(x => x.HoursAgo, "Спустя")
             @Html.TextBoxFor(x => x.HoursAgo)
-            <span>часов</span>
+            <span class="help-inline">часов</span>
         </div>
         <div class="control-group">
             @Html.LabelFor(x => x.HoursNext, "Через")
             @Html.TextBoxFor(x => x.HoursNext)
-            <span>часов</span>
+            <span class="help-inline">часов</span>
         </div>
         @Html.HiddenFor(x => x.PagingInfo.CurrentPage)
         @Html.HiddenFor(x => x.PagingInfo.ItemsPerPage)

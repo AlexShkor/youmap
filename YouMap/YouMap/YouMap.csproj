@@ -1160,6 +1160,15 @@
   <ItemGroup>
     <Content Include="Views\Events\EventsFilter.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Places\PlaceFilter2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CheckIns\Index.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

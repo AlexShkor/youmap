@@ -1,0 +1,33 @@
+﻿@using YouMap.Areas.Mobile.Controllers
+@model IEnumerable<PlaceInfoModel>
+<style>
+    #placesList
+    {
+        list-style: none;
+    }
+</style>
+
+@{
+    var filter = (PlaceFilterModel)ViewBag.Filter;
+}
+@Html.Partial("PlaceFilter2",filter)
+@Html.Partial("Paging",filter.PagingInfo)
+<ul id="placesList" class="thumbnails">
+    @foreach(var item in Model)
+    {
+        var model = item;
+        <li>
+            <div class="thumbnail">
+                @Html.Partial("PlaceInfo",model)
+            </div>
+        </li>
+    }
+</ul>
+
+<script>
+    $(function() {
+        $(".accordion").accordion({
+            header: '.accordion-heading'
+        });
+    })
+</script>
