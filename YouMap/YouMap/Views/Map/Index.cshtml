@@ -1,12 +1,11 @@
 ﻿@using System.Globalization
 @model MapModel
-
+@{ Layout = "~/Views/Shared/_LayoutFluid.cshtml";
+}
 <script>
     $(document).ready(function () {
         var config = @( Html.Raw(Model.ToJson()));
 	YouMap.Map.Initialize(config);
 });
 </script>
-<div id="mapHolder">
     <div id="map"></div>
-</div>
