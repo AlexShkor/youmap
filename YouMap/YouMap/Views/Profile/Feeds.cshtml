@@ -1,0 +1,27 @@
+﻿@using System.Web.Mvc
+@model IEnumerable<string>
+
+<div class="well">
+    <p>Выберите интересующий вас фид, либо создайте новый</p>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap-forms.css")" />
+
+@using(Html.BeginForm("Create","Feeds",FormMethod.Get))
+{    
+<div class="input-append">
+                <input class="span2" name="Name" type="text"><button class="btn ajax-submit" type="submit">Добавить</button>
+              </div>
+}
+</div>
+
+<ul class="nav nav-list">
+     <li class="nav-header">
+    Ваши фиды
+  </li>
+    @foreach(var item in Model)
+    {
+        <li>
+            <a href="@Url.Action("Details","Feeds",new{name=item})">#@item</a>
+        </li>
+    }
+
+</ul>

@@ -8,7 +8,7 @@ using YouMap.Controllers;
 
 namespace YouMap.Models
 {
-    public class AddPlaceModel
+    public class PlaceCreateModel
     {
         [Required(ErrorMessage = "¬ведите название")]
         public string Title { get; set; }
@@ -50,7 +50,7 @@ namespace YouMap.Models
 
         public List<string> Tags { get; set; }
 
-        public AddPlaceModel()
+        public PlaceCreateModel()
         {
             DaysOfWeek = Framework.Helpers.SelectListHelper.WorkDaysOfWeek();
             Layers = new SelectList(Enumerable.Range(0,6));

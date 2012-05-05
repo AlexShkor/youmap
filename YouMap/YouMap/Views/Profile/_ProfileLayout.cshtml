@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Профиль";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<style>
+    .sidebar
+    {
+        width: 20%;
+    }
+    .content
+    {
+        width: 60%;
+    }
+</style>
+
+<div>
+    <div class="sidebar">
+        <ul>
+            <li>
+                <a href="@Url.Action("Index")">Профиль</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Settings")">Настройки</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Feeds")">Фиды</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        @RenderBody()
+    </div>
+</div>

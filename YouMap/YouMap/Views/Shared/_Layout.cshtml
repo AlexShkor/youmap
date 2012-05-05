@@ -1,13 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
+    <head>
+        @{
+            ViewBag.Title = "YouMap " + ViewBag.Title;
+        }
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
     
-    @Html.Partial("Styles")
-    @Html.Partial("Scripts")
-    @RenderSection("head",false)
-</head>
+        @Html.Partial("Styles")
+        @Html.Partial("Scripts")
+        @RenderSection("head",false)
+    </head>
     <body>
         <div class="page">
             <header>             
@@ -17,6 +20,7 @@
                             <a class="simple-btn friends" href="@Url.Action("Friends","Users")">Друзья</a>
                             <a class="simple-btn events" href="@Url.Action("Index","Events")">События</a>
                             <a class="simple-btn places" href="@Url.Action("List","Places")">Места</a>
+                            <a class="simple-btn places" href="@Url.Action("Index","Feeds")">Фиды</a>
                         </li>
                         @Html.Action("Navigation", "Categories")
                     </ul>

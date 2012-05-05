@@ -128,7 +128,7 @@ namespace YouMap.Controllers
         [Role(UserPermissionEnum.Admin, UserPermissionEnum.Advertiser)]
         public ActionResult AddPlace()
         {
-            var model = new AddPlaceModel();
+            var model = new PlaceCreateModel();
             model.Categories = GetCategorySelectList();
             if (!Request.IsAjaxRequest())
             {
@@ -154,7 +154,7 @@ namespace YouMap.Controllers
         [HttpPost]
         [Authorize]
         [Role(UserPermissionEnum.Admin, UserPermissionEnum.Advertiser)]
-        public ActionResult AddPlace(AddPlaceModel model)
+        public ActionResult AddPlace(PlaceCreateModel model)
         {
             if (ModelState.IsValid)
             {
@@ -325,9 +325,9 @@ namespace YouMap.Controllers
             return RespondTo(MapToEdit(place));
         }
 
-        private AddPlaceModel MapToEdit(PlaceDocument place)
+        private PlaceCreateModel MapToEdit(PlaceDocument place)
         {
-            var model =  new AddPlaceModel
+            var model =  new PlaceCreateModel
                        {
                            Id = place.Id,
                            Title = place.Title,
@@ -351,7 +351,7 @@ namespace YouMap.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(AddPlaceModel model)
+        public ActionResult Edit(PlaceCreateModel model)
         {
             if (ModelState.IsValid)
             {
@@ -482,7 +482,7 @@ namespace YouMap.Controllers
                        };
         }
 
-        private void TrySaveImage(AddPlaceModel model)
+        private void TrySaveImage(PlaceCreateModel model)
         {
             try
             {

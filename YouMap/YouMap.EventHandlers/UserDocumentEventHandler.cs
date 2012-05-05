@@ -19,7 +19,8 @@ namespace YouMap.EventHandlers
         IMessageHandler<User_FriendsAddedEvent>,
         IMessageHandler<User_CheckInAddedEvent>,
         IMessageHandler<User_FeedCreatedEvent>,
-        IMessageHandler<User_FeedSubscribedEvent>
+        IMessageHandler<User_FeedSubscribedEvent>,
+        IMessageHandler<User_FeedUnsubscribedEvent>
 
     {
         private readonly UserDocumentService _documentService;
@@ -128,6 +129,13 @@ namespace YouMap.EventHandlers
         {
             var query = Query.EQ("_id", userId);
             var update = Update.AddToSet("Feeds", feed);
+            _documentService.Update(query, update);
+        }
+
+        public void Handle(User_FeedUnsubscribedEvent message)
+        {
+            var query = Query.EQ("_id", message.UserId);
+            var update = Update.Pull("Feeds", message.Feed);
             _documentService.Update(query, update);
         }
     }

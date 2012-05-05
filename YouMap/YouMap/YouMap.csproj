@@ -324,42 +324,45 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CheckInsController.cs" />
+    <Compile Include="Models\Feeds\FeedDetailsModel.cs" />
+    <Compile Include="Controllers\FeedsController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Factories\Models\PlaceModelFactory.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
     <Compile Include="JsonModelBinder.cs" />
     <Compile Include="Models\CheckInListItem.cs" />
     <Compile Include="Models\EventListItem.cs" />
-    <Compile Include="Models\PlaceInfoModel.cs" />
-    <Compile Include="Models\UserInfoModel.cs" />
-    <Compile Include="Models\UserListItem.cs" />
+    <Compile Include="Models\Places\PlaceInfoModel.cs" />
+    <Compile Include="Models\Users\UserInfoModel.cs" />
+    <Compile Include="Models\Users\UserListItem.cs" />
     <Compile Include="Models\EventEditModel.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Models\PlaceAssignModel.cs" />
+    <Compile Include="Models\Places\PlaceAssignModel.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\VkController.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="Models\CheckInModel.cs" />
     <Compile Include="Models\ControlPanelModel.cs" />
-    <Compile Include="Models\PlaceEditModel.cs" />
-    <Compile Include="Models\PlaceListItem.cs" />
-    <Compile Include="Models\PlaceSearchModel.cs" />
-    <Compile Include="Models\UserProfileModel.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
-    <Compile Include="Models\VkLoginModel.cs" />
+    <Compile Include="Models\Places\PlaceEditModel.cs" />
+    <Compile Include="Models\Places\PlaceListItem.cs" />
+    <Compile Include="Models\Places\PlaceSearchModel.cs" />
+    <Compile Include="Models\Users\UserProfileModel.cs" />
+    <Compile Include="Models\Users\UserViewModel.cs" />
+    <Compile Include="Models\Account\VkLoginModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\AddCategoryModel.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\Markers.cs" />
-    <Compile Include="Models\AddPlaceModel.cs" />
+    <Compile Include="Models\Places\PlaceCreateModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="DependencyResolution\SmDependencyResolver.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Account\AccountModels.cs" />
     <Compile Include="Models\VkPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionContext.cs" />
@@ -1168,6 +1171,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\CheckIns\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_ProfileLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Feeds.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Settings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feeds\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feeds\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feeds\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

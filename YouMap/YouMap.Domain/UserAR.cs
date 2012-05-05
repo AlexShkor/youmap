@@ -15,6 +15,7 @@ namespace YouMap.Domain
         public UserAR()
         {
             Friends  = new HashSet<string>();
+            Feeds = new HashSet<string>();
         }
 
         public UserAR(string userId, UserData userData, ICommandMetadata metadata): this()
@@ -127,13 +128,31 @@ namespace YouMap.Domain
             });
         }
 
+        public HashSet<string> Feeds { get; set; }
+
         public void SubscribeFeed(string feed)
         {
-            Apply(new User_FeedSubscribedEvent
+            if (!Feeds.Contains(feed))
             {
-                UserId = Id,
-                Feed = feed
-            });
+                Apply(new User_FeedSubscribedEvent
+                          {
+                              UserId = Id,
+                              Feed = feed
+                          });
+            }
+        }
+
+
+        public void UnsubscribeFeed(string feed)
+        {
+            if (Feeds.Contains(feed))
+            {
+                Apply(new User_FeedUnsubscribedEvent
+                          {
+                              UserId = Id,
+                              Feed = feed
+                          });
+            }
         }
 
         #region Object Reconstruction
@@ -149,6 +168,16 @@ namespace YouMap.Domain
 
         protected void On(User_PasswordChangedEvent user)
         {
+        }
+
+        protected void On(User_FeedSubscribedEvent user)
+        {
+            Feeds.Add(user.Feed);
+        }
+
+        protected void On(User_FeedUnsubscribedEvent user)
+        {
+            Feeds.Remove(user.Feed);
         }
 
         protected void On(User_ImportedFromVkEvent user)

@@ -78,6 +78,7 @@
     <Compile Include="Commands\User_CreateFeedCommand.cs" />
     <Compile Include="Commands\User_JoinToEventCommand.cs" />
     <Compile Include="Commands\User_SubscribeFeedCommand.cs" />
+    <Compile Include="Commands\User_UnsubscribeFeedCommand.cs" />
     <Compile Include="Data\CheckInData.cs" />
     <Compile Include="Commands\User_AddCheckInCommand.cs" />
     <Compile Include="Commands\User_UpdateMarkCommand.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Events\User_ImportedFromVkEvent.cs" />
     <Compile Include="Events\User_FeedCreatedEvent.cs" />
     <Compile Include="Events\User_FeedSubscribedEvent.cs" />
+    <Compile Include="Events\User_FeedUnsubscribedEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
