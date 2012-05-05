@@ -30,7 +30,9 @@
     @foreach (var item in Model)
     {
         var model = item;
-        <li><a href="#">@item.Title
+        <li><a href="#">
+            <strong>@item.Title</strong>
+            <strong style="float:right">@item.Distance</strong>
             <div class="thumbnail">
                 <img class="fRight" src="@(item.Logo)"/></div>
         </a></li>

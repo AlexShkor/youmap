@@ -571,6 +571,8 @@
     <Content Include="Content\colorbox.css" />
     <Content Include="Content\bootstrap-forms.css" />
     <Content Include="Content\custom_bootstrap.css" />
+    <Content Include="Content\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\img\glyphicons-halflings.png" />
     <Content Include="Content\jgrowl.css" />
     <Content Include="Content\forms.css" />
     <Content Include="Content\images\alert-overlay.png" />
