@@ -1,9 +1,19 @@
 ﻿@{ Layout = "~/Views/Shared/_LayoutB.cshtml";
 }
+<style>
+    .container-fluid
+    {
+        padding: 0;
+    }
+    .row-fluid > .span10
+    {
+    }
+</style>
+
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span2">
-      <!--Sidebar content-->
+      @RenderSection("Sidebar",false)
     </div>
     <div class="span10">
       @RenderBody()

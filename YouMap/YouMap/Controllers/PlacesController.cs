@@ -118,6 +118,18 @@ namespace YouMap.Controllers
             return Result();
         }
 
+        public ActionResult Sidebar(string term)
+        {
+            var luceneDocs = _placeLuceneService.Search(term, PlaceStatusEnum.Active);
+
+            var filter = new PlaceDocumentFilter { IdIn = luceneDocs.Select(x => x.Id) };
+            var places =
+                _documentService.GetNear(filter, SessionContext.Location ?? DefaultLocation).
+                    Select(MapListItem).SelectMany(x=>x);
+            AjaxResponse.AddJsonItem("places", places);
+            return PartialView(places);
+        }
+
         public ActionResult SearchForm()
         {
             return PartialView();
