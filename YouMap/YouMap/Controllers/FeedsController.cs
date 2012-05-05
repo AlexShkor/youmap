@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using YouMap.Documents.Documents;
@@ -34,26 +36,45 @@ namespace YouMap.Controllers
             var feed = _feedDocumentService.GetByName(name);
             if (feed == null)
             {
-                var cmd = new User_CreateFeedCommand
+                ValidateModel(name);
+                if (name.Length < 2 || name.Length > 100)
                 {
-                    UserId = User.Id,
-                    Name = name
-                };
-                Send(cmd);
-                AjaxResponse.Options.SuccessMessage = "Вы создали фид #" + name;
+                    ModelState.AddModelError("Name", "длина хэштега должна быть от 2 до 100 символов");
+                }
+                if (!IsValidCharsForFeedName(name))
+                {
+                    ModelState.AddModelError("Name", "недопустимые символы в имени фида");
+                }
+                if (ModelState.IsValid)
+                {
+                    var cmd = new User_CreateFeedCommand
+                                  {
+                                      UserId = User.Id,
+                                      Name = name
+                                  };
+                    Send(cmd);
+                    AjaxResponse.Options.SuccessMessage = "Вы создали фид #" + name;
+                    AjaxResponse.ReloadPage = true;
+                }
             }
             else
             {
-                var cmd = new User_SubscribeFeedCommand
-                {
-                    UserId = User.Id,
-                    Feed = name
-                };
-                Send(cmd);
-                AjaxResponse.Options.SuccessMessage = "Вы подписались на #" + name;
+                    var cmd = new User_SubscribeFeedCommand
+                                  {
+                                      UserId = User.Id,
+                                      Feed = name
+                                  };
+                    Send(cmd);
+                    AjaxResponse.Options.SuccessMessage = "Вы подписались на #" + name;
+                    AjaxResponse.ReloadPage = true;
+                
             }
-            AjaxResponse.ReloadPage = true;
             return Result();
+        }
+
+        private bool IsValidCharsForFeedName(string name)
+        {
+            return Regex.IsMatch(name, @"[\w]");
         }
 
         [Authorize]
