@@ -132,6 +132,11 @@ namespace YouMap.Controllers
             return View();
         }
 
+        public ActionResult Vk()
+        {
+            return View("VkError");
+        }
+
         [HttpGet]
         public ActionResult LoginVk()
         {
