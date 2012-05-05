@@ -12,10 +12,6 @@ namespace YouMap.Domain.Commands
 
     public class User_UpdateMarkCommandHandler : CommandHandler<User_UpdateMarkCommand>
     {
-        public User_UpdateMarkCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(User_UpdateMarkCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.UserId);

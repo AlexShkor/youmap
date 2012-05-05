@@ -35,10 +35,6 @@ namespace YouMap.Domain.Commands
 
     public class Place_CreateCommandHandler : CommandHandler<Place_CreateCommand>
     {
-        public Place_CreateCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(Place_CreateCommand message)
         {
             var data = new PlaceData

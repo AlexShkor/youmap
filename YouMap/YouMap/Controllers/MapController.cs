@@ -150,8 +150,11 @@ namespace YouMap.Controllers
             var place = _placeDocumentService.GetByFilter(filter).SingleOrDefault();
             if (place != null)
             {
-                var user = _userDocumentService.GetById(User.Id);
-                model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.PlaceId == model.PlaceId && x.Visited.Date == DateTime.Now.Date); 
+                if (User != null)
+                {
+                    var user = _userDocumentService.GetById(User.Id);
+                    model.LeftCount = MaxCountPerDay - user.CheckIns.Count(x => x.PlaceId == model.PlaceId && x.Visited.Date == DateTime.Now.Date);
+                }
                 model.Limited = true;
                 model.DisplayPlace = true;
                 model.PlaceId = place.Id;

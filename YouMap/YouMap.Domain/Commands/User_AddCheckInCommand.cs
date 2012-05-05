@@ -18,10 +18,6 @@ namespace YouMap.Domain.Commands
     }
     public class User_AddCheckInCommandHandler: CommandHandler<User_AddCheckInCommand>
     {
-        public User_AddCheckInCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(User_AddCheckInCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.UserId);

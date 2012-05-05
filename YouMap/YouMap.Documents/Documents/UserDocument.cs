@@ -56,6 +56,8 @@ namespace YouMap.Documents.Documents
 
         public List<EventDocument> Events { get; set; }
 
+        public List<String> Feeds { get; set; }
+
         public HashSet<string> Friends { get; set; } 
 
         public string Name
@@ -76,6 +78,7 @@ namespace YouMap.Documents.Documents
             Permissions = new List<UserPermissionEnum>();
             Friends = new HashSet<string>();
             Events = new List<EventDocument>();
+            Feeds = new List<string>();
         }
     }
 

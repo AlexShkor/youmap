@@ -15,8 +15,7 @@ namespace YouMap.Framework.Registries
                 config.For<MongoRead>().Singleton().Use(() =>
                                                             {
                                                                 var MongoRead =
-                                                                    new MongoRead(
-                                                                        settings.MongoReadDatabaseConnectionString);
+                                                                    new MongoRead(settings.MongoReadDatabaseConnectionString);
                                                                 MongoRead.EnsureIndexes();
                                                                 return MongoRead;
                                                             });

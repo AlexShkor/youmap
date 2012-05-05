@@ -21,10 +21,6 @@ namespace YouMap.Domain.Commands
 
     public class User_CreateEventCommandHandler: CommandHandler<User_AddEventCommand>
     {
-        public User_CreateEventCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(User_AddEventCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.OwnerId);

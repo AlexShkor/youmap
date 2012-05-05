@@ -18,10 +18,6 @@ namespace YouMap.Domain.Commands
 
     public class Category_CreateCommandHandler: CommandHandler<Category_CreateCommand>
     {
-        public Category_CreateCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(Category_CreateCommand message)
         {
             var ar = new CategoryAR(message);

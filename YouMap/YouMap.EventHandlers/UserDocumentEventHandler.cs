@@ -17,7 +17,10 @@ namespace YouMap.EventHandlers
         IMessageHandler<User_EventAddedEvent>,
         IMessageHandler<User_EventMemberAddedEvent>,
         IMessageHandler<User_FriendsAddedEvent>,
-        IMessageHandler<User_CheckInAddedEvent>
+        IMessageHandler<User_CheckInAddedEvent>,
+        IMessageHandler<User_FeedCreatedEvent>,
+        IMessageHandler<User_FeedSubscribedEvent>
+
     {
         private readonly UserDocumentService _documentService;
 
@@ -109,6 +112,23 @@ namespace YouMap.EventHandlers
             var query = Query.EQ("_id", message.UserId);
             var update = Update.PushAll("Friends", new BsonArray(message.Friends.Select(x => x.VkId)));
             _documentService.Update(query,update);
+        }
+
+        public void Handle(User_FeedCreatedEvent message)
+        {
+            SubscribeFeed(message.Name,message.UserId);
+        }
+
+        public void Handle(User_FeedSubscribedEvent message)
+        {
+            SubscribeFeed(message.Feed, message.UserId);
+        }
+
+        private void SubscribeFeed(string feed, string userId)
+        {
+            var query = Query.EQ("_id", userId);
+            var update = Update.AddToSet("Feeds", feed);
+            _documentService.Update(query, update);
         }
     }
 }

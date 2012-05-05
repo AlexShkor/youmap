@@ -13,10 +13,6 @@ namespace YouMap.Domain.Commands
 
     public class Place_ChangeStatusCommandHandler: CommandHandler<Place_ChangeStatusCommand>
     {
-        public Place_ChangeStatusCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(Place_ChangeStatusCommand message)
         {
             var ar = Repository.GetById<PlaceAR>(message.PlaceId);

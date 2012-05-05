@@ -33,6 +33,7 @@ namespace YouMap.Framework
         public void EnsureIndexes()
         {
             GetCollection("places").EnsureIndex(IndexKeys.GeoSpatial("Location"));
+            GetCollection("feeds").EnsureIndex(IndexKeys.Ascending("Name"));
         }
 
         /// <summary>

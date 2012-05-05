@@ -16,10 +16,6 @@ namespace YouMap.Domain.Commands
 
     public class User_JoinToEventCommandHandler: CommandHandler<User_JoinToEventCommand>
     {
-        public User_JoinToEventCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(User_JoinToEventCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.UserId);

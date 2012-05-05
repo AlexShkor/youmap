@@ -28,11 +28,6 @@ namespace YouMap.Domain.Commands
 
     public class User_CreateCommandHandler: CommandHandler<User_CreateCommand>
     {
-        public User_CreateCommandHandler(IRepository repository)
-            : base(repository)
-        {
-        }
-
         public override void Handle(User_CreateCommand message)
         {
             var ar = new UserAR(message.UserId, new UserData

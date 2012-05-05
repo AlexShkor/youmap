@@ -12,10 +12,6 @@ namespace YouMap.Domain.Commands
 
     public class Place_ChangeLayerCommandHandler: CommandHandler<Place_ChangeLayerCommand>
     {
-        public Place_ChangeLayerCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(Place_ChangeLayerCommand message)
         {
             var ar = Repository.GetById<PlaceAR>(message.PlaceId);

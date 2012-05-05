@@ -118,6 +118,24 @@ namespace YouMap.Domain
             }
         }
 
+        public void CreateFeed(string name)
+        {
+            Apply(new User_FeedCreatedEvent
+            {
+                UserId = Id,
+                Name = name
+            });
+        }
+
+        public void SubscribeFeed(string feed)
+        {
+            Apply(new User_FeedSubscribedEvent
+            {
+                UserId = Id,
+                Feed = feed
+            });
+        }
+
         #region Object Reconstruction
 
         protected void On(User_CreatedEvent created)
@@ -143,6 +161,5 @@ namespace YouMap.Domain
             Friends.SymmetricExceptWith(user.Friends.Select(x=> x.VkId));
         }
         #endregion
-
     }
 }

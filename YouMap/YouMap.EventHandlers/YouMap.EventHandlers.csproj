@@ -64,6 +64,7 @@
     <Compile Include="CategoryDocumentEventHandler.cs" />
     <Compile Include="EventDocumentEventHandler.cs" />
     <Compile Include="EventsLuceneEventHandler.cs" />
+    <Compile Include="FeedDocumentEventHandler.cs" />
     <Compile Include="PlaceDocumentEventHandler.cs" />
     <Compile Include="PlaceLuceneEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

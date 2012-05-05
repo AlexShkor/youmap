@@ -19,10 +19,6 @@ namespace YouMap.Domain.Commands
 
     public class User_AddFriendsCommandHandler: CommandHandler<User_AddFriendsCommand>
     {
-        public User_AddFriendsCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(User_AddFriendsCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.UserId);

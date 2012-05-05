@@ -18,10 +18,6 @@ namespace YouMap.Domain.Commands
 
     public class Category_UpdateCommandHandler : CommandHandler<Category_UpdateCommand>
     {
-        public Category_UpdateCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(Category_UpdateCommand message)
         {
             var ar = Repository.GetById<CategoryAR>(message.Id);

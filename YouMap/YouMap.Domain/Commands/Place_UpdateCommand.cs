@@ -31,10 +31,6 @@ namespace YouMap.Domain.Commands
 
     public class  Place_UpdateCommandHandler: CommandHandler<Place_UpdateCommand>
     {
-        public Place_UpdateCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(Place_UpdateCommand message)
         {
             var ar = Repository.GetById<PlaceAR>(message.Id);

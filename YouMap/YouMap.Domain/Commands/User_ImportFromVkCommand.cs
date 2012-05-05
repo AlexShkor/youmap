@@ -13,10 +13,6 @@ namespace YouMap.Domain.Commands
 
     public class User_ImportFromVkCommandHandler: CommandHandler<User_ImportFromVkCommand>
     {
-        public User_ImportFromVkCommandHandler(IRepository repository) : base(repository)
-        {
-        }
-
         public override void Handle(User_ImportFromVkCommand message)
         {
             var ar = Repository.GetById<UserAR>(message.UserId);
