@@ -1,0 +1,9 @@
+﻿@using System.Web.Mvc
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/bootstrap-forms.css")" />
+
+@using(Html.BeginForm("Create","Feeds",FormMethod.Get))
+{    
+<div class="input-append">
+                <input class="span2" name="Name" type="text"><button class="btn ajax-submit" type="submit">Добавить</button>
+              </div>
+}

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using YouMap.ActionFilters;
 using YouMap.Documents.Documents;
 using YouMap.Documents.Services;
 using YouMap.Domain.Commands;
@@ -30,7 +31,7 @@ namespace YouMap.Controllers
             return View(model);
         }
 
-        [Authorize]
+        [Auth]
         public ActionResult Create(string name)
         {
             var feed = _feedDocumentService.GetByName(name);
@@ -90,11 +91,12 @@ namespace YouMap.Controllers
                               };
                 Send(cmd);
                 AjaxResponse.Options.SuccessMessage = "Вы подписались на #" + name;
+                AjaxResponse.ReloadPage = true;
             }
             return Result();
         }
 
-        [Authorize]
+        [Auth]
         public ActionResult Details(string name)
         {
             var model = new FeedDetailsModel();
@@ -121,16 +123,17 @@ namespace YouMap.Controllers
         }
 
 
-         [Authorize]
+        [Authorize]
         public ActionResult Unsubscribe(string name)
         {
             var cmd = new User_UnsubscribeFeedCommand
-            {
-                UserId = User.Id,
-                Feed = name
-            };
+                          {
+                              UserId = User.Id,
+                              Feed = name
+                          };
             Send(cmd);
             AjaxResponse.Options.SuccessMessage = "Вы отменили подписку на фид #" + name;
+            AjaxResponse.ReloadPage = true;
             return Result();
         }
     }

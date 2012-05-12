@@ -123,6 +123,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\Auth.cs" />
     <Compile Include="ActionFilters\MobileAttribute.cs" />
     <Compile Include="ActionFilters\RedirectMobileDevicesAttribute.cs" />
     <Compile Include="ActionFilters\RoleAttribute.cs" />

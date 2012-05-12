@@ -1,0 +1,18 @@
+﻿@model System.Collections.Generic.IEnumerable<string>
+
+<h2>Фиды</h2>
+
+<div class="well">
+    <p>Выберите интересующий вас фид, либо создайте новый</p>
+    @Html.Partial("Create")
+</div>
+
+
+<ul class="nav nav-list">
+@foreach(var item in Model)
+{
+    <li>
+        <a href="@Url.Action("Details","Feeds",new{name=item})">#@item</a>
+    </li>
+}
+</ul>
