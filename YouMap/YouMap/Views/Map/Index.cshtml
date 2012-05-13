@@ -10,3 +10,57 @@
 <div id="mapHolder">
     <div id="map"></div>
 </div>
+
+@section joyride{
+
+    <style>
+    .joyride-tip-guide
+    {
+        font-size: 14px;
+    }
+    </style>
+    <ol id="tour" style="display: none">
+        <li data-id="title" data-text="Далее">
+            <h4>Добро пожаловать на YouMap</h4>
+            Здравствуйте, cейчас мы проведем небольшую экскурвию, чтобы познакомить вас с возможностями сервиса. Нажмите "Далее" если вы готовы начать
+        </li>
+        <li data-id="searchField"  data-text="Далее">
+            <h4>Поиск</h4>
+            Это строка поиска. Здесь вы можете искать интересующие вас заведения. В результатах поиска они будут отображены по удаленности от вашего месторасположения.
+        </li>
+        <li data-id="searchSubmit"  data-text="Далее">
+             <h4>Попробуйте сами</h4>
+            Введите в строку поиска слово "кафе" и выбирите любой из вариантов. Когда закончите нажмите "Далее".
+        </li>
+        <li data-id="title"  data-text="Далее">
+            <h4>Место</h4>
+            В появившемся окне вы можете посмотреть последнии отметки и встречи в выбранном заведении.
+            <div class="thumbnail"><img src="@Url.Content("~/Content/images/events_smaple.png")"/></div>
+            <div class="thumbnail"><img src="@Url.Content("~/Content/images/checkins_smaple.png")"/></div>                   
+        </li>
+        <li data-id="title"  data-text="Далее">
+             <h4>Отметки и Встречи</h4>
+            Так же вы сами можете отметиться здесь или создать встречу. Но для этого сначала нужно войти в сервис.
+        </li>
+        <li data-id="vkLogin" data-options="right: true"  data-text="Далее">
+             <h4>Войдите</h4>
+            Нажмите на кнопку "Войти" чтобы авторизироваться с помощью ВКонтакте
+        </li>     
+        <li data-id="loginPanel, #profilePanel" data-options="right: true"  data-text="Далее">
+             <h4>Друзья на карте</h4>
+            После того как вы авторизировались через ВКонтакте, вы будете видеть последние отметки ваших друзей на карте в виде их аватаров.
+            <div class="thumbnail"><img src="@Url.Content("~/Content/images/friends_sample.png")"/></div>   
+        </li>
+    </ol>
+
+    <script>
+        $(document).ready(function() {
+            $(this).joyride({
+                tipContent: '#tour',
+                tipAnimation: 'fade',
+                cookieMonster: true,          
+                cookieName: 'JoyRide'    
+            });
+        });
+    </script>
+}
