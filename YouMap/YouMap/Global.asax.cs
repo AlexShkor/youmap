@@ -124,24 +124,21 @@ namespace YouMap
 
             container.Configure(config => config.For<IServiceBus>().Singleton().Use(bus));
 
-            var asyncBus = ServiceBus.Run(c => c
-                .SetServiceLocator(new StructureMapServiceLocator(container))
-                .MsmqTransport()
-                .SetName("Async YouMap Service Bus")
-                .SetInputQueue(String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-                .SetErrorQueue(String.Format("{0}_{1}", settings.ErrorQueueName, ApplicationName))
-                .AddEndpoint(type => type.FullName.EndsWith("Event"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-                .AddEndpoint(type => type.FullName.EndsWith("Command"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-                .AddEndpoint(type => type.FullName.EndsWith("Message"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-                .Dispatcher(d => d
-                            .AddHandlers(typeof(PlaceAR).Assembly)
-                            //.AddHandlers(typeof(PlaceDocumentEventHandler).Assembly)
-                            //.AddHandlers(typeof(NotificationTempService).Assembly)
-                            //.AddHandlers(typeof(CreditIdentityAlertDocumentEventHandler).Assembly, new[] { "mPower.EventHandlers.Eventual" }) //async event handlers
-                )
-            );
+            //var asyncBus = ServiceBus.Run(c => c
+            //    .SetServiceLocator(new StructureMapServiceLocator(container))
+            //    .MsmqTransport()
+            //    .SetName("Async YouMap Service Bus")
+            //    .SetInputQueue(String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+            //    .SetErrorQueue(String.Format("{0}_{1}", settings.ErrorQueueName, ApplicationName))
+            //    .AddEndpoint(type => type.FullName.EndsWith("Event"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+            //    .AddEndpoint(type => type.FullName.EndsWith("Command"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+            //    .AddEndpoint(type => type.FullName.EndsWith("Message"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+            //    .Dispatcher(d => d
+            //                .AddHandlers(typeof(PlaceAR).Assembly)
+            //    )
+            //);
 
-            container.Configure(config => config.For<AsyncServiceBus>().Singleton().Use(new AsyncServiceBus(asyncBus)));
+            //container.Configure(config => config.For<AsyncServiceBus>().Singleton().Use(new AsyncServiceBus(asyncBus)));
 
             // 
             // Domain and Event store configuration
