@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Paralect.Domain;
@@ -23,11 +24,28 @@ namespace YouMap
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
+    public class LogEvent : WebRequestErrorEvent
+    {
+        public LogEvent(Exception ex)
+            : base(null, null, 100001, ex)
+        {
+        }
+    }
+
+    public class HandleAppharborErrorAttribute : HandleErrorAttribute
+    {
+        public override void OnException(ExceptionContext ex)
+        {
+            new LogEvent( ex.Exception).Raise();
+        }
+    }
+
     public class MvcApplication : System.Web.HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new HandleAppharborErrorAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
