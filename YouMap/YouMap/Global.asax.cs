@@ -90,100 +90,107 @@ namespace YouMap
 
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-
-
-            GlobalFilters.Filters.Add(new RedirectMobileDevicesToMobileAreaAttribute(), 1);
-            RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
-
-            var container = new Container();
-            DependencyResolver.SetResolver(new SmDependencyResolver(container));
-            #region Common Configuration
-
-            new SettingsRegistry(container);
-            new MongoRegistry(container);
-
-            var settings = container.GetInstance<Settings>();
-
-            //var encrypt = new EncryptionService();
-
-            // Id generator & Membership API
-            container.Configure(config =>
+            try
             {
-                config.For<IIdGenerator>().Use<MongoObjectIdGenerator>();
-                config.For<IContainer>().Use(container);
-                //config.For<MembershipApiService>().Add(
-                //    new MembershipApiService(tenant.MembershipApiKey,
-                //                                settings.MembershipBaseUrl));
-                // config.For<IEncryptionService>().Singleton().Use(encrypt);
-                //config.For<IEmailHtmlBuilder>().Use<NuggetHtmlBuilder>();
-                //config.For<ITransUnionService>().Use<TransUnionService>();
-                //config.For<IIntuitService>().Use<IntuitService>();
-            });
+                AreaRegistration.RegisterAllAreas();
 
-            //
-            // Service bus
-            //
-            var bus = ServiceBus.Run(c => c
-                .SetServiceLocator(new StructureMapServiceLocator(container))
-                .MemorySynchronousTransport()
-                .SetName("Main YouMap Service Bus")
-                .SetInputQueue("youmap.sync.server")
-                .AddEndpoint(type => type.FullName.EndsWith("Event"), "youmap.sync.server")
-                .AddEndpoint(type => type.FullName.EndsWith("Command"), "youmap.sync.server")
-                .AddEndpoint(type => type.FullName.EndsWith("Message"), "youmap.sync.server")
-                .Dispatcher(d => d
-                    .AddHandlers(typeof(PlaceAR).Assembly) //mPower.Domain command handler
-                     .AddHandlers(typeof(PlaceDocumentEventHandler).Assembly)
-                   // .AddHandlers(typeof(CreditIdentityAlertDocumentEventHandler).Assembly, new[] { "mPower.EventHandlers.Immediate" }) //sync event handlers
-                 )
-            );
 
-            container.Configure(config => config.For<IServiceBus>().Singleton().Use(bus));
+                GlobalFilters.Filters.Add(new RedirectMobileDevicesToMobileAreaAttribute(), 1);
+                RegisterGlobalFilters(GlobalFilters.Filters);
+                RegisterRoutes(RouteTable.Routes);
 
-            //var asyncBus = ServiceBus.Run(c => c
-            //    .SetServiceLocator(new StructureMapServiceLocator(container))
-            //    .MsmqTransport()
-            //    .SetName("Async YouMap Service Bus")
-            //    .SetInputQueue(String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-            //    .SetErrorQueue(String.Format("{0}_{1}", settings.ErrorQueueName, ApplicationName))
-            //    .AddEndpoint(type => type.FullName.EndsWith("Event"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-            //    .AddEndpoint(type => type.FullName.EndsWith("Command"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-            //    .AddEndpoint(type => type.FullName.EndsWith("Message"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
-            //    .Dispatcher(d => d
-            //                .AddHandlers(typeof(PlaceAR).Assembly)
-            //    )
-            //);
+                var container = new Container();
+                DependencyResolver.SetResolver(new SmDependencyResolver(container));
+                #region Common Configuration
 
-            //container.Configure(config => config.For<AsyncServiceBus>().Singleton().Use(new AsyncServiceBus(asyncBus)));
+                new SettingsRegistry(container);
+                new MongoRegistry(container);
 
-            // 
-            // Domain and Event store configuration
-            //
-            var dataTypeRegistry = new AssemblyQualifiedDataTypeRegistry();
+                var settings = container.GetInstance<Settings>();
 
-            var transitionsRepository = new MongoTransitionRepository(
-                new AssemblyQualifiedDataTypeRegistry(),
-                settings.MongoWriteDatabaseConnectionString);
+                //var encrypt = new EncryptionService();
 
-            var transitionsStorage = new TransitionStorage(transitionsRepository);
+                // Id generator & Membership API
+                container.Configure(config =>
+                {
+                    config.For<IIdGenerator>().Use<MongoObjectIdGenerator>();
+                    config.For<IContainer>().Use(container);
+                    //config.For<MembershipApiService>().Add(
+                    //    new MembershipApiService(tenant.MembershipApiKey,
+                    //                                settings.MembershipBaseUrl));
+                    // config.For<IEncryptionService>().Singleton().Use(encrypt);
+                    //config.For<IEmailHtmlBuilder>().Use<NuggetHtmlBuilder>();
+                    //config.For<ITransUnionService>().Use<TransUnionService>();
+                    //config.For<IIntuitService>().Use<IntuitService>();
+                });
 
-            container.Configure(config =>
+                //
+                // Service bus
+                //
+                var bus = ServiceBus.Run(c => c
+                    .SetServiceLocator(new StructureMapServiceLocator(container))
+                    .MemorySynchronousTransport()
+                    .SetName("Main YouMap Service Bus")
+                    .SetInputQueue("youmap.sync.server")
+                    .AddEndpoint(type => type.FullName.EndsWith("Event"), "youmap.sync.server")
+                    .AddEndpoint(type => type.FullName.EndsWith("Command"), "youmap.sync.server")
+                    .AddEndpoint(type => type.FullName.EndsWith("Message"), "youmap.sync.server")
+                    .Dispatcher(d => d
+                        .AddHandlers(typeof(PlaceAR).Assembly) //mPower.Domain command handler
+                         .AddHandlers(typeof(PlaceDocumentEventHandler).Assembly)
+                    // .AddHandlers(typeof(CreditIdentityAlertDocumentEventHandler).Assembly, new[] { "mPower.EventHandlers.Immediate" }) //sync event handlers
+                     )
+                );
+
+                container.Configure(config => config.For<IServiceBus>().Singleton().Use(bus));
+
+                //var asyncBus = ServiceBus.Run(c => c
+                //    .SetServiceLocator(new StructureMapServiceLocator(container))
+                //    .MsmqTransport()
+                //    .SetName("Async YouMap Service Bus")
+                //    .SetInputQueue(String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+                //    .SetErrorQueue(String.Format("{0}_{1}", settings.ErrorQueueName, ApplicationName))
+                //    .AddEndpoint(type => type.FullName.EndsWith("Event"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+                //    .AddEndpoint(type => type.FullName.EndsWith("Command"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+                //    .AddEndpoint(type => type.FullName.EndsWith("Message"), String.Format("{0}_{1}", settings.InputQueueName, ApplicationName))
+                //    .Dispatcher(d => d
+                //                .AddHandlers(typeof(PlaceAR).Assembly)
+                //    )
+                //);
+
+                //container.Configure(config => config.For<AsyncServiceBus>().Singleton().Use(new AsyncServiceBus(asyncBus)));
+
+                // 
+                // Domain and Event store configuration
+                //
+                var dataTypeRegistry = new AssemblyQualifiedDataTypeRegistry();
+
+                var transitionsRepository = new MongoTransitionRepository(
+                    new AssemblyQualifiedDataTypeRegistry(),
+                    settings.MongoWriteDatabaseConnectionString);
+
+                var transitionsStorage = new TransitionStorage(transitionsRepository);
+
+                container.Configure(config =>
+                {
+                    config.For<ITransitionRepository>().Singleton().Use(transitionsRepository);
+                    config.For<ITransitionStorage>().Singleton().Use(transitionsStorage);
+                    config.For<IDataTypeRegistry>().Singleton().Use(dataTypeRegistry);
+                    config.For<IEventBus>().Use<DualEventBus>();
+                    config.For<IRepository>().Use<Repository>();
+                    config.For<IEventService>().Use<EventService>();
+                    config.For<ICommandService>().Use<CommandService>();
+                    config.For<ISessionContext>().Singleton().Use<SessionContext>();
+                    config.For<IAuthenticationService>().Use<AuthenticationService>();
+                    config.For<DeploymentHelper>().Use<DeploymentHelper>();
+                });
+
+                #endregion
+            }
+            catch (Exception ex)
             {
-                config.For<ITransitionRepository>().Singleton().Use(transitionsRepository);
-                config.For<ITransitionStorage>().Singleton().Use(transitionsStorage);
-                config.For<IDataTypeRegistry>().Singleton().Use(dataTypeRegistry);
-                config.For<IEventBus>().Use<DualEventBus>();
-                config.For<IRepository>().Use<Repository>();
-                config.For<IEventService>().Use<EventService>();
-                config.For<ICommandService>().Use<CommandService>();
-                config.For<ISessionContext>().Singleton().Use<SessionContext>();
-                config.For<IAuthenticationService>().Use<AuthenticationService>();
-                config.For<DeploymentHelper>().Use<DeploymentHelper>();
-            });
-
-            #endregion
+                new LogEvent(ex).Raise();
+            }
 
         }
 
